@@ -19,7 +19,7 @@ public class Record {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.TABLE) //todo pick proper because now it is null
     private int id;//todo create such table should be long
 
     public Record() {
