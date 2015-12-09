@@ -6,11 +6,11 @@
   "success_url": "/",
   "env": {
     "STORMPATH_API_KEY_ID": {
-      "description": "The API key ID from your ~/.stormpath/apiKey.properties file",
+      "description": "48IT3XS1FWL80VX1PDYQV3SDF",
       "value": "changeme"
     },
     "STORMPATH_API_KEY_SECRET": {
-      "description": "The API key secret from tyou ~/.stormpath/apiKey.properties file",
+      "description": "6j+AfVnxEijenM5gq6WBbO9e6dvw2kE60zMKlIfB2hM",
       "value": "changeme"
     },
     "STORMPATH_APPLICATION_HREF": {
