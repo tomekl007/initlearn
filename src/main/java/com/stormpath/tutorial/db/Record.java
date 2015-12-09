@@ -16,6 +16,10 @@ public class Record {
     @NotEmpty
     private String data;
 
+    public Record(String data) {
+        this.data = data;
+    }
+
     public String getData() {
         return data;
     }
