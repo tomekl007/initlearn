@@ -60,7 +60,9 @@ public class HelloController {
 
     @RequestMapping(method = RequestMethod.GET, path = "/db")
     public String home(ModelMap model) {
-        repository.save(new Record("A"));
+        Record a = new Record("A");
+        System.out.println("should insert a : " + a);
+        repository.save(a);
         List<Record> records = repository.findAll();
         logger.info("records : --" +records);
         model.addAttribute("records", records);

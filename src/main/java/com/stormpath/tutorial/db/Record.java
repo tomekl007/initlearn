@@ -12,7 +12,7 @@ public class Record {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;//todo create such table
+    private int id;//todo create such table should be long
     @NotEmpty
     private String data;
 
