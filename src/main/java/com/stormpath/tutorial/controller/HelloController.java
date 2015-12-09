@@ -60,12 +60,14 @@ public class HelloController {
 
     @RequestMapping(method = RequestMethod.GET, path = "/db")
     public String home(ModelMap model) {
+        List<Record> records = repository.findAll();
+        logger.info("records : --" +records);
         Record a = new Record("A");
         System.out.println("should insert a : " + a);
         repository.save(a);
-        List<Record> records = repository.findAll();
-        logger.info("records : --" +records);
-        model.addAttribute("records", records);
+        List<Record> records2 = repository.findAll();
+        logger.info("records : --" +records2);
+        model.addAttribute("records", records2);
         model.addAttribute("insertRecord", new Record("B"));
         return "correct";
     }
