@@ -10,6 +10,14 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Entity
 public class Record {
 
+    @Override
+    public String toString() {
+        return "Record{" +
+                "id=" + id +
+                ", data='" + data + '\'' +
+                '}';
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;//todo create such table should be long
