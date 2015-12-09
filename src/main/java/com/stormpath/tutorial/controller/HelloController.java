@@ -61,7 +61,7 @@ public class HelloController {
         List<Record> records = repository.findAll();
         System.out.println("records : --" +records);
         model.addAttribute("records", records);
-        model.addAttribute("insertRecord", new Record());
+        model.addAttribute("insertRecord", new Record("B"));
         return "home";
     }
 
