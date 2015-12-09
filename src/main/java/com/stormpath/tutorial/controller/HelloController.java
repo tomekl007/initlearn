@@ -19,6 +19,8 @@ package com.stormpath.tutorial.controller;
 import com.stormpath.tutorial.db.Record;
 import com.stormpath.tutorial.db.RecordRepository;
 import com.stormpath.tutorial.service.AdminService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -32,6 +34,7 @@ import java.util.List;
 
 @Controller
 public class HelloController {
+    private static final Logger logger = LoggerFactory.getLogger(HelloController.class);
     @Autowired
     private RecordRepository repository;
 
@@ -59,7 +62,7 @@ public class HelloController {
     public String home(ModelMap model) {
         repository.save(new Record("A"));
         List<Record> records = repository.findAll();
-        System.out.println("records : --" +records);
+        logger.info("records : --" +records);
         model.addAttribute("records", records);
         model.addAttribute("insertRecord", new Record("B"));
         return "home";
