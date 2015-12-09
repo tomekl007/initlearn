@@ -1,7 +1,7 @@
 {
   "name": "Spring Boot Spring Security",
   "description": "GroupAccessControl - This tag demonstrates restricting access by Stormpath Group membership.",
-  "repository": "https://github.com/stormpath/spring-boot-spring-security-tutorial/tree/03-GroupAccessControl",
+  "repository": "https://github.com/tomekl007/initlearn",
   "keywords": ["spring boot", "identity", "security", "authentication"],
   "success_url": "/",
   "env": {
