@@ -21,7 +21,21 @@ public class Record {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;//todo create such table should be long
+
+    public Record() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+
+        this.id = id;
+    }
+
     @NotEmpty
+
     private String data;
 
     public Record(String data) {
