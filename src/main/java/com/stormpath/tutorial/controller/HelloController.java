@@ -16,13 +16,24 @@
 
 package com.stormpath.tutorial.controller;
 
+import com.stormpath.tutorial.db.Record;
+import com.stormpath.tutorial.db.RecordRepository;
 import com.stormpath.tutorial.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 public class HelloController {
+    @Autowired
+    private RecordRepository repository;
 
     @Autowired
     AdminService adminService;
@@ -41,5 +52,26 @@ public class HelloController {
     String admin() {
         adminService.ensureAdmin();
         return "admin";
+    }
+
+
+    @RequestMapping(method = RequestMethod.GET, path = "/db")
+    public String home(ModelMap model) {
+        List<Record> records = repository.findAll();
+        model.addAttribute("records", records);
+        model.addAttribute("insertRecord", new Record());
+        return "home";
+    }
+
+
+    @RequestMapping(method = RequestMethod.POST, path = "/db")
+    public String insertData(ModelMap model,
+                             @ModelAttribute("insertRecord") @Valid Record record,
+                             BindingResult result) {
+        if (!result.hasErrors()) {
+            System.out.println("will save record : " + record);
+            repository.save(record);
+        }
+        return home(model);
     }
 }
