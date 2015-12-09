@@ -65,7 +65,7 @@ public class HelloController {
         logger.info("records : --" +records);
         model.addAttribute("records", records);
         model.addAttribute("insertRecord", new Record("B"));
-        return "home";
+        return "correct";
     }
 
 
