@@ -27,15 +27,19 @@ import com.stormpath.tutorial.service.AdminService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.ServletRequest;
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
@@ -56,8 +60,6 @@ public class HelloController {
     @RequestMapping("/")
     String home(ServletRequest servletRequest) {
 
-        Account authenticatedAccount = AccountResolver.INSTANCE.getRequiredAccount(servletRequest);
-        
         client.getAccounts().forEach(new Consumer<Account>() {
             @Override
             public void accept(Account account) {
@@ -96,10 +98,24 @@ public class HelloController {
         directory.createAccount(account);
         account.save();
 */
-        sendMessageToUser("tomekl007@gmail.com", "hello tomek"+ new Date(), authenticatedAccount);
         return "home";
     }
-    
+
+
+
+    @RequestMapping("/msg")
+    ResponseEntity msg(ServletRequest servletRequest, @RequestParam("text") String text, @RequestParam("to") String emailTo) {
+        if (AccountResolver.INSTANCE.hasAccount(servletRequest)) {
+            //or Account account = (Account)servletRequest.getAttribute("account");
+            Account authenticatedAccount = AccountResolver.INSTANCE.getRequiredAccount(servletRequest);
+            sendMessageToUser(emailTo, text, authenticatedAccount);
+            return new ResponseEntity(HttpStatus.OK);
+        } else {
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        }
+    }
+
+
     public void sendMessageToUser(String emailTo, String text, Account from) {
         
         logger.info("send message from " + from.getEmail() + " to " + emailTo);
