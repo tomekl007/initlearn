@@ -28,7 +28,13 @@ public class UserController {
                 list
                         .stream()
                         .map(a ->
-                                new User(a.getEmail(), a.getFullName(), a.getGivenName(), a.getStatus(), a.getMiddleName())).collect(Collectors.toList());
+                                new User(a.getEmail(), a.getFullName(), a.getGivenName(), a.getMiddleName())).collect(Collectors.toList());
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
+    
+  /*  @RequestMapping(value = "users/{email}", method = RequestMethod.GET)
+    public ResponseEntity<User> getUserByEmail(@PathVariable("email") String email){
+        client.getAccounts(Map ("email" -> email))
+        
+    }*/
 }
