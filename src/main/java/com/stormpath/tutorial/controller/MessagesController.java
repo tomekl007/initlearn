@@ -24,12 +24,13 @@ import java.util.stream.StreamSupport;
 public class MessagesController {
 
     private static final Logger logger = LoggerFactory.getLogger(MessagesController.class);
+    public static final String MESSAGES_FIELD = "messages";
 
     @Autowired
     private Client client;
 
 
-    @RequestMapping("/msg")
+    @RequestMapping("/msg")//todo should be put
     ResponseEntity msg(ServletRequest servletRequest, @RequestParam("text") String text, @RequestParam("to") String emailTo) {
         if (AccountResolver.INSTANCE.hasAccount(servletRequest)) {
             //or Account account = (Account)servletRequest.getAttribute("account");
@@ -40,7 +41,18 @@ public class MessagesController {
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
     }
-
+    @RequestMapping("/allMsg")
+    ResponseEntity<List<Message>> retrieveAllMessagesForLoggedUser(ServletRequest servletRequest){
+        if (AccountResolver.INSTANCE.hasAccount(servletRequest)) {
+            //or Account account = (Account)servletRequest.getAttribute("account");
+            Account authenticatedAccount = AccountResolver.INSTANCE.getRequiredAccount(servletRequest);
+            return new ResponseEntity<>(retrieveAllMessages(authenticatedAccount), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        
+    }
+    
 
     public void sendMessageToUser(String emailTo, String text, Account from) {
 
@@ -52,7 +64,7 @@ public class MessagesController {
         CustomData customData = account.get().getCustomData();
 
         List<Message> messagesList;
-        Object messages = customData.get("messages");
+        Object messages = customData.get(MESSAGES_FIELD);
         if (messages == null) {
             messagesList = new LinkedList<>();
         } else {
@@ -60,8 +72,18 @@ public class MessagesController {
         }
         messagesList.add(new Message(false, text, from.getEmail()));
         //todo add sended emails to fromEmail user
-        customData.put("messages", messagesList);
+        customData.put(MESSAGES_FIELD, messagesList);
         account.get().save();
+    }
+    
+    public List<Message> retrieveAllMessages(Account account){
+        Object messages = account.getCustomData().get(MESSAGES_FIELD);
+        if(messages == null){
+            return Collections.emptyList();
+        }else{
+            return (List<Message>) messages;
+        }
+
     }
 
 }
