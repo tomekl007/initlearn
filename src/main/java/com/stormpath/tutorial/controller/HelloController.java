@@ -16,6 +16,10 @@
 
 package com.stormpath.tutorial.controller;
 
+import com.stormpath.sdk.account.Account;
+import com.stormpath.sdk.client.Client;
+import com.stormpath.sdk.directory.CustomData;
+import com.stormpath.sdk.impl.account.DefaultAccount;
 import com.stormpath.tutorial.db.Record;
 import com.stormpath.tutorial.db.RecordRepository;
 import com.stormpath.tutorial.service.AdminService;
@@ -31,6 +35,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.function.Consumer;
 
 @Controller
 public class HelloController {
@@ -39,10 +44,22 @@ public class HelloController {
     private RecordRepository repository;
 
     @Autowired
+    private Client client;
+
+    @Autowired
     AdminService adminService;
 
     @RequestMapping("/")
     String home() {
+        
+        client.getAccounts().forEach(new Consumer<Account>() {
+            @Override
+            public void accept(Account account) {
+                CustomData customData = account.getCustomData();
+                customData.put("sc", "field");
+                account.save();
+            }
+        });
         return "home";
     }
     
