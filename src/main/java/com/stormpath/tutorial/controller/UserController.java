@@ -9,18 +9,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
 public class UserController {
 
     private static final Logger logger = LoggerFactory.getLogger(MessagesController.class);
-    
+
     @Autowired
     private Client client;
 
@@ -28,18 +28,22 @@ public class UserController {
     public ResponseEntity<List<User>> getAllUsers() {
         List<Account> list = new ArrayList<>();
         client.getAccounts().iterator().forEachRemaining(list::add);
-        List<User> users =
-                list
-                        .stream()
-                        .map(a ->
-                                new User(a.getEmail(), a.getFullName(), a.getGivenName(), a.getMiddleName())).collect(Collectors.toList());
+        List<User> users = mapToUsers(list);
         logger.info("Return users : " + users);
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
-    
-  /*  @RequestMapping(value = "users/{email}", method = RequestMethod.GET)
-    public ResponseEntity<User> getUserByEmail(@PathVariable("email") String email){
-        client.getAccounts(Map ("email" -> email))
-        
-    }*/
+
+    private List<User> mapToUsers(List<Account> list) {
+        return list
+                .stream()
+                .map(a ->
+                        new User(a.getEmail(), a.getFullName(), a.getGivenName(), a.getMiddleName())).collect(Collectors.toList());
+    }
+
+    @RequestMapping(value = "users/{email}", method = RequestMethod.GET)
+    public ResponseEntity<List<User>> getUserByEmail(@PathVariable("email") String email) {
+        List<Account> accounts = new ArrayList<>();
+        client.getAccounts(Collections.singletonMap("email", email)).iterator().forEachRemaining(accounts::add);
+        return new ResponseEntity<>(mapToUsers(accounts), HttpStatus.OK);
+    }
 }
