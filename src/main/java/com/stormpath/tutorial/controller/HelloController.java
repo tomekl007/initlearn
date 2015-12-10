@@ -56,7 +56,8 @@ public class HelloController {
 
     @Autowired
     AdminService adminService;
-
+    
+    //todo after login quick guide, how to login, and fill extra data about user
     @RequestMapping("/")
     String home(ServletRequest servletRequest) {
 
