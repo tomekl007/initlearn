@@ -101,44 +101,6 @@ public class HelloController {
         return "home";
     }
 
-
-
-    @RequestMapping("/msg")
-    ResponseEntity msg(ServletRequest servletRequest, @RequestParam("text") String text, @RequestParam("to") String emailTo) {
-        if (AccountResolver.INSTANCE.hasAccount(servletRequest)) {
-            //or Account account = (Account)servletRequest.getAttribute("account");
-            Account authenticatedAccount = AccountResolver.INSTANCE.getRequiredAccount(servletRequest);
-            sendMessageToUser(emailTo, text, authenticatedAccount);
-            return new ResponseEntity(HttpStatus.OK);
-        } else {
-            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
-        }
-    }
-
-
-    public void sendMessageToUser(String emailTo, String text, Account from) {
-        
-        logger.info("send message from " + from.getEmail() + " to " + emailTo);
-
-        Stream<Account> accounts = StreamSupport.stream(Spliterators
-                .spliteratorUnknownSize(client.getAccounts().iterator(), Spliterator.ORDERED), false);
-        Optional<Account> account = accounts.filter(a -> a.getEmail().equals(emailTo)).findFirst();
-        CustomData customData = account.get().getCustomData();
-        
-        List<Message> messagesList;
-        Object messages = customData.get("messages");
-        if(messages == null){
-            messagesList = new LinkedList<>();
-        }
-        else{
-            messagesList = (List<Message>) messages;
-        }
-        messagesList.add(new Message(false, text, from.getEmail()));
-        //todo add sended emails to fromEmail user
-        customData.put("messages", messagesList);
-        account.get().save();
-    }
-    
     @RequestMapping("index")
     String index() {return "index"; }
 
