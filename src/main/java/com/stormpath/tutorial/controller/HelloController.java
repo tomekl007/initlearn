@@ -45,6 +45,9 @@ public class HelloController {
     String home() {
         return "home";
     }
+    
+    @RequestMapping("index")
+    String index() {return "index.html"; }
 
     @RequestMapping("/restricted")
     String restricted() {
