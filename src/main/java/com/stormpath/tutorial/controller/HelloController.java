@@ -77,13 +77,13 @@ public class HelloController {
                 .setSurname("Picard")
                 .setPassword("uGhd%a8Kl!")
                 .setStatus(AccountStatus.ENABLED);
-//        Directory directory = account.getDirectory();
+        Directory directory = account.getDirectory();
         CustomData customData = account.getCustomData();
         customData.put("rank", "Captain");
         customData.put("birthDate", "2305-07-13");
         customData.put("favoriteDrink", "favoriteDrink");
         
-//        directory.createAccount(account);
+        directory.createAccount(account);
         account.save();
 
         Group teachers = StreamSupport.stream(Spliterators
