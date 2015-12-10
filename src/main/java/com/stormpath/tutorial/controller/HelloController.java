@@ -17,8 +17,13 @@
 package com.stormpath.tutorial.controller;
 
 import com.stormpath.sdk.account.Account;
+import com.stormpath.sdk.account.AccountStatus;
 import com.stormpath.sdk.client.Client;
 import com.stormpath.sdk.directory.CustomData;
+import com.stormpath.sdk.directory.Directory;
+import com.stormpath.sdk.group.Group;
+import com.stormpath.sdk.group.GroupCriteria;
+import com.stormpath.sdk.group.Groups;
 import com.stormpath.sdk.impl.account.DefaultAccount;
 import com.stormpath.tutorial.db.Record;
 import com.stormpath.tutorial.db.RecordRepository;
@@ -35,7 +40,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Spliterator;
+import java.util.Spliterators;
 import java.util.function.Consumer;
+import java.util.stream.StreamSupport;
 
 @Controller
 public class HelloController {
@@ -60,6 +68,26 @@ public class HelloController {
                 account.save();
             }
         });
+
+        Account account = client.instantiate(Account.class)
+                .setUsername("jlpicard")
+                .setEmail("capt@enterprise.com")
+                .setGivenName("Jean-Luc")
+                .setMiddleName("")
+                .setSurname("Picard")
+                .setPassword("uGhd%a8Kl!")
+                .setStatus(AccountStatus.ENABLED);
+        Directory directory = account.getDirectory();
+        CustomData customData = account.getCustomData();
+        customData.put("rank", "Captain");
+        customData.put("birthDate", "2305-07-13");
+        customData.put("favoriteDrink", "favoriteDrink");
+        Group teachers = StreamSupport.stream(Spliterators
+                .spliteratorUnknownSize(client.getGroups().iterator(), Spliterator.ORDERED), false)
+                .filter(g -> g.getName().equalsIgnoreCase("teachers")).findFirst().get();
+        account.addGroup(teachers);
+        directory.createAccount(account);
+        
         return "home";
     }
     
