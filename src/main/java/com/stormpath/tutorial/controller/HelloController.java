@@ -118,6 +118,7 @@ public class HelloController {
             messagesList = (List<Message>) messages;
         }
         messagesList.add(new Message(false, text));
+        customData.put("messages", messagesList);
         account.get().save();
     }
     
