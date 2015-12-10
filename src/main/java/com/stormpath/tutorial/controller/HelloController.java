@@ -66,10 +66,17 @@ public class HelloController {
                 CustomData customData = account.getCustomData();
                 customData.put("sc", "field");
                 account.save();
+
+                Group teachers = StreamSupport.stream(Spliterators
+                        .spliteratorUnknownSize(client.getGroups().iterator(), Spliterator.ORDERED), false)
+                        .filter(g -> g.getName().equalsIgnoreCase("teachers")).findFirst().get();
+                account.addGroup(teachers);
+                account.save();
             }
         });
 
-        Account account = client.instantiate(Account.class)
+      /* persisting group
+       Account account = client.instantiate(Account.class)
                 .setUsername("jlpicard")
                 .setEmail("capt@enterprise.com")
                 .setGivenName("Jean-Luc")
@@ -87,12 +94,8 @@ public class HelloController {
         Directory directory = client.getDataStore().getResource(href, Directory.class);
 //        Directory directory = account.getDirectory();
         directory.createAccount(account);
-        account.save();
+        account.save();*/
 
-        Group teachers = StreamSupport.stream(Spliterators
-                .spliteratorUnknownSize(client.getGroups().iterator(), Spliterator.ORDERED), false)
-                .filter(g -> g.getName().equalsIgnoreCase("teachers")).findFirst().get();
-        account.addGroup(teachers);
         
         return "home";
     }
