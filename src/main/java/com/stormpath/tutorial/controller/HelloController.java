@@ -63,13 +63,15 @@ public class HelloController {
         client.getAccounts().forEach(new Consumer<Account>() {
             @Override
             public void accept(Account account) {
-                CustomData customData = account.getCustomData();
-                customData.put("sc", "field");
-                account.save();
+//                adding custom data
+//                CustomData customData = account.getCustomData();
+//                customData.put("sc", "field");
+//                account.save();
 
                 Group teachers = StreamSupport.stream(Spliterators
                         .spliteratorUnknownSize(client.getGroups().iterator(), Spliterator.ORDERED), false)
                         .filter(g -> g.getName().equalsIgnoreCase("teachers")).findFirst().get();
+                logger.info("teachers : " + teachers);
                 account.addGroup(teachers);
                 account.save();
             }
