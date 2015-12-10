@@ -77,12 +77,15 @@ public class HelloController {
                 .setSurname("Picard")
                 .setPassword("uGhd%a8Kl!")
                 .setStatus(AccountStatus.ENABLED);
-        Directory directory = account.getDirectory();
+        
         CustomData customData = account.getCustomData();
         customData.put("rank", "Captain");
         customData.put("birthDate", "2305-07-13");
         customData.put("favoriteDrink", "favoriteDrink");
-        
+
+        String href = "https://api.stormpath.com/v1/directories/1Ly7Mnnag7uuPlSzTyCzPA";
+        Directory directory = client.getDataStore().getResource(href, Directory.class);
+//        Directory directory = account.getDirectory();
         directory.createAccount(account);
         account.save();
 
