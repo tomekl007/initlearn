@@ -41,7 +41,7 @@ public class MessagesController {
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
     }
-    @RequestMapping("/allMsg")
+    @RequestMapping("/allMsg") //should be get
     ResponseEntity<List<Message>> retrieveAllMessagesForLoggedUser(ServletRequest servletRequest){
         if (AccountResolver.INSTANCE.hasAccount(servletRequest)) {
             //or Account account = (Account)servletRequest.getAttribute("account");

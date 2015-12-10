@@ -13,4 +13,6 @@ public class Message {
         this.text = text;
         this.from = from;
     }
+    
+    //todo add timestamp
 }

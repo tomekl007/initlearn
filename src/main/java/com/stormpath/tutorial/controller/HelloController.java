@@ -106,8 +106,13 @@ public class HelloController {
     String index() {return "index"; }
 
     @RequestMapping("/restricted")
-    String restricted() {
-        return "restricted";
+    String restricted(ServletRequest servletRequest) {
+        if (AccountResolver.INSTANCE.hasAccount(servletRequest)) {
+            return "restricted";
+        }else{
+            return "redirect:/login";
+        }
+        
     }
 
     @RequestMapping("/admin")
