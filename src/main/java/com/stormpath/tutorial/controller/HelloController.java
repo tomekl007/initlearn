@@ -47,7 +47,7 @@ public class HelloController {
     }
     
     @RequestMapping("index")
-    String index() {return "index.html"; }
+    String index() {return "templates/index.html"; }
 
     @RequestMapping("/restricted")
     String restricted() {
