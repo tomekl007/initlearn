@@ -27,6 +27,7 @@ import com.stormpath.sdk.group.Groups;
 import com.stormpath.sdk.impl.account.DefaultAccount;
 import com.stormpath.tutorial.db.Record;
 import com.stormpath.tutorial.db.RecordRepository;
+import com.stormpath.tutorial.messages.Message;
 import com.stormpath.tutorial.service.AdminService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,10 +40,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
-import java.util.List;
-import java.util.Spliterator;
-import java.util.Spliterators;
+import java.util.*;
 import java.util.function.Consumer;
+import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 @Controller
@@ -68,16 +68,17 @@ public class HelloController {
 //                customData.put("sc", "field");
 //                account.save();
 
+                /*add group to account
                 Group teachers = StreamSupport.stream(Spliterators
                         .spliteratorUnknownSize(client.getGroups().iterator(), Spliterator.ORDERED), false)
                         .filter(g -> g.getName().equalsIgnoreCase("teachers")).findFirst().get();
                 logger.info("teachers : " + teachers);
                 account.addGroup(teachers);
-                account.save();
+                account.save();*/
             }
         });
 
-      /* persisting group
+       /*create account and custom data
        Account account = client.instantiate(Account.class)
                 .setUsername("jlpicard")
                 .setEmail("capt@enterprise.com")
@@ -94,12 +95,30 @@ public class HelloController {
 
         String href = "https://api.stormpath.com/v1/directories/1Ly7Mnnag7uuPlSzTyCzPA";
         Directory directory = client.getDataStore().getResource(href, Directory.class);
-//        Directory directory = account.getDirectory();
         directory.createAccount(account);
-        account.save();*/
-
-        
+        account.save();
+*/
+        sendMessageToUser("tomekl007@gmail.com", "hello tomek"+ new Date());
         return "home";
+    }
+    
+    public void sendMessageToUser(String mail, String text) {
+
+        Stream<Account> accounts = StreamSupport.stream(Spliterators
+                .spliteratorUnknownSize(client.getAccounts().iterator(), Spliterator.ORDERED), false);
+        Optional<Account> account = accounts.filter(a -> a.getEmail().equals(mail)).findFirst();
+        CustomData customData = account.get().getCustomData();
+        
+        List<Message> messagesList;
+        Object messages = customData.get("messages");
+        if(messages == null){
+            messagesList = new LinkedList<>();
+        }
+        else{
+            messagesList = (List<Message>) messages;
+        }
+        messagesList.add(new Message(false, text));
+        account.get().save();
     }
     
     @RequestMapping("index")
