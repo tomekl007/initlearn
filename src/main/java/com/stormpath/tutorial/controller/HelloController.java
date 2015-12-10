@@ -17,14 +17,9 @@
 package com.stormpath.tutorial.controller;
 
 import com.stormpath.sdk.account.Account;
-import com.stormpath.sdk.account.AccountStatus;
 import com.stormpath.sdk.client.Client;
 import com.stormpath.sdk.directory.CustomData;
-import com.stormpath.sdk.directory.Directory;
-import com.stormpath.sdk.group.Group;
-import com.stormpath.sdk.group.GroupCriteria;
-import com.stormpath.sdk.group.Groups;
-import com.stormpath.sdk.impl.account.DefaultAccount;
+import com.stormpath.sdk.servlet.account.AccountResolver;
 import com.stormpath.tutorial.db.Record;
 import com.stormpath.tutorial.db.RecordRepository;
 import com.stormpath.tutorial.messages.Message;
@@ -39,6 +34,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.ServletRequest;
 import javax.validation.Valid;
 import java.util.*;
 import java.util.function.Consumer;
@@ -58,7 +54,9 @@ public class HelloController {
     AdminService adminService;
 
     @RequestMapping("/")
-    String home() {
+    String home(ServletRequest servletRequest) {
+
+        Account authenticatedAccount = AccountResolver.INSTANCE.getRequiredAccount(servletRequest);
         
         client.getAccounts().forEach(new Consumer<Account>() {
             @Override
@@ -98,15 +96,17 @@ public class HelloController {
         directory.createAccount(account);
         account.save();
 */
-        sendMessageToUser("tomekl007@gmail.com", "hello tomek"+ new Date());
+        sendMessageToUser("tomekl007@gmail.com", "hello tomek"+ new Date(), authenticatedAccount);
         return "home";
     }
     
-    public void sendMessageToUser(String mail, String text) {
+    public void sendMessageToUser(String emailTo, String text, Account from) {
+        
+        logger.info("send message from " + from.getEmail() + " to " + emailTo);
 
         Stream<Account> accounts = StreamSupport.stream(Spliterators
                 .spliteratorUnknownSize(client.getAccounts().iterator(), Spliterator.ORDERED), false);
-        Optional<Account> account = accounts.filter(a -> a.getEmail().equals(mail)).findFirst();
+        Optional<Account> account = accounts.filter(a -> a.getEmail().equals(emailTo)).findFirst();
         CustomData customData = account.get().getCustomData();
         
         List<Message> messagesList;
@@ -117,7 +117,8 @@ public class HelloController {
         else{
             messagesList = (List<Message>) messages;
         }
-        messagesList.add(new Message(false, text));
+        messagesList.add(new Message(false, text, from.getEmail()));
+        //todo add sended emails to fromEmail user
         customData.put("messages", messagesList);
         account.get().save();
     }
