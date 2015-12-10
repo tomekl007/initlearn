@@ -1,5 +1,8 @@
 package com.stormpath.tutorial.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class User {
     private final String email;
     private final String fullName;

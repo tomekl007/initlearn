@@ -3,6 +3,8 @@ package com.stormpath.tutorial.controller;
 import com.stormpath.sdk.account.Account;
 import com.stormpath.sdk.client.Client;
 import com.stormpath.tutorial.model.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,8 @@ import java.util.stream.Collectors;
 @Controller
 public class UserController {
 
+    private static final Logger logger = LoggerFactory.getLogger(MessagesController.class);
+    
     @Autowired
     private Client client;
 
@@ -29,6 +33,7 @@ public class UserController {
                         .stream()
                         .map(a ->
                                 new User(a.getEmail(), a.getFullName(), a.getGivenName(), a.getMiddleName())).collect(Collectors.toList());
+        logger.info("Return users : " + users);
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
     
