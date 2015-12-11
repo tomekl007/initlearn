@@ -24,6 +24,9 @@ import org.springframework.stereotype.Component;
 public class Roles {
     public final String ADMIN;
 
+    /*
+    Remember, in the context of Stormpath, that must ultimately resolve to a fully qualified href that refers to a Stormpath group.
+     */
     @Autowired
     public Roles(Environment env) {
         ADMIN = env.getProperty("stormpath.authorized.group.admin");

@@ -43,8 +43,12 @@ public class UserController {
         return list
                 .stream()
                 .map(a ->
-                        new User(a.getEmail(), a.getFullName(), a.getGivenName(), a.getMiddleName(),
-                                AccountUtils.getCustomFieldValue(a, SCREEN_HERO_FIELD))).collect(Collectors.toList());
+                        mapAccountToUser(a)).collect(Collectors.toList());
+    }
+
+    private User mapAccountToUser(Account a) {
+        return new User(a.getEmail(), a.getFullName(), a.getGivenName(), a.getMiddleName(),
+                AccountUtils.getCustomFieldValue(a, SCREEN_HERO_FIELD));
     }
 
     private List<User> mapToUsers(AccountList list) {
@@ -98,5 +102,10 @@ public class UserController {
         List<Account> accountsByEmail = findAccountsByEmail(email);
         accountsByEmail.forEach(a -> AccountUtils.addCustomFieldToAccount(a, SCREEN_HERO_FIELD, sc));
         return new ResponseEntity<>(mapToUsers(accountsByEmail), HttpStatus.OK);
+    }
+
+    @RequestMapping("/me")
+    ResponseEntity<User> me(Account account) {
+        new ResponseEntity<>(mapAccountToUser(account), HttpStatus.OK);
     }
 }
