@@ -106,6 +106,6 @@ public class UserController {
 
     @RequestMapping("/me")
     ResponseEntity<User> me(Account account) {
-        new ResponseEntity<>(mapAccountToUser(account), HttpStatus.OK);
+        return new ResponseEntity<>(mapAccountToUser(account), HttpStatus.OK);
     }
 }
