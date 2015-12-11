@@ -5,6 +5,7 @@ import com.stormpath.sdk.account.AccountList;
 import com.stormpath.sdk.client.Client;
 import com.stormpath.sdk.group.Group;
 import com.stormpath.tutorial.model.User;
+import com.stormpath.tutorial.utils.AccountUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -23,6 +25,7 @@ import java.util.stream.StreamSupport;
 public class UserController {
 
     private static final Logger logger = LoggerFactory.getLogger(MessagesController.class);
+    public static final String SCREEN_HERO_FIELD = "screenHero";
 
     @Autowired
     private Client client;
@@ -40,7 +43,8 @@ public class UserController {
         return list
                 .stream()
                 .map(a ->
-                        new User(a.getEmail(), a.getFullName(), a.getGivenName(), a.getMiddleName())).collect(Collectors.toList());
+                        new User(a.getEmail(), a.getFullName(), a.getGivenName(), a.getMiddleName(),
+                                AccountUtils.getCustomFieldValue(a, SCREEN_HERO_FIELD))).collect(Collectors.toList());
     }
 
     private List<User> mapToUsers(AccountList list) {
@@ -55,12 +59,22 @@ public class UserController {
     @RequestMapping(value = "users/{email:.+}", method = RequestMethod.GET)
     public ResponseEntity<List<User>> getUserByEmail(@PathVariable("email") String email) {
         logger.info("find by email : " + email);
+        List<User> users = findUsersByEmail(email);
+        return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+
+    private List<User> findUsersByEmail(String email) {
+        List<Account> accounts = findAccountsByEmail(email);
+        return mapToUsers(accounts);
+    }
+
+    private List<Account> findAccountsByEmail(String email) {
         List<Account> accounts = new ArrayList<>();
         client.getAccounts(Collections.singletonMap("email", email))
                 .iterator()
                 .forEachRemaining(accounts::add);
         logger.info("accounts : " + accounts);
-        return new ResponseEntity<>(mapToUsers(accounts), HttpStatus.OK);
+        return accounts;
     }
 
     @RequestMapping(value = "group/users/{groupName}", method = RequestMethod.GET)
@@ -79,4 +93,10 @@ public class UserController {
         return new ResponseEntity<>(mapToUsers(accountForGroup.get()), HttpStatus.OK);
     }
 
+    @RequestMapping(value = "users/{email:.+}/screenhero", method = RequestMethod.POST)
+    public ResponseEntity<List<User>> addScreenheroToUser(@RequestBody String screenheroNick, @PathVariable("email") String email) {
+        List<Account> accountsByEmail = findAccountsByEmail(email);
+        accountsByEmail.forEach(a -> AccountUtils.addCustomFieldToAccount(a, SCREEN_HERO_FIELD, screenheroNick));
+        return new ResponseEntity<>(mapToUsers(accountsByEmail), HttpStatus.OK);
+    }
 }
