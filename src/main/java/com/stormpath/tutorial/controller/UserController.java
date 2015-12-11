@@ -63,11 +63,11 @@ public class UserController {
         return new ResponseEntity<>(mapToUsers(accounts), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "users/{group}", method = RequestMethod.GET)
-    public ResponseEntity<List<User>> getTeachers(@PathVariable("group") String group) {
+    @RequestMapping(value = "group/users/{groupName}", method = RequestMethod.GET)
+    public ResponseEntity<List<User>> getTeachers(@PathVariable("groupName") String groupName) {
 
         Optional<AccountList> accountForGroup = StreamSupport.stream(Spliterators
-                .spliteratorUnknownSize(client.getGroups(Collections.singletonMap("name", group))
+                .spliteratorUnknownSize(client.getGroups(Collections.singletonMap("name", groupName))
                         .iterator(), Spliterator.ORDERED), false)
                 .findFirst()
                 .map(Group::getAccounts);
