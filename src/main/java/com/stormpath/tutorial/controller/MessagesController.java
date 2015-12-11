@@ -5,6 +5,7 @@ import com.stormpath.sdk.client.Client;
 import com.stormpath.sdk.directory.CustomData;
 import com.stormpath.sdk.servlet.account.AccountResolver;
 import com.stormpath.tutorial.messages.Message;
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,7 +71,7 @@ public class MessagesController {
         } else {
             messagesList = (List<Message>) messages;
         }
-        messagesList.add(new Message(false, text, from.getEmail()));
+        messagesList.add(new Message(false, text, from.getEmail(), new DateTime().getMillis()));
         //todo add sended emails to fromEmail user
         customData.put(MESSAGES_FIELD, messagesList);
         account.get().save();
