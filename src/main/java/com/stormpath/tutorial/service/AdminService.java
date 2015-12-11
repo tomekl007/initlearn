@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class AdminService {
     @PreAuthorize("hasRole(@roles.ADMIN)")
-    public boolean ensureAdmin(Account account) {
+    public boolean ensureAdmin() {
         // per the @PreAuthorize, can only get in here if an admin
         return true;
     }
