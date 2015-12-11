@@ -10,6 +10,7 @@ import com.stormpath.tutorial.utils.AccountUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -112,7 +113,9 @@ public class UserController {
             Account authenticatedAccount = AccountResolver.INSTANCE.getRequiredAccount(servletRequest);
             return new ResponseEntity<>(action.apply(authenticatedAccount), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Location", "/login");
+            return new ResponseEntity<>(headers, HttpStatus.PERMANENT_REDIRECT);
         }
     }
 }
