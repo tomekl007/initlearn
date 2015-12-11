@@ -40,7 +40,7 @@ public class UserController {
                         new User(a.getEmail(), a.getFullName(), a.getGivenName(), a.getMiddleName())).collect(Collectors.toList());
     }
 
-    @RequestMapping(value = "users/{email}", method = RequestMethod.GET)
+    @RequestMapping(value = "users/{email:.+}", method = RequestMethod.GET)
     public ResponseEntity<List<User>> getUserByEmail(@PathVariable("email") String email) {
         logger.info("find by email : " + email);
         List<Account> accounts = new ArrayList<>();
