@@ -4,6 +4,7 @@ import com.stormpath.sdk.account.Account;
 import com.stormpath.sdk.account.AccountList;
 import com.stormpath.sdk.client.Client;
 import com.stormpath.sdk.group.Group;
+import com.stormpath.sdk.servlet.account.AccountResolver;
 import com.stormpath.tutorial.model.User;
 import com.stormpath.tutorial.utils.AccountUtils;
 import org.slf4j.Logger;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.ServletRequest;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -105,7 +107,12 @@ public class UserController {
     }
 
     @RequestMapping("/me")
-    ResponseEntity<User> me(Account account) {
-        return new ResponseEntity<>(mapAccountToUser(account), HttpStatus.OK);
+    ResponseEntity<User> me(ServletRequest servletRequest) {
+        if (AccountResolver.INSTANCE.hasAccount(servletRequest)) {
+            Account authenticatedAccount = AccountResolver.INSTANCE.getRequiredAccount(servletRequest);
+            return new ResponseEntity<>(mapAccountToUser(authenticatedAccount), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
     }
 }

@@ -44,6 +44,11 @@ public class MessagesController {
     }
     @RequestMapping("/allMsg") //should be get
     ResponseEntity<List<Message>> retrieveAllMessagesForLoggedUser(ServletRequest servletRequest){
+        return actionForUserOrNotFound(servletRequest);
+
+    }
+
+    private ResponseEntity<List<Message>> actionForUserOrNotFound(ServletRequest servletRequest) {
         if (AccountResolver.INSTANCE.hasAccount(servletRequest)) {
             //or Account account = (Account)servletRequest.getAttribute("account");
             Account authenticatedAccount = AccountResolver.INSTANCE.getRequiredAccount(servletRequest);
@@ -51,9 +56,8 @@ public class MessagesController {
         } else {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
-        
     }
-    
+
 
     public void sendMessageToUser(String emailTo, String text, Account from) {
 
