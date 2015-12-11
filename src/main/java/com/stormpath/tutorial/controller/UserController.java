@@ -42,8 +42,10 @@ public class UserController {
 
     @RequestMapping(value = "users/{email}", method = RequestMethod.GET)
     public ResponseEntity<List<User>> getUserByEmail(@PathVariable("email") String email) {
+        logger.info("find by email : " + email);
         List<Account> accounts = new ArrayList<>();
-        client.getAccounts(Collections.singletonMap("email", email)).iterator().forEachRemaining(accounts::add);
+        client.getAccounts(Collections.singletonMap("Email", email)).iterator().forEachRemaining(accounts::add);
+        logger.info("accounts : " + accounts);
         return new ResponseEntity<>(mapToUsers(accounts), HttpStatus.OK);
     }
 }
