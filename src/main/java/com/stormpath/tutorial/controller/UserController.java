@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.ServletRequest;
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -44,14 +45,9 @@ public class UserController {
     private List<User> mapToUsers(List<Account> list) {
         return list
                 .stream()
-                .map(a ->
-                        mapAccountToUser(a)).collect(Collectors.toList());
+                .map(AccountUtils::mapAccountToUser).collect(Collectors.toList());
     }
 
-    private User mapAccountToUser(Account a) {
-        return new User(a.getEmail(), a.getFullName(), a.getGivenName(), a.getMiddleName(),
-                AccountUtils.getCustomFieldValue(a, SCREEN_HERO_FIELD));
-    }
 
     private List<User> mapToUsers(AccountList list) {
         List<Account> accounts = new ArrayList<>();
@@ -108,9 +104,13 @@ public class UserController {
 
     @RequestMapping("/me")
     ResponseEntity<User> me(ServletRequest servletRequest) {
+        return actionForAuthenticatedUserOrUnauthorized(servletRequest, AccountUtils::mapAccountToUser);
+    }
+
+    private ResponseEntity<User> actionForAuthenticatedUserOrUnauthorized(ServletRequest servletRequest, Function<Account, User> action) {
         if (AccountResolver.INSTANCE.hasAccount(servletRequest)) {
             Account authenticatedAccount = AccountResolver.INSTANCE.getRequiredAccount(servletRequest);
-            return new ResponseEntity<>(mapAccountToUser(authenticatedAccount), HttpStatus.OK);
+            return new ResponseEntity<>(action.apply(authenticatedAccount), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
