@@ -93,7 +93,7 @@ public class UserController {
         return new ResponseEntity<>(mapToUsers(accountForGroup.get()), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "users/{email:.+}/screenhero", method = RequestMethod.POST)
+    @RequestMapping(value = "users/{email:.+}/screenhero", method = RequestMethod.GET)
     public ResponseEntity<List<User>> addScreenHeroToUser(@RequestBody String sc, @PathVariable("email") String email) {
         List<Account> accountsByEmail = findAccountsByEmail(email);
         accountsByEmail.forEach(a -> AccountUtils.addCustomFieldToAccount(a, SCREEN_HERO_FIELD, sc));
