@@ -1,0 +1,57 @@
+.main-container {
+  margin-top: 80px; }
+
+#about-us {
+  height: 560px; }
+
+#about-us .overlay-content {
+  padding: 20% 10%; }
+
+#about-us h2 {
+  padding: 0.625rem; }
+
+.main-video {
+  position: absolute;
+  left: 0;
+  z-index: -1; }
+
+.overlay-content {
+  position: relative;
+  height: 100%; }
+
+.overlay-content:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -50%;
+  width: 250%;
+  height: 100%;
+  background-color: #f79f00;
+  opacity: .3;
+  z-index: -1; }
+
+.section-header {
+  text-align: center; }
+
+.card-wrapper {
+  position: relative;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+  padding: 3.125rem 0.625rem 0.625rem 0.625rem;
+  margin-top: 3.75rem; }
+
+.card-header {
+  text-align: center; }
+
+.card-header-img {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  top: -50px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  border-radius: 100%;
+  overflow: hidden; }
+
+.card-header-img img {
+  width: 100%; }

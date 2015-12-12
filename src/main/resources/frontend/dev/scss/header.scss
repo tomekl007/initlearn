@@ -1,0 +1,138 @@
+@import "functions.scss";
+@import "variables.scss";
+
+.main-header {
+  position: relative;
+  z-index: 10;
+}
+
+.main-logo {
+  display: inline;
+  color: #fff;
+}
+
+.main-nav {
+  padding: rem-calc(24px) rem-calc(20px);
+  background: #4dbdeb; /* Old browsers */
+  background: -moz-linear-gradient(-45deg, #4dbdeb 0%, #009ec3 100%);
+  background: -webkit-linear-gradient(-45deg, #4dbdeb 0%, #009ec3 100%);
+  background: linear-gradient(135deg, #4dbdeb 0%, #009ec3 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#4dbdeb', endColorstr='#009ec3', GradientType=1);
+  font-size: rem-calc(16px);
+  width: 100%;
+  height: 80px;
+
+  &.is-open {
+
+    .main-nav-list {
+      left: 0;
+    }
+
+    .main-nav-icon-area {
+      display: block;
+    }
+  }
+}
+
+.main-nav-list {
+  margin: 0;
+  padding: 0;
+  width: 80%;
+  height: 100%;
+  background-color: #fff;
+  transition: left .3s ease;
+
+  &.pos-left {
+    left: -100%;
+  }
+}
+
+.main-nav-list-item {
+  display: inline-block;
+  width: 100%;
+  color: #fff;
+  border-bottom: 1px solid $color-grey;
+
+  a {
+    display: block;
+    padding: rem-calc(28px);
+    text-decoration: none;
+    text-transform: capitalize;
+    border: 2px solid transparent;
+    border-radius: $border-radius;
+    color: #000;
+
+    &:hover {
+      color: $color-gold;
+    }
+  }
+}
+
+.main-nav-icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20%;
+  height: 100%;
+  padding: 20px;
+}
+
+.main-nav-icon-line {
+  width: 30px;
+  margin: 5px auto;
+  height: 5px;
+  border-radius: $border-radius;
+  background-color: #fff;
+}
+
+.main-nav-icon-area {
+  display: none;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+@media #{$medium-and-up} {
+  .main-nav-icon {
+    display: none;
+  }
+
+  .main-nav-list {
+    position: relative;
+    background-color: transparent;
+    width: 400px;
+    height: auto;
+    float: right;
+
+    &.pos-left {
+      left: initial;
+    }
+  }
+
+  .main-nav-list-item {
+    width: auto;
+    border-bottom: none;
+    cursor: pointer;
+
+    a {
+      transition: background-color .3s ease, color .3s ease, border .3s ease;
+      padding: rem-calc(5px);
+      color: #fff;
+
+      &:hover,
+      &.is-active {
+        border: 2px solid $color-yellow;
+        color: $color-yellow;
+      }
+
+      &.is-active {
+
+        &:hover {
+          border: 2px solid $color-gold;
+          background-color: $color-gold;
+          color: #fff;
+        }
+      }
+    }
+  }
+}
