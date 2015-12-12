@@ -1,0 +1,45 @@
+@import "variables.scss";
+
+html {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  text-shadow: $box-shadow;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+body {
+  background-color: $color-grey;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+li {
+  position: relative;
+  list-style-type: none;
+}
+
+.sticky {
+  position: fixed;
+
+  &.pos-top {
+    top: 0;
+  }
+
+  &.pos-left {
+    left: 0;
+  }
+}
+
+.color-white {
+  color: #fff;
+}
+
+.color-blue {
+  color: $color-blue;
+}
+
+.bg-gold {
+  background-color: $color-gold;
+}
