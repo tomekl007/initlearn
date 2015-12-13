@@ -16,9 +16,7 @@ public class PaymentController {
     private PaymentService paymentService = new PaymentService();
     @RequestMapping("/adaptivePayment")
     public String executeAdaptivePayment() throws IOException, InvalidResponseDataException, SSLConfigurationException, OAuthException, MissingCredentialException, InvalidCredentialException, HttpErrorException, ClientActionRequiredException, InterruptedException {
-        //todo fix redirect
-        //not https://initlearn.herokuapp.com/https://www.sandbox.paypal.com/webscr?cmd=_ap-payment&paykey=AP-71K7215863589321X
-        return "redirect:https://www.sandbox.paypal.com/webscr?cmd=_ap-payment&paykey="+paymentService.pay();
+        return "redirect:https://www.sandbox.paypal.com/webscr?cmd=_ap-payment&paykey=" + paymentService.pay();
     }
     
     @RequestMapping("/ap_chained_payment_cancel")

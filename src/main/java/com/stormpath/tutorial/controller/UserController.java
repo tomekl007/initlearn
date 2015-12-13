@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.servlet.ServletRequest;
 import java.util.*;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Controller
@@ -38,26 +37,11 @@ public class UserController {
     public ResponseEntity<List<User>> getAllUsers() {
         List<Account> list = new ArrayList<>();
         client.getAccounts().iterator().forEachRemaining(list::add);
-        List<User> users = mapToUsers(list);
+        List<User> users = AccountUtils.mapToUsers(list);
         logger.info("Return users : " + users);
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    private List<User> mapToUsers(List<Account> list) {
-        return list
-                .stream()
-                .map(AccountUtils::mapAccountToUser).collect(Collectors.toList());
-    }
-
-
-    private List<User> mapToUsers(AccountList list) {
-        List<Account> accounts = new ArrayList<>();
-        list
-                .iterator()
-                .forEachRemaining(accounts::add);
-
-        return mapToUsers(accounts);
-    }
 
     @RequestMapping(value = "users/{email:.+}", method = RequestMethod.GET)
     public ResponseEntity<List<User>> getUserByEmail(@PathVariable("email") String email) {
@@ -68,7 +52,7 @@ public class UserController {
 
     private List<User> findUsersByEmail(String email) {
         List<Account> accounts = findAccountsByEmail(email);
-        return mapToUsers(accounts);
+        return AccountUtils.mapToUsers(accounts);
     }
 
     private List<Account> findAccountsByEmail(String email) {
@@ -93,14 +77,14 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity<>(mapToUsers(accountForGroup.get()), HttpStatus.OK);
+        return new ResponseEntity<>(AccountUtils.mapToUsers(accountForGroup.get()), HttpStatus.OK);
     }
 
     @RequestMapping(value = "users/{email:.+}/screenhero", method = RequestMethod.POST)
     public ResponseEntity<List<User>> addScreenHeroToUser(@RequestBody String sc, @PathVariable("email") String email) {
         List<Account> accountsByEmail = findAccountsByEmail(email);
         accountsByEmail.forEach(a -> AccountUtils.addCustomFieldToAccount(a, SCREEN_HERO_FIELD, sc));
-        return new ResponseEntity<>(mapToUsers(accountsByEmail), HttpStatus.OK);
+        return new ResponseEntity<>(AccountUtils.mapToUsers(accountsByEmail), HttpStatus.OK);
     }
 
     @RequestMapping("/me")
