@@ -12,17 +12,17 @@ import java.io.IOException;
 public class PaymentController {
     private static final Logger logger = LoggerFactory.getLogger(PaymentController.class);
     private PaymentService paymentService = new PaymentService();
-    @RequestMapping("adaptivePayment")
+    @RequestMapping("/adaptivePayment")
     public String executeAdaptivePayment() throws IOException, InvalidResponseDataException, SSLConfigurationException, OAuthException, MissingCredentialException, InvalidCredentialException, HttpErrorException, ClientActionRequiredException, InterruptedException {
         return "redirect:/https://www.sandbox.paypal.com/webscr?cmd=_ap-payment&paykey="+paymentService.pay();
     }
     
-    @RequestMapping("ap_chained_payment_cancel")
+    @RequestMapping("/ap_chained_payment_cancel")
     public void paymentCancelled(){
         logger.info("payment cancelled");
     }
     
-    @RequestMapping("ap_chained_payment_success")
+    @RequestMapping("/ap_chained_payment_success")
     public void paymentSucceed(){
         logger.info("payment success");   
     }
