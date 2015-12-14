@@ -9,6 +9,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 public class StaticConfiguration extends WebMvcConfigurerAdapter {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/**").addResourceLocations("/resources/templates/assets/");
+        registry
+                .addResourceHandler("/**")
+                .addResourceLocations("/resources/templates/*");
     }
 }
