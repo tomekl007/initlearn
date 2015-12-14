@@ -81,24 +81,18 @@ public class PaymentService {
 
 
 
-    public String pay(User sender) {
+    public String pay(User sender) { //todo add User teacher
         
         String toEmail = "pupil2@gmail.com";
-        paymentsRepository.save(new Payment(sender.email, toEmail, 10.00d, DateTime.now().toDate()));
+        paymentsRepository.save(new Payment(sender.email, toEmail, 10.00d, DateTime.now().toDate()));//todo hourRate
         
         PayRequest payRequest = new PayRequest();
 
         List<Receiver> receivers = new ArrayList<Receiver>();
-        Receiver secondaryReceiver = new Receiver();
-        secondaryReceiver.setAmount(5.00);
-        secondaryReceiver.setEmail("initlearn@gmail.com");
+        Receiver secondaryReceiver = createCompanyReceiver();
         receivers.add(secondaryReceiver);
 
-        Receiver primaryReceiver = new Receiver();
-        primaryReceiver.setAmount(10.00);
-        primaryReceiver.setEmail(toEmail);
-        primaryReceiver.setPrimary(true);
-        receivers.add(primaryReceiver);
+        createTeacherReceiver(toEmail, receivers);
         ReceiverList receiverList = new ReceiverList(receivers);
 
         payRequest.setReceiverList(receiverList);
@@ -120,7 +114,22 @@ public class PaymentService {
             throw new RuntimeException(ex);
         }
     }
-    
+
+    private void createTeacherReceiver(String toEmail, List<Receiver> receivers) {
+        Receiver primaryReceiver = new Receiver();
+        primaryReceiver.setAmount(10.00);
+        primaryReceiver.setEmail(toEmail);
+        primaryReceiver.setPrimary(true);
+        receivers.add(primaryReceiver);
+    }
+
+    private Receiver createCompanyReceiver() {
+        Receiver secondaryReceiver = new Receiver();
+        secondaryReceiver.setAmount(5.00);
+        secondaryReceiver.setEmail("initlearn@gmail.com");
+        return secondaryReceiver;
+    }
+
     public PaymentDetailsResponse getPaymentStatus(String payKey) throws IOException, OAuthException, InvalidResponseDataException, SSLConfigurationException, ClientActionRequiredException, MissingCredentialException, HttpErrorException, InvalidCredentialException, InterruptedException {
         RequestEnvelope requestEnvelope = new RequestEnvelope("en_US");
         PaymentDetailsRequest paymentDetailsRequest = new PaymentDetailsRequest(requestEnvelope);
