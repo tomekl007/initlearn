@@ -75,6 +75,12 @@
                     </div>
                 </div>
             </div>
+
+            <a href="/adaptivePayment" data-paypal-button="true">
+                <img src="//www.paypalobjects.com/en_US/i/btn/btn_paynow_LG.gif" alt="Pay Now" />
+            </a>
+            <button type="button" onclick="facebookLogin()">Facebook login</button>
+
         </section>
     </div>
     <footer class="main-footer">
@@ -95,6 +101,37 @@
         } catch (err) {
         }
     </script>
-   
+    <script>
+        function facebookLogin() {
+            var FB = window.FB;
+            var scopes = 'email,user_likes,public_profile';
+
+            FB.login(function(response) {
+                if (response.status === 'connected') {
+                    console.log('The user has logged in!');
+                    FB.api('/me', function(response) {
+                        console.log('Good to see you, ' + response.name + '.');
+                    });
+                }
+            }, {scope: scopes});
+        }
+
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId      : '492970127541627',
+                xfbml      : true,
+                version    : 'v2.5'
+            });
+        };
+
+        (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+
 </body>
 </html>
