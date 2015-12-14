@@ -46,7 +46,8 @@ public class PaymentController {
                 PaymentDetailsResponse paymentStatus = paymentService.getPaymentStatus(nameValuePair.getValue());
                 return ResponseEntity.ok("payment successfully status: " +
                         paymentStatus.getStatus() + ", sender: "
-                        + paymentStatus.getSenderEmail());
+                        + paymentStatus.getSenderEmail() + ", sender: " + 
+                          paymentStatus.getSender());
             }
         }
         return ResponseEntity.ok().build();
