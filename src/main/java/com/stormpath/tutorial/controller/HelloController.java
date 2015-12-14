@@ -99,11 +99,8 @@ public class HelloController {
         directory.createAccount(account);
         account.save();
 */
-        return "frontend/index.html";
+        return "index";
     }
-
-    @RequestMapping("index")
-    String index() {return "index"; }
 
     @RequestMapping("/restricted")
     String restricted(ServletRequest servletRequest) {
@@ -119,32 +116,5 @@ public class HelloController {
     String admin() {
         adminService.ensureAdmin();
         return "admin";
-    }
-
-
-    @RequestMapping(method = RequestMethod.GET, path = "/db")
-    public String home(ModelMap model) {
-        List<Record> records = repository.findAll();
-        logger.info("records : --" +records);
-        Record a = new Record("A");
-        System.out.println("should insert a : " + a);
-        repository.save(a);
-        List<Record> records2 = repository.findAll();
-        logger.info("records : --" +records2);
-        model.addAttribute("records", records2);
-        model.addAttribute("insertRecord", new Record("B"));
-        return "correct";
-    }
-
-
-    @RequestMapping(method = RequestMethod.POST, path = "/db")
-    public String insertData(ModelMap model,
-                             @ModelAttribute("insertRecord") @Valid Record record,
-                             BindingResult result) {
-        if (!result.hasErrors()) {
-            System.out.println("will save record : " + record);
-            repository.save(record);
-        }
-        return home(model);
     }
 }
