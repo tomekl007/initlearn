@@ -5,6 +5,7 @@ import com.paypal.sdk.exceptions.OAuthException;
 import com.stormpath.tutorial.payment.PaymentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -13,7 +14,8 @@ import java.io.IOException;
 @Controller
 public class PaymentController {
     private static final Logger logger = LoggerFactory.getLogger(PaymentController.class);
-    private PaymentService paymentService = new PaymentService();
+    @Autowired
+    private PaymentService paymentService;
     @RequestMapping("/adaptivePayment")
     public String executeAdaptivePayment() throws IOException, InvalidResponseDataException, SSLConfigurationException, OAuthException, MissingCredentialException, InvalidCredentialException, HttpErrorException, ClientActionRequiredException, InterruptedException {
         return "redirect:https://www.sandbox.paypal.com/webscr?cmd=_ap-payment&paykey=" + paymentService.pay();

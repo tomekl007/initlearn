@@ -1,5 +1,6 @@
 package com.stormpath.tutorial.payment;
 
+import com.paypal.api.payments.Payment;
 import com.paypal.exception.*;
 import com.paypal.sdk.exceptions.OAuthException;
 import com.paypal.svcs.services.AdaptivePaymentsService;
@@ -8,6 +9,11 @@ import com.paypal.svcs.types.ap.PayResponse;
 import com.paypal.svcs.types.ap.Receiver;
 import com.paypal.svcs.types.ap.ReceiverList;
 import com.paypal.svcs.types.common.RequestEnvelope;
+import com.stormpath.tutorial.db.payment.Payments;
+import com.stormpath.tutorial.db.payment.PaymentsRepository;
+import org.joda.time.DateTime;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,7 +21,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Component
 public class PaymentService {
+    @Autowired
+    PaymentsRepository paymentsRepository;
     //todo besides sending callback to paypal we need to send transation data to db
     /*
      REST :
@@ -73,6 +82,10 @@ public class PaymentService {
 
 
     public String pay() throws IOException, OAuthException, InvalidResponseDataException, SSLConfigurationException, ClientActionRequiredException, MissingCredentialException, HttpErrorException, InvalidCredentialException, InterruptedException {
+        
+        String toEmail = "pupil2@gmail.com";
+        paymentsRepository.save(new Payments("from", toEmail, 10.00d, DateTime.now().toDate()));
+        
         PayRequest payRequest = new PayRequest();
 
         List<Receiver> receivers = new ArrayList<Receiver>();
@@ -83,7 +96,7 @@ public class PaymentService {
 
         Receiver primaryReceiver = new Receiver();
         primaryReceiver.setAmount(10.00);
-        primaryReceiver.setEmail("pupil2@gmail.com");
+        primaryReceiver.setEmail(toEmail);
         primaryReceiver.setPrimary(true);
         receivers.add(primaryReceiver);
         ReceiverList receiverList = new ReceiverList(receivers);
