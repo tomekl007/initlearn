@@ -87,10 +87,10 @@ public class HelloController {
         return "index";
     }
 
-    @RequestMapping
+   /* @RequestMapping
     String home() {
         return "home";
-    }
+    }*/
 
     @RequestMapping("/restricted")
     String restricted(ServletRequest servletRequest) {
