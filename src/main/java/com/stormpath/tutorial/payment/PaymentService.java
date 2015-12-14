@@ -3,10 +3,7 @@ package com.stormpath.tutorial.payment;
 import com.paypal.exception.*;
 import com.paypal.sdk.exceptions.OAuthException;
 import com.paypal.svcs.services.AdaptivePaymentsService;
-import com.paypal.svcs.types.ap.PayRequest;
-import com.paypal.svcs.types.ap.PayResponse;
-import com.paypal.svcs.types.ap.Receiver;
-import com.paypal.svcs.types.ap.ReceiverList;
+import com.paypal.svcs.types.ap.*;
 import com.paypal.svcs.types.common.RequestEnvelope;
 import com.stormpath.tutorial.db.payment.Payment;
 import com.stormpath.tutorial.db.payment.PaymentsRepository;
@@ -110,16 +107,33 @@ public class PaymentService {
         payRequest.setCurrencyCode("USD");
         payRequest.setIpnNotificationUrl("http://replaceIpnUrl.com");//todo
 
+        Map<String, String> sdkConfig = credentials();
+
+        AdaptivePaymentsService adaptivePaymentsService = new AdaptivePaymentsService(sdkConfig);
+        PayResponse payResponse = adaptivePaymentsService.pay(payRequest);
+
+        return payResponse.getPayKey();
+    }
+    
+    public void getPaymentStatus(String payKey) throws IOException, OAuthException, InvalidResponseDataException, SSLConfigurationException, ClientActionRequiredException, MissingCredentialException, HttpErrorException, InvalidCredentialException, InterruptedException {
+        RequestEnvelope requestEnvelope = new RequestEnvelope("en_US");
+        PaymentDetailsRequest paymentDetailsRequest = new PaymentDetailsRequest(requestEnvelope);
+        paymentDetailsRequest.setPayKey(payKey);
+
+        Map<String, String> sdkConfig = credentials();
+
+        AdaptivePaymentsService adaptivePaymentsService = new AdaptivePaymentsService(sdkConfig);
+        PaymentDetailsResponse paymentDetailsResponse = adaptivePaymentsService.paymentDetails(paymentDetailsRequest);
+        
+    }
+
+    private Map<String, String> credentials() {
         Map<String, String> sdkConfig = new HashMap<>();
         sdkConfig.put("mode", "sandbox");
         sdkConfig.put("acct1.UserName", "jb-us-seller_api1.paypal.com");
         sdkConfig.put("acct1.Password", "WX4WTU3S8MY44S7F");
         sdkConfig.put("acct1.Signature","AFcWxV21C7fd0v3bYYYRCpSSRl31A7yDhhsPUU2XhtMoZXsWHFxu-RWy");
         sdkConfig.put("acct1.AppId","APP-80W284485P519543T");
-
-        AdaptivePaymentsService adaptivePaymentsService = new AdaptivePaymentsService(sdkConfig);
-        PayResponse payResponse = adaptivePaymentsService.pay(payRequest);
-
-        return payResponse.getPayKey();
+        return sdkConfig;
     }
 }

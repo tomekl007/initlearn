@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 @Controller
@@ -27,7 +28,8 @@ public class PaymentController {
     }
     
     @RequestMapping("/ap_chained_payment_success")
-    public void paymentSucceed(){
-        logger.info("payment success");   
+    public void paymentSucceed(HttpServletRequest request){
+        String referer = request.getHeader("referer");
+        logger.info("payment success"+ referer);
     }
 }
