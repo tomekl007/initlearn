@@ -3,7 +3,10 @@ package com.stormpath.tutorial.controller;
 import com.paypal.exception.*;
 import com.paypal.sdk.exceptions.OAuthException;
 import com.paypal.svcs.types.ap.PaymentDetailsResponse;
+import com.stormpath.sdk.account.Account;
+import com.stormpath.tutorial.model.User;
 import com.stormpath.tutorial.payment.PaymentService;
+import com.stormpath.tutorial.utils.AccountUtils;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.slf4j.Logger;
@@ -13,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.net.URI;
@@ -27,8 +31,14 @@ public class PaymentController {
     private PaymentService paymentService;
 
     @RequestMapping("/adaptivePayment")
-    public String executeAdaptivePayment() throws IOException, InvalidResponseDataException, SSLConfigurationException, OAuthException, MissingCredentialException, InvalidCredentialException, HttpErrorException, ClientActionRequiredException, InterruptedException {
-        return "redirect:https://www.sandbox.paypal.com/webscr?cmd=_ap-payment&paykey=" + paymentService.pay();
+    public String executeAdaptivePayment(ServletRequest servletRequest){
+        Optional<User> accountIfUserLoggedIn = AccountUtils.getAccountIfUserLoggedIn(servletRequest);
+        if(accountIfUserLoggedIn.isPresent()) {
+            return "redirect:https://www.sandbox.paypal.com/webscr?cmd=_ap-payment&paykey=" + paymentService.pay(accountIfUserLoggedIn.get());
+        }
+        else{
+            return "redirect:/login";
+        }
     }
 
     @RequestMapping("/ap_chained_payment_cancel")

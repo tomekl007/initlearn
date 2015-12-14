@@ -3,27 +3,30 @@ package com.stormpath.tutorial.utils;
 import com.stormpath.sdk.account.Account;
 import com.stormpath.sdk.account.AccountList;
 import com.stormpath.sdk.directory.CustomData;
+import com.stormpath.sdk.servlet.account.AccountResolver;
 import com.stormpath.tutorial.model.User;
 
+import javax.servlet.ServletRequest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class AccountUtils {
 
     public static final String SCREEN_HERO_FIELD = "screenHero";
     public static final String HOUR_RATE_FIELD = "hourRate";
-            
-    public static void addScreenheroField(Account a, String value){
-        addCustomFieldToAccount(a,SCREEN_HERO_FIELD, value);
-        
+
+    public static void addScreenheroField(Account a, String value) {
+        addCustomFieldToAccount(a, SCREEN_HERO_FIELD, value);
+
     }
-    
-    public static void addHourRateForTeacher(Account a, Double value){
+
+    public static void addHourRateForTeacher(Account a, Double value) {
         addCustomFieldToAccount(a, HOUR_RATE_FIELD, value);
-        
+
     }
-    
+
     public static void addCustomFieldToAccount(Account a, String name, Object value) {
         CustomData customData = a.getCustomData();
         customData.put(name, value);
@@ -51,7 +54,7 @@ public class AccountUtils {
 
     public static User mapAccountToUser(Account a) {
         return new User(a.getEmail(), a.getFullName(), a.getGivenName(), a.getMiddleName(),
-                AccountUtils.getCustomFieldValue(a, SCREEN_HERO_FIELD), 
+                AccountUtils.getCustomFieldValue(a, SCREEN_HERO_FIELD),
                 AccountUtils.getCustomDoubleFieldValue(a, HOUR_RATE_FIELD));
     }
 
@@ -67,5 +70,15 @@ public class AccountUtils {
         List<Account> accounts = new ArrayList<>();
         list.iterator().forEachRemaining(accounts::add);
         return mapToUsers(accounts);
+    }
+
+
+    public static Optional<User> getAccountIfUserLoggedIn(ServletRequest servletRequest) {
+        if (AccountResolver.INSTANCE.hasAccount(servletRequest)) {
+            Account authenticatedAccount = AccountResolver.INSTANCE.getRequiredAccount(servletRequest);
+            return Optional.of(mapAccountToUser(authenticatedAccount));
+        } else {
+            return Optional.empty();
+        }
     }
 }

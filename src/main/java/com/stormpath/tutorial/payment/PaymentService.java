@@ -7,6 +7,7 @@ import com.paypal.svcs.types.ap.*;
 import com.paypal.svcs.types.common.RequestEnvelope;
 import com.stormpath.tutorial.db.payment.Payment;
 import com.stormpath.tutorial.db.payment.PaymentsRepository;
+import com.stormpath.tutorial.model.User;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -80,10 +81,10 @@ public class PaymentService {
 
 
 
-    public String pay() throws IOException, OAuthException, InvalidResponseDataException, SSLConfigurationException, ClientActionRequiredException, MissingCredentialException, HttpErrorException, InvalidCredentialException, InterruptedException {
+    public String pay(User sender) {
         
         String toEmail = "pupil2@gmail.com";
-        paymentsRepository.save(new Payment("from", toEmail, 10.00d, DateTime.now().toDate()));
+        paymentsRepository.save(new Payment(sender.email, toEmail, 10.00d, DateTime.now().toDate()));
         
         PayRequest payRequest = new PayRequest();
 
@@ -113,9 +114,11 @@ public class PaymentService {
         Map<String, String> sdkConfig = credentials();
 
         AdaptivePaymentsService adaptivePaymentsService = new AdaptivePaymentsService(sdkConfig);
-        PayResponse payResponse = adaptivePaymentsService.pay(payRequest);
-
-        return payResponse.getPayKey();
+        try {
+            return adaptivePaymentsService.pay(payRequest).getPayKey();
+        }catch(Exception ex){
+            throw new RuntimeException(ex);
+        }
     }
     
     public PaymentDetailsResponse getPaymentStatus(String payKey) throws IOException, OAuthException, InvalidResponseDataException, SSLConfigurationException, ClientActionRequiredException, MissingCredentialException, HttpErrorException, InvalidCredentialException, InterruptedException {
