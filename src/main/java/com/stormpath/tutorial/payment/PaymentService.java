@@ -8,6 +8,8 @@ import com.paypal.svcs.types.common.RequestEnvelope;
 import com.stormpath.tutorial.db.payment.Payment;
 import com.stormpath.tutorial.db.payment.PaymentsRepository;
 import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,6 +21,7 @@ import java.util.Map;
 
 @Component
 public class PaymentService {
+    private static final Logger logger = LoggerFactory.getLogger(PaymentService.class);
     @Autowired
     PaymentsRepository paymentsRepository;
     //todo besides sending callback to paypal we need to send transation data to db
@@ -124,7 +127,7 @@ public class PaymentService {
 
         AdaptivePaymentsService adaptivePaymentsService = new AdaptivePaymentsService(sdkConfig);
         PaymentDetailsResponse paymentDetailsResponse = adaptivePaymentsService.paymentDetails(paymentDetailsRequest);
-        
+        logger.info("paymentDetailsResponse : " + paymentDetailsResponse);
     }
 
     private Map<String, String> credentials() {
