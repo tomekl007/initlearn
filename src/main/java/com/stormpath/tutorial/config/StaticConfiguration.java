@@ -10,7 +10,7 @@ public class StaticConfiguration extends WebMvcConfigurerAdapter {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry
-                .addResourceHandler("/templates/assets/**")
+                .addResourceHandler("/assets/**")
                 .addResourceLocations("classpath:/templates/assets/");
     }
 }
