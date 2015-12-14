@@ -28,8 +28,7 @@ import java.util.stream.StreamSupport;
 public class UserController {
 
     private static final Logger logger = LoggerFactory.getLogger(MessagesController.class);
-    public static final String SCREEN_HERO_FIELD = "screenHero";
-
+    
     @Autowired
     private Client client;
 
@@ -83,10 +82,17 @@ public class UserController {
     @RequestMapping(value = "users/{email:.+}/screenhero", method = RequestMethod.POST)
     public ResponseEntity<List<User>> addScreenHeroToUser(@RequestBody String sc, @PathVariable("email") String email) {
         List<Account> accountsByEmail = findAccountsByEmail(email);
-        accountsByEmail.forEach(a -> AccountUtils.addCustomFieldToAccount(a, SCREEN_HERO_FIELD, sc));
+        accountsByEmail.forEach(a -> AccountUtils.addScreenheroField(a, sc));
         return new ResponseEntity<>(AccountUtils.mapToUsers(accountsByEmail), HttpStatus.OK);
     }
 
+    @RequestMapping(value = "users/{email:.+}/hourRate", method = RequestMethod.POST)
+    public ResponseEntity<List<User>> addHourRateToUser(@RequestBody Double hourRate, @PathVariable("email") String email) {
+        List<Account> accountsByEmail = findAccountsByEmail(email);
+        accountsByEmail.forEach(a -> AccountUtils.addHourRateForTeacher(a, hourRate));
+        return new ResponseEntity<>(AccountUtils.mapToUsers(accountsByEmail), HttpStatus.OK);
+    }
+    
     @RequestMapping("/me")
     ResponseEntity<User> me(ServletRequest servletRequest) {
         return actionForAuthenticatedUserOrUnauthorized(servletRequest, AccountUtils::mapAccountToUser);

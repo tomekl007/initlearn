@@ -12,7 +12,19 @@ import java.util.stream.Collectors;
 public class AccountUtils {
 
     public static final String SCREEN_HERO_FIELD = "screenHero";
-    public static void addCustomFieldToAccount(Account a, String name, String value) {
+    public static final String HOUR_RATE_FIELD = "hourRate";
+            
+    public static void addScreenheroField(Account a, String value){
+        addCustomFieldToAccount(a,SCREEN_HERO_FIELD, value);
+        
+    }
+    
+    public static void addHourRateForTeacher(Account a, Double value){
+        addCustomFieldToAccount(a, HOUR_RATE_FIELD, value);
+        
+    }
+    
+    public static void addCustomFieldToAccount(Account a, String name, Object value) {
         CustomData customData = a.getCustomData();
         customData.put(name, value);
         a.save();
@@ -27,10 +39,20 @@ public class AccountUtils {
         }
     }
 
+    public static Double getCustomDoubleFieldValue(Account a, String screenHeroField) {
+        Object o = a.getCustomData().get(screenHeroField);
+        if (o == null) {
+            return null;
+        } else {
+            return (Double) o;
+        }
+    }
+
 
     public static User mapAccountToUser(Account a) {
         return new User(a.getEmail(), a.getFullName(), a.getGivenName(), a.getMiddleName(),
-                AccountUtils.getCustomFieldValue(a, SCREEN_HERO_FIELD));
+                AccountUtils.getCustomFieldValue(a, SCREEN_HERO_FIELD), 
+                AccountUtils.getCustomDoubleFieldValue(a, HOUR_RATE_FIELD));
     }
 
 
