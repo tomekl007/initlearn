@@ -1,6 +1,5 @@
 package com.stormpath.tutorial.payment;
 
-import com.paypal.api.payments.Payment;
 import com.paypal.exception.*;
 import com.paypal.sdk.exceptions.OAuthException;
 import com.paypal.svcs.services.AdaptivePaymentsService;
@@ -9,7 +8,7 @@ import com.paypal.svcs.types.ap.PayResponse;
 import com.paypal.svcs.types.ap.Receiver;
 import com.paypal.svcs.types.ap.ReceiverList;
 import com.paypal.svcs.types.common.RequestEnvelope;
-import com.stormpath.tutorial.db.payment.Payments;
+import com.stormpath.tutorial.db.payment.Payment;
 import com.stormpath.tutorial.db.payment.PaymentsRepository;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,7 +83,7 @@ public class PaymentService {
     public String pay() throws IOException, OAuthException, InvalidResponseDataException, SSLConfigurationException, ClientActionRequiredException, MissingCredentialException, HttpErrorException, InvalidCredentialException, InterruptedException {
         
         String toEmail = "pupil2@gmail.com";
-        paymentsRepository.save(new Payments("from", toEmail, 10.00d, DateTime.now().toDate()));
+        paymentsRepository.save(new Payment("from", toEmail, 10.00d, DateTime.now().toDate()));
         
         PayRequest payRequest = new PayRequest();
 

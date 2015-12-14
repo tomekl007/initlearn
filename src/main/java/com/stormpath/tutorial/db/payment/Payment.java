@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-public class Payments {
+public class Payment {
 
     public long getId() {
         return id;
@@ -21,10 +21,10 @@ public class Payments {
     
     private String from_email;
 
-    public Payments() {
+    public Payment() {
     }
 
-    public Payments(String from_email, String to_email, Double amount, Date payment_date) {
+    public Payment(String from_email, String to_email, Double amount, Date payment_date) {
 
         this.from_email = from_email;
         this.to_email = to_email;
