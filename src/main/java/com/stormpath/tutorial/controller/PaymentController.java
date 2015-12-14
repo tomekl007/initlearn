@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class PaymentController {
@@ -31,25 +32,41 @@ public class PaymentController {
     }
 
     @RequestMapping("/ap_chained_payment_cancel")
-    public void paymentCancelled() {
+    public ResponseEntity paymentCancelled(HttpServletRequest request) throws URISyntaxException, IOException, InvalidResponseDataException, SSLConfigurationException, OAuthException, MissingCredentialException, InvalidCredentialException, HttpErrorException, ClientActionRequiredException, InterruptedException {
         logger.info("payment cancelled");
+        Optional<String> payKey = getPayKeyValue(request);
+        return handlePaymentStatus(payKey, "cancel");
     }
 
     @RequestMapping("/ap_chained_payment_success")
     public ResponseEntity paymentSucceed(HttpServletRequest request) throws URISyntaxException, IOException, InvalidResponseDataException, SSLConfigurationException, OAuthException, MissingCredentialException, InvalidCredentialException, HttpErrorException, ClientActionRequiredException, InterruptedException {
-        String referer = request.getHeader("referer");
-        logger.info("payment success from referer" + referer);
+        Optional<String> payKey = getPayKeyValue(request);
 
+        return handlePaymentStatus(payKey, "success");
+    }
+
+    private ResponseEntity handlePaymentStatus(Optional<String> payKey, String msg) throws IOException, OAuthException, InvalidResponseDataException, SSLConfigurationException, ClientActionRequiredException, MissingCredentialException, HttpErrorException, InvalidCredentialException, InterruptedException {
+        if (payKey.isPresent()) {
+            PaymentDetailsResponse paymentStatus = paymentService.getPaymentStatus(payKey.get());
+
+            return ResponseEntity.ok("payment "+ msg + " status: " +
+                    paymentStatus.getStatus() + ", sender: "
+                    + paymentStatus.getSenderEmail() + ", sender: " +
+                    paymentStatus.getSender());
+        }else{
+            return ResponseEntity.badRequest().build();    
+        }
+    }
+
+    public Optional<String> getPayKeyValue(HttpServletRequest httpServletRequest) throws URISyntaxException {
+        String referer = httpServletRequest.getHeader("referer");
+        logger.info("payment success from referer" + referer);
         List<NameValuePair> nameValuePairs = URLEncodedUtils.parse(new URI(referer), "UTF-8");
         for (NameValuePair nameValuePair : nameValuePairs) {
             if (nameValuePair.getName().equals("paykey")) {
-                PaymentDetailsResponse paymentStatus = paymentService.getPaymentStatus(nameValuePair.getValue());
-                return ResponseEntity.ok("payment successfully status: " +
-                        paymentStatus.getStatus() + ", sender: "
-                        + paymentStatus.getSenderEmail() + ", sender: " + 
-                          paymentStatus.getSender());
+                return Optional.of(nameValuePair.getValue());
             }
         }
-        return ResponseEntity.ok().build();
+        return Optional.empty();
     }
 }
