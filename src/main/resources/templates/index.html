@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-us">
+<html lang="en-us" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
     <title>Individual IT Learning</title>
@@ -39,6 +39,10 @@
                     WE'RE COMING SOON
                 </h2>
             </div>
+        </section>
+        <section>
+            <h3 th:if="${account}" th:inline="text">Hello, [[${account.fullName}]]!</h3>
+            <h3 th:unless="${account}">Who are you?</h3>
         </section>
 
         <section id="teachers" class="main-section">
@@ -91,7 +95,6 @@
         } catch (err) {
         }
     </script>
-
-
+   
 </body>
 </html>
