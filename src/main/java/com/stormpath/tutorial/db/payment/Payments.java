@@ -1,10 +1,23 @@
 package com.stormpath.tutorial.db.payment;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 public class Payments {
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    @Id
+    @Column(name="id")
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    private long id;
     
     private String from_email;
 
