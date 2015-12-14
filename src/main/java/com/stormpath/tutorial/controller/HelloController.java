@@ -99,7 +99,7 @@ public class HelloController {
         directory.createAccount(account);
         account.save();
 */
-        return "home";
+        return "frontend/index.html";
     }
 
     @RequestMapping("index")
