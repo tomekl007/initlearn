@@ -35,6 +35,6 @@ public class SpringSecurityWebAppConfig extends WebSecurityConfigurerAdapter {
     }
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/templates/**");
+        web.ignoring().antMatchers("/templates/**", "/assets/**");
     }
 }
