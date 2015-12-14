@@ -118,7 +118,7 @@ public class PaymentService {
         return payResponse.getPayKey();
     }
     
-    public void getPaymentStatus(String payKey) throws IOException, OAuthException, InvalidResponseDataException, SSLConfigurationException, ClientActionRequiredException, MissingCredentialException, HttpErrorException, InvalidCredentialException, InterruptedException {
+    public PaymentDetailsResponse getPaymentStatus(String payKey) throws IOException, OAuthException, InvalidResponseDataException, SSLConfigurationException, ClientActionRequiredException, MissingCredentialException, HttpErrorException, InvalidCredentialException, InterruptedException {
         RequestEnvelope requestEnvelope = new RequestEnvelope("en_US");
         PaymentDetailsRequest paymentDetailsRequest = new PaymentDetailsRequest(requestEnvelope);
         paymentDetailsRequest.setPayKey(payKey);
@@ -126,8 +126,7 @@ public class PaymentService {
         Map<String, String> sdkConfig = credentials();
 
         AdaptivePaymentsService adaptivePaymentsService = new AdaptivePaymentsService(sdkConfig);
-        PaymentDetailsResponse paymentDetailsResponse = adaptivePaymentsService.paymentDetails(paymentDetailsRequest);
-        logger.info("paymentDetailsResponse : " + paymentDetailsResponse);
+        return adaptivePaymentsService.paymentDetails(paymentDetailsRequest);
     }
 
     private Map<String, String> credentials() {
