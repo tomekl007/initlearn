@@ -11,6 +11,6 @@ public class StaticConfiguration extends WebMvcConfigurerAdapter {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry
                 .addResourceHandler("/**")
-                .addResourceLocations("/resources/templates/*");
+                .addResourceLocations("/resources/templates/**");
     }
 }
