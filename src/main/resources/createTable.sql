@@ -10,7 +10,7 @@ CREATE TABLE Payment(
   FROM_EMAIL TEXT,
   TO_EMAIL TEXT,
   AMOUNT DECIMAL(10,2),
-  PAYMENT_DATE DATE
+  PAYMENT_DATE timestamp
 );
 
 insert into payment (from_email, to_email, amount, payment_date) values ('a','b', 2.00, current_date);
