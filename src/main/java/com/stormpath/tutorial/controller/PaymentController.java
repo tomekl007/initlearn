@@ -51,8 +51,8 @@ public class PaymentController {
 
             return ResponseEntity.ok("payment "+ msg + " status: " +
                     paymentStatus.getStatus() + ", sender: "
-                    + paymentStatus.getSenderEmail() + ", sender: " +
-                    paymentStatus.getSender());
+                    + paymentStatus.getSenderEmail() + ", sender account: " +
+                    paymentStatus.getSender().getAccountId());
         }else{
             return ResponseEntity.badRequest().build();    
         }
