@@ -34,15 +34,10 @@ public class MessagesController {
 
     @RequestMapping("/msg")//todo should be put
     ResponseEntity msg(ServletRequest servletRequest, @RequestParam("text") String text, @RequestParam("to") String emailTo) {
-        if (AccountResolver.INSTANCE.hasAccount(servletRequest)) {
-            //or Account account = (Account)servletRequest.getAttribute("account");
-            Account authenticatedAccount = AccountResolver.INSTANCE.getRequiredAccount(servletRequest);
-            sendMessageToUser(emailTo, text, authenticatedAccount);
-            return new ResponseEntity(HttpStatus.OK);
-        } else {
-            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
-        }
+        return AccountUtils.actionForAuthenticatedUserOrRedirectToLogin(servletRequest,
+                a -> sendMessageToUser(emailTo, text, a));
     }
+
     @RequestMapping("/allMsg") //should be get
     ResponseEntity<List<Message>> retrieveAllMessagesForLoggedUser(ServletRequest servletRequest){
         return actionForUserOrNotFound(servletRequest);
@@ -54,7 +49,7 @@ public class MessagesController {
     }
 
 
-    public void sendMessageToUser(String emailTo, String text, Account from) {
+    public String sendMessageToUser(String emailTo, String text, Account from) {
 
         logger.info("send message from " + from.getEmail() + " to " + emailTo);
 
@@ -74,8 +69,9 @@ public class MessagesController {
         //todo add sended emails to fromEmail user
         customData.put(MESSAGES_FIELD, messagesList);
         account.get().save();
+        return "OK";
     }
-    
+
     public List<Message> retrieveAllMessages(Account account){
         Object messages = account.getCustomData().get(MESSAGES_FIELD);
         if(messages == null){
