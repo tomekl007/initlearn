@@ -22,8 +22,8 @@
             <ul class="main-nav-list sticky pos-top pos-left">
                 <li class="main-nav-list-item"><a href="#teachers">teachers</a></li>
                 <li class="main-nav-list-item"><a href="#pricing">pricing</a></li>
-                <li class="main-nav-list-item"><a href="#create-account" class="is-active">create free account</a></li>
-                <li class="main-nav-list-item"><a href="#sign-in">sign in</a></li>
+                <li class="main-nav-list-item main-create-account"><a href="#create-account-form" class="is-active">create free account</a></li>
+                <li class="main-nav-list-item main-sign-in"><a href="#sign-in-form">sign in</a></li>
             </ul>
         </nav>
     </header>
@@ -77,11 +77,73 @@
             </div>
         </section>
     </div>
+    <div class="main-modal-window">
+        <div class="main-form-wrapper">
+            <form id="create-account-form" method="post" role="form" class="main-form">
+
+                <div form-group="true" class="main-create-account-form-username">
+                    <label class="">User name</label>
+
+                    <div class="">
+                        <input name="username" type="text" placeholder="username" autofocus="autofocus" required="required" value="">
+                    </div>
+                </div>
+
+                <div form-group="true" class="main-create-account-form-usersurname">
+                    <label class="">User surname</label>
+
+                    <div class="">
+                        <input name="usersurname" type="text" placeholder="usersurname" autofocus="autofocus" required="required" value="">
+                    </div>
+                </div>
+
+                <div form-group="true" class="main-create-account-form-usermail">
+                    <label class="">Mail</label>
+
+                    <div class="col-sm-8">
+                        <input class="" name="email" type="email" placeholder="zzz@gmail.com" required="required" value="">
+                    </div>
+                </div>
+
+                <div form-group="true" class="main-create-account-form-userpassword">
+                    <label class="">Password</label>
+
+                    <div class="col-sm-8">
+                        <input class="" name="password" type="password" placeholder="Password" required="required" value="">
+                    </div>
+                </div>
+
+                <div>
+                    <button type="submit" class="main-button">create account</button>
+                </div>
+            </form>
+        </div>
+        <div class="main-form-wrapper">
+            <form id="sign-in-form" method="post" role="form" class="main-form">
+                <div form-group="true" class="main-create-account-form-usermail">
+                    <label class="">Mail</label>
+
+                    <div class="col-sm-8">
+                        <input class="" name="email" type="email" placeholder="zzz@gmail.com" required="required" value="">
+                    </div>
+                </div>
+
+                <div form-group="true" class="main-create-account-form-userpassword">
+                    <label class="">Password</label>
+
+                    <div class="col-sm-8">
+                        <input class="" name="password" type="password" placeholder="Password" required="required" value="">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="main-outside-area sticky pos-top pos-left"></div>
     <footer class="main-footer">
 
     </footer>
 
-    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="assets/js/main.min.js"></script>
 
     <script type="text/javascript">

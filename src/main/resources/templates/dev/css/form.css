@@ -1,0 +1,5 @@
+.main-form {
+  display: none; }
+
+.main-form.show {
+  display: block; }
