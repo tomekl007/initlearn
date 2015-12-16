@@ -7,6 +7,7 @@ import com.paypal.svcs.types.ap.*;
 import com.paypal.svcs.types.common.RequestEnvelope;
 import com.stormpath.tutorial.db.payment.Payment;
 import com.stormpath.tutorial.db.payment.PaymentsRepository;
+import com.stormpath.tutorial.db.payment.PaypalConfiguration;
 import com.stormpath.tutorial.model.User;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -25,6 +26,8 @@ public class PaymentService {
     private static final Logger logger = LoggerFactory.getLogger(PaymentService.class);
     @Autowired
     PaymentsRepository paymentsRepository;
+    @Autowired
+    PaypalConfiguration paypalConfiguration;
     //todo besides sending callback to paypal we need to send transation data to db
     /*
      REST :
@@ -80,12 +83,11 @@ public class PaymentService {
     */
 
 
-
     public String pay(User sender) { //todo add User teacher
-        
+
         String toEmail = "pupil2@gmail.com";
         paymentsRepository.save(new Payment(sender.email, toEmail, 10.00d, DateTime.now().toDate()));//todo hourRate
-        
+
         PayRequest payRequest = new PayRequest();
 
         List<Receiver> receivers = new ArrayList<Receiver>();
@@ -100,8 +102,8 @@ public class PaymentService {
         RequestEnvelope requestEnvelope = new RequestEnvelope("en_US");
         payRequest.setRequestEnvelope(requestEnvelope);
         payRequest.setActionType("PAY");
-        payRequest.setCancelUrl("https://initlearn.herokuapp.com/ap_chained_payment_cancel");
-        payRequest.setReturnUrl("https://initlearn.herokuapp.com/ap_chained_payment_success");
+        payRequest.setCancelUrl(paypalConfiguration.getCancelurl());
+        payRequest.setReturnUrl(paypalConfiguration.getSuccessurl());
         payRequest.setCurrencyCode("USD");
         payRequest.setIpnNotificationUrl("http://replaceIpnUrl.com");//todo
 
@@ -110,7 +112,7 @@ public class PaymentService {
         AdaptivePaymentsService adaptivePaymentsService = new AdaptivePaymentsService(sdkConfig);
         try {
             return adaptivePaymentsService.pay(payRequest).getPayKey();
-        }catch(Exception ex){
+        } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
     }
@@ -143,11 +145,11 @@ public class PaymentService {
 
     private Map<String, String> credentials() {
         Map<String, String> sdkConfig = new HashMap<>();
-        sdkConfig.put("mode", "sandbox");
-        sdkConfig.put("acct1.UserName", "jb-us-seller_api1.paypal.com");
-        sdkConfig.put("acct1.Password", "WX4WTU3S8MY44S7F");
-        sdkConfig.put("acct1.Signature","AFcWxV21C7fd0v3bYYYRCpSSRl31A7yDhhsPUU2XhtMoZXsWHFxu-RWy");
-        sdkConfig.put("acct1.AppId","APP-80W284485P519543T");
+        sdkConfig.put("mode", paypalConfiguration.getMode());
+        sdkConfig.put("acct1.UserName", paypalConfiguration.getUsername());
+        sdkConfig.put("acct1.Password", paypalConfiguration.getPassword());
+        sdkConfig.put("acct1.Signature", paypalConfiguration.getSignature());
+        sdkConfig.put("acct1.AppId", paypalConfiguration.getAppid());
         return sdkConfig;
     }
 }
