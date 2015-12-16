@@ -17,5 +17,5 @@ var OutsideArea = (function () {
 
     return {
         init: init
-    }
+    };
 })();

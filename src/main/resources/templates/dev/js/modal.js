@@ -7,7 +7,7 @@ var Modal = (function () {
         attachEvents();
     };
 
-    var attachEvents = function() {
+    var attachEvents = function () {
 
     };
 
@@ -24,5 +24,5 @@ var Modal = (function () {
         open: open,
         close: close,
         init: init
-    }
+    };
 })();

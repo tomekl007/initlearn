@@ -1,7 +1,39 @@
+@import "functions";
+@import "prefixer";
+@import "variables";
+
 .main-form {
   display: none;
 
   &.show {
     display: block;
   }
+}
+
+.main-input-wrapper {
+  position: relative;
+}
+
+.main-input {
+  padding: rem-calc(10px);
+  margin-top: rem-calc(20px);
+  background-color: transparent;
+  border: none;
+
+  &:focus,
+  &.is-filled {
+    ~ .main-label {
+      @include transform(translate3d(0px,-60px,0));
+      font-size: rem-calc(14px);
+    }
+  }
+}
+
+.main-label {
+  position: absolute;
+  @include transform(translate3d(10px,-35px,0));
+  color: $color-grey;
+  transition: transform .5s ease;
+  font-size: rem-calc(20px);
+  z-index: -1;
 }

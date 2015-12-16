@@ -1,7 +1,7 @@
-$(window).load(function() {
+$(window).load(function () {
 
     Modal.init();
-    console.log(Form);
+    Form.init();
     Menu.init(Modal, Form);
     OutsideArea.init(Modal);
 });

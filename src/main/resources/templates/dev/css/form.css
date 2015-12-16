@@ -3,3 +3,32 @@
 
 .main-form.show {
   display: block; }
+
+.main-input-wrapper {
+  position: relative; }
+
+.main-input {
+  padding: 0.625rem;
+  margin-top: 1.25rem;
+  background-color: transparent;
+  border: none; }
+
+.main-input:focus ~ .main-label, .main-input.is-filled ~ .main-label {
+  -webkit-transform: translate3d(0px, -60px, 0);
+  -moz-transform: translate3d(0px, -60px, 0);
+  -ms-transform: translate3d(0px, -60px, 0);
+  -o-transform: translate3d(0px, -60px, 0);
+  transform: translate3d(0px, -60px, 0);
+  font-size: 0.875rem; }
+
+.main-label {
+  position: absolute;
+  -webkit-transform: translate3d(10px, -35px, 0);
+  -moz-transform: translate3d(10px, -35px, 0);
+  -ms-transform: translate3d(10px, -35px, 0);
+  -o-transform: translate3d(10px, -35px, 0);
+  transform: translate3d(10px, -35px, 0);
+  color: #e8e8e8;
+  transition: transform .5s ease;
+  font-size: 1.25rem;
+  z-index: -1; }

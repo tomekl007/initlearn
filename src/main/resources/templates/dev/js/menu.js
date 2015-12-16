@@ -23,5 +23,5 @@ var Menu = (function () {
 
     return {
         init: init
-    }
+    };
 })();

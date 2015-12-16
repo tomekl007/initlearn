@@ -87,64 +87,44 @@
         <div class="main-form-wrapper">
             <form id="create-account-form" method="post" role="form" class="main-form">
 
-                <div form-group="true" class="main-create-account-form-username">
-                    <label class="">User name</label>
-
-                    <div class="">
-                        <input name="username" type="text" placeholder="username" required="required" value=""/>
-                    </div>
+                <div form-group="true" class="main-input-wrapper">
+                    <input class="main-input" name="username" type="text" required="required" value=""/>
+                    <label class="main-label">User name</label>
                 </div>
 
-                <div form-group="true" class="main-create-account-form-usersurname">
-                    <label class="">User surname</label>
-
-                    <div class="">
-                        <input name="usersurname" type="text" placeholder="usersurname" required="required" value=""/>
-                    </div>
+                <div form-group="true" class="main-input-wrapper">
+                    <input class="main-input" name="usersurname" type="text" required="required" value=""/>
+                    <label class="main-label">User surname</label>
                 </div>
 
-                <div form-group="true" class="main-create-account-form-usermail">
-                    <label class="">Mail</label>
-
-                    <div class="col-sm-8">
-                        <input class="" name="email" type="email" placeholder="zzz@gmail.com" required="required" value=""/>
-                    </div>
+                <div form-group="true" class="main-input-wrapper">
+                    <input class="main-input" class="" name="email" type="email" required="required" value=""/>
+                    <label class="main-label">zzz@gmail.com</label>
                 </div>
 
-                <div form-group="true" class="main-create-account-form-userpassword">
-                    <label class="">Password</label>
-
-                    <div class="col-sm-8">
-                        <input class="" name="password" type="password" placeholder="Password" required="required" value=""/>
-                    </div>
+                <div form-group="true" class="main-input-wrapper">
+                    <input class="main-input" class="" name="password" type="password" required="required" value=""/>
+                    <label class="main-label">Password</label>
                 </div>
 
-                <div>
-                    <button type="submit" class="main-button">create account</button>
-                </div>
+                <button type="submit" class="main-button">create account</button>
+
             </form>
         </div>
         <div class="main-form-wrapper">
             <form id="sign-in-form" method="post" role="form" class="main-form">
-                <div form-group="true" class="main-create-account-form-usermail">
-                    <label class="">Mail</label>
-
-                    <div class="col-sm-8">
-                        <input class="" name="email" type="email" placeholder="zzz@gmail.com" required="required" value=""/>
-                    </div>
+                <div form-group="true" class="main-input-wrapper">
+                    <input class="main-input" name="email" type="email"  required="required" value=""/>
+                    <label class="main-label">zzz@gmail.com</label>
                 </div>
 
-                <div form-group="true" class="main-create-account-form-userpassword">
-                    <label class="">Password</label>
-
-                    <div class="col-sm-8">
-                        <input class="" name="password" type="password" placeholder="Password" required="required" value=""/>
-                    </div>
+                <div form-group="true" class="main-input-wrapper">
+                    <input class="main-input" name="password" type="password" required="required" value=""/>
+                    <label class="main-label">Password</label>
                 </div>
 
-                <div>
-                    <button type="submit" class="main-button">login</button>
-                </div>
+                <button type="submit" class="main-button">login</button>
+
             </form>
         </div>
     </div>
