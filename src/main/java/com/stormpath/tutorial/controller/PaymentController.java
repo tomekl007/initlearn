@@ -3,7 +3,7 @@ package com.stormpath.tutorial.controller;
 import com.paypal.exception.*;
 import com.paypal.sdk.exceptions.OAuthException;
 import com.paypal.svcs.types.ap.PaymentDetailsResponse;
-import com.stormpath.sdk.account.Account;
+import com.stormpath.tutorial.db.payment.PaypalConfiguration;
 import com.stormpath.tutorial.model.User;
 import com.stormpath.tutorial.payment.PaymentService;
 import com.stormpath.tutorial.utils.AccountUtils;
@@ -29,12 +29,14 @@ public class PaymentController {
     private static final Logger logger = LoggerFactory.getLogger(PaymentController.class);
     @Autowired
     private PaymentService paymentService;
+    @Autowired
+    PaypalConfiguration paypalConfiguration;
 
-    @RequestMapping("/adaptivePayment")
+    @RequestMapping("/adaptivePayment") //toto pathParam toEmail
     public String executeAdaptivePayment(ServletRequest servletRequest){
         Optional<User> accountIfUserLoggedIn = AccountUtils.getAccountIfUserLoggedIn(servletRequest);
         if(accountIfUserLoggedIn.isPresent()) {
-            return "redirect:https://www.sandbox.paypal.com/webscr?cmd=_ap-payment&paykey=" + paymentService.pay(accountIfUserLoggedIn.get());
+            return "redirect:"+ paypalConfiguration.getUrl() + paymentService.pay(accountIfUserLoggedIn.get());
         }
         else{
             return "redirect:/login";

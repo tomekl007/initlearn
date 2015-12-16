@@ -5,11 +5,15 @@ import com.stormpath.sdk.account.AccountList;
 import com.stormpath.sdk.directory.CustomData;
 import com.stormpath.sdk.servlet.account.AccountResolver;
 import com.stormpath.tutorial.model.User;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import javax.servlet.ServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class AccountUtils {
@@ -79,6 +83,17 @@ public class AccountUtils {
             return Optional.of(mapAccountToUser(authenticatedAccount));
         } else {
             return Optional.empty();
+        }
+    }
+
+    public static <T> ResponseEntity<T> actionForAuthenticatedUserOrRedirectToLogin(ServletRequest servletRequest, Function<Account, T> action) {
+        if (AccountResolver.INSTANCE.hasAccount(servletRequest)) {
+            Account authenticatedAccount = AccountResolver.INSTANCE.getRequiredAccount(servletRequest);
+            return new ResponseEntity<>(action.apply(authenticatedAccount), HttpStatus.OK);
+        } else {
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Location", "/login");
+            return new ResponseEntity<>(headers, HttpStatus.PERMANENT_REDIRECT);
         }
     }
 }
