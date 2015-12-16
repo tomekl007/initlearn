@@ -5,6 +5,7 @@ import com.stormpath.sdk.account.AccountList;
 import com.stormpath.sdk.client.Client;
 import com.stormpath.sdk.group.Group;
 import com.stormpath.tutorial.model.User;
+import com.stormpath.tutorial.user.UserService;
 import com.stormpath.tutorial.utils.AccountUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,10 +25,13 @@ import java.util.stream.StreamSupport;
 @Controller
 public class UserController {
 
-    private static final Logger logger = LoggerFactory.getLogger(MessagesController.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
     
     @Autowired
     private Client client;
+    
+    @Autowired
+    private UserService userService;
 
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     public ResponseEntity<List<User>> getAllUsers() {
@@ -42,23 +46,10 @@ public class UserController {
     @RequestMapping(value = "users/{email:.+}", method = RequestMethod.GET)
     public ResponseEntity<List<User>> getUserByEmail(@PathVariable("email") String email) {
         logger.info("find by email : " + email);
-        List<User> users = findUsersByEmail(email);
+        List<User> users = userService.findUsersByEmail(email);
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    private List<User> findUsersByEmail(String email) {
-        List<Account> accounts = findAccountsByEmail(email);
-        return AccountUtils.mapToUsers(accounts);
-    }
-
-    private List<Account> findAccountsByEmail(String email) {
-        List<Account> accounts = new ArrayList<>();
-        client.getAccounts(Collections.singletonMap("email", email))
-                .iterator()
-                .forEachRemaining(accounts::add);
-        logger.info("accounts : " + accounts);
-        return accounts;
-    }
 
     @RequestMapping(value = "group/users/{groupName}", method = RequestMethod.GET)
     public ResponseEntity<List<User>> getTeachers(@PathVariable("groupName") String groupName) {
@@ -78,14 +69,14 @@ public class UserController {
 
     @RequestMapping(value = "users/{email:.+}/screenhero", method = RequestMethod.POST)
     public ResponseEntity<List<User>> addScreenHeroToUser(@RequestBody String sc, @PathVariable("email") String email) {
-        List<Account> accountsByEmail = findAccountsByEmail(email);
+        List<Account> accountsByEmail = userService.findAccountsByEmail(email);
         accountsByEmail.forEach(a -> AccountUtils.addScreenheroField(a, sc));
         return new ResponseEntity<>(AccountUtils.mapToUsers(accountsByEmail), HttpStatus.OK);
     }
 
     @RequestMapping(value = "users/{email:.+}/hourRate", method = RequestMethod.POST)
     public ResponseEntity<List<User>> addHourRateToUser(@RequestBody Double hourRate, @PathVariable("email") String email) {
-        List<Account> accountsByEmail = findAccountsByEmail(email);
+        List<Account> accountsByEmail = userService.findAccountsByEmail(email);
         accountsByEmail.forEach(a -> AccountUtils.addHourRateForTeacher(a, hourRate));
         return new ResponseEntity<>(AccountUtils.mapToUsers(accountsByEmail), HttpStatus.OK);
     }
@@ -94,5 +85,4 @@ public class UserController {
     ResponseEntity<User> me(ServletRequest servletRequest) {
         return AccountUtils.actionForAuthenticatedUserOrRedirectToLogin(servletRequest, AccountUtils::mapAccountToUser);
     }
-
 }
