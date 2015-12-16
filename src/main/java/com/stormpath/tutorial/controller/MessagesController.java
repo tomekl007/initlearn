@@ -5,6 +5,7 @@ import com.stormpath.sdk.client.Client;
 import com.stormpath.sdk.directory.CustomData;
 import com.stormpath.sdk.servlet.account.AccountResolver;
 import com.stormpath.tutorial.messages.Message;
+import com.stormpath.tutorial.utils.AccountUtils;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,13 +50,7 @@ public class MessagesController {
     }
 
     private ResponseEntity<List<Message>> actionForUserOrNotFound(ServletRequest servletRequest) {
-        if (AccountResolver.INSTANCE.hasAccount(servletRequest)) {
-            //or Account account = (Account)servletRequest.getAttribute("account");
-            Account authenticatedAccount = AccountResolver.INSTANCE.getRequiredAccount(servletRequest);
-            return new ResponseEntity<>(retrieveAllMessages(authenticatedAccount), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
+        return AccountUtils.actionForAuthenticatedUserOrRedirectToLogin(servletRequest, this::retrieveAllMessages);
     }
 
 

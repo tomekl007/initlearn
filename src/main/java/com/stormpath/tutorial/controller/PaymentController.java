@@ -30,7 +30,7 @@ public class PaymentController {
     @Autowired
     private PaymentService paymentService;
 
-    @RequestMapping("/adaptivePayment")
+    @RequestMapping("/adaptivePayment") //toto pathParam toEmail
     public String executeAdaptivePayment(ServletRequest servletRequest){
         Optional<User> accountIfUserLoggedIn = AccountUtils.getAccountIfUserLoggedIn(servletRequest);
         if(accountIfUserLoggedIn.isPresent()) {
