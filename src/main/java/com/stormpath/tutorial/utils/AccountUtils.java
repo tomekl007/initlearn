@@ -66,7 +66,7 @@ public class AccountUtils {
         if (o == null) {
             return null;
         } else {
-            return (Double) o;
+            return (double) o;
         }
     }
     
