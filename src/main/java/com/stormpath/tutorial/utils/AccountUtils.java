@@ -69,12 +69,21 @@ public class AccountUtils {
             return (Double) o;
         }
     }
+    
+    public static List<String> getCustomListFieldValue(Account a, String fieldName) {
+        Object o = a.getCustomData().get(fieldName);
+        if (o == null) {
+            return Collections.emptyList();
+        } else {
+            return (List<String>) o;
+        }
+    }
 
 
     public static User mapAccountToUser(Account a) {
         return new User(a.getEmail(), a.getFullName(), a.getGivenName(), a.getMiddleName(),
                 AccountUtils.getCustomFieldValue(a, SCREEN_HERO_FIELD),
-                AccountUtils.getCustomDoubleFieldValue(a, HOUR_RATE_FIELD), skills);
+                AccountUtils.getCustomDoubleFieldValue(a, HOUR_RATE_FIELD), AccountUtils.getCustomListFieldValue(a, SKILLS_FIELD));
     }
 
 
