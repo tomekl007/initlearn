@@ -87,13 +87,13 @@
             <form id="create-account-form" method="post" role="form" class="main-form" th:action="@{/register}">
 
                 <div form-group="true" class="main-input-wrapper">
-                    <input class="main-input" name="username" type="text" required="required" value=""/>
+                    <input class="main-input" name="givenName" type="text" placeholder="First Name" autofocus="autofocus" value=""/>
                     <label class="main-label">User name</label>
                     <div class="main-input-bg"></div>
                 </div>
 
                 <div form-group="true" class="main-input-wrapper">
-                    <input class="main-input" name="usersurname" type="text" required="required" value=""/>
+                    <input class="main-input" name="surname" type="text" placeholder="Last Name" value="" />
                     <label class="main-label">User surname</label>
                     <div class="main-input-bg"></div>
                 </div>
