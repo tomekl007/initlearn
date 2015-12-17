@@ -5,21 +5,31 @@
   display: block; }
 
 .main-input-wrapper {
-  position: relative; }
+  position: relative;
+  margin-bottom: 0.3125rem; }
 
 .main-input {
   padding: 0.625rem;
   margin-top: 1.25rem;
   background-color: transparent;
-  border: none; }
+  border: none;
+  width: 100%;
+  color: #009ec3; }
+
+.main-input:focus, .main-input.is-filled {
+  outline: 0; }
 
 .main-input:focus ~ .main-label, .main-input.is-filled ~ .main-label {
-  -webkit-transform: translate3d(0px, -60px, 0);
-  -moz-transform: translate3d(0px, -60px, 0);
-  -ms-transform: translate3d(0px, -60px, 0);
-  -o-transform: translate3d(0px, -60px, 0);
-  transform: translate3d(0px, -60px, 0);
+  color: #f79f00;
+  -webkit-transform: translate3d(10px, -60px, 0);
+  -moz-transform: translate3d(10px, -60px, 0);
+  -ms-transform: translate3d(10px, -60px, 0);
+  -o-transform: translate3d(10px, -60px, 0);
+  transform: translate3d(10px, -60px, 0);
   font-size: 0.875rem; }
+
+.main-input:focus ~ .main-input-bg, .main-input.is-filled ~ .main-input-bg {
+  background-color: #fff; }
 
 .main-label {
   position: absolute;
@@ -29,6 +39,17 @@
   -o-transform: translate3d(10px, -35px, 0);
   transform: translate3d(10px, -35px, 0);
   color: #e8e8e8;
-  transition: transform .5s ease;
+  transition: transform .3s ease, color .3s ease;
   font-size: 1.25rem;
   z-index: -1; }
+
+.main-input-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+  border-radius: 2px;
+  background-color: #009ec3;
+  transition: background-color .3s ease; }

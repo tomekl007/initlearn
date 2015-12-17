@@ -12,6 +12,7 @@
 
 .main-input-wrapper {
   position: relative;
+  margin-bottom: rem-calc(5px);
 }
 
 .main-input {
@@ -19,21 +20,42 @@
   margin-top: rem-calc(20px);
   background-color: transparent;
   border: none;
+  width: 100%;
+  color: $input-color;
 
   &:focus,
   &.is-filled {
+    outline: 0;
+
     ~ .main-label {
-      @include transform(translate3d(0px,-60px,0));
+      color: $label-color;
+      @include transform(translate3d(10px, -60px, 0));
       font-size: rem-calc(14px);
+    }
+
+    ~ .main-input-bg {
+      background-color: #fff;
     }
   }
 }
 
 .main-label {
   position: absolute;
-  @include transform(translate3d(10px,-35px,0));
+  @include transform(translate3d(10px, -35px, 0));
   color: $color-grey;
-  transition: transform .5s ease;
+  transition: transform .3s ease, color .3s ease;
   font-size: rem-calc(20px);
   z-index: -1;
+}
+
+.main-input-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+  border-radius: $border-radius;
+  background-color: $input-bg-color;
+  transition: background-color .3s ease;
 }

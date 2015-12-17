@@ -1,12 +1,17 @@
 @import "prefixer";
+@import "variables";
 @import "functions";
 
 .main-modal-window {
   position: fixed;
   left: 50%;
   top: 50%;
+  min-width: 320px;
+  width: 80%;
+  max-width: 600px;
+  border-radius: $border-radius;
   @include transform(translate(-10000px,-50%));
-  background-color: #fff;
+  background-color: $color-grey;
   padding: rem-calc(10px);
   transition: transform .5s ease;
   z-index: 11;
