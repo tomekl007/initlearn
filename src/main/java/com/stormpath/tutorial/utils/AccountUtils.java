@@ -52,8 +52,8 @@ public class AccountUtils {
         a.save();
     }
 
-    public static String getCustomFieldValue(Account a, String screenHeroField) {
-        Object o = a.getCustomData().get(screenHeroField);
+    public static String getCustomFieldValue(Account a, String field) {
+        Object o = a.getCustomData().get(field);
         if (o == null) {
             return "";
         } else {
@@ -61,8 +61,8 @@ public class AccountUtils {
         }
     }
 
-    public static Double getCustomDoubleFieldValue(Account a, String screenHeroField) {
-        Object o = a.getCustomData().get(screenHeroField);
+    public static Double getCustomDoubleFieldValue(Account a, String field) {
+        Object o = a.getCustomData().get(field);
         if (o == null) {
             return null;
         } else {
