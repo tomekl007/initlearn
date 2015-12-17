@@ -19,21 +19,24 @@ package com.stormpath.tutorial.config;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
 import static com.stormpath.spring.config.StormpathWebSecurityConfigurer.stormpath;
 
+@EnableWebSecurity
 @Configuration
 public class SpringSecurityWebAppConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable();
+        
         http
             .apply(stormpath()).and()
             .authorizeRequests()
             .antMatchers("/", "/login", "/users", "/users/*", "/group/users/*", "users/*/*", "users/**/skills", "/isLoggedIn")
             .permitAll();
-        http.csrf().disable();
     }
     @Override
     public void configure(WebSecurity web) throws Exception {
