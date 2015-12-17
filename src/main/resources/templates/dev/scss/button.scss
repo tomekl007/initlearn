@@ -1,0 +1,25 @@
+@import "functions";
+@import "variables";
+
+.main-btn {
+  display: block;
+  text-decoration: none;
+  padding: rem-calc(10px);
+  border-radius: $border-radius;
+  border: 2px solid transparent;
+  text-transform: uppercase;
+  transition: color .3s ease, background-color .3s ease;
+  font-weight: bold;
+  margin: auto;
+}
+
+.btn-primary {
+  background-color: #fff;
+  border: 2px solid $color-blue;
+  color: $color-blue;
+
+  &:hover {
+    background-color: $color-blue;
+    color: #fff;
+  }
+}

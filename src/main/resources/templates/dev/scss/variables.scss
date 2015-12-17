@@ -24,8 +24,16 @@ $element-bottom-margin: ($gutter-width*2)/3 !default;
 $color-yellow: #ffee9c;
 $color-gold: #f79f00;
 $color-grey: #e8e8e8;
+$color-dark-grey: #bbb;
 $color-blue: #009ec3;
+
 
 //border
 $border-radius: 2px;
 $box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+
+//form
+
+$input-bg-color: $color-blue;
+$input-color: $color-blue;
+$label-color: $color-gold;

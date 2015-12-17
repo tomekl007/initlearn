@@ -2,12 +2,16 @@
   position: fixed;
   left: 50%;
   top: 50%;
+  min-width: 320px;
+  width: 80%;
+  max-width: 600px;
+  border-radius: 2px;
   -webkit-transform: translate(-10000px, -50%);
   -moz-transform: translate(-10000px, -50%);
   -ms-transform: translate(-10000px, -50%);
   -o-transform: translate(-10000px, -50%);
   transform: translate(-10000px, -50%);
-  background-color: #fff;
+  background-color: #e8e8e8;
   padding: 0.625rem;
   transition: transform .5s ease;
   z-index: 11; }
