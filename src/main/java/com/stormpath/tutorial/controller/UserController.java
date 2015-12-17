@@ -114,9 +114,15 @@ public class UserController {
         accountsByEmail.forEach(a -> AccountUtils.addLinksField(a, links));
         return new ResponseEntity<>(AccountUtils.mapToUsers(accountsByEmail), HttpStatus.OK);
     }
-    
-    
-    
+
+    @RequestMapping(value = "users/{email:.+}/bio", method = RequestMethod.POST)
+    public ResponseEntity<List<User>> addBioToTeacher(@RequestBody String bio, @PathVariable("email") String email) {
+        List<Account> accountsByEmail = userService.findAccountsByEmail(email);
+        accountsByEmail.forEach(a -> AccountUtils.addBioField(a, bio));
+        return new ResponseEntity<>(AccountUtils.mapToUsers(accountsByEmail), HttpStatus.OK);
+    }
+
+
     @RequestMapping("/me")
     ResponseEntity<User> me(ServletRequest servletRequest) {
         return AccountUtils.actionForAuthenticatedUserOrRedirectToLogin(servletRequest, AccountUtils::mapAccountToUser);

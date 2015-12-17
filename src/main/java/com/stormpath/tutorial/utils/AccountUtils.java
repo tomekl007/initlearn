@@ -21,7 +21,12 @@ public class AccountUtils {
     public static final String SKILLS_FIELD = "skills";
     public static final String LINKEDIN_FIELD = "linkedIn";
     public static final String LINKS_FILED = "links";
+    public static final String BIO_FILED = "bio";
 
+    public static void addBioField(Account a, String bio){
+        addCustomFieldToAccount(a, BIO_FILED, bio);
+    }
+    
     public static void addLinksField(Account a, List<String> values){
         addCustomListFieldToAccount(a, LINKS_FILED, values, a.getCustomData());
     }
