@@ -8,10 +8,10 @@ public class User {
     public final String givenName;
     public final String middleName;
     public final String screenHero;
-    public final Double hourRate;
+    public final Integer hourRate;
     public final List<String> skills;
 
-    public User(String email, String fullName, String givenName, String middleName, String screenHero, Double hourRate, 
+    public User(String email, String fullName, String givenName, String middleName, String screenHero, Integer hourRate,
                 List<String> skills) {
         this.email = email;
         this.fullName = fullName;

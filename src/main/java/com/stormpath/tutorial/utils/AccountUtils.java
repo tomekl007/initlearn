@@ -61,12 +61,12 @@ public class AccountUtils {
         }
     }
 
-    public static Double getCustomDoubleFieldValue(Account a, String field) {
+    public static Integer getCustomIntegerValue(Account a, String field) {
         Object o = a.getCustomData().get(field);
         if (o == null) {
             return null;
         } else {
-            return (double) o;
+            return (int) o;
         }
     }
     
@@ -83,7 +83,7 @@ public class AccountUtils {
     public static User mapAccountToUser(Account a) {
         return new User(a.getEmail(), a.getFullName(), a.getGivenName(), a.getMiddleName(),
                 AccountUtils.getCustomFieldValue(a, SCREEN_HERO_FIELD),
-                AccountUtils.getCustomDoubleFieldValue(a, HOUR_RATE_FIELD), AccountUtils.getCustomListFieldValue(a, SKILLS_FIELD));
+                AccountUtils.getCustomIntegerValue(a, HOUR_RATE_FIELD), AccountUtils.getCustomListFieldValue(a, SKILLS_FIELD));
     }
 
 
