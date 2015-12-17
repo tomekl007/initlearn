@@ -105,4 +105,14 @@ public class UserController {
     ResponseEntity<User> me(ServletRequest servletRequest) {
         return AccountUtils.actionForAuthenticatedUserOrRedirectToLogin(servletRequest, AccountUtils::mapAccountToUser);
     }
+    
+    @RequestMapping("/isLoggedIn")
+    ResponseEntity<Boolean> isLoggedIn(ServletRequest servletRequest){
+        Optional<User> accountIfUserLoggedIn = AccountUtils.getAccountIfUserLoggedIn(servletRequest);
+        if(accountIfUserLoggedIn.isPresent()){
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(false, HttpStatus.OK);
+        }
+    }
 }
