@@ -10,9 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import javax.servlet.ServletRequest;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -20,6 +18,7 @@ public class AccountUtils {
 
     public static final String SCREEN_HERO_FIELD = "screenHero";
     public static final String HOUR_RATE_FIELD = "hourRate";
+    public static final String SKILLS_FIELD = "skills";
 
     public static void addScreenheroField(Account a, String value) {
         addCustomFieldToAccount(a, SCREEN_HERO_FIELD, value);
@@ -30,6 +29,22 @@ public class AccountUtils {
         addCustomFieldToAccount(a, HOUR_RATE_FIELD, value);
 
     }
+    
+    public static void addSkillsForTeacher(Account a, List<String> skills){
+        addCustomListFieldToAccount(a, SKILLS_FIELD, skills, a.getCustomData());
+    }
+
+    public static void addCustomListFieldToAccount(Account a, String fieldName, List<String> skills, 
+                                                   Map<String, Object> customData) {
+        Object o = customData.get(fieldName);
+        List<String> userSkills = new LinkedList<>();
+        if(o != null){
+            userSkills.addAll((List<String>) o);
+        }
+        userSkills.addAll(skills);
+        customData.put(fieldName, userSkills);
+        a.save();
+    }
 
     public static void addCustomFieldToAccount(Account a, String name, Object value) {
         CustomData customData = a.getCustomData();
@@ -37,8 +52,8 @@ public class AccountUtils {
         a.save();
     }
 
-    public static String getCustomFieldValue(Account a, String screenHeroField) {
-        Object o = a.getCustomData().get(screenHeroField);
+    public static String getCustomFieldValue(Account a, String field) {
+        Object o = a.getCustomData().get(field);
         if (o == null) {
             return "";
         } else {
@@ -46,12 +61,21 @@ public class AccountUtils {
         }
     }
 
-    public static Double getCustomDoubleFieldValue(Account a, String screenHeroField) {
-        Object o = a.getCustomData().get(screenHeroField);
+    public static Integer getCustomIntegerValue(Account a, String field) {
+        Object o = a.getCustomData().get(field);
         if (o == null) {
             return null;
         } else {
-            return (Double) o;
+            return (int) o;
+        }
+    }
+    
+    public static List<String> getCustomListFieldValue(Account a, String fieldName) {
+        Object o = a.getCustomData().get(fieldName);
+        if (o == null) {
+            return Collections.emptyList();
+        } else {
+            return (List<String>) o;
         }
     }
 
@@ -59,7 +83,7 @@ public class AccountUtils {
     public static User mapAccountToUser(Account a) {
         return new User(a.getEmail(), a.getFullName(), a.getGivenName(), a.getMiddleName(),
                 AccountUtils.getCustomFieldValue(a, SCREEN_HERO_FIELD),
-                AccountUtils.getCustomDoubleFieldValue(a, HOUR_RATE_FIELD));
+                AccountUtils.getCustomIntegerValue(a, HOUR_RATE_FIELD), AccountUtils.getCustomListFieldValue(a, SKILLS_FIELD));
     }
 
 

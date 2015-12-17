@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.ServletRequest;
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Controller
@@ -80,6 +81,25 @@ public class UserController {
         accountsByEmail.forEach(a -> AccountUtils.addHourRateForTeacher(a, hourRate));
         return new ResponseEntity<>(AccountUtils.mapToUsers(accountsByEmail), HttpStatus.OK);
     }
+
+
+    @RequestMapping(value = "users/{email:.+}/skills", method = RequestMethod.POST)
+    public ResponseEntity<List<User>> addSkillsToTeacher(@RequestBody List<String> skill, @PathVariable("email") String email) {
+        List<Account> accountsByEmail = userService.findAccountsByEmail(email);
+        accountsByEmail.forEach(a -> AccountUtils.addSkillsForTeacher(a, skill));
+        return new ResponseEntity<>(AccountUtils.mapToUsers(accountsByEmail), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "users/{email:.+}/skills", method = RequestMethod.GET)
+    public ResponseEntity<List<List<String>>> getSkillsForTeacher(@PathVariable("email") String email) {
+        List<List<String>> list = userService.findAccountsByEmail(email)
+                .stream()
+                .map(AccountUtils::mapAccountToUser)
+                .map(u -> u.skills)
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+    
     
     @RequestMapping("/me")
     ResponseEntity<User> me(ServletRequest servletRequest) {
