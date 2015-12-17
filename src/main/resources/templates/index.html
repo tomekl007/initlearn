@@ -112,7 +112,7 @@
             </form>
         </div>
         <div class="main-form-wrapper">
-            <form id="sign-in-form" method="post" role="form" class="main-form">
+            <form id="sign-in-form" method="post" role="form" class="main-form" th:action="@{/login}">
                 <div form-group="true" class="main-input-wrapper">
                     <input class="main-input" name="email" type="email"  required="required" value=""/>
                     <label class="main-label">zzz@gmail.com</label>
@@ -122,11 +122,8 @@
                     <input class="main-input" name="password" type="password" required="required" value=""/>
                     <label class="main-label">Password</label>
                 </div>
-                <div form-group="true" class="main-input-wrapper">
-                <input type="hidden"
-                       name="${_csrf.parameterName}"
-                       value="${_csrf.token}"/>
-                </div>
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
                 <button type="submit" class="main-button">login</button>
                     
 
