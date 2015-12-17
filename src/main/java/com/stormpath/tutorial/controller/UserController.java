@@ -75,6 +75,13 @@ public class UserController {
         return new ResponseEntity<>(AccountUtils.mapToUsers(accountsByEmail), HttpStatus.OK);
     }
 
+    @RequestMapping(value = "users/{email:.+}/linkedin", method = RequestMethod.POST)
+    public ResponseEntity<List<User>> addLinkedInToUser(@RequestBody String sc, @PathVariable("email") String email) {
+        List<Account> accountsByEmail = userService.findAccountsByEmail(email);
+        accountsByEmail.forEach(a -> AccountUtils.addLinkedInField(a, sc));
+        return new ResponseEntity<>(AccountUtils.mapToUsers(accountsByEmail), HttpStatus.OK);
+    }
+
     @RequestMapping(value = "users/{email:.+}/hourRate", method = RequestMethod.POST)
     public ResponseEntity<List<User>> addHourRateToUser(@RequestBody Double hourRate, @PathVariable("email") String email) {
         List<Account> accountsByEmail = userService.findAccountsByEmail(email);
@@ -99,8 +106,23 @@ public class UserController {
                 .collect(Collectors.toList());
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
-    
-    
+
+
+    @RequestMapping(value = "users/{email:.+}/links", method = RequestMethod.POST)
+    public ResponseEntity<List<User>> addLinksToTeacher(@RequestBody List<String> links, @PathVariable("email") String email) {
+        List<Account> accountsByEmail = userService.findAccountsByEmail(email);
+        accountsByEmail.forEach(a -> AccountUtils.addLinksField(a, links));
+        return new ResponseEntity<>(AccountUtils.mapToUsers(accountsByEmail), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "users/{email:.+}/bio", method = RequestMethod.POST)
+    public ResponseEntity<List<User>> addBioToTeacher(@RequestBody String bio, @PathVariable("email") String email) {
+        List<Account> accountsByEmail = userService.findAccountsByEmail(email);
+        accountsByEmail.forEach(a -> AccountUtils.addBioField(a, bio));
+        return new ResponseEntity<>(AccountUtils.mapToUsers(accountsByEmail), HttpStatus.OK);
+    }
+
+
     @RequestMapping("/me")
     ResponseEntity<User> me(ServletRequest servletRequest) {
         return AccountUtils.actionForAuthenticatedUserOrRedirectToLogin(servletRequest, AccountUtils::mapAccountToUser);
