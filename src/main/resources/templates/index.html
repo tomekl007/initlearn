@@ -122,7 +122,9 @@
                     <input class="main-input" name="password" type="password" required="required" value=""/>
                     <label class="main-label">Password</label>
                 </div>
-
+                <input type="hidden"
+                       name="${_csrf.parameterName}"
+                       value="${_csrf.token}"/>
                 <button type="submit" class="main-button">login</button>
 
             </form>
