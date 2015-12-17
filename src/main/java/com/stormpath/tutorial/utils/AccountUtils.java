@@ -20,7 +20,12 @@ public class AccountUtils {
     public static final String HOUR_RATE_FIELD = "hourRate";
     public static final String SKILLS_FIELD = "skills";
     public static final String LINKEDIN_FIELD = "linkedIn";
+    public static final String LINKS_FILED = "links";
 
+    public static void addLinksField(Account a, List<String> values){
+        addCustomListFieldToAccount(a, LINKS_FILED, values, a.getCustomData());
+    }
+    
     public static void addScreenheroField(Account a, String value) {
         addCustomFieldToAccount(a, SCREEN_HERO_FIELD, value);
 
@@ -91,7 +96,8 @@ public class AccountUtils {
                 AccountUtils.getCustomFieldValue(a, SCREEN_HERO_FIELD),
                 AccountUtils.getCustomIntegerValue(a, HOUR_RATE_FIELD), 
                 AccountUtils.getCustomFieldValue(a, LINKEDIN_FIELD),
-                AccountUtils.getCustomListFieldValue(a, SKILLS_FIELD));
+                AccountUtils.getCustomListFieldValue(a, SKILLS_FIELD),
+                AccountUtils.getCustomListFieldValue(a, LINKS_FILED));
     }
 
 

@@ -106,6 +106,15 @@ public class UserController {
                 .collect(Collectors.toList());
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
+
+
+    @RequestMapping(value = "users/{email:.+}/links", method = RequestMethod.POST)
+    public ResponseEntity<List<User>> addLinksToTeacher(@RequestBody List<String> links, @PathVariable("email") String email) {
+        List<Account> accountsByEmail = userService.findAccountsByEmail(email);
+        accountsByEmail.forEach(a -> AccountUtils.addLinksField(a, links));
+        return new ResponseEntity<>(AccountUtils.mapToUsers(accountsByEmail), HttpStatus.OK);
+    }
+    
     
     
     @RequestMapping("/me")

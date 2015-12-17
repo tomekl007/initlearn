@@ -11,9 +11,10 @@ public class User {
     public final Integer hourRate;
     public final String linkedIn;
     public final List<String> skills;
+    public final List<String> links;
 
     public User(String email, String fullName, String givenName, String middleName, String screenHero, Integer hourRate,
-                String linkedIn, List<String> skills) {
+                String linkedIn, List<String> skills, List<String> links) {
         this.email = email;
         this.fullName = fullName;
         this.givenName = givenName;
@@ -22,6 +23,7 @@ public class User {
         this.hourRate = hourRate;
         this.linkedIn = linkedIn;
         this.skills = skills;
+        this.links = links;
     }
 
     @Override
