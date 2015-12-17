@@ -19,6 +19,7 @@ public class AccountUtils {
     public static final String SCREEN_HERO_FIELD = "screenHero";
     public static final String HOUR_RATE_FIELD = "hourRate";
     public static final String SKILLS_FIELD = "skills";
+    public static final String LINKEDIN_FIELD = "linkedIn";
 
     public static void addScreenheroField(Account a, String value) {
         addCustomFieldToAccount(a, SCREEN_HERO_FIELD, value);
@@ -33,6 +34,11 @@ public class AccountUtils {
     public static void addSkillsForTeacher(Account a, List<String> skills){
         addCustomListFieldToAccount(a, SKILLS_FIELD, skills, a.getCustomData());
     }
+
+    public static void addLinkedInField(Account a, String link) {
+        addCustomFieldToAccount(a, LINKEDIN_FIELD, link);
+    }
+    
 
     public static void addCustomListFieldToAccount(Account a, String fieldName, List<String> skills, 
                                                    Map<String, Object> customData) {
@@ -83,7 +89,9 @@ public class AccountUtils {
     public static User mapAccountToUser(Account a) {
         return new User(a.getEmail(), a.getFullName(), a.getGivenName(), a.getMiddleName(),
                 AccountUtils.getCustomFieldValue(a, SCREEN_HERO_FIELD),
-                AccountUtils.getCustomIntegerValue(a, HOUR_RATE_FIELD), AccountUtils.getCustomListFieldValue(a, SKILLS_FIELD));
+                AccountUtils.getCustomIntegerValue(a, HOUR_RATE_FIELD), 
+                AccountUtils.getCustomFieldValue(a, LINKEDIN_FIELD),
+                AccountUtils.getCustomListFieldValue(a, SKILLS_FIELD));
     }
 
 
@@ -120,4 +128,5 @@ public class AccountUtils {
             return new ResponseEntity<>(headers, HttpStatus.PERMANENT_REDIRECT);
         }
     }
+
 }

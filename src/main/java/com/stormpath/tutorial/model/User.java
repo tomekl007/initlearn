@@ -9,16 +9,18 @@ public class User {
     public final String middleName;
     public final String screenHero;
     public final Integer hourRate;
+    public final String linkedIn;
     public final List<String> skills;
 
     public User(String email, String fullName, String givenName, String middleName, String screenHero, Integer hourRate,
-                List<String> skills) {
+                String linkedIn, List<String> skills) {
         this.email = email;
         this.fullName = fullName;
         this.givenName = givenName;
         this.middleName = middleName;
         this.screenHero = screenHero;
         this.hourRate = hourRate;
+        this.linkedIn = linkedIn;
         this.skills = skills;
     }
 

@@ -75,6 +75,13 @@ public class UserController {
         return new ResponseEntity<>(AccountUtils.mapToUsers(accountsByEmail), HttpStatus.OK);
     }
 
+    @RequestMapping(value = "users/{email:.+}/linkedin", method = RequestMethod.POST)
+    public ResponseEntity<List<User>> addLinkedInToUser(@RequestBody String sc, @PathVariable("email") String email) {
+        List<Account> accountsByEmail = userService.findAccountsByEmail(email);
+        accountsByEmail.forEach(a -> AccountUtils.addLinkedInField(a, sc));
+        return new ResponseEntity<>(AccountUtils.mapToUsers(accountsByEmail), HttpStatus.OK);
+    }
+
     @RequestMapping(value = "users/{email:.+}/hourRate", method = RequestMethod.POST)
     public ResponseEntity<List<User>> addHourRateToUser(@RequestBody Double hourRate, @PathVariable("email") String email) {
         List<Account> accountsByEmail = userService.findAccountsByEmail(email);
