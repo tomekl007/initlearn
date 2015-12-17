@@ -30,7 +30,7 @@ public class AccountUtils {
 
     }
     
-    public static void addSkillForTeacher(Account a, List<String> skills){
+    public static void addSkillsForTeacher(Account a, List<String> skills){
         addCustomListFieldToAccount(a, SKILLS_FIELD, skills, a.getCustomData());
     }
 
@@ -74,7 +74,7 @@ public class AccountUtils {
     public static User mapAccountToUser(Account a) {
         return new User(a.getEmail(), a.getFullName(), a.getGivenName(), a.getMiddleName(),
                 AccountUtils.getCustomFieldValue(a, SCREEN_HERO_FIELD),
-                AccountUtils.getCustomDoubleFieldValue(a, HOUR_RATE_FIELD));
+                AccountUtils.getCustomDoubleFieldValue(a, HOUR_RATE_FIELD), skills);
     }
 
 
