@@ -10,9 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import javax.servlet.ServletRequest;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -20,6 +18,7 @@ public class AccountUtils {
 
     public static final String SCREEN_HERO_FIELD = "screenHero";
     public static final String HOUR_RATE_FIELD = "hourRate";
+    public static final String SKILLS_FIELD = "skills";
 
     public static void addScreenheroField(Account a, String value) {
         addCustomFieldToAccount(a, SCREEN_HERO_FIELD, value);
@@ -29,6 +28,22 @@ public class AccountUtils {
     public static void addHourRateForTeacher(Account a, Double value) {
         addCustomFieldToAccount(a, HOUR_RATE_FIELD, value);
 
+    }
+    
+    public static void addSkillForTeacher(Account a, List<String> skills){
+        addCustomListFieldToAccount(a, SKILLS_FIELD, skills, a.getCustomData());
+    }
+
+    public static void addCustomListFieldToAccount(Account a, String fieldName, List<String> skills, 
+                                                   Map<String, Object> customData) {
+        Object o = customData.get(fieldName);
+        List<String> userSkills = new LinkedList<>();
+        if(o != null){
+            userSkills.addAll((List<String>) o);
+        }
+        userSkills.addAll(skills);
+        customData.put(fieldName, userSkills);
+        a.save();
     }
 
     public static void addCustomFieldToAccount(Account a, String name, Object value) {
