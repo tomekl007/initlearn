@@ -1,27 +1,33 @@
-var Menu = (function () {
+define('menu', ['jquery', 'modal', 'form'], function ($, modal, form) {
 
-    var $wrapper = $('.main-nav');
-    var $mobileOpenBtn = $('.js-main-nav-menu-open');
-    var $createAccountBtn = $('.main-create-account');
-    var $signInBtn = $('.main-sign-in');
+    var Menu = (function () {
 
-    var init = function (Modal, Form) {
-        attachEvents(Modal, Form);
-    };
+        var $wrapper = $('.main-nav');
+        var $mobileOpenBtn = $('.js-main-nav-menu-open');
+        var $createAccountBtn = $('.main-create-account');
+        var $signInBtn = $('.main-sign-in');
 
-    var attachEvents = function (Modal, Form) {
-        $mobileOpenBtn.on('click', toggleMobile);
-        $signInBtn.on('click', Modal.open);
-        $signInBtn.on('click', Form.show);
-        $createAccountBtn.on('click', Modal.open);
-        $createAccountBtn.on('click', Form.show);
-    };
+        var init = function () {
+            attachEvents();
+        };
 
-    var toggleMobile = function () {
-        $wrapper.toggleClass('is-open');
-    };
+        var attachEvents = function () {
 
-    return {
-        init: init
-    };
-})();
+            $mobileOpenBtn.on('click', toggleMobile);
+            $signInBtn.on('click', modal.open);
+            $signInBtn.on('click', form.show);
+            $createAccountBtn.on('click', modal.open);
+            $createAccountBtn.on('click', form.show);
+        };
+
+        var toggleMobile = function () {
+            $wrapper.toggleClass('is-open');
+        };
+
+        return {
+            init: init
+        };
+    })();
+
+    return Menu;
+});
