@@ -21,11 +21,8 @@
 
 .main-input:focus ~ .main-label, .main-input.is-filled ~ .main-label {
   color: #f79f00;
-  -webkit-transform: translate3d(10px, -60px, 0);
-  -moz-transform: translate3d(10px, -60px, 0);
-  -ms-transform: translate3d(10px, -60px, 0);
-  -o-transform: translate3d(10px, -60px, 0);
-  transform: translate3d(10px, -60px, 0);
+  left: 0;
+  top: 0;
   font-size: 0.875rem; }
 
 .main-input:focus ~ .main-input-bg, .main-input.is-filled ~ .main-input-bg {
@@ -33,13 +30,10 @@
 
 .main-label {
   position: absolute;
-  -webkit-transform: translate3d(10px, -35px, 0);
-  -moz-transform: translate3d(10px, -35px, 0);
-  -ms-transform: translate3d(10px, -35px, 0);
-  -o-transform: translate3d(10px, -35px, 0);
-  transform: translate3d(10px, -35px, 0);
+  left: 10px;
+  top: 28px;
   color: #e8e8e8;
-  transition: transform .3s ease, color .3s ease;
+  transition: top .3s ease, left .3s ease, color .3s ease;
   font-size: 1.25rem;
   z-index: -1; }
 

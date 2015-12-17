@@ -29,7 +29,8 @@
 
     ~ .main-label {
       color: $label-color;
-      @include transform(translate3d(10px, -60px, 0));
+      left: 0;
+      top: 0;
       font-size: rem-calc(14px);
     }
 
@@ -41,9 +42,10 @@
 
 .main-label {
   position: absolute;
-  @include transform(translate3d(10px, -35px, 0));
+  left: 10px;
+  top: 28px;
   color: $color-grey;
-  transition: transform .3s ease, color .3s ease;
+  transition: top .3s ease, left .3s ease, color .3s ease;
   font-size: rem-calc(20px);
   z-index: -1;
 }
