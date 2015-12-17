@@ -20,30 +20,29 @@
   outline: 0; }
 
 .main-input:focus ~ .main-label, .main-input.is-filled ~ .main-label {
-  color: #f79f00;
   left: 0;
   top: 0;
   font-size: 0.875rem; }
 
 .main-input:focus ~ .main-input-bg, .main-input.is-filled ~ .main-input-bg {
-  background-color: #fff; }
+  height: 100%; }
 
 .main-label {
   position: absolute;
   left: 10px;
   top: 28px;
-  color: #e8e8e8;
-  transition: top .3s ease, left .3s ease, color .3s ease;
+  color: #696969;
+  transition: top .3s ease, left .3s ease;
   font-size: 1.25rem;
   z-index: -1; }
 
 .main-input-bg {
   position: absolute;
-  top: 0;
+  bottom: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 2px;
   z-index: -2;
   border-radius: 2px;
-  background-color: #009ec3;
+  background-color: #fff;
   transition: background-color .3s ease; }

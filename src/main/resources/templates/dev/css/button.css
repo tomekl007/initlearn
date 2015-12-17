@@ -10,10 +10,6 @@
   margin: auto; }
 
 .btn-primary {
-  background-color: #fff;
-  border: 2px solid #009ec3;
-  color: #009ec3; }
-
-.btn-primary:hover {
-  background-color: #009ec3;
+  border: 2px solid #f79f00;
+  background-color: #f79f00;
   color: #fff; }
