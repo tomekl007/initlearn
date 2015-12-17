@@ -102,7 +102,8 @@ public class AccountUtils {
                 AccountUtils.getCustomIntegerValue(a, HOUR_RATE_FIELD), 
                 AccountUtils.getCustomFieldValue(a, LINKEDIN_FIELD),
                 AccountUtils.getCustomListFieldValue(a, SKILLS_FIELD),
-                AccountUtils.getCustomListFieldValue(a, LINKS_FILED));
+                AccountUtils.getCustomListFieldValue(a, LINKS_FILED),
+                AccountUtils.getCustomFieldValue(a, BIO_FILED));
     }
 
 
