@@ -17,7 +17,7 @@ public class StaticConfiguration extends WebMvcConfigurerAdapter {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**");
+        registry.addMapping("/**");//todo disable on prod
 
     }
 }
