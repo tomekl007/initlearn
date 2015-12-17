@@ -88,25 +88,25 @@
 
                 <div form-group="true" class="main-input-wrapper">
                     <input class="main-input" name="username" type="text" required="required" value=""/>
-                    <label class="main-label">User name</label>
+                    <label class="main-label">name</label>
                     <div class="main-input-bg"></div>
                 </div>
 
                 <div form-group="true" class="main-input-wrapper">
                     <input class="main-input" name="usersurname" type="text" required="required" value=""/>
-                    <label class="main-label">User surname</label>
+                    <label class="main-label">surname</label>
                     <div class="main-input-bg"></div>
                 </div>
 
                 <div form-group="true" class="main-input-wrapper">
                     <input class="main-input" name="email" type="email" required="required" value=""/>
-                    <label class="main-label">zzz@gmail.com</label>
+                    <label class="main-label">mail</label>
                     <div class="main-input-bg"></div>
                 </div>
 
                 <div form-group="true" class="main-input-wrapper">
                     <input class="main-input" name="password" type="password" required="required" value=""/>
-                    <label class="main-label">Password</label>
+                    <label class="main-label">password</label>
                     <div class="main-input-bg"></div>
                 </div>
 
@@ -118,13 +118,13 @@
             <form id="sign-in-form" method="post" role="form" class="main-form" th:action="@{/login}">
                 <div form-group="true" class="main-input-wrapper">
                     <input class="main-input" name="email" type="email"  required="required" value=""/>
-                    <label class="main-label">zzz@gmail.com</label>
+                    <label class="main-label">mail</label>
                     <div class="main-input-bg"></div>
                 </div>
 
                 <div form-group="true" class="main-input-wrapper">
                     <input class="main-input" name="password" type="password" required="required" value=""/>
-                    <label class="main-label">Password</label>
+                    <label class="main-label">password</label>
                     <div class="main-input-bg"></div>
                 </div>
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />

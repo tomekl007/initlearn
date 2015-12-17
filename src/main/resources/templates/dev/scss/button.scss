@@ -14,12 +14,7 @@
 }
 
 .btn-primary {
-  background-color: #fff;
-  border: 2px solid $color-blue;
-  color: $color-blue;
-
-  &:hover {
-    background-color: $color-blue;
-    color: #fff;
-  }
+  border: 2px solid $color-gold;
+  background-color: $color-gold;
+  color: #fff;
 }
