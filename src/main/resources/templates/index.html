@@ -88,13 +88,13 @@
             <form id="create-account-form" method="post" role="form" class="main-form" th:action="@{/register}">
 
                 <div form-group="true" class="main-input-wrapper">
-                    <input class="main-input" name="givenName" type="text" placeholder="First Name" autofocus="autofocus" value=""/>
+                    <input class="main-input" name="givenName" type="text" autofocus="autofocus" value=""/>
                     <label class="main-label">name</label>
                     <div class="main-input-bg"></div>
                 </div>
 
                 <div form-group="true" class="main-input-wrapper">
-                    <input class="main-input" name="surname" type="text" placeholder="Last Name" value="" />
+                    <input class="main-input" name="surname" type="text" value="" />
                     <label class="main-label">surname</label>
                     <div class="main-input-bg"></div>
                 </div>
@@ -118,7 +118,7 @@
         <div class="main-form-wrapper">
             <form id="sign-in-form" method="post" role="form" class="main-form" th:action="@{/login}">
                 <div form-group="true" class="main-input-wrapper">
-                    <input class="main-input" name="login" type="text" placeholder="Username or Email" autofocus="autofocus" required="required" value=""/>
+                    <input class="main-input" name="login" type="text" autofocus="autofocus" required="required" value=""/>
                     <label class="main-label">mail</label>
                     <div class="main-input-bg"></div>
                 </div>
