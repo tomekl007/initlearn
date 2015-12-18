@@ -87,6 +87,14 @@
         <div class="main-form-wrapper">
             <form id="create-account-form" method="post" role="form" class="main-form" th:action="@{/register}">
 
+                <div class="alert alert-dismissable alert-danger"
+                     th:if="${errors != null and not #lists.isEmpty(errors)}">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <!--/*/ <th-block data-th-each="error : ${errors}"> /*/-->
+                    <p th:text="${error}">|Error message here.|</p>
+                    <!--/*/ </th-block> /*/-->
+                </div>
+                
                 <div form-group="true" class="main-input-wrapper">
                     <input class="main-input" name="givenName" type="text" autofocus="autofocus" value=""/>
                     <label class="main-label">name</label>
