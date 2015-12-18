@@ -22,7 +22,8 @@
                 <li class="main-nav-list-item"><a href="#teachers">teachers</a></li>
                 <li class="main-nav-list-item"><a href="#pricing">pricing</a></li>
                 <li class="main-nav-list-item main-create-account"><a href="#create-account-form" class="is-active">create free account</a></li>
-                <li class="main-nav-list-item main-sign-in"><a href="#sign-in-form">sign in</a></li>
+                <li class="main-nav-list-item main-sign-in" th:unless="${account}"><a href="#sign-in-form">sign in</a></li>
+                <li class="main-nav-list-item main-sign-in" th:if="${account}"><a th:href="@{/logout}">logout</a></li>
             </ul>
         </nav>
     </header>
