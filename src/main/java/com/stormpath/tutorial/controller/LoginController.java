@@ -45,7 +45,7 @@ public class LoginController {
         return new ResponseEntity<>(AccountUtils.mapAccountToUser(account), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+  /*  @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity login(@PathVariable String status, ServletRequest servletRequest){
         if(Objects.equals(status, "logout")){
             Optional<User> accountIfUserLoggedIn = AccountUtils.getAccountIfUserLoggedIn(servletRequest);
@@ -53,5 +53,5 @@ public class LoginController {
             
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
+    }*/
 }
