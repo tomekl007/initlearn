@@ -35,7 +35,6 @@ public class UserService {
         client.getAccounts(Collections.singletonMap("email", email))
                 .iterator()
                 .forEachRemaining(accounts::add);
-        logger.info("accounts : " + accounts);
         return accounts;
     }
 }
