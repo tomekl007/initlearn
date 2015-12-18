@@ -1,40 +1,45 @@
-var Form = (function () {
+define('form', ['jquery'], function () {
 
-    var $wrapper = $('.main-form-wrapper');
+    var Form = (function () {
 
-    var show = function (event) {
+        var $wrapper = $('.main-form-wrapper');
 
-        $wrapper.find('.main-form').removeClass('show');
+        var show = function (event) {
 
-        if (typeof event !== 'undefined') {
-            $wrapper.find(event.target.hash).addClass('show');
-        }
-    };
+            $wrapper.find('.main-form').removeClass('show');
 
-    var init = function () {
-        attachEvents();
-    };
+            if (typeof event !== 'undefined') {
+                $wrapper.find(event.target.hash).addClass('show');
+            }
+        };
 
-    var attachEvents = function () {
-        $wrapper.find('.main-input').on('blur', isFilled);
+        var init = function () {
+            attachEvents();
+        };
 
-    };
+        var attachEvents = function () {
+            $wrapper.find('.main-input').on('blur', isFilled);
+        };
 
-    var isFilled = function () {
-        var $currentInput = $(this);
-        var textLength = $currentInput.val().trim().length;
+        var isFilled = function () {
 
-        if (textLength > 0) {
-            $currentInput.addClass('is-filled');
-            return true;
-        }
+            var $currentInput = $(this);
+            var textLength = $currentInput.val().trim().length;
 
-        $currentInput.removeClass('is-filled');
-        return false;
-    };
+            if (textLength > 0) {
+                $currentInput.addClass('is-filled');
+                return true;
+            }
 
-    return {
-        show: show,
-        init: init
-    };
-})();
+            $currentInput.removeClass('is-filled');
+            return false;
+        };
+
+        return {
+            init: init,
+            show: show
+        };
+    })();
+
+    return Form;
+});

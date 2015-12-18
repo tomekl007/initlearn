@@ -1,7 +1,8 @@
-$(window).load(function () {
+requirejs(['jquery', 'form', 'menu', 'outsideArea', 'ajax/config'], function ($, form, menu, outsideArea, config) {
 
-    Modal.init();
-    Form.init();
-    Menu.init(Modal, Form);
-    OutsideArea.init(Modal);
+    $(function () {
+        form.init();
+        menu.init();
+        outsideArea.init();
+    });
 });

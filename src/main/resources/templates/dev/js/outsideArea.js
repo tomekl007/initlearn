@@ -1,21 +1,25 @@
-var OutsideArea = (function () {
+define('outsideArea', ['jquery', 'modal'], function ($, modal) {
 
-    var $outsideArea = $('.main-outside-area');
+    var OutsideArea = (function () {
+        var $outsideArea = $('.main-outside-area');
 
-    var init = function(Modal) {
-        attachEvents(Modal);
-    };
+        var init = function () {
+            attachEvents();
+        };
 
-    var attachEvents = function(Modal) {
-        $outsideArea.on('click', close);
-        $outsideArea.on('click', Modal.close);
-    };
+        var attachEvents = function () {
+            $outsideArea.on('click', close);
+            $outsideArea.on('click', modal.close);
+        };
 
-    var close = function() {
-        $outsideArea.removeClass('is-active');
-    };
+        var close = function () {
+            $outsideArea.removeClass('is-active');
+        };
 
-    return {
-        init: init
-    };
-})();
+        return {
+            init: init
+        };
+    })();
+
+    return OutsideArea;
+});

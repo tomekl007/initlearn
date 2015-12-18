@@ -5,6 +5,19 @@ var jshint = require('gulp-jshint');
 var sass = require('gulp-sass');
 var minifyCss = require('gulp-minify-css');
 var browserSync = require('browser-sync').create();
+//var rjs = require('gulp-requirejs');
+
+
+/*gulp.task('requirejs', function () {
+    rjs({
+        name: 'main',
+        baseUrl: 'dev/js',
+        out: 'main.js',
+        paths: {
+            jquery: 'lib/jquery'
+        }
+    })
+});*/
 
 gulp.task('minify-css', function () {
     gulp.src('dev/css/*.css')
@@ -24,13 +37,13 @@ gulp.task('sass', function () {
 gulp.task('default', ['browser-sync']);
 
 gulp.task('uglify', function () {
-    gulp.src('dev/js/*.js')
+    gulp.src('dev/js/**/*.js')
         .pipe(uglify('main.min.js'))
         .pipe(gulp.dest('assets/js'))
 });
 
 gulp.task('hint', function () {
-    gulp.src('dev/js/*.js')
+    gulp.src(['dev/js/**/*.js', '!dev/js/lib/**/*.js'])
         .pipe(jshint())
         .pipe(jshint.reporter('default', {verbose: true}));
 });
@@ -43,6 +56,6 @@ gulp.task('browser-sync', function () {
     });
 
     gulp.watch("dev/scss/*.scss", ['sass', 'minify-css']).on('change', browserSync.reload);
-    gulp.watch("dev/js/*.js", ['hint', 'uglify']).on('change', browserSync.reload);
+    gulp.watch("dev/js/**/*.js", ['hint', 'uglify']).on('change', browserSync.reload);
     gulp.watch("./*.html").on('change', browserSync.reload);
 });
