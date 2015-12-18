@@ -1,4 +1,6 @@
-define('menu', ['jquery', 'modal', 'form'], function ($, modal, form) {
+import $ from '../lib/jquery';
+import Modal from './modal';
+import Form from './form';
 
     var Menu = (function () {
 
@@ -14,10 +16,10 @@ define('menu', ['jquery', 'modal', 'form'], function ($, modal, form) {
         var attachEvents = function () {
 
             $mobileOpenBtn.on('click', toggleMobile);
-            $signInBtn.on('click', modal.open);
-            $signInBtn.on('click', form.show);
-            $createAccountBtn.on('click', modal.open);
-            $createAccountBtn.on('click', form.show);
+            $signInBtn.on('click', Modal.open);
+            $signInBtn.on('click', Form.show);
+            $createAccountBtn.on('click', Modal.open);
+            $createAccountBtn.on('click', Form.show);
         };
 
         var toggleMobile = function () {
@@ -29,5 +31,4 @@ define('menu', ['jquery', 'modal', 'form'], function ($, modal, form) {
         };
     })();
 
-    return Menu;
-});
+module.exports = Menu;

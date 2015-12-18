@@ -1,8 +1,10 @@
-requirejs(['jquery', 'form', 'menu', 'outsideArea', 'ajax/config'], function ($, form, menu, outsideArea, config) {
+import $ from './lib/jquery';
+import Form from './controllers/form';
+import Menu from './controllers/menu';
+import OutsideArea from './controllers/outsideArea';
 
-    $(function () {
-        form.init();
-        menu.init();
-        outsideArea.init();
-    });
+$(function () {
+    Form.init();
+    Menu.init();
+    OutsideArea.init();
 });

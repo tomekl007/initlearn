@@ -1,23 +1,24 @@
 var gulp = require('gulp');
 var concat = require('gulp-concat');
-var uglify = require('gulp-uglifyjs');
-var jshint = require('gulp-jshint');
+var uglifyify = require('uglifyify');
 var sass = require('gulp-sass');
 var minifyCss = require('gulp-minify-css');
 var browserSync = require('browser-sync').create();
-//var rjs = require('gulp-requirejs');
+var browserify = require('browserify');
+var source = require('vinyl-source-stream');
+var rename = require('gulp-rename');
+var babelify = require('babelify');
 
-
-/*gulp.task('requirejs', function () {
-    rjs({
-        name: 'main',
-        baseUrl: 'dev/js',
-        out: 'main.js',
-        paths: {
-            jquery: 'lib/jquery'
-        }
-    })
-});*/
+gulp.task('compile-js', function() {
+    var b = browserify();
+    b.transform(babelify);
+    b.transform(uglifyify);
+    b.add('dev/js/main.js');
+    return b.bundle()
+        .pipe(source('dev/js/main.js'))
+        .pipe(rename('main.min.js'))
+        .pipe(gulp.dest('assets/js/'));
+});
 
 gulp.task('minify-css', function () {
     gulp.src('dev/css/*.css')
@@ -34,20 +35,6 @@ gulp.task('sass', function () {
         .pipe(gulp.dest('dev/css'));
 });
 
-gulp.task('default', ['browser-sync']);
-
-gulp.task('uglify', function () {
-    gulp.src('dev/js/**/*.js')
-        .pipe(uglify('main.min.js'))
-        .pipe(gulp.dest('assets/js'))
-});
-
-gulp.task('hint', function () {
-    gulp.src(['dev/js/**/*.js', '!dev/js/lib/**/*.js'])
-        .pipe(jshint())
-        .pipe(jshint.reporter('default', {verbose: true}));
-});
-
 gulp.task('browser-sync', function () {
     browserSync.init({
         server: {
@@ -56,6 +43,8 @@ gulp.task('browser-sync', function () {
     });
 
     gulp.watch("dev/scss/*.scss", ['sass', 'minify-css']).on('change', browserSync.reload);
-    gulp.watch("dev/js/**/*.js", ['hint', 'uglify']).on('change', browserSync.reload);
+    gulp.watch("dev/js/**/*.js", ['compile-js']).on('change', browserSync.reload);
     gulp.watch("./*.html").on('change', browserSync.reload);
 });
+
+gulp.task('default', ['browser-sync']);
