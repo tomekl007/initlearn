@@ -21,11 +21,22 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         logger.info("Request URL::" + request.getRequestURL().toString()
                 + " Sent to Handler :: Current Time=" + System.currentTimeMillis()
                 + "r.status : " + response.getStatus() + "req.contextPath : " + request.getContextPath()
-                + "handler: " + handler + " MandV" + modelAndView.getModelMap() + "" + modelAndView.getModel()) ;
-        
-        
+                + "handler: " + handler + " MandV" + modelAndView.getModelMap() + "" + modelAndView.getModel());
+
+
         //we can add attributes in the modelAndView and use that in the view page
     }
+
+    @Override
+    public void afterCompletion(
+            HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
+            throws Exception{
+        logger.info("Request URL::" + request.getRequestURL().toString()
+                + " Sent to Handler :: Current Time=" + System.currentTimeMillis()
+                + "r.status : " + response.getStatus() + "req.contextPath : " + request.getContextPath()
+                + "handler: " + handler + " ex " + ex );
+    }
+
 
 
 }
