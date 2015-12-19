@@ -1,14 +1,14 @@
-define('ajax/config', function () {
-    var config = (function () {
+var Config = (function () {
 
-        var appUrl = 'https://initlearn.herokuapp.com/';
-        var userGroupPath = 'group/users/';
+    var appUrl = 'https://initlearn.herokuapp.com/';
+    var userGroupPath = 'group/users/';
+    var allTeachersUrl = appUrl + userGroupPath + 'teachers';
 
-        return {
-            appUrl: appUrl,
-            userGroupPath: userGroupPath
-        };
-    })();
+    return {
+        appUrl: appUrl,
+        userGroupPath: userGroupPath,
+        allTeachersUrl: allTeachersUrl
+    };
+})();
 
-    return config;
-});
+module.exports = Config;
