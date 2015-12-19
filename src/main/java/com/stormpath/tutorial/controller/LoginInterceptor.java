@@ -32,7 +32,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
                         + " att names: " + request.getAttribute("StormpathHttpServletRequest") + " view : " +
                     view);
         
-        
+
         //we can add attributes in the modelAndView and use that in the view page
     }
 

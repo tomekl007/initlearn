@@ -13,9 +13,10 @@ public class User {
     public final List<String> skills;
     public final List<String> links;
     public final String bio;
+    public final String img;
 
     public User(String email, String fullName, String givenName, String middleName, String screenHero, Integer hourRate,
-                String linkedIn, List<String> skills, List<String> links, String bio) {
+                String linkedIn, List<String> skills, List<String> links, String bio, String img) {
         this.email = email;
         this.fullName = fullName;
         this.givenName = givenName;
@@ -26,6 +27,7 @@ public class User {
         this.skills = skills;
         this.links = links;
         this.bio = bio;
+        this.img = img;
     }
 
     @Override
