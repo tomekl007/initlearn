@@ -1,4 +1,5 @@
-define('outsideArea', ['jquery', 'modal'], function ($, modal) {
+import $ from '../lib/jquery';
+import Modal from './modal';
 
     var OutsideArea = (function () {
         var $outsideArea = $('.main-outside-area');
@@ -9,7 +10,7 @@ define('outsideArea', ['jquery', 'modal'], function ($, modal) {
 
         var attachEvents = function () {
             $outsideArea.on('click', close);
-            $outsideArea.on('click', modal.close);
+            $outsideArea.on('click', Modal.close);
         };
 
         var close = function () {
@@ -21,5 +22,4 @@ define('outsideArea', ['jquery', 'modal'], function ($, modal) {
         };
     })();
 
-    return OutsideArea;
-});
+module.exports = OutsideArea;
