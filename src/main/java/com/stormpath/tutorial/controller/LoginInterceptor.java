@@ -24,7 +24,6 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         Enumeration<String> attributeNames = request.getAttributeNames();
 
         View view = modelAndView.getView();
-        
 
         logger.info("postHandle Request URL::" + request.getRequestURL().toString()
                 + " Sent to Handler :: Current Time=" + System.currentTimeMillis()
@@ -33,6 +32,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
                         + " att names: " + request.getAttribute("StormpathHttpServletRequest") + " view : " +
                     view);
         
+        logger.info("view : " + view.getContentType() + ", : " + view + ", ");
 
 
         //we can add attributes in the modelAndView and use that in the view page

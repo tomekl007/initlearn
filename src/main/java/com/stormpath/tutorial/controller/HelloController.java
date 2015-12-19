@@ -19,7 +19,6 @@ package com.stormpath.tutorial.controller;
 import com.stormpath.sdk.account.Account;
 import com.stormpath.sdk.client.Client;
 import com.stormpath.sdk.servlet.account.AccountResolver;
-import com.stormpath.tutorial.db.RecordRepository;
 import com.stormpath.tutorial.service.AdminService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,9 +32,6 @@ import java.util.function.Consumer;
 @Controller
 public class HelloController {
     private static final Logger logger = LoggerFactory.getLogger(HelloController.class);
-    @Autowired
-    private RecordRepository repository;
-
     @Autowired
     private Client client;
 
