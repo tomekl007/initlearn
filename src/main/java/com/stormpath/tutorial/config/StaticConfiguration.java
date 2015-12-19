@@ -33,8 +33,8 @@ public class StaticConfiguration extends WebMvcConfigurerAdapter {
         registry.addInterceptor(new LoginInterceptor());
     }
 
-//    @Bean
-//    public Filter shallowEtagHeaderFilter() {
-//        return new CustomFilter();
-//    }
+    @Bean
+    public Filter addFilter() {
+        return new CustomFilter();
+    }
 }
