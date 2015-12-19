@@ -18,7 +18,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
     public void postHandle(HttpServletRequest request,
                            HttpServletResponse response, Object handler,
                            ModelAndView modelAndView) throws Exception {
-        logger.info("Request URL::" + request.getRequestURL().toString()
+        logger.info("postHandle Request URL::" + request.getRequestURL().toString()
                 + " Sent to Handler :: Current Time=" + System.currentTimeMillis()
                 + "r.status : " + response.getStatus() + "req.contextPath : " + request.getContextPath()
                 + "handler: " + handler + " MandV" + modelAndView.getModelMap() + "" + modelAndView.getModel());
@@ -31,7 +31,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
     public void afterCompletion(
             HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
             throws Exception{
-        logger.info("Request URL::" + request.getRequestURL().toString()
+        logger.info("afterCompletion Request URL::" + request.getRequestURL().toString()
                 + " Sent to Handler :: Current Time=" + System.currentTimeMillis()
                 + "r.status : " + response.getStatus() + "req.contextPath : " + request.getContextPath()
                 + "handler: " + handler + " ex " + ex );
