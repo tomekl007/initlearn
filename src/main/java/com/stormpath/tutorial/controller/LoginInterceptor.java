@@ -3,6 +3,7 @@ package com.stormpath.tutorial.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,12 +23,16 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
                            ModelAndView modelAndView) throws Exception {
         Enumeration<String> attributeNames = request.getAttributeNames();
 
+        View view = modelAndView.getView();
         
+
         logger.info("postHandle Request URL::" + request.getRequestURL().toString()
                 + " Sent to Handler :: Current Time=" + System.currentTimeMillis()
                 + "r.status : " + response.getStatus() + "req.contextPath : " + request.getContextPath()
                 + "handler: " + handler + " MandV" + modelAndView.getModelMap() + "" + modelAndView.getModel()
-                        + " att names: " + request.getAttribute("StormpathHttpServletRequest"));
+                        + " att names: " + request.getAttribute("StormpathHttpServletRequest") + " view : " +
+                    view);
+        
 
 
         //we can add attributes in the modelAndView and use that in the view page
