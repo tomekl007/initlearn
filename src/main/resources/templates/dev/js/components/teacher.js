@@ -7,8 +7,8 @@ class Teacher extends React.Component {
                 <div className='col s12 m6'>
                     <div className='card-wrapper'>
                         <div className='card-header-img'>
-                            <a href='https://pl.linkedin.com/in/tomaszlelek'>
-                                <img src='assets/teachers/teacher_2.jpg' alt='teacher profile image'/>
+                            <a href={teacher.linkedIn}>
+                                <img src={teacher.img} alt='teacher profile image'/>
                             </a>
                         </div>
                         <div className='card-header'>
