@@ -28,10 +28,10 @@ public class StaticConfiguration extends WebMvcConfigurerAdapter {
 
     }
 
-//    @Override
-//    public void addInterceptors(InterceptorRegistry registry) {
-//        registry.addInterceptor(new LoginInterceptor());
-//    }
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new LoginInterceptor());
+    }
 
 //    @Bean
 //    public Filter shallowEtagHeaderFilter() {
