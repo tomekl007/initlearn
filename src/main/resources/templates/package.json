@@ -22,9 +22,8 @@
     "react": "^0.13.2",
     "react-router": "^0.13.3",
     "uglifyify": "^3.0.1",
-    "vinyl-source-stream": "^1.1.0",
-    "react": "^0.13.2",
-    "react-router": "^0.13.3"
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0"
   },
   "scripts": {
     "start": "gulp"

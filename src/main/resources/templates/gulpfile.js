@@ -1,6 +1,6 @@
 var gulp = require('gulp');
 var concat = require('gulp-concat');
-var uglifyify = require('uglifyify');
+var uglify = require('gulp-uglify');
 var sass = require('gulp-sass');
 var minifyCss = require('gulp-minify-css');
 var browserSync = require('browser-sync').create();
@@ -8,14 +8,16 @@ var browserify = require('browserify');
 var source = require('vinyl-source-stream');
 var rename = require('gulp-rename');
 var babelify = require('babelify');
+var buffer = require('vinyl-buffer');
 
 gulp.task('compile-js', function() {
     var b = browserify();
     b.transform(babelify);
-    b.transform(uglifyify);
     b.add('dev/js/main.js');
     return b.bundle()
         .pipe(source('dev/js/main.js'))
+        .pipe(buffer())
+        .pipe(uglify())
         .pipe(rename('main.min.js'))
         .pipe(gulp.dest('assets/js/'));
 });
