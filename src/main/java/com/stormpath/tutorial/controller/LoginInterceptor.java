@@ -7,6 +7,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Collection;
 
 
 public class LoginInterceptor extends HandlerInterceptorAdapter {
@@ -35,6 +36,12 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
                 + " Sent to Handler :: Current Time=" + System.currentTimeMillis()
                 + "r.status : " + response.getStatus() + "req.contextPath : " + request.getContextPath()
                 + "handler: " + handler + " ex " + ex );
+        Collection<String> headerNames = response.getHeaderNames();
+        for (String headerName : headerNames) {
+            logger.info("cookie : "+ headerName);
+        }
+
+
     }
 
 
