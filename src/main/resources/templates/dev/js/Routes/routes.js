@@ -9,6 +9,7 @@ import HomeView from '../views/home';
 var routes = (
     <Route name="app" path="/">
         <Route name="teachers" handler={TeachersView}/>
+        <Route name="*" path='*' handler={HomeView}/>
         <DefaultRoute handler={HomeView}/>
     </Route>
 );
