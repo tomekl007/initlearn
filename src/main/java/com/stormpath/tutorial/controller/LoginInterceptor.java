@@ -8,6 +8,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Collection;
+import java.util.Enumeration;
 
 
 public class LoginInterceptor extends HandlerInterceptorAdapter {
@@ -19,10 +20,13 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
     public void postHandle(HttpServletRequest request,
                            HttpServletResponse response, Object handler,
                            ModelAndView modelAndView) throws Exception {
+        Enumeration<String> attributeNames = request.getAttributeNames();
+
         logger.info("postHandle Request URL::" + request.getRequestURL().toString()
                 + " Sent to Handler :: Current Time=" + System.currentTimeMillis()
                 + "r.status : " + response.getStatus() + "req.contextPath : " + request.getContextPath()
-                + "handler: " + handler + " MandV" + modelAndView.getModelMap() + "" + modelAndView.getModel());
+                + "handler: " + handler + " MandV" + modelAndView.getModelMap() + "" + modelAndView.getModel()
+                        + " att names: " + request.getAttributeNames());
 
 
         //we can add attributes in the modelAndView and use that in the view page

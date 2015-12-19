@@ -24,8 +24,8 @@ public class CustomFilter extends HttpFilter {
     
     @Override
     protected void filter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
-        logger.info("filter request :" + request.getContextPath());
-        logger.info("filter response :" + response.getStatus());
+        logger.info("filter request :" + request.getContextPath() +
+        "filter response :" + response.getStatus());
         chain.doFilter(request, response);
     }
 
