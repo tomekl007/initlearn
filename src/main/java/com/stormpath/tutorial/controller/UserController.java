@@ -4,6 +4,7 @@ import com.stormpath.sdk.account.Account;
 import com.stormpath.sdk.account.AccountList;
 import com.stormpath.sdk.client.Client;
 import com.stormpath.sdk.group.Group;
+import com.stormpath.tutorial.avarage.AverageCountStrategy;
 import com.stormpath.tutorial.model.User;
 import com.stormpath.tutorial.user.UserService;
 import com.stormpath.tutorial.utils.AccountUtils;
@@ -129,6 +130,13 @@ public class UserController {
         return new ResponseEntity<>(AccountUtils.mapToUsers(accountsByEmail), HttpStatus.OK);
     }
 
+    @RequestMapping(value = "users/{email:.+}/rate", method = RequestMethod.POST)
+    public ResponseEntity<List<User>> addRateForTeacher(@RequestBody Double rate, @PathVariable("email") String email) {
+        List<User> users = userService.rateTeacher(rate, email);
+        return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+
+    
     @RequestMapping("/me")
     ResponseEntity<User> me(ServletRequest servletRequest) {
         return AccountUtils.actionForAuthenticatedUserOrRedirectToLogin(servletRequest, AccountUtils::mapAccountToUser);

@@ -5,6 +5,7 @@ import com.stormpath.sdk.account.AccountList;
 import com.stormpath.sdk.directory.CustomData;
 import com.stormpath.sdk.servlet.account.AccountResolver;
 import com.stormpath.tutorial.model.User;
+import com.stormpath.tutorial.model.UserBuilder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,8 @@ public class AccountUtils {
     public static final String LINKS_FILED = "links";
     public static final String BIO_FILED = "bio";
     public static final String IMG_FIELD = "img";
+    public static final String NUMBER_OF_RATES_FIELD = "numberOfRates";
+    public static final String AVERAGE_FIELD = "average";
 
     public static void addBioField(Account a, String bio) {
         addCustomFieldToAccount(a, BIO_FILED, bio);
@@ -44,6 +47,14 @@ public class AccountUtils {
 
     public static void addSkillsForTeacher(Account a, List<String> skills) {
         addCustomListFieldToAccount(a, SKILLS_FIELD, skills, a.getCustomData());
+    }
+
+    public static void addNumberOfRateForTeacher(Account a, Integer numberOfRates) {
+        addCustomIntegerField(a, NUMBER_OF_RATES_FIELD, numberOfRates);
+    }
+    
+    public static void addAverageForTeacher(Account a, Double average){
+        addCustomFieldToAccount(a, AVERAGE_FIELD, String.valueOf(average));
     }
 
 
@@ -74,6 +85,12 @@ public class AccountUtils {
         a.save();
     }
 
+    public static void addCustomIntegerField(Account a, String name, Integer value) {
+        CustomData customData = a.getCustomData();
+        customData.put(name, value);
+        a.save();
+    }
+
     public static String getCustomFieldValue(Account a, String field) {
         Object o = a.getCustomData().get(field);
         if (o == null) {
@@ -81,6 +98,16 @@ public class AccountUtils {
         } else {
             return (String) o;
         }
+    }
+    
+    public static Double getCustomFieldValueAsDouble(Account a, String field){
+        Object o = a.getCustomData().get(field);
+        if(o == null) {
+            return null;
+        }else{
+           return Double.parseDouble((String)o);
+        }
+
     }
 
     public static Integer getCustomIntegerValue(Account a, String field) {
@@ -103,21 +130,29 @@ public class AccountUtils {
 
 
     public static User mapAccountToUser(Account a) {
-        return new User(a.getEmail(), a.getFullName(), a.getGivenName(), a.getMiddleName(),
-                AccountUtils.getCustomFieldValue(a, SCREEN_HERO_FIELD),
-                AccountUtils.getCustomIntegerValue(a, HOUR_RATE_FIELD),
-                AccountUtils.getCustomFieldValue(a, LINKEDIN_FIELD),
-                AccountUtils.getCustomListFieldValue(a, SKILLS_FIELD),
-                AccountUtils.getCustomListFieldValue(a, LINKS_FILED),
-                AccountUtils.getCustomFieldValue(a, BIO_FILED),
-                AccountUtils.getCustomFieldValue(a, IMG_FIELD));
+        return new UserBuilder()
+                .setEmail(a.getEmail())
+                .setFullName(a.getFullName())
+                .setGivenName(a.getGivenName())
+                .setMiddleName(a.getMiddleName())
+                .setScreenHero(AccountUtils.getCustomFieldValue(a, SCREEN_HERO_FIELD))
+                .setHourRate(AccountUtils.getCustomIntegerValue(a, HOUR_RATE_FIELD))
+                .setLinkedIn(AccountUtils.getCustomFieldValue(a, LINKEDIN_FIELD))
+                .setSkills(AccountUtils.getCustomListFieldValue(a, SKILLS_FIELD))
+                .setLinks(AccountUtils.getCustomListFieldValue(a, LINKS_FILED))
+                .setBio(AccountUtils.getCustomFieldValue(a, BIO_FILED))
+                .setImg(AccountUtils.getCustomFieldValue(a, IMG_FIELD))
+                .setAverage(AccountUtils.getCustomFieldValueAsDouble(a, AVERAGE_FIELD))
+                .setNumberOfRates(AccountUtils.getCustomIntegerValue(a, NUMBER_OF_RATES_FIELD))
+                .createUser();
     }
 
 
     public static List<User> mapToUsers(List<Account> list) {
         return list
                 .stream()
-                .map(AccountUtils::mapAccountToUser).collect(Collectors.toList());
+                .map(AccountUtils::mapAccountToUser)
+                .collect(Collectors.toList());
     }
 
 
