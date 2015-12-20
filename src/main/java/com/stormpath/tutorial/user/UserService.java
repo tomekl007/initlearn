@@ -45,7 +45,7 @@ public class UserService {
         return accounts;
     }
 
-    public List<User> rateTeacher(Double newValue, String email) {
+    public List<User> rateTeacher(Integer newValue, String email) {
         Map<Account, User> usersByEmail = findUsersAndAccountByEmail(email);
         for (Map.Entry<Account, User> entry : usersByEmail.entrySet()) {
             Double currentAverage = entry.getValue().average;

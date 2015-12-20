@@ -131,7 +131,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "users/{email:.+}/rate", method = RequestMethod.POST)
-    public ResponseEntity<List<User>> addRateForTeacher(@RequestBody Double rate, @PathVariable("email") String email) {
+    public ResponseEntity<List<User>> addRateForTeacher(@RequestBody Integer rate, @PathVariable("email") String email) {
         List<User> users = userService.rateTeacher(rate, email);
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
