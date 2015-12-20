@@ -2,8 +2,6 @@ import Config from '../ajax/config';
 import React from 'react';
 import TeachersComponent from '../components/teachers';
 
-/*change hardcoded url to Config.allTeachersUrl*/
-
 class Teachers extends React.Component {
     render() {
         return (
@@ -13,7 +11,7 @@ class Teachers extends React.Component {
                         <h2 className='section-header color-blue'>Our Teachers</h2>
                     </div>
                     <div>
-                        <TeachersComponent url='https://initlearn.herokuapp.com/group/users/teachers' />
+                        <TeachersComponent url={Config.allTeachersUrl} />
                     </div>
                 </div>
             </section>
