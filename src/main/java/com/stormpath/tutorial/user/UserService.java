@@ -48,8 +48,8 @@ public class UserService {
     public List<User> rateTeacher(Integer newValue, String email) {
         Map<Account, User> usersByEmail = findUsersAndAccountByEmail(email);
         for (Map.Entry<Account, User> entry : usersByEmail.entrySet()) {
-            Double currentAverage = Optional.of(entry.getValue().average).orElse(0d);
-            Integer numberOfRates = Optional.of(entry.getValue().numberOfRates).orElse(0);
+            Double currentAverage = Optional.ofNullable(entry.getValue().average).orElse(0d);
+            Integer numberOfRates = Optional.ofNullable(entry.getValue().numberOfRates).orElse(0);
 
             double newAverageRate = AverageCountStrategy.countApproxAverage(currentAverage, newValue, numberOfRates);
 
