@@ -1,9 +1,9 @@
 import React from 'react';
 import $ from '../lib/jquery';
-import TeacherComponent from './teacher';
+import UserComponent from './user';
 
 /*improve Teachers class to ES6*/
-var Teachers = React.createClass({
+var Users = React.createClass({
 
     getInitialState() {
         return {data: []};
@@ -26,9 +26,9 @@ var Teachers = React.createClass({
     },
     render() {
         return (
-            <TeacherComponent data={this.state.data} />
+            <UserComponent data={this.state.data} />
         );
     }
 });
 
-module.exports = Teachers;
+module.exports = Users;

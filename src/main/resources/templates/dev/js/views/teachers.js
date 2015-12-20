@@ -1,6 +1,6 @@
 import Config from '../ajax/config';
 import React from 'react';
-import TeachersComponent from '../components/teachers';
+import UsersComponent from '../components/users';
 
 class Teachers extends React.Component {
     render() {
@@ -11,7 +11,7 @@ class Teachers extends React.Component {
                         <h2 className='section-header color-blue'>Our Teachers</h2>
                     </div>
                     <div>
-                        <TeachersComponent url={Config.allTeachersUrl} />
+                        <UsersComponent url={Config.allTeachersUrl} />
                     </div>
                 </div>
             </section>
