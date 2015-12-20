@@ -35,7 +35,7 @@ public class SpringSecurityWebAppConfig extends WebSecurityConfigurerAdapter {
         http
             .apply(stormpath()).and()
             .authorizeRequests()
-            .antMatchers("/", "/login", "/users", "/users/*", "/group/users/*", "users/*/*", "users/**/skills", "/isLoggedIn")
+            .antMatchers("/", "/login", "/users", "/users/**", "/group/users/*", "users/*/*", "users/**/skills", "/isLoggedIn")
             .permitAll();
     }
     @Override
