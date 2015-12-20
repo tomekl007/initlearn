@@ -29,15 +29,17 @@ import static com.stormpath.spring.config.StormpathWebSecurityConfigurer.stormpa
 public class SpringSecurityWebAppConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .antMatcher("/users/**").
-                csrf().disable();
+//        http
+//                .antMatcher("/users/**").
+//                csrf().disable();
 
         http
                 .apply(stormpath()).and()
                 .authorizeRequests()
                 .antMatchers("/", "/login", "/users", "/users/**", "/group/users/*", "users/*/*", "users/**/skills", "/isLoggedIn")
-                .permitAll();
+                .permitAll()
+                .and()
+                .antMatcher("/users/**").csrf().disable().httpBasic();
     }
 
     @Override
