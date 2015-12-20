@@ -54,9 +54,13 @@ public class AccountUtils {
     }
     
     public static void addAverageForTeacher(Account a, Double average){
-        addCustomFieldToAccount(a, AVERAGE_FIELD, String.valueOf(average));
+        String newAv = convertDoubleToString(average);
+        addCustomFieldToAccount(a, AVERAGE_FIELD, newAv);
     }
 
+    public static String convertDoubleToString(Double average) {
+        return String.valueOf(average);
+    }
 
     public static void addImgField(Account a, String img) {
         addCustomFieldToAccount(a, HOUR_RATE_FIELD, img);
@@ -105,9 +109,13 @@ public class AccountUtils {
         if(o == null) {
             return null;
         }else{
-           return Double.parseDouble((String)o);
+           return convertStringToDouble((String) o);
         }
 
+    }
+    
+    public static double convertStringToDouble(String o) {
+        return Double.parseDouble(o);
     }
 
     public static Integer getCustomIntegerValue(Account a, String field) {

@@ -52,7 +52,7 @@ public class UserService {
             Integer numberOfRates = Optional.ofNullable(entry.getValue().numberOfRates).orElse(0);
 
             double newAverageRate = AverageCountStrategy.countApproxAverage(currentAverage, newValue, numberOfRates);
-
+            logger.info("rateTeacher, new rate: " + newAverageRate);
             addNewRateAndAverage(entry.getKey(), numberOfRates, newAverageRate);
         }
         return new ArrayList<>(usersByEmail.values());
