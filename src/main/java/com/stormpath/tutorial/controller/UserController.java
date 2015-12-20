@@ -130,7 +130,7 @@ public class UserController {
         return new ResponseEntity<>(AccountUtils.mapToUsers(accountsByEmail), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "users/{email:.+}/rate", method = RequestMethod.POST)
+    @RequestMapping(value = "users/{email:.+}/rate", method = RequestMethod.POST, consumes = "application/json")
     public ResponseEntity<List<User>> addRateForTeacher(@RequestBody Integer rate, @PathVariable("email") String email) {
         List<User> users = userService.rateTeacher(rate, email);
         return new ResponseEntity<>(users, HttpStatus.OK);
