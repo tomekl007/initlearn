@@ -89,7 +89,6 @@
                 <div form-group="true" class="main-input-wrapper">
                     <a th:href="@{${forgotLoginUri}}" class="to-login" th:text="#{stormpath.web.login.form.resetLink.text}">|Forgot Password?|</a>
                 </div>
-                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 
                 <button type="submit" class="main-btn btn-primary">login</button>
 
