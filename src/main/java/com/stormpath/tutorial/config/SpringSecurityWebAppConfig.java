@@ -39,7 +39,7 @@ public class SpringSecurityWebAppConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/", "/login", "/users", "/users/**", "/group/users/*", "users/*/*", "users/**/skills", "/isLoggedIn")
                 .permitAll()
                 .and()
-                .antMatcher("/users/**").csrf().disable().httpBasic();
+                .antMatcher("/users/**").csrf().disable();
     }
 
     @Override
