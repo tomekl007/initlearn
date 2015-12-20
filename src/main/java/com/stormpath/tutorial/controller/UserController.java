@@ -5,6 +5,7 @@ import com.stormpath.sdk.account.AccountList;
 import com.stormpath.sdk.client.Client;
 import com.stormpath.sdk.group.Group;
 import com.stormpath.tutorial.avarage.AverageCountStrategy;
+import com.stormpath.tutorial.controller.jsonrequest.Rate;
 import com.stormpath.tutorial.model.User;
 import com.stormpath.tutorial.user.UserService;
 import com.stormpath.tutorial.utils.AccountUtils;
@@ -131,12 +132,11 @@ public class UserController {
     }
 
     @RequestMapping(value = "users/{email:.+}/rate", method = RequestMethod.POST, consumes = "application/json")
-    public ResponseEntity<List<User>> addRateForTeacher(@RequestBody Integer rate, @PathVariable("email") String email) {
-        List<User> users = userService.rateTeacher(rate, email);
+    public ResponseEntity<List<User>> addRateForTeacher(@RequestBody Rate rate, @PathVariable("email") String email) {
+        List<User> users = userService.rateTeacher(rate.getRate(), email);
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    
     @RequestMapping("/me")
     ResponseEntity<User> me(ServletRequest servletRequest) {
         return AccountUtils.actionForAuthenticatedUserOrRedirectToLogin(servletRequest, AccountUtils::mapAccountToUser);
