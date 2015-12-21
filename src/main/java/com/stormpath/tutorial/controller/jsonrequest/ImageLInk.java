@@ -13,4 +13,11 @@ public class ImageLink {
     public void setImg(String img) {
         this.img = img;
     }
+
+    @Override
+    public String toString() {
+        return "ImageLink{" +
+                "img='" + img + '\'' +
+                '}';
+    }
 }
