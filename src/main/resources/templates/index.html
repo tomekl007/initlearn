@@ -74,9 +74,9 @@
             </form>
         </div>
         <div class="main-form-wrapper">
-            <form id="sign-in-form" method="post" role="form" class="main-form" th:action="@{/login}">
+            <form id="ajaxLoginForm" method="post" role="form" class="main-form" action="oauth/token">
                 <div form-group="true" class="main-input-wrapper">
-                    <input class="main-input" name="login" type="text" autofocus="autofocus" required="required" value=""/>
+                    <input class="main-input" name="username" type="text" autofocus="autofocus" required="required" value=""/>
                     <label class="main-label">mail</label>
                     <div class="main-input-bg"></div>
                 </div>
@@ -86,6 +86,7 @@
                     <label class="main-label">password</label>
                     <div class="main-input-bg"></div>
                 </div>
+                <input name="grant_type" type="hidden" value="password"/>
                 <div form-group="true" class="main-input-wrapper">
                     <a th:href="@{${forgotLoginUri}}" class="to-login" th:text="#{stormpath.web.login.form.resetLink.text}">|Forgot Password?|</a>
                 </div>
