@@ -40,7 +40,6 @@ public class UserController {
         List<Account> list = new ArrayList<>();
         client.getAccounts().iterator().forEachRemaining(list::add);
         List<User> users = AccountUtils.mapToUsers(list);
-        logger.info("Return users : " + users);
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
