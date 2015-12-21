@@ -40,8 +40,8 @@ public class AccountUtils {
 
     }
 
-    public static void addHourRateForTeacher(Account a, Double value) {
-        addCustomFieldToAccount(a, HOUR_RATE_FIELD, value);
+    public static void addHourRateForTeacher(Account a, Integer value) {
+        addCustomIntegerField(a, HOUR_RATE_FIELD, value);
 
     }
 
