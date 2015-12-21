@@ -4,7 +4,6 @@ import com.stormpath.sdk.account.Account;
 import com.stormpath.sdk.account.AccountList;
 import com.stormpath.sdk.client.Client;
 import com.stormpath.sdk.group.Group;
-import com.stormpath.tutorial.avarage.AverageCountStrategy;
 import com.stormpath.tutorial.controller.jsonrequest.*;
 import com.stormpath.tutorial.model.User;
 import com.stormpath.tutorial.user.UserService;
@@ -125,9 +124,9 @@ public class UserController {
     }
 
     @RequestMapping(value = "users/{email:.+}/img", method = RequestMethod.POST)
-    public ResponseEntity<List<User>> addImgToTeacher(@RequestBody ImageLink img, @PathVariable("email") String email) {
+    public ResponseEntity<List<User>> addImgToTeacher(@RequestBody Link link, @PathVariable("email") String email) {
         List<Account> accountsByEmail = userService.findAccountsByEmail(email);
-        accountsByEmail.forEach(a -> AccountUtils.addImgField(a, img.getImg()));
+        accountsByEmail.forEach(a -> AccountUtils.addImgField(a, link.getLink()));
         return new ResponseEntity<>(AccountUtils.mapToUsers(accountsByEmail), HttpStatus.OK);
     }
 
