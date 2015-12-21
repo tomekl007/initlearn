@@ -93,6 +93,18 @@
                 <button type="submit" class="main-btn btn-primary">login</button>
 
             </form>
+
+            <form id="ajaxLoginForm" method="post" action="${pageContext.request.contextPath}/oauth/token">
+
+                <input name="username" type="text" autofocus="autofocus" required="required"/>
+
+                <input name="password" type="password" required="required"/>
+
+                <input name="grant_type" type="hidden" value="password"/>
+
+                <button type="submit">Log In</button>
+
+            </form>
         </div>
     </div>
     <div class="main-outside-area sticky pos-top pos-left"></div>
@@ -143,6 +155,32 @@
             js.src = "//connect.facebook.net/en_US/sdk.js";
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
+    </script>
+    <script type="text/javascript">
+
+        var frm = $('#ajaxLoginForm');
+
+        frm.submit(function (ev) {
+
+            $.ajax({
+                type: frm.attr('method'),
+                url: frm.attr('action'),
+                data: frm.serialize(),
+
+                success: function (data) {
+                    window.location = "${pageContext.request.contextPath}/dashboard";
+                },
+
+                error: function(jqXHR, statusString, err) {
+                    alert('login attempt failed.  Please try again.');
+                }
+
+            });
+
+            ev.preventDefault();
+
+        });
+
     </script>
 
 </body>
