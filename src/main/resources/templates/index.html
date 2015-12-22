@@ -104,13 +104,13 @@
                 <input name="grant_type" type="hidden" value="password"/>
 
                 <button type="submit">Log In</button>
-
+                
             </form>
+            <button onclick="facebookLogin()" name="Facebook login"></button>
         </div>
     </div>
     <div id="temp-area"></div>
     <div class="main-outside-area sticky pos-top pos-left"></div>
-    <button onclick="facebookLogin()" name="Facebook login"></button>
     <footer class="main-footer">
 
     </footer>
@@ -144,6 +144,14 @@
             }, {scope: scopes});
 
         }
+        
+        function me() {
+            var FB = window.FB;
+            FB.api('/me', function(response) {
+                console.log(JSON.stringify(response));
+            });
+            
+        }
         function facebookToken(){
             var FB = window.FB;
             
@@ -156,7 +164,7 @@
                     // and signed request each expire
                     var uid = response.authResponse.userID;
                     var accessToken = response.authResponse.accessToken;
-                    console.log("Access token : "+ accessToken)
+                    console.log("Access token : "+ accessToken + " userId " + uid)
                 } else if (response.status === 'not_authorized') {
                     // the user is logged in to Facebook, 
                     // but has not authenticated your app
