@@ -5,10 +5,10 @@ import UsersComponent from '../components/users';
 class Teachers extends React.Component {
     render() {
         return (
-            <section id='teachers' className='main-section'>
+            <section id='teachers' className='main-section-teachers'>
                 <div className='row'>
                     <div className='col s12'>
-                        <h2 className='section-header color-blue'>Our Teachers</h2>
+                        <h2 className='section-header color-purple'>Our Teachers</h2>
                     </div>
                     <div>
                         <UsersComponent url={Config.allTeachersUrl} />

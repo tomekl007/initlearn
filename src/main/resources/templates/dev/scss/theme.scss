@@ -27,33 +27,6 @@
   text-align: center;
 }
 
-.card-wrapper {
-  position: relative;
-  box-shadow: $box-shadow;
-  padding: rem-calc(50px) rem-calc(10px) rem-calc(10px) rem-calc(10px);
-  margin-top: rem-calc(60px);
-}
-
-.card-header {
-  text-align: center;
-}
-
-.card-header-img {
-  position: absolute;
-  width: 100px;
-  height: 100px;
-  top: -50px;
-  left: 0;
-  right: 0;
-  margin: auto;
-  border-radius: 100%;
-  overflow: hidden;
-
-  img {
-    width: 100%;
-  }
-}
-
 .main-outside-area {
   display: none;
   width: 100%;

@@ -3,14 +3,14 @@ import React from 'react';
 import Router from 'react-router';
 import UsersComponent from '../components/users';
 
-class User extends React.Component {
+class UserProfile extends React.Component {
     render() {
         return (
-            <div>
+            <section id='profile' className='main-section-user-profile'>
                 <UsersComponent url={Config.appUrl + Router.HashLocation.getCurrentPath()} />
-            </div>
+            </section>
         );
     }
 }
 
-module.exports = User;
+module.exports = UserProfile;

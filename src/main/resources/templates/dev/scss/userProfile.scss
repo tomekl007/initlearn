@@ -1,0 +1,49 @@
+@import "variables";
+@import "functions";
+
+.main-section-user-profile {
+  margin-top: 150px;
+
+  .card-wrapper {
+    .user-skill {
+      display: block;
+      margin: rem-calc(5px) 0;
+    }
+  }
+
+  .card-header {
+    display: none;
+  }
+
+  @media #{$medium-and-up} {
+    .card-wrapper {
+
+      &:before {
+        height: 104px;
+      }
+    }
+
+    .card-header-img {
+      top: 2px;
+      left: 2px;
+      margin: 0;
+      border-radius: 0;
+    }
+
+    .card-header {
+      display: block;
+
+      .user-name {
+        margin: 0 0 45px 0;
+      }
+    }
+
+    .card-content {
+      text-align: left;
+
+      .user-name {
+        display: none;
+      }
+    }
+  }
+}

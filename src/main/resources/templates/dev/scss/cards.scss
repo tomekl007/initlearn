@@ -1,0 +1,57 @@
+@import "variables";
+@import "functions";
+
+.card-wrapper {
+  font-family: $fontRoboto;
+  display: block;
+  position: relative;
+  box-shadow: $box-shadow;
+  padding: rem-calc(50px) rem-calc(10px) rem-calc(10px) rem-calc(10px);
+  margin-top: rem-calc(60px);
+  text-decoration: none;
+  background-color: #fff;
+  color: #000;
+  border-radius: $border-radius;
+  border: 2px solid #fff;
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background-color: $color-purple;
+  }
+
+  .user-skill {
+    padding: rem-calc(5px);
+    margin: 0 rem-calc(5px);
+    background-color: $cardsUserSkillsBackground;
+    border-radius: $border-radius;
+  }
+}
+
+.card-header,
+.card-content {
+  position: relative;
+  text-align: center;
+}
+
+.card-header-img {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  top: -50px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  border-radius: 100%;
+  overflow: hidden;
+  border: 2px solid #fff;
+  transition: opacity .5s ease .5s;
+
+  img {
+    width: 100%;
+  }
+}

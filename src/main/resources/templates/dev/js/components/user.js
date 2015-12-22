@@ -2,32 +2,37 @@ import Config from '../ajax/config';
 import React from 'react';
 
 class User extends React.Component {
+
     render() {
-        var teacherNodes = this.props.data.map(function (user) {
-            var userSkills = user.skills.map(function(skill) {
+        var teacherNodes = this.props.data.map(function (user, key) {
+
+            var userSkills = user.skills.map(function (skill, key) {
                 return (
-                    <p>{skill}</p>
+                    <span className='user-skill color-white fw-700' key={key}>{skill}</span>
                 );
             });
+
             return (
-                <div className='col s12 m6'>
-                    <div className='card-wrapper'>
+                <div className='col s12 m6' key={key}>
+                    <a className='card-wrapper fw-100' href={Config.usersHash + user.email}>
                         <div className='card-header-img'>
-                            <a href={Config.usersHash + user.email}>
-                                <img src={user.img} alt='teacher profile image'/>
-                            </a>
+                            <img src={user.img} alt='teacher profile image'/>
                         </div>
                         <div className='card-header'>
-                            <p className='user-label-name'>Name:</p>
-                            <p className='user-name'>{user.fullName}</p>
+                            <h3 className='user-name color-white'>{user.fullName}</h3>
+                        </div>
+                        <div className='card-content'>
+                            <h3 className='user-name color-purple'>{user.fullName}</h3>
                             <p className='user-label-screenhero'>ScreenHero:</p>
                             <p className='user-screenhero'>{user.screenHero}</p>
                             <p className='user-label-rate'>Hour rate:</p>
                             <p className='user-hourRate'>{user.hourRate}</p>
                             <p className='user-label-skills'>Skills:</p>
-                            <p className='user-skills'>{userSkills}</p>
+                            <div className='user-skill-list'>
+                                {userSkills}
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             );
 

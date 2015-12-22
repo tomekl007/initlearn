@@ -1,13 +1,20 @@
+*, *:before, *:after {
+  box-sizing: inherit; }
+
 html {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
-  font-family: 'Source Sans Pro', sans-serif; }
+  font-family: "Source Sans Pro", sans-serif; }
 
 body {
-  background-color: #e8e8e8; }
+  background-color: #e8e8e8;
+  font-family: "Source Sans Pro", sans-serif; }
 
-*, *:before, *:after {
-  box-sizing: inherit; }
+.fw-100 {
+  font-weight: 100; }
+
+.fw-700 {
+  font-weight: 700; }
 
 li {
   position: relative;
@@ -27,6 +34,9 @@ li {
 
 .color-blue {
   color: #009ec3; }
+
+.color-purple {
+  color: #83639c; }
 
 .bg-gold {
   background-color: #f79f00; }
