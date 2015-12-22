@@ -1,7 +1,8 @@
+import $ from '../lib/jquery';
 import config from './config';
 import localStorage from '../common/localStorage';
 
-var UserLogin = (function () {
+var userData = (function () {
 
     var get = function() {
         $.ajax({
@@ -25,6 +26,6 @@ var UserLogin = (function () {
         get: get
     }
 
-});
+})();
 
-module.exports = UserLogin;
+module.exports = userData;

@@ -1,3 +1,4 @@
+import $ from '../lib/jquery';
 import config from './config';
 import localStorage from '../common/localStorage';
 
@@ -25,6 +26,6 @@ var UserLogin = (function () {
         get: get
     }
 
-});
+})();
 
 module.exports = UserLogin;

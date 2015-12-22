@@ -22,6 +22,6 @@ var LocalStorage = (function() {
     return {
         isAvailable: isAvailable
     }
-});
+})();
 
 module.exports = LocalStorage;
