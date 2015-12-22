@@ -1,6 +1,7 @@
 import $ from '../lib/jquery';
 import config from './config';
 import localStorage from '../common/localStorage';
+import userData from './userData';
 
 var UserLogin = (function () {
 
@@ -12,6 +13,7 @@ var UserLogin = (function () {
             },
             success: function(data){
                 console.log(data);
+                userData.get();
             },
             error: function(jqXHR, statusString, err) {
                 console.log(jqXHR);
