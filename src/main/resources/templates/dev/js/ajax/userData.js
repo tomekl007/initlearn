@@ -12,6 +12,11 @@ var userData = (function () {
             },
             success: function(data){
                 console.log(data);
+                $('.main-create-account').fadeOut(0);
+                $('.main-sign-in').fadeOut(0);
+                $('.main-nav-list').append('<li><a>'+ data.givenName +'</a></li>');
+                $('.main-nav-list').append('<li><a>logout</a></li>');
+
             },
             error: function(jqXHR, statusString, err) {
                 console.log(jqXHR);

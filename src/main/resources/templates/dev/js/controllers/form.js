@@ -2,6 +2,7 @@ import $ from '../lib/jquery';
 import localStorage from '../common/localStorage';
 import config from '../ajax/config';
 import userLogin from '../ajax/userLogin';
+import modal from './modal';
 
 var Form = (function () {
 
@@ -35,6 +36,7 @@ var Form = (function () {
                     }
 
                     userLogin.get();
+                    modal.close();
                 },
 
                 error: function(jqXHR, statusString, err) {
