@@ -13,12 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by tomasz.lelek on 16/12/15.
  */
 @Component
-public class UserService implements AccountFields{
+public class UserService implements AccountFields {
 
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
@@ -42,8 +43,8 @@ public class UserService implements AccountFields{
     public List<Account> findAccountsByEmail(String email) {
         return findAccountsBy("email", email);
     }
-    
-    private List<Account> findAccountsBy(String key, String value){
+
+    private List<Account> findAccountsBy(String key, String value) {
         List<Account> accounts = new ArrayList<>();
         client.getAccounts(Collections.singletonMap(key, value))
                 .iterator()
@@ -80,10 +81,21 @@ public class UserService implements AccountFields{
             AccountUtils.addLinksField(account, teacherData.links);
             AccountUtils.addLinkedInField(account, teacherData.linkedIn);
         }
-       return AccountUtils.mapToUsers(accountsByEmail);
+        return AccountUtils.mapToUsers(accountsByEmail);
     }
 
     public List<User> findUsersBySkill(String skill) {
-        return AccountUtils.mapToUsers(findAccountsBy("screenHero", skill));
+        return findAccountsByBruteForce(SKILLS_FIELD, skill);
+    }
+
+    //todo replace when will be resolved https://github.com/stormpath/stormpath-sdk-java/issues/221
+    private List<User> findAccountsByBruteForce(String skillsField, String skill) {
+        return getAllUsers().stream().filter(u -> u.skills.contains(skill)).collect(Collectors.toList());
+    }
+
+    public List<User> getAllUsers() {
+        List<Account> list = new ArrayList<>();
+        client.getAccounts().iterator().forEachRemaining(list::add);
+        return AccountUtils.mapToUsers(list);
     }
 }

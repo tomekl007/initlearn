@@ -33,10 +33,7 @@ public class UserController {
 
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     public ResponseEntity<List<User>> getAllUsers() {
-        List<Account> list = new ArrayList<>();
-        client.getAccounts().iterator().forEachRemaining(list::add);
-        List<User> users = AccountUtils.mapToUsers(list);
-        return new ResponseEntity<>(users, HttpStatus.OK);
+        return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
     }
 
 
