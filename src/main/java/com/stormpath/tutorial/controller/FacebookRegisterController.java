@@ -39,6 +39,7 @@ public class FacebookRegisterController {
         Account account = result.getAccount();
         logger.info("account for register fb : "+ AccountUtils.mapAccountToUser(account));
         FacebookProviderData providerData = (FacebookProviderData) account.getProviderData();
+        logger.info("token for that account" + providerData.getAccessToken());
         return new ResponseEntity<>(providerData.getAccessToken(), HttpStatus.OK);
     }
 }
