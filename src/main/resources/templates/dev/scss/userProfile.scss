@@ -5,9 +5,14 @@
   margin-top: 150px;
 
   .card-wrapper {
+    
     .user-skill {
       display: block;
       margin: rem-calc(5px) 0;
+    }
+
+    .user-more-info-btn {
+      display: none;
     }
   }
 

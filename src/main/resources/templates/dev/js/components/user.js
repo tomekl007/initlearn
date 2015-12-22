@@ -15,7 +15,7 @@ class User extends React.Component {
             return (
                 <div className='col s12 m6' key={key}>
                     <a className='card-wrapper fw-100' href={Config.usersHash + user.email}>
-                        <div className='card-header-img'>
+                        <div className='card-header-img bg-white'>
                             <img src={user.img} alt='teacher profile image'/>
                         </div>
                         <div className='card-header'>
@@ -31,6 +31,7 @@ class User extends React.Component {
                             <div className='user-skill-list'>
                                 {userSkills}
                             </div>
+                            <div className='user-more-info-btn main-btn fw-700 color-purple bg-white'>more</div>
                         </div>
                     </a>
                 </div>

@@ -5,6 +5,9 @@
   display: block;
   margin: 0.3125rem 0; }
 
+.main-section-user-profile .card-wrapper .user-more-info-btn {
+  display: none; }
+
 .main-section-user-profile .card-header {
   display: none; }
 
