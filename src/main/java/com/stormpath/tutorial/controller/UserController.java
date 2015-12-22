@@ -15,7 +15,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -113,7 +112,7 @@ public class UserController {
 
     @RequestMapping("/me")
     ResponseEntity<User> me(ServletRequest servletRequest) {
-        return AccountUtils.actionForAuthenticatedUserOrRedirectToLogin(servletRequest, AccountUtils::mapAccountToUser);
+        return AccountUtils.actionForAuthenticatedUserOrUnauthorized(servletRequest, AccountUtils::mapAccountToUser);
     }
 
     @RequestMapping(value = "users/{email:.+}/teacher/data", method = RequestMethod.POST, consumes = "application/json")

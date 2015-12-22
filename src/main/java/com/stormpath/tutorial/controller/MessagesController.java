@@ -1,6 +1,5 @@
 package com.stormpath.tutorial.controller;
 
-import com.stormpath.sdk.client.Client;
 import com.stormpath.tutorial.messages.Message;
 import com.stormpath.tutorial.messages.MessageService;
 import com.stormpath.tutorial.utils.AccountUtils;
@@ -27,7 +26,7 @@ public class MessagesController {
 
     @RequestMapping("/msg")//todo should be put
     ResponseEntity msg(ServletRequest servletRequest, @RequestParam("text") String text, @RequestParam("to") String emailTo) {
-        return AccountUtils.actionForAuthenticatedUserOrRedirectToLogin(servletRequest,
+        return AccountUtils.actionForAuthenticatedUserOrUnauthorized(servletRequest,
                 a -> messageService.sendMessageToUser(emailTo, text, a));
     }
 
@@ -38,6 +37,6 @@ public class MessagesController {
     }
 
     private ResponseEntity<List<Message>> actionForUserOrNotFound(ServletRequest servletRequest) {
-        return AccountUtils.actionForAuthenticatedUserOrRedirectToLogin(servletRequest, messageService::retrieveAllMessages);
+        return AccountUtils.actionForAuthenticatedUserOrUnauthorized(servletRequest, messageService::retrieveAllMessages);
     }
 }
