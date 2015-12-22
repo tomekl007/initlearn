@@ -163,7 +163,8 @@
                     // request, and the time the access token 
                     // and signed request each expire
                     var uid = response.authResponse.userID;
-                    var accessToken = response.authResponse.accessToken;
+                    var accessToken = response.authResponse.accessToken;//todo store accessToken
+                    console.log("response : " + response);
                     console.log("Access token : "+ accessToken + " userId " + uid)
                 } else if (response.status === 'not_authorized') {
                     // the user is logged in to Facebook, 
