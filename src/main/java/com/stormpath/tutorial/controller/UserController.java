@@ -125,7 +125,7 @@ public class UserController {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
     
-    @RequestMapping(value = "users", method = RequestMethod.GET)
+    @RequestMapping(value = "/users/search", method = RequestMethod.GET)
     public ResponseEntity<List<User>> getUsersBySkill(@RequestParam("skill") String skill){
         List<User> users = userService.findUsersBySkill(skill);
         return new ResponseEntity<>(users, HttpStatus.OK);
