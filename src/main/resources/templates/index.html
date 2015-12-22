@@ -110,6 +110,7 @@
     </div>
     <div id="temp-area"></div>
     <div class="main-outside-area sticky pos-top pos-left"></div>
+    <button onclick="facebookLogin()" name="Facebook login"></button>
     <footer class="main-footer">
 
     </footer>
@@ -140,7 +141,27 @@
                     });
                 }
             }, {scope: scopes});
+
+
+            FB.getLoginStatus(function(response) {
+                if (response.status === 'connected') {
+                    // the user is logged in and has authenticated your
+                    // app, and response.authResponse supplies
+                    // the user's ID, a valid access token, a signed
+                    // request, and the time the access token 
+                    // and signed request each expire
+                    var uid = response.authResponse.userID;
+                    var accessToken = response.authResponse.accessToken;
+                    console.log("Access token : "+ accessToken)
+                } else if (response.status === 'not_authorized') {
+                    // the user is logged in to Facebook, 
+                    // but has not authenticated your app
+                } else {
+                    // the user isn't logged in to Facebook.
+                }
+            });
         }
+
 
         window.fbAsyncInit = function() {
             FB.init({
