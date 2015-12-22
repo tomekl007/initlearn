@@ -71,15 +71,17 @@ public class AccountUtils {
     }
 
 
-    public static void addCustomListFieldToAccount(Account a, String fieldName, List<String> skills,
+    public static void addCustomListFieldToAccount(Account a, String fieldName, List<String> list,
                                                    Map<String, Object> customData) {
         Object o = customData.get(fieldName);
         List<String> userSkills = new LinkedList<>();
         if (o != null) {
             userSkills.addAll((List<String>) o);
         }
-        userSkills.addAll(skills);
-        customData.put(fieldName, userSkills);
+        userSkills.addAll(list);
+        List<String> deduplicate =
+                new ArrayList<>(new LinkedHashSet<>(userSkills));
+        customData.put(fieldName, deduplicate);
         a.save();
     }
 

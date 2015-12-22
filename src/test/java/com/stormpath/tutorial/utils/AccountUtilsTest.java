@@ -49,6 +49,25 @@ public class AccountUtilsTest {
         Mockito.verify(account, times(1)).save();
         assertThat(strings).isEqualTo(Arrays.asList("x", "a", "b"));
     }
+
+
+    @Test
+    public void shouldNotAddDuplicates() {
+        //given
+        String fieldName = "f1";
+        Account account = Mockito.mock(Account.class);
+        List<String> values = Arrays.asList("a","b");
+        Map<String, Object> customData = new LinkedHashMap<>();
+        customData.put(fieldName, Arrays.asList("a", "x"));
+
+        //when
+        AccountUtils.addCustomListFieldToAccount(account, fieldName, values, customData);
+
+        //then
+        List<String> strings = (List<String>) customData.get(fieldName);
+        Mockito.verify(account, times(1)).save();
+        assertThat(strings).isEqualTo(Arrays.asList("a", "x", "b"));
+    }
     
     @Test
     public void shouldConvertDoubleToString(){
