@@ -8,7 +8,7 @@ var UserLogin = (function () {
         $.ajax({
             url : config.isUserLoggedInUrl,
             headers: {
-                'Authorization' : localStorage.isAvailable() ? window.localStorage.getItem('user-token') || '' : ''
+                'Authorization' : localStorage.isAvailable() ? config.authorizationPrefix + window.localStorage.getItem('user-token') || '' : ''
             },
             success: function(data){
                 console.log(data);
@@ -17,7 +17,7 @@ var UserLogin = (function () {
                 console.log(jqXHR);
                 console.log(statusString);
                 console.log(err);
-                alert('login attempt failed.  Please try again.');
+                console.log('login attempt failed.  Please try again.');
             }
         });
     };
