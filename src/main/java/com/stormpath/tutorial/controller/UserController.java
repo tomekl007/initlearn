@@ -1,12 +1,6 @@
 package com.stormpath.tutorial.controller;
 
 import com.stormpath.sdk.account.Account;
-import com.stormpath.sdk.application.Application;
-import com.stormpath.sdk.client.Client;
-import com.stormpath.sdk.provider.FacebookProviderData;
-import com.stormpath.sdk.provider.ProviderAccountRequest;
-import com.stormpath.sdk.provider.ProviderAccountResult;
-import com.stormpath.sdk.provider.Providers;
 import com.stormpath.tutorial.controller.jsonrequest.*;
 import com.stormpath.tutorial.model.User;
 import com.stormpath.tutorial.user.UserService;
@@ -28,13 +22,7 @@ import java.util.stream.Collectors;
 public class UserController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
-    
-    @Autowired
-    Application application;
-    
-    @Autowired
-    private Client client;
-    
+
     @Autowired
     private UserService userService;
 
@@ -143,19 +131,5 @@ public class UserController {
         }else{
             return new ResponseEntity<>(false, HttpStatus.OK);
         }
-    }
-
-    @RequestMapping(value = "/registerFacebookAccount/{accessToken}", method = RequestMethod.POST)
-    ResponseEntity<String> registerFacebookAccount(@PathVariable("accessToken") String accessToken) {
-
-        ProviderAccountRequest request = Providers.FACEBOOK.account()
-                .setAccessToken(accessToken)
-                .build();
-
-        ProviderAccountResult result = application.getAccount(request);
-        Account account = result.getAccount();
-        logger.info("account for register fb : "+ AccountUtils.mapAccountToUser(account));
-        FacebookProviderData providerData = (FacebookProviderData) account.getProviderData();
-        return new ResponseEntity<>(providerData.getAccessToken(), HttpStatus.OK);
     }
 }
