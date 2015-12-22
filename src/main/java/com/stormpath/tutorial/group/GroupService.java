@@ -19,6 +19,7 @@ public class GroupService {
 
     @Autowired
     private Client client;
+    public static final String TEACHERS_GROUP_NAME = "teachers";
 
     public Optional<Group> findGroup(String groupName) {
         return StreamSupport.stream(Spliterators
@@ -40,6 +41,13 @@ public class GroupService {
             account.addGroup(g);
             account.save();
         }
+    }
+
+    public List<User> findAllTeachers() {
+        return findGroup(TEACHERS_GROUP_NAME)
+                .map(Group::getAccounts)
+                .map(AccountUtils::mapToUsers)
+                .orElse(Collections.emptyList());
     }
 }
 
