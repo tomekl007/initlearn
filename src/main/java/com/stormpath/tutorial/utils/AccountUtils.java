@@ -63,7 +63,7 @@ public class AccountUtils {
     }
 
     public static void addImgField(Account a, String img) {
-        addCustomFieldToAccount(a, HOUR_RATE_FIELD, img);
+        addCustomFieldToAccount(a, IMG_FIELD, img);
     }
 
     public static void addLinkedInField(Account a, String link) {

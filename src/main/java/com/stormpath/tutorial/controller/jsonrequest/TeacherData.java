@@ -12,7 +12,6 @@ public class TeacherData {
     public List<String> skills;
     public List<String> links;
     public String bio;
-    
 
     public String getScreenHero() {
         return screenHero;
@@ -70,5 +69,5 @@ public class TeacherData {
         this.img = img;
     }
 
-   
+    public String img;
 }
