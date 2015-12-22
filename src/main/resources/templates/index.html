@@ -212,9 +212,10 @@
         
         function registerFacebookAccount(accessToken){
             console.log("send register fb account with access token : " + accessToken);
-            xhttp.open("POST", "registerFacebookAccount/"+accessToken, true);
-            xhttp.send();
-            
+            $.post( "registerFacebookAccount/"+accessToken)
+                    .done(function( data ) {
+                        console.log( "register done : " + data );
+                    });
         }
     </script>
 
