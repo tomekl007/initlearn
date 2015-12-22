@@ -176,14 +176,12 @@ public class AccountUtils implements AccountFields {
         }
     }
 
-    public static <T> ResponseEntity<T> actionForAuthenticatedUserOrRedirectToLogin(ServletRequest servletRequest, Function<Account, T> action) {
+    public static <T> ResponseEntity<T> actionForAuthenticatedUserOrUnauthorized(ServletRequest servletRequest, Function<Account, T> action) {
         if (AccountResolver.INSTANCE.hasAccount(servletRequest)) {
             Account authenticatedAccount = AccountResolver.INSTANCE.getRequiredAccount(servletRequest);
             return new ResponseEntity<>(action.apply(authenticatedAccount), HttpStatus.OK);
         } else {
-            HttpHeaders headers = new HttpHeaders();
-            headers.add("Location", "/login");
-            return new ResponseEntity<>(headers, HttpStatus.PERMANENT_REDIRECT);
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }
 
