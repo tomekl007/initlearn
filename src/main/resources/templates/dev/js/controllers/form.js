@@ -15,6 +15,32 @@ var Form = (function () {
 
     var init = function () {
         attachEvents();
+
+        var frm = $('#ajaxLoginForm');
+
+        frm.on('submit', function (ev) {
+
+            $.ajax({
+                type: frm.attr('method'),
+                url: frm.attr('action'),
+                data: frm.serialize(),
+
+                success: function (data) {
+                    console.log(data);
+                },
+
+                error: function(jqXHR, statusString, err) {
+                    console.log(jqXHR);
+                    console.log(statusString);
+                    console.log(err);
+                    alert('login attempt failed.  Please try again.');
+                }
+
+            });
+
+            ev.preventDefault();
+
+        });
     };
 
     var attachEvents = function () {

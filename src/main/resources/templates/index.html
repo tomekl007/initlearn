@@ -158,33 +158,6 @@
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
     </script>
-    <script type="text/javascript">
-
-        var frm = $('#ajaxLoginForm');
-
-        frm.submit(function (ev) {
-
-            $.ajax({
-                type: frm.attr('method'),
-                url: frm.attr('action'),
-                data: frm.serialize(),
-
-                success: function (data) {
-                    log.console(data);
-                    window.location = "${pageContext.request.contextPath}/dashboard";
-                },
-
-                error: function(jqXHR, statusString, err) {
-                    alert('login attempt failed.  Please try again.');
-                }
-
-            });
-
-            ev.preventDefault();
-
-        });
-
-    </script>
 
 </body>
 </html>
