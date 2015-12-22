@@ -1,4 +1,7 @@
 import $ from '../lib/jquery';
+import localStorage from '../common/localStorage';
+import config from '../ajax/config';
+import userData from '../ajax/userData';
 
 var Form = (function () {
 
@@ -27,6 +30,11 @@ var Form = (function () {
 
                 success: function (data) {
                     console.log(data);
+                    if(localStorage.isAvailable()) {
+                        window.localStorage.setItem('user-token', data.access_token);
+                    }
+
+                    userData.get();
                 },
 
                 error: function(jqXHR, statusString, err) {
