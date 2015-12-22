@@ -1,4 +1,7 @@
 @import "prefixer";
+// fonts
+$fontSourceSansPro: 'Source Sans Pro', sans-serif;
+$fontRoboto: 'Roboto', sans-serif;
 
 // Media Query Ranges
 $small-screen-up: 601px !default;
@@ -26,14 +29,19 @@ $color-gold: #f79f00;
 $color-grey: #e8e8e8;
 $color-dark-grey: #bbb;
 $color-blue: #009ec3;
+$color-purple: #83639c;
 
 
 //border
 $border-radius: 2px;
-$box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+$box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
 
 //form
 
 $input-bg-color: #fff;
 $input-color: $color-blue;
 $label-color: #696969;
+
+//cards
+
+$cardsUserSkillsBackground: #f26377;

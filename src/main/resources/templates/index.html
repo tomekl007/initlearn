@@ -20,7 +20,6 @@
             </div>
             <ul class="main-nav-list sticky pos-top pos-left">
                 <li class="main-nav-list-item"><a href="#teachers">teachers</a></li>
-                <li class="main-nav-list-item"><a href="#pricing">pricing</a></li>
                 <li class="main-nav-list-item main-create-account"><a href="#create-account-form" class="is-active">create free account</a></li>
                 <li class="main-nav-list-item main-sign-in" th:unless="${account}"><a href="#sign-in-form">sign in</a></li>
                 <li class="main-nav-list-item" th:if="${account}"><a th:href="@{/logout}">logout</a></li>
@@ -69,7 +68,7 @@
                     <div class="main-input-bg"></div>
                 </div>
 
-                <button type="submit" class="main-btn btn-primary">create account</button>
+                <button type="submit" class="main-btn btn-primary fw-700">create account</button>
 
             </form>
         </div>
@@ -90,7 +89,7 @@
                     <a th:href="@{${forgotLoginUri}}" class="to-login" th:text="#{stormpath.web.login.form.resetLink.text}">|Forgot Password?|</a>
                 </div>
 
-                <button type="submit" class="main-btn btn-primary">login</button>
+                <button type="submit" class="main-btn btn-primary fw-700">login</button>
 
             </form>
 
@@ -107,6 +106,7 @@
             </form>
         </div>
     </div>
+    <div id="temp-area"></div>
     <div class="main-outside-area sticky pos-top pos-left"></div>
     <footer class="main-footer">
 

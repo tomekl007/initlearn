@@ -1,0 +1,26 @@
+.main-section-user-profile {
+  margin-top: 150px; }
+
+.main-section-user-profile .card-wrapper .user-skill {
+  display: block;
+  margin: 0.3125rem 0; }
+
+.main-section-user-profile .card-header {
+  display: none; }
+
+@media only screen and (min-width: 601px) {
+  .main-section-user-profile .card-wrapper:before {
+    height: 104px; }
+  .main-section-user-profile .card-header-img {
+    top: 2px;
+    left: 2px;
+    margin: 0;
+    border-radius: 0; }
+  .main-section-user-profile .card-header {
+    display: block; }
+  .main-section-user-profile .card-header .user-name {
+    margin: 0 0 45px 0; }
+  .main-section-user-profile .card-content {
+    text-align: left; }
+  .main-section-user-profile .card-content .user-name {
+    display: none; } }

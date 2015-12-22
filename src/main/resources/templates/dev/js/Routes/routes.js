@@ -5,10 +5,12 @@ var {DefaultRoute, Route} = Router;
 
 import TeachersView from '../views/teachers';
 import HomeView from '../views/home';
+import userProfileView from '../views/userProfile';
 
 var routes = (
     <Route name="app" path="/">
         <Route name="teachers" handler={TeachersView}/>
+        <Route name="users/*" handler={userProfileView} />
         <Route name="*" path='*' handler={HomeView}/>
         <DefaultRoute handler={HomeView}/>
     </Route>

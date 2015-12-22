@@ -1,23 +1,40 @@
 @import "variables";
 
-html {
-  box-sizing: border-box;
-  -webkit-font-smoothing: antialiased;
-  font-family: 'Source Sans Pro', sans-serif;
-}
-
-body {
-  background-color: $color-grey;
-}
+/*all*/
 
 *, *:before, *:after {
   box-sizing: inherit;
 }
 
+html {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  font-family: $fontSourceSansPro;
+}
+
+body {
+  background-color: $color-grey;
+  font-family: $fontSourceSansPro;
+}
+
+/*fonts*/
+
+.fw-100 {
+  font-weight: 100;
+}
+
+.fw-700 {
+  font-weight: 700;
+}
+
+/*list*/
+
 li {
   position: relative;
   list-style-type: none;
 }
+
+/*positions*/
 
 .sticky {
   position: fixed;
@@ -31,6 +48,8 @@ li {
   }
 }
 
+/*colors*/
+
 .color-white {
   color: #fff;
 }
@@ -38,6 +57,12 @@ li {
 .color-blue {
   color: $color-blue;
 }
+
+.color-purple {
+  color: $color-purple;
+}
+
+/*backgrounds*/
 
 .bg-gold {
   background-color: $color-gold;
