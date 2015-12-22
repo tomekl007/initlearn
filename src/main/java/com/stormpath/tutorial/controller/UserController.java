@@ -139,6 +139,12 @@ public class UserController {
     ResponseEntity<User> me(ServletRequest servletRequest) {
         return AccountUtils.actionForAuthenticatedUserOrRedirectToLogin(servletRequest, AccountUtils::mapAccountToUser);
     }
+
+    @RequestMapping(value = "users/{email:.+}/teacher/data", method = RequestMethod.POST, consumes = "application/json")
+    public ResponseEntity<List<User>> fillTeacherWithData(@RequestBody TeacherData teacherData, @PathVariable("email") String email){
+        List<User> users = userService.fillTeacherWithData(teacherData, email);
+        return new ResponseEntity<>(users, HttpStatus.OK);
+    }
     
     @RequestMapping("/isLoggedIn")
     ResponseEntity<Boolean> isLoggedIn(ServletRequest servletRequest){

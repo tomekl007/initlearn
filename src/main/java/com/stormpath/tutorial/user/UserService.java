@@ -3,6 +3,7 @@ package com.stormpath.tutorial.user;
 import com.stormpath.sdk.account.Account;
 import com.stormpath.sdk.client.Client;
 import com.stormpath.tutorial.avarage.AverageCountStrategy;
+import com.stormpath.tutorial.controller.jsonrequest.TeacherData;
 import com.stormpath.tutorial.model.User;
 import com.stormpath.tutorial.utils.AccountUtils;
 import org.slf4j.Logger;
@@ -61,5 +62,19 @@ public class UserService {
     private void addNewRateAndAverage(Account a, Integer numberOfRates, double newAverageRate) {
         AccountUtils.addAverageForTeacher(a, newAverageRate);
         AccountUtils.addNumberOfRateForTeacher(a, numberOfRates + 1);
+    }
+
+    public List<User> fillTeacherWithData(TeacherData teacherData, String email) {
+        List<Account> accountsByEmail = findAccountsByEmail(email);
+        for (Account account : accountsByEmail) {
+            AccountUtils.addBioField(account, teacherData.bio);
+            AccountUtils.addHourRateForTeacher(account, teacherData.hourRate);
+            AccountUtils.addSkillsForTeacher(account, teacherData.skills);
+            AccountUtils.addImgField(account, teacherData.img);
+            AccountUtils.addScreenheroField(account, teacherData.screenHero);
+            AccountUtils.addLinksField(account, teacherData.links);
+            AccountUtils.addScreenheroField(account, teacherData.screenHero);
+        }
+       return AccountUtils.mapToUsers(accountsByEmail);
     }
 }
