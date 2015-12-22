@@ -49,5 +49,23 @@ public class AccountUtilsTest {
         Mockito.verify(account, times(1)).save();
         assertThat(strings).isEqualTo(Arrays.asList("x", "a", "b"));
     }
+    
+    @Test
+    public void shouldConvertDoubleToString(){
+        //given
+        String res = AccountUtils.convertDoubleToString(2.5453535);
+
+        assertThat(res).isEqualTo("2.5453535");
+    }
+    
+    @Test
+    public void shouldConvertStringToDouble(){
+        String a = "2.3425";
+
+        double res = AccountUtils.convertStringToDouble(a);
+        assertThat(res).isEqualTo(2.3425);
+
+    }
+        
 
 }

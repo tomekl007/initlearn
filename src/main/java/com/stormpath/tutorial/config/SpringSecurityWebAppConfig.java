@@ -21,7 +21,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
 import static com.stormpath.spring.config.StormpathWebSecurityConfigurer.stormpath;
 
@@ -30,14 +29,19 @@ import static com.stormpath.spring.config.StormpathWebSecurityConfigurer.stormpa
 public class SpringSecurityWebAppConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable();
-        
+//        http
+//                .antMatcher("/users/**").
+//                csrf().disable();
+
         http
-            .apply(stormpath()).and()
-            .authorizeRequests()
-            .antMatchers("/", "/login", "/users", "/users/*", "/group/users/*", "users/*/*", "users/**/skills", "/isLoggedIn")
-            .permitAll();
+                .apply(stormpath()).and()
+                .authorizeRequests()
+                .antMatchers("/", "/login", "/users", "/users/**", "/group/users/*", "users/*/*", "users/**/skills", "/isLoggedIn")
+                .permitAll()
+                .and()
+                .antMatcher("/users/**").csrf().disable();
     }
+
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/templates/**", "/assets/**");

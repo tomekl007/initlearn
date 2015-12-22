@@ -4,6 +4,7 @@ import com.stormpath.sdk.account.Account;
 import com.stormpath.sdk.account.AccountList;
 import com.stormpath.sdk.client.Client;
 import com.stormpath.sdk.group.Group;
+import com.stormpath.tutorial.controller.jsonrequest.*;
 import com.stormpath.tutorial.model.User;
 import com.stormpath.tutorial.user.UserService;
 import com.stormpath.tutorial.utils.AccountUtils;
@@ -39,7 +40,6 @@ public class UserController {
         List<Account> list = new ArrayList<>();
         client.getAccounts().iterator().forEachRemaining(list::add);
         List<User> users = AccountUtils.mapToUsers(list);
-        logger.info("Return users : " + users);
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
@@ -69,31 +69,31 @@ public class UserController {
     }
 
     @RequestMapping(value = "users/{email:.+}/screenhero", method = RequestMethod.POST)
-    public ResponseEntity<List<User>> addScreenHeroToUser(@RequestBody String sc, @PathVariable("email") String email) {
+    public ResponseEntity<List<User>> addScreenHeroToUser(@RequestBody Nick nick, @PathVariable("email") String email) {
         List<Account> accountsByEmail = userService.findAccountsByEmail(email);
-        accountsByEmail.forEach(a -> AccountUtils.addScreenheroField(a, sc));
+        accountsByEmail.forEach(a -> AccountUtils.addScreenheroField(a, nick.getNick()));
         return new ResponseEntity<>(AccountUtils.mapToUsers(accountsByEmail), HttpStatus.OK);
     }
 
     @RequestMapping(value = "users/{email:.+}/linkedin", method = RequestMethod.POST)
-    public ResponseEntity<List<User>> addLinkedInToUser(@RequestBody String sc, @PathVariable("email") String email) {
+    public ResponseEntity<List<User>> addLinkedInToUser(@RequestBody Link link, @PathVariable("email") String email) {
         List<Account> accountsByEmail = userService.findAccountsByEmail(email);
-        accountsByEmail.forEach(a -> AccountUtils.addLinkedInField(a, sc));
+        accountsByEmail.forEach(a -> AccountUtils.addLinkedInField(a, link.getLink()));
         return new ResponseEntity<>(AccountUtils.mapToUsers(accountsByEmail), HttpStatus.OK);
     }
 
     @RequestMapping(value = "users/{email:.+}/hourRate", method = RequestMethod.POST)
-    public ResponseEntity<List<User>> addHourRateToUser(@RequestBody Double hourRate, @PathVariable("email") String email) {
+    public ResponseEntity<List<User>> addHourRateToUser(@RequestBody HourRate hourRate, @PathVariable("email") String email) {
         List<Account> accountsByEmail = userService.findAccountsByEmail(email);
-        accountsByEmail.forEach(a -> AccountUtils.addHourRateForTeacher(a, hourRate));
+        accountsByEmail.forEach(a -> AccountUtils.addHourRateForTeacher(a, hourRate.getHourRate()));
         return new ResponseEntity<>(AccountUtils.mapToUsers(accountsByEmail), HttpStatus.OK);
     }
 
 
     @RequestMapping(value = "users/{email:.+}/skills", method = RequestMethod.POST)
-    public ResponseEntity<List<User>> addSkillsToTeacher(@RequestBody List<String> skill, @PathVariable("email") String email) {
+    public ResponseEntity<List<User>> addSkillsToTeacher(@RequestBody Skills skills, @PathVariable("email") String email) {
         List<Account> accountsByEmail = userService.findAccountsByEmail(email);
-        accountsByEmail.forEach(a -> AccountUtils.addSkillsForTeacher(a, skill));
+        accountsByEmail.forEach(a -> AccountUtils.addSkillsForTeacher(a, skills.getSkills()));
         return new ResponseEntity<>(AccountUtils.mapToUsers(accountsByEmail), HttpStatus.OK);
     }
 
@@ -109,24 +109,30 @@ public class UserController {
 
 
     @RequestMapping(value = "users/{email:.+}/links", method = RequestMethod.POST)
-    public ResponseEntity<List<User>> addLinksToTeacher(@RequestBody List<String> links, @PathVariable("email") String email) {
+    public ResponseEntity<List<User>> addLinksToTeacher(@RequestBody Links links, @PathVariable("email") String email) {
         List<Account> accountsByEmail = userService.findAccountsByEmail(email);
-        accountsByEmail.forEach(a -> AccountUtils.addLinksField(a, links));
+        accountsByEmail.forEach(a -> AccountUtils.addLinksField(a, links.getLinks()));
         return new ResponseEntity<>(AccountUtils.mapToUsers(accountsByEmail), HttpStatus.OK);
     }
 
     @RequestMapping(value = "users/{email:.+}/bio", method = RequestMethod.POST)
-    public ResponseEntity<List<User>> addBioToTeacher(@RequestBody String bio, @PathVariable("email") String email) {
+    public ResponseEntity<List<User>> addBioToTeacher(@RequestBody Bio bio, @PathVariable("email") String email) {
         List<Account> accountsByEmail = userService.findAccountsByEmail(email);
-        accountsByEmail.forEach(a -> AccountUtils.addBioField(a, bio));
+        accountsByEmail.forEach(a -> AccountUtils.addBioField(a, bio.getBio()));
         return new ResponseEntity<>(AccountUtils.mapToUsers(accountsByEmail), HttpStatus.OK);
     }
 
     @RequestMapping(value = "users/{email:.+}/img", method = RequestMethod.POST)
-    public ResponseEntity<List<User>> addImgToTeacher(@RequestBody String img, @PathVariable("email") String email) {
+    public ResponseEntity<List<User>> addImgToTeacher(@RequestBody Link link, @PathVariable("email") String email) {
         List<Account> accountsByEmail = userService.findAccountsByEmail(email);
-        accountsByEmail.forEach(a -> AccountUtils.addImgField(a, img));
+        accountsByEmail.forEach(a -> AccountUtils.addImgField(a, link.getLink()));
         return new ResponseEntity<>(AccountUtils.mapToUsers(accountsByEmail), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "users/{email:.+}/rate", method = RequestMethod.POST, consumes = "application/json")
+    public ResponseEntity<List<User>> addRateForTeacher(@RequestBody Rate rate, @PathVariable("email") String email) {
+        List<User> users = userService.rateTeacher(rate.getRate(), email);
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     @RequestMapping("/me")
