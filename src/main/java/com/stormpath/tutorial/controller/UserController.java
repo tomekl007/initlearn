@@ -128,6 +128,12 @@ public class UserController {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
     
+    @RequestMapping(value = "users/{skill}", method = RequestMethod.GET)
+    public ResponseEntity<List<User>> getUsersBySkill(@PathVariable("skill") String skill){
+        List<User> users = userService.findUsersBySkill(skill);
+        return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+    
     @RequestMapping("/isLoggedIn")
     ResponseEntity<Boolean> isLoggedIn(ServletRequest servletRequest){
         Optional<User> accountIfUserLoggedIn = AccountUtils.getAccountIfUserLoggedIn(servletRequest);

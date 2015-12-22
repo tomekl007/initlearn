@@ -5,6 +5,7 @@ import com.stormpath.sdk.client.Client;
 import com.stormpath.tutorial.avarage.AverageCountStrategy;
 import com.stormpath.tutorial.controller.jsonrequest.TeacherData;
 import com.stormpath.tutorial.model.User;
+import com.stormpath.tutorial.utils.AccountFields;
 import com.stormpath.tutorial.utils.AccountUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +18,7 @@ import java.util.*;
  * Created by tomasz.lelek on 16/12/15.
  */
 @Component
-public class UserService {
+public class UserService implements AccountFields{
 
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
@@ -39,8 +40,12 @@ public class UserService {
     }
 
     public List<Account> findAccountsByEmail(String email) {
+        return findAccountsBy("email", email);
+    }
+    
+    private List<Account> findAccountsBy(String key, String value){
         List<Account> accounts = new ArrayList<>();
-        client.getAccounts(Collections.singletonMap("email", email))
+        client.getAccounts(Collections.singletonMap(key, value))
                 .iterator()
                 .forEachRemaining(accounts::add);
         return accounts;
@@ -76,5 +81,9 @@ public class UserService {
             AccountUtils.addLinkedInField(account, teacherData.linkedIn);
         }
        return AccountUtils.mapToUsers(accountsByEmail);
+    }
+
+    public List<User> findUsersBySkill(String skill) {
+        return AccountUtils.mapToUsers(findAccountsBy(SKILLS_FIELD, skill));
     }
 }

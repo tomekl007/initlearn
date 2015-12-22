@@ -15,17 +15,7 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class AccountUtils {
-
-    public static final String SCREEN_HERO_FIELD = "screenHero";
-    public static final String HOUR_RATE_FIELD = "hourRate";
-    public static final String SKILLS_FIELD = "skills";
-    public static final String LINKEDIN_FIELD = "linkedIn";
-    public static final String LINKS_FILED = "links";
-    public static final String BIO_FILED = "bio";
-    public static final String IMG_FIELD = "img";
-    public static final String NUMBER_OF_RATES_FIELD = "numberOfRates";
-    public static final String AVERAGE_FIELD = "average";
+public class AccountUtils implements AccountFields{
 
     public static void addBioField(Account a, String bio) {
         addCustomFieldToAccount(a, BIO_FILED, bio);
