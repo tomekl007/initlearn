@@ -12,10 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletRequest;
 import java.util.ArrayList;
@@ -128,8 +125,8 @@ public class UserController {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
     
-    @RequestMapping(value = "users/{skill}", method = RequestMethod.GET)
-    public ResponseEntity<List<User>> getUsersBySkill(@PathVariable("skill") String skill){
+    @RequestMapping(value = "users", method = RequestMethod.GET)
+    public ResponseEntity<List<User>> getUsersBySkill(@RequestParam("skill") String skill){
         List<User> users = userService.findUsersBySkill(skill);
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
