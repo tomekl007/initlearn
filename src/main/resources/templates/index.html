@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,100,900italic" rel="stylesheet" type="text/css"/>
     <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,900italic' rel='stylesheet' type='text/css'/>
     <link type="text/css" href="assets/css/main.min.css" rel="stylesheet"/>
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 </head>
 <body>
     <header class="main-header">
@@ -214,7 +215,7 @@
             console.log("send register fb account with access token : " + accessToken);
             $.post( "registerFacebookAccount/"+accessToken)
                     .done(function( data ) {
-                        console.log( "register done : " + data );
+                        console.log( "register done, access token that should be used when login to our application : " + data );
                     });
         }
     </script>

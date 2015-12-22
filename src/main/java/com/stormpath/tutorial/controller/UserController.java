@@ -3,6 +3,7 @@ package com.stormpath.tutorial.controller;
 import com.stormpath.sdk.account.Account;
 import com.stormpath.sdk.application.Application;
 import com.stormpath.sdk.client.Client;
+import com.stormpath.sdk.provider.FacebookProviderData;
 import com.stormpath.sdk.provider.ProviderAccountRequest;
 import com.stormpath.sdk.provider.ProviderAccountResult;
 import com.stormpath.sdk.provider.Providers;
@@ -145,7 +146,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/registerFacebookAccount/{accessToken}", method = RequestMethod.POST)
-    ResponseEntity<User> registerFacebookAccount(@PathVariable("accessToken") String accessToken) {
+    ResponseEntity<String> registerFacebookAccount(@PathVariable("accessToken") String accessToken) {
 
         ProviderAccountRequest request = Providers.FACEBOOK.account()
                 .setAccessToken(accessToken)
@@ -153,7 +154,8 @@ public class UserController {
 
         ProviderAccountResult result = application.getAccount(request);
         Account account = result.getAccount();
-        logger.info("account for register fb : "+ account);
-        return new ResponseEntity<>(AccountUtils.mapAccountToUser(account), HttpStatus.OK);
+        logger.info("account for register fb : "+ AccountUtils.mapAccountToUser(account));
+        FacebookProviderData providerData = (FacebookProviderData) account.getProviderData();
+        return new ResponseEntity<>(providerData.getAccessToken(), HttpStatus.OK);
     }
 }
