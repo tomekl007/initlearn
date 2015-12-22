@@ -144,7 +144,7 @@ public class UserController {
         }
     }
 
-    @RequestMapping(value = "/registerFacebookAccount/${accessToken}", method = RequestMethod.POST)
+    @RequestMapping(value = "/registerFacebookAccount/{accessToken}", method = RequestMethod.POST)
     ResponseEntity<User> registerFacebookAccount(@PathVariable("accessToken") String accessToken) {
 
         ProviderAccountRequest request = Providers.FACEBOOK.account()
