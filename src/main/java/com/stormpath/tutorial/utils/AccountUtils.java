@@ -15,7 +15,7 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class AccountUtils implements AccountFields{
+public class AccountUtils implements AccountFields {
 
     public static void addBioField(Account a, String bio) {
         addCustomFieldToAccount(a, BIO_FILED, bio);
@@ -36,14 +36,18 @@ public class AccountUtils implements AccountFields{
     }
 
     public static void addSkillsForTeacher(Account a, List<String> skills) {
-        addCustomListFieldToAccount(a, SKILLS_FIELD, skills, a.getCustomData());
+        List<String> skillsNormalized = skills
+                .stream()
+                .map(String::toLowerCase)
+                .collect(Collectors.toList());
+        addCustomListFieldToAccount(a, SKILLS_FIELD, skillsNormalized, a.getCustomData());
     }
 
     public static void addNumberOfRateForTeacher(Account a, Integer numberOfRates) {
         addCustomIntegerField(a, NUMBER_OF_RATES_FIELD, numberOfRates);
     }
-    
-    public static void addAverageForTeacher(Account a, Double average){
+
+    public static void addAverageForTeacher(Account a, Double average) {
         String newAv = convertDoubleToString(average);
         addCustomFieldToAccount(a, AVERAGE_FIELD, newAv);
     }
@@ -95,17 +99,17 @@ public class AccountUtils implements AccountFields{
             return (String) o;
         }
     }
-    
-    public static Double getCustomFieldValueAsDouble(Account a, String field){
+
+    public static Double getCustomFieldValueAsDouble(Account a, String field) {
         Object o = a.getCustomData().get(field);
-        if(o == null) {
+        if (o == null) {
             return null;
-        }else{
-           return convertStringToDouble((String) o);
+        } else {
+            return convertStringToDouble((String) o);
         }
 
     }
-    
+
     public static double convertStringToDouble(String o) {
         return Double.parseDouble(o);
     }

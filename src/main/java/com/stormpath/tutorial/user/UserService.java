@@ -90,7 +90,10 @@ public class UserService implements AccountFields {
 
     //todo replace when will be resolved https://github.com/stormpath/stormpath-sdk-java/issues/221
     private List<User> findAccountsByBruteForce(String skillsField, String skill) {
-        return getAllUsers().stream().filter(u -> u.skills.contains(skill)).collect(Collectors.toList());
+        return getAllUsers()
+                .stream()
+                .filter(u -> u.skills.contains(skill.toLowerCase()))
+                .collect(Collectors.toList());
     }
 
     public List<User> getAllUsers() {
