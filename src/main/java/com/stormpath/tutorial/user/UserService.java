@@ -73,7 +73,7 @@ public class UserService {
             AccountUtils.addImgField(account, teacherData.img);
             AccountUtils.addScreenheroField(account, teacherData.screenHero);
             AccountUtils.addLinksField(account, teacherData.links);
-            AccountUtils.addScreenheroField(account, teacherData.screenHero);
+            AccountUtils.addLinkedInField(account, teacherData.linkedIn);
         }
        return AccountUtils.mapToUsers(accountsByEmail);
     }
