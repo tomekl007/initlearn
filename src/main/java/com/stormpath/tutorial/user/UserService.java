@@ -4,6 +4,7 @@ import com.stormpath.sdk.account.Account;
 import com.stormpath.sdk.client.Client;
 import com.stormpath.tutorial.avarage.AverageCountStrategy;
 import com.stormpath.tutorial.controller.jsonrequest.TeacherData;
+import com.stormpath.tutorial.group.GroupService;
 import com.stormpath.tutorial.model.User;
 import com.stormpath.tutorial.utils.AccountFields;
 import com.stormpath.tutorial.utils.AccountUtils;
@@ -25,6 +26,9 @@ public class UserService implements AccountFields {
 
     @Autowired
     private Client client;
+    
+    @Autowired
+    private GroupService groupService;
 
     public Map<Account, User> findUsersAndAccountByEmail(String email) {
         List<Account> accounts = findAccountsByEmail(email);
@@ -90,7 +94,8 @@ public class UserService implements AccountFields {
 
     //todo replace when will be resolved https://github.com/stormpath/stormpath-sdk-java/issues/221
     private List<User> findAccountsByBruteForce(String skillsField, String skill) {
-        return getAllUsers()
+        return groupService
+                .findAllTeachers()
                 .stream()
                 .filter(u -> u.skills.contains(skill.toLowerCase()))
                 .collect(Collectors.toList());
