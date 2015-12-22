@@ -1,0 +1,25 @@
+curl -X POST --user 48IT3XS1FWL80VX1PDYQV3SDF:6j+AfVnxEijenM5gq6WBbO9e6dvw2kE60zMKlIfB2hM \
+     -H "Accept: application/json" \
+     -H "Content-Type: application/json" \
+     -d '{
+            "name" : "facebook-accounts",
+            "description" : "A Facebook directory",
+            "provider": {
+              "providerId": "facebook",
+              "clientId":"492970127541627",
+              "clientSecret":"f577e7726e42bd6f285f91b623e8946e"
+            }
+          }' \
+ "https://api.stormpath.com/v1/directories"
+ 
+ curl -X POST -u 48IT3XS1FWL80VX1PDYQV3SDF:6j+AfVnxEijenM5gq6WBbO9e6dvw2kE60zMKlIfB2hM  \
+      -H "Content-Type: application/json;charset=UTF-8" \
+      -d '{
+            "application": {
+              "href": "https://api.stormpath.com/v1/applications/1Lst6onrAoaDCXqrhcvQTc"
+            },
+            "accountStore": {
+              "href": "https://api.stormpath.com/v1/directories/2jarEhqjW8NXs33UcQpwfy"
+            }
+          }' \
+      'https://api.stormpath.com/v1/accountStoreMappings'
