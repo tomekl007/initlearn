@@ -8,7 +8,7 @@ var Config = (function () {
     var userUrl = appUrl + '/users';
     var usersHash = '#users/';
 
-    var authorizationPrefix = 'Bearer';
+    var authorizationPrefix = 'Bearer ';
 
     return {
         appUrl: appUrl,
