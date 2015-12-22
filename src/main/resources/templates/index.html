@@ -140,8 +140,9 @@
             if (response.status === 'connected') {
                 // Logged into your app and Facebook.
                 var accessToken = response.authResponse.accessToken;
-                console.log("access token : " + accessToken)
+                console.log("access token : " + accessToken);
                 testAPI();
+                registerFacebookAccount(accessToken);
             } else if (response.status === 'not_authorized') {
                 // The person is logged into Facebook, but not your app.
                 document.getElementById('status').innerHTML = 'Please log ' +
@@ -205,8 +206,15 @@
             console.log('Welcome!  Fetching your information.... ');
             FB.api('/me?fields=name,email', function(response) {
                 console.log('Successful login for: ' + response.name);
-                console.log('Thanks for logging in, ' + response.name + '!, email' + response.email);
+                console.log('Thanks for logging in, ' + response.name + '!, email: ' + response.email);
             });
+        }
+        
+        function registerFacebookAccount(accessToken){
+            console.log("send register fb account with access token : " + accessToken);
+            xhttp.open("POST", "registerFacebookAccount/"+accessToken, true);
+            xhttp.send();
+            
         }
     </script>
 
