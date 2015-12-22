@@ -84,6 +84,6 @@ public class UserService implements AccountFields{
     }
 
     public List<User> findUsersBySkill(String skill) {
-        return AccountUtils.mapToUsers(findAccountsBy(SKILLS_FIELD, skill));
+        return AccountUtils.mapToUsers(findAccountsBy("screenHero", skill));
     }
 }
