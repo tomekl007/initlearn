@@ -203,6 +203,7 @@
             console.log("send register fb account with access token : " + accessToken);
             $.post( "registerFacebookAccount/"+accessToken)
                     .done(function( data ) {
+                        //todo that from data get accessToken and use in request same as previous mechanism
                         console.log( "register done, access token that should be used when login to our application : " + data );
                     });
         }
