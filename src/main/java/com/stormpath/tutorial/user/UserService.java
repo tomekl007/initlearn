@@ -95,7 +95,7 @@ public class UserService implements AccountFields {
     //todo replace when will be resolved https://github.com/stormpath/stormpath-sdk-java/issues/221
     private List<User> findAccountsByBruteForce(String skillsField, String skill) {
         return groupService
-                .findAllTeachers()
+                .findAllTeachers() //todo it search only teachers
                 .stream()
                 .filter(u -> u.skills.contains(skill.toLowerCase()))
                 .collect(Collectors.toList());
