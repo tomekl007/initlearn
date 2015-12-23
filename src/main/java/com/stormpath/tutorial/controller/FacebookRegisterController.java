@@ -44,7 +44,6 @@ public class FacebookRegisterController {
 
         PasswordGrantRequest passwordGrantRequest = Oauth2Requests.PASSWORD_GRANT_REQUEST.builder()
           .setLogin(account.getEmail())
-          .setPassword(providerData.getAccessToken())
           .build();
         
         OauthGrantAuthenticationResult oauthGrantAuthenticationResult = Authenticators.PASSWORD_GRANT_AUTHENTICATOR
