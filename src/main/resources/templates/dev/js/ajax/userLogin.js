@@ -5,12 +5,21 @@ import userData from './userData';
 
 var UserLogin = (function () {
 
+    var headers = {};
+
+    if (localStorage.isAvailable()) {
+
+        if (window.localStorage.getItem('user-token') !== null) {
+            headers = {
+                'Authorization' : localStorage.isAvailable() ? config.authorizationPrefix + window.localStorage.getItem('user-token') || '' : ''
+            }
+        }
+    }
+
     var get = function() {
         $.ajax({
             url : config.isUserLoggedInUrl,
-            headers: {
-                'Authorization' : localStorage.isAvailable() ? config.authorizationPrefix + window.localStorage.getItem('user-token') || '' : ''
-            },
+            headers: headers,
             success: function(data){
                 console.log(data);
                 userData.get();
