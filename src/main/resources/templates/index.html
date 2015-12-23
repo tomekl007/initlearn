@@ -34,7 +34,7 @@
     </div>
     <div class="main-modal-window">
         <div class="main-form-wrapper">
-            <form id="create-account-form" method="post" role="form" class="main-form" action="oauth/token">
+            <form id="create-account-form" method="post" role="form" class="main-form" th:action="@{/register}">
                 
                 <div form-group="true" class="main-input-wrapper">
                     <input class="main-input" name="givenName" type="text" autofocus="autofocus" value=""/>
