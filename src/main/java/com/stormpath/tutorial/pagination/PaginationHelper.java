@@ -8,7 +8,4 @@ public class PaginationHelper {
         return page * size;
     }
 
-    public static int getLimitForPageAndSize(Integer page, Integer size) {
-        return page * size + size;
-    }
 }

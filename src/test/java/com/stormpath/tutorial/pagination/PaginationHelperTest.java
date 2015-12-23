@@ -20,19 +20,4 @@ public class PaginationHelperTest {
         assertThat(offsetForPageAndSize).isEqualTo(50);
     }
 
-    @Test
-    public void shouldGetProperLimitForZeroPage(){
-        int limit = PaginationHelper.getLimitForPageAndSize(0, 50);
-
-        assertThat(limit).isEqualTo(50);
-    }
-
-    @Test
-    public void shouldGetProperLimitForFirstPage(){
-        int limit = PaginationHelper.getLimitForPageAndSize(1, 50);
-
-        assertThat(limit).isEqualTo(100);
-    }
-
-
 }
