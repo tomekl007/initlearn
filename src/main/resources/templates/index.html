@@ -205,7 +205,7 @@
                         $('.main-modal-window').removeClass('is-active');
                         $('.main-outside-area').removeClass('is-active');
 
-                        console.log('fejs loguje');
+                        window.localStorage.setItem('user-token', 'Bearer ' + accessToken);
                     });
         }
         

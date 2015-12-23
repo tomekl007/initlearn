@@ -18,7 +18,8 @@ import Modal from './modal';
         };
 
         return {
-            init: init
+            init: init,
+            close: close
         };
     })();
 
