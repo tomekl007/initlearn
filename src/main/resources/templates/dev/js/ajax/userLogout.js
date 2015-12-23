@@ -13,7 +13,7 @@ var UserLogout = (function () {
             success: function(){
 
                 if (localStorage.isAvailable()) {
-                    FB.logout(window.localStorage.getItem('user-token'));
+                    //FB.logout(function(response) {});
                     window.localStorage.clear();
                 }
 
