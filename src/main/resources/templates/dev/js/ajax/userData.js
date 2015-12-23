@@ -8,7 +8,7 @@ var userData = (function () {
         $.ajax({
             url : config.loggedUserUrl,
             headers: {
-                'Authorization' : localStorage.isAvailable() ? window.localStorage.getItem('user-token') || '' : ''
+                'Authorization' : localStorage.isAvailable() ? config.authorizationPrefix + window.localStorage.getItem('user-token') || '' : ''
             },
             success: function(data){
                 console.log(data);

@@ -9,6 +9,8 @@ var Config = (function () {
     var userUrl = appUrl + '/users';
     var usersHash = '#users/';
 
+    var authorizationPrefix = 'Bearer ';
+
     return {
         appUrl: appUrl,
         userGroupPath: userGroupPath,
@@ -17,7 +19,8 @@ var Config = (function () {
         loggedUserUrl: loggedUserUrl,
         logoutUserUrl: logoutUserUrl,
         userUrl: userUrl,
-        usersHash: usersHash
+        usersHash: usersHash,
+        authorizationPrefix: authorizationPrefix
     };
 })();
 
