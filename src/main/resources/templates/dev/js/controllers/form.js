@@ -21,7 +21,7 @@ var Form = (function () {
     var init = function () {
         attachEvents();
 
-        var frm = $('#ajaxLoginForm');
+        var frm = $('#sign-in-form');
 
         frm.on('submit', function (ev) {
 
