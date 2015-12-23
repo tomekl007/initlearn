@@ -104,6 +104,10 @@ public class UserService implements AccountFields {
     }
 
     public List<User> getAllUsers(Optional<String> sort, Optional<Integer> offset , Optional<Integer> limit) {
+       return getAllUsers(sort, offset, limit, client);
+    }
+
+    public static List<User> getAllUsers(Optional<String> sort, Optional<Integer> offset, Optional<Integer> limit, Client client) {
         List<Account> list = new ArrayList<>();
         client.getAccounts(pagination(offset, limit))
                 .iterator()
@@ -111,12 +115,12 @@ public class UserService implements AccountFields {
         return AccountUtils.mapToUsers(sortBy(list, sort));
     }
 
-    private List<Account> sortBy(List<Account> list, Optional<String> sort) {
+    private static List<Account> sortBy(List<Account> list, Optional<String> sort) {
         
         return list;
     }
 
-    private AccountCriteria pagination(Optional<Integer> offset, Optional<Integer> limit) {
+    private static AccountCriteria pagination(Optional<Integer> offset, Optional<Integer> limit) {
         if (offset.isPresent() && limit.isPresent()) {
             logger.info("--> offset : " + offset + " limit : " + limit);
             return Accounts.criteria().limitTo(limit.get()).offsetBy(offset.get());
