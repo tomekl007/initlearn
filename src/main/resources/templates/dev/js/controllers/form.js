@@ -3,6 +3,7 @@ import localStorage from '../common/localStorage';
 import config from '../ajax/config';
 import userLogin from '../ajax/userLogin';
 import modal from './modal';
+import outsideArea from './outsideArea';
 
 var Form = (function () {
 
@@ -37,6 +38,7 @@ var Form = (function () {
 
                     userLogin.get();
                     modal.close();
+                    outsideArea.close();
                 },
 
                 error: function(jqXHR, statusString, err) {
