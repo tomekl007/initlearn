@@ -2,6 +2,7 @@ package com.stormpath.tutorial.controller;
 
 import com.stormpath.sdk.account.Account;
 import com.stormpath.sdk.application.Application;
+import com.stormpath.sdk.oauth.*;
 import com.stormpath.sdk.provider.FacebookProviderData;
 import com.stormpath.sdk.provider.ProviderAccountRequest;
 import com.stormpath.sdk.provider.ProviderAccountResult;
@@ -40,6 +41,18 @@ public class FacebookRegisterController {
         logger.info("account for register fb : "+ AccountUtils.mapAccountToUser(account));
         FacebookProviderData providerData = (FacebookProviderData) account.getProviderData();
         logger.info("token for that account" + providerData.getAccessToken());
+
+        PasswordGrantRequest passwordGrantRequest = Oauth2Requests.PASSWORD_GRANT_REQUEST.builder()
+          .setLogin(account.getEmail())
+          .setPassword(providerData.getAccessToken())
+          .build();
+        
+        OauthGrantAuthenticationResult oauthGrantAuthenticationResult = Authenticators.PASSWORD_GRANT_AUTHENTICATOR
+          .forApplication(application)
+          .authenticate(passwordGrantRequest);
+        AccessToken accessToken1 = oauthGrantAuthenticationResult.getAccessToken();
+        logger.info("oauth access token : " + accessToken1);
+
         return new ResponseEntity<>(providerData.getAccessToken(), HttpStatus.OK);
     }
 }
