@@ -114,7 +114,7 @@ public class UserService implements AccountFields {
     private AccountCriteria pagination(Optional<Integer> offset, Optional<Integer> limit) {
         if (offset.isPresent() && limit.isPresent()) {
             logger.info("--> offset : " + offset + " limit : " + limit);
-            return Accounts.criteria().offsetBy(offset.get()).limitTo(limit.get());
+            return Accounts.criteria().offsetBy(0).limitTo(1);
         } else {
             return Accounts.criteria();
         }
