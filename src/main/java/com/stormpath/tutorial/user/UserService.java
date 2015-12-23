@@ -111,13 +111,17 @@ public class UserService implements AccountFields {
         return AccountUtils.mapToUsers(list);
     }
 
-    private AccountCriteria pagination(Optional<Integer> offset, Optional<Integer> limit) {
+    private Map<String, Object> pagination(Optional<Integer> offset, Optional<Integer> limit) {
 
         if (offset.isPresent() && limit.isPresent()) {
-            return Accounts.criteria().offsetBy(offset.get()).limitTo(limit.get());
+            Map<String, Object> limitAndOffset = new HashMap<>();
+            limitAndOffset.put("limit", String.valueOf(limit));
+            limitAndOffset.put("offset", String.valueOf(offset));
+            return limitAndOffset;
+//            return Accounts.criteria().offsetBy(offset.get()).limitTo(limit.get());
         } else {
             logger.info("return defaults");
-            return Accounts.criteria();
+            return Collections.emptyMap();
         }
     }
 }
