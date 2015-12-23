@@ -2,27 +2,32 @@ import $ from '../lib/jquery';
 import config from './config';
 import localStorage from '../common/localStorage';
 
-var userData = (function () {
+var UserLogout = (function () {
 
     var get = function() {
         $.ajax({
-            url : config.loggedUserUrl,
+            url : config.logoutUserUrl,
             headers: {
                 'Authorization' : localStorage.isAvailable() ? config.authorizationPrefix + window.localStorage.getItem('user-token') || '' : ''
             },
-            success: function(data){
-                console.log(data);
-                $('.main-create-account').fadeOut(0);
-                $('.main-sign-in').fadeOut(0);
-                $('.main-user-name').fadeIn(0).find('a').attr('href', '#'+ data.email).html(data.fullName);
-                $('.main-user-logout').fadeIn(0);
+            success: function(){
 
+                if (localStorage.isAvailable()) {
+                    window.localStorage.clear();
+                }
+
+                $('.main-user-name').fadeOut(0);
+                $('.main-user-logout').fadeOut(0);
+                $('.main-create-account').fadeIn(0);
+                $('.main-sign-in').fadeIn(0);
+
+                FB.logout(function(response) {});
             },
             error: function(jqXHR, statusString, err) {
                 console.log(jqXHR);
                 console.log(statusString);
                 console.log(err);
-                console.log('cannot retrieve user data');
+                console.log('logout failed');
             }
         });
     };
@@ -33,4 +38,4 @@ var userData = (function () {
 
 })();
 
-module.exports = userData;
+module.exports = UserLogout;

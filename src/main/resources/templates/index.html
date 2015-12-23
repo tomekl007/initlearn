@@ -23,17 +23,14 @@
             </div>
             <ul class="main-nav-list sticky pos-top pos-left">
                 <li class="main-nav-list-item"><a href="#teachers">teachers</a></li>
-                <li class="main-nav-list-item main-create-account" th:unless="${account}"><a href="#create-account-form" class="is-active">create free account</a></li>
-                <li class="main-nav-list-item main-sign-in" th:unless="${account}"><a href="#sign-in-form">sign in</a></li>
-                <li class="main-nav-list-item" th:if="${account}"><a th:href="@{/logout}">logout</a></li>
+                <li class="main-nav-list-item main-create-account"><a href="#create-account-form" class="is-active">create free account</a></li>
+                <li class="main-nav-list-item main-sign-in"><a href="#sign-in-form">sign in</a></li>
+                <li class="main-nav-list-item main-user-name" style="display:none;"><a href="#"></a></li>
+                <li class="main-nav-list-item main-user-logout" style="display:none;"><a href="#">logout</a></li>
             </ul>
         </nav>
     </header>
     <div id="main-container" class="main-container container">
-        <section>
-            <h3 th:if="${account}" th:inline="text">Hello, [[${account.fullName}]]!</h3>
-            <h3 th:unless="${account}">Who are you?</h3>
-        </section>
     </div>
     <div class="main-modal-window">
         <div class="main-form-wrapper">
@@ -107,7 +104,7 @@
                 <button type="submit">Log In</button>
                 
             </form>
-            <fb:login-button scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button>
+            <fb:login-button class="fb-login-btn" scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button>
         </div>
     </div>
     <div id="temp-area"></div>
@@ -205,6 +202,11 @@
                     .done(function( data ) {
                         //todo that from data get accessToken and use in request same as previous mechanism
                         console.log( "register done, access token that should be used when login to our application : " + data );
+                        $('.main-modal-window').removeClass('is-active');
+                        $('.main-outside-area').removeClass('is-active');
+
+                        window.localStorage.setItem('user-token', 'Bearer ' + accessToken);
+                        window.location.reload();
                     });
         }
     </script>
