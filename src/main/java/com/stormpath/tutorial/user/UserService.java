@@ -8,6 +8,7 @@ import com.stormpath.tutorial.avarage.AverageCountStrategy;
 import com.stormpath.tutorial.controller.jsonrequest.TeacherData;
 import com.stormpath.tutorial.group.GroupService;
 import com.stormpath.tutorial.model.User;
+import com.stormpath.tutorial.pagination.PaginationHelper;
 import com.stormpath.tutorial.utils.AccountFields;
 import com.stormpath.tutorial.utils.AccountUtils;
 import org.slf4j.Logger;
@@ -28,7 +29,7 @@ public class UserService implements AccountFields {
 
     @Autowired
     private Client client;
-    
+
     @Autowired
     private GroupService groupService;
 
@@ -106,12 +107,18 @@ public class UserService implements AccountFields {
     public List<User> getAllUsers(Optional<String> sort, Optional<Integer> page, Optional<Integer> size) {
         List<Account> list = new ArrayList<>();
         client.getAccounts(pagination(page, size))
-               .iterator()
-               .forEachRemaining(list::add);
+                .iterator()
+                .forEachRemaining(list::add);
         return AccountUtils.mapToUsers(list);
     }
 
     private AccountCriteria pagination(Optional<Integer> page, Optional<Integer> size) {
-        return Accounts.criteria();
+        if (page.isPresent() && size.isPresent()) {
+            int offset = PaginationHelper.getOffsetForPageAndSize(page.get(), size.get());
+            int limit = PaginationHelper.getLimitForPageAndSize(page.get(), size.get());
+            return Accounts.criteria().offsetBy(offset).limitTo(limit);
+        } else {
+            return Accounts.criteria();
+        }
     }
 }
