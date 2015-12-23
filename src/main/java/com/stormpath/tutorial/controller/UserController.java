@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletRequest;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -27,8 +28,10 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping(value = "/users", method = RequestMethod.GET)
-    public ResponseEntity<List<User>> getAllUsers() {
-        return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
+    public ResponseEntity<List<User>> getAllUsers(@RequestParam(required = false) Optional<String> sort,
+                                                  @RequestParam(required = false) Optional<Integer> page,
+                                                  @RequestParam(required = false) Optional<Integer> size) {
+        return new ResponseEntity<>(userService.getAllUsers(sort, page, size), HttpStatus.OK);
     }
 
 
@@ -107,8 +110,8 @@ public class UserController {
     }
 
     @RequestMapping("/me")
-    ResponseEntity<User> me(ServletRequest servletRequest) {
-        return AccountUtils.actionForAuthenticatedUserOrUnauthorized(servletRequest, AccountUtils::mapAccountToUser);
+    ResponseEntity<List<User>> me(ServletRequest servletRequest) {
+        return AccountUtils.actionForAuthenticatedUserOrUnauthorized(servletRequest, a -> Arrays.asList(AccountUtils.mapAccountToUser(a)));
     }
 
     @RequestMapping(value = "users/{email:.+}/teacher/data", method = RequestMethod.POST, consumes = "application/json")

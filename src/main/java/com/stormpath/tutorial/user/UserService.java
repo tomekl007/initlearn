@@ -1,6 +1,8 @@
 package com.stormpath.tutorial.user;
 
 import com.stormpath.sdk.account.Account;
+import com.stormpath.sdk.account.AccountCriteria;
+import com.stormpath.sdk.account.Accounts;
 import com.stormpath.sdk.client.Client;
 import com.stormpath.tutorial.avarage.AverageCountStrategy;
 import com.stormpath.tutorial.controller.jsonrequest.TeacherData;
@@ -101,9 +103,15 @@ public class UserService implements AccountFields {
                 .collect(Collectors.toList());
     }
 
-    public List<User> getAllUsers() {
+    public List<User> getAllUsers(Optional<String> sort, Optional<Integer> page, Optional<Integer> size) {
         List<Account> list = new ArrayList<>();
-        client.getAccounts().iterator().forEachRemaining(list::add);
+        client.getAccounts(pagination(page, size))
+               .iterator()
+               .forEachRemaining(list::add);
         return AccountUtils.mapToUsers(list);
+    }
+
+    private AccountCriteria pagination(Optional<Integer> page, Optional<Integer> size) {
+        return Accounts.criteria();
     }
 }
