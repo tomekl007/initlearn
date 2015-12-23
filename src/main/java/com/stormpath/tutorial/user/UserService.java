@@ -8,7 +8,6 @@ import com.stormpath.tutorial.avarage.AverageCountStrategy;
 import com.stormpath.tutorial.controller.jsonrequest.TeacherData;
 import com.stormpath.tutorial.group.GroupService;
 import com.stormpath.tutorial.model.User;
-import com.stormpath.tutorial.pagination.PaginationHelper;
 import com.stormpath.tutorial.utils.AccountFields;
 import com.stormpath.tutorial.utils.AccountUtils;
 import org.slf4j.Logger;
@@ -104,21 +103,18 @@ public class UserService implements AccountFields {
                 .collect(Collectors.toList());
     }
 
-    public List<User> getAllUsers(Optional<String> sort, Optional<Integer> page, Optional<Integer> size) {
+    public List<User> getAllUsers(Optional<String> sort, Optional<Integer> offset , Optional<Integer> limit) {
         List<Account> list = new ArrayList<>();
-        client.getAccounts(pagination(page, size))
+        client.getAccounts(pagination(offset, limit))
                 .iterator()
                 .forEachRemaining(list::add);
         return AccountUtils.mapToUsers(list);
     }
 
-    private AccountCriteria pagination(Optional<Integer> page, Optional<Integer> size) {
-        logger.info("get allUsers for" + page + "and size : " +size);
-        if (page.isPresent() && size.isPresent()) {
-            int offset = PaginationHelper.getOffsetForPageAndSize(page.get(), size.get());
+    private AccountCriteria pagination(Optional<Integer> offset, Optional<Integer> limit) {
 
-            logger.info("offset : " + offset + " limit : " + size.get());
-            return Accounts.criteria().offsetBy(offset).limitTo(size.get());
+        if (offset.isPresent() && limit.isPresent()) {
+            return Accounts.criteria().offsetBy(offset.get()).limitTo(limit.get());
         } else {
             logger.info("return defaults");
             return Accounts.criteria();

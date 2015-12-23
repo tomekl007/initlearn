@@ -29,10 +29,10 @@ public class UserController {
 
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     public ResponseEntity<List<User>> getAllUsers(@RequestParam(required = false) Optional<String> sort,
-                                                  @RequestParam(required = false) Optional<Integer> page,
-                                                  @RequestParam(required = false) Optional<Integer> size) {
-        logger.info("get params : " + sort.orElse("nothing") + " " + page.orElse(-100) + size.orElse(-100));
-        return new ResponseEntity<>(userService.getAllUsers(sort, page, size), HttpStatus.OK);
+                                                  @RequestParam(required = false) Optional<Integer> offset,
+                                                  @RequestParam(required = false) Optional<Integer> limit) {
+        logger.info("get params : " + sort.orElse("nothing") + " " + offset.orElse(-100) + limit.orElse(-100));
+        return new ResponseEntity<>(userService.getAllUsers(sort, offset, limit), HttpStatus.OK);
     }
 
 
