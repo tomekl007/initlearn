@@ -22,7 +22,9 @@ var UserLogin = (function () {
             headers: headers,
             success: function(data){
                 console.log(data);
-                userData.get();
+                if (data === true) {
+                    userData.get();
+                }
             },
             error: function(jqXHR, statusString, err) {
                 console.log(jqXHR);
