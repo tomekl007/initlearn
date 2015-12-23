@@ -118,7 +118,7 @@ public class UserService implements AccountFields {
             int offset = PaginationHelper.getOffsetForPageAndSize(page.get(), size.get());
             int limit = PaginationHelper.getLimitForPageAndSize(page.get(), size.get());
             logger.info("offset : " + offset + " limit : " + limit);
-            return Accounts.criteria().offsetBy(offset).limitTo(limit);
+            return Accounts.criteria().offsetBy(offset).limitTo(size.get());
         } else {
             logger.info("return defaults");
             return Accounts.criteria();
