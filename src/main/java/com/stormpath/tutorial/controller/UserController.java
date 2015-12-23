@@ -31,6 +31,7 @@ public class UserController {
     public ResponseEntity<List<User>> getAllUsers(@RequestParam(required = false) Optional<String> sort,
                                                   @RequestParam(required = false) Optional<Integer> page,
                                                   @RequestParam(required = false) Optional<Integer> size) {
+        logger.info("get params : " + sort.orElse("nothing") + " " + page.orElse(-100) + size.orElse(-100));
         return new ResponseEntity<>(userService.getAllUsers(sort, page, size), HttpStatus.OK);
     }
 
