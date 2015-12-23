@@ -207,6 +207,13 @@
                         console.log( "register done, access token that should be used when login to our application : " + data );
                     });
         }
+        
+        function logout(){
+            FB.logout(function(response) {
+                // Person is now logged out
+            });
+            
+        }
     </script>
 
 
