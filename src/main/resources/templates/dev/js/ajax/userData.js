@@ -14,7 +14,7 @@ var userData = (function () {
                 console.log(data);
                 $('.main-create-account').fadeOut(0);
                 $('.main-sign-in').fadeOut(0);
-                $('.main-user-name').fadeIn(0).find('a').attr('href', config.usersHash + data.email).html(data.fullName);
+                $('.main-user-name').fadeIn(0).find('a').attr('href', config.myProfileHash).html(data[0].fullName);
                 $('.main-user-logout').fadeIn(0);
 
             },
