@@ -13,6 +13,8 @@ var UserLogout = (function () {
             success: function(){
 
                 if (localStorage.isAvailable()) {
+                    var token = window.localStorage.getItem('user-token');
+                    FB.logout(token, function(response) {});
                     window.localStorage.clear();
                 }
 
@@ -20,8 +22,6 @@ var UserLogout = (function () {
                 $('.main-user-logout').fadeOut(0);
                 $('.main-create-account').fadeIn(0);
                 $('.main-sign-in').fadeIn(0);
-
-                FB.logout(function(response) {});
             },
             error: function(jqXHR, statusString, err) {
                 console.log(jqXHR);

@@ -33,7 +33,7 @@ var Form = (function () {
                 success: function (data) {
                     console.log(data);
                     if(localStorage.isAvailable()) {
-                        window.localStorage.setItem('user-token', data.access_token);
+                        window.localStorage.setItem('user-token', 'Bearer ' + data.access_token);
                     }
 
                     userLogin.get();
