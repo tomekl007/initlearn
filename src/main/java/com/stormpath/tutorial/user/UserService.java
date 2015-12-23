@@ -8,7 +8,6 @@ import com.stormpath.tutorial.avarage.AverageCountStrategy;
 import com.stormpath.tutorial.controller.jsonrequest.TeacherData;
 import com.stormpath.tutorial.group.GroupService;
 import com.stormpath.tutorial.model.User;
-import com.stormpath.tutorial.pagination.PaginationHelper;
 import com.stormpath.tutorial.utils.AccountFields;
 import com.stormpath.tutorial.utils.AccountUtils;
 import org.slf4j.Logger;
