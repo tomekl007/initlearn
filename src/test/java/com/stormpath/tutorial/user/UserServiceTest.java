@@ -19,11 +19,11 @@ public class UserServiceTest {
     public void limitDoNotWork(){
         InternalDataStore mock = Mockito.mock(InternalDataStore.class);
         
-        new DefaultClient(mock)
+//        new DefaultClient(mock)
         //when
-        List<User> allUsers = UserService.getAllUsers(Optional.empty(), Optional.of(0), Optional.of(1), client);
+//        List<User> allUsers = UserService.getAllUsers(Optional.empty(), Optional.of(0), Optional.of(1), client);
 
-        System.out.println("allUsers : " + allUsers.size());
+//        System.out.println("allUsers : " + allUsers.size());
 
     }
 
