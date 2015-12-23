@@ -108,13 +108,18 @@ public class UserService implements AccountFields {
         client.getAccounts(pagination(offset, limit))
                 .iterator()
                 .forEachRemaining(list::add);
-        return AccountUtils.mapToUsers(list);
+        return AccountUtils.mapToUsers(sortBy(list, sort));
+    }
+
+    private List<Account> sortBy(List<Account> list, Optional<String> sort) {
+        
+        return list;
     }
 
     private AccountCriteria pagination(Optional<Integer> offset, Optional<Integer> limit) {
         if (offset.isPresent() && limit.isPresent()) {
             logger.info("--> offset : " + offset + " limit : " + limit);
-            return Accounts.criteria().offsetBy(offset.get()).limitTo(limit.get());
+            return Accounts.criteria().limitTo(limit.get()).offsetBy(offset.get());
         } else {
             return Accounts.criteria();
         }
