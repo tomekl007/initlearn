@@ -13,9 +13,9 @@ var NavigationList = React.createClass({
         };
     },
     componentDidMount() {
-        this.getUserData();
+        this.login();
     },
-    getUserData() {
+    login() {
 
         var thisComponent = this;
 
@@ -50,6 +50,8 @@ var NavigationList = React.createClass({
     },
     logout() {
 
+        var thisComponent = this;
+
         $.ajax({
             url : config.logoutUserUrl,
             headers: {
@@ -61,7 +63,7 @@ var NavigationList = React.createClass({
                     /*TODO improve FB logout*/
                     //FB.logout(function(response) {});
                     window.localStorage.clear();
-                    this.setState({ isLoggedIn: false });
+                    thisComponent.setState({ isLoggedIn: false });
                 }
             },
             error: function(jqXHR, statusString, err) {
