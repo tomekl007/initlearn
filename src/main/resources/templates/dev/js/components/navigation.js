@@ -2,8 +2,6 @@ import React from 'react';
 
 import NavigationListComponent from './navigationList';
 
-var userData = {name:'bartek', href: '#/me'};
-
 class Navigation extends React.Component {
     render() {
         return (
@@ -17,7 +15,7 @@ class Navigation extends React.Component {
                     <div className='main-nav-icon-line line-3'></div>
                     <div className='main-nav-icon-area sticky pos-left pos-top'></div>
                 </div>
-                <NavigationListComponent data={userData}/>
+                <NavigationListComponent/>
             </nav>
         );
     }

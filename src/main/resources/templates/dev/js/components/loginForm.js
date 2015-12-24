@@ -1,4 +1,5 @@
 import React from 'react';
+import $ from '../lib/jquery';
 
 import localStorage from '../common/localStorage';
 
@@ -14,6 +15,7 @@ var LoginForm = React.createClass({
         $.ajax({
             type: $target.getAttribute('method'),
             url: $target.getAttribute('action'),
+            data: $($target).serialize(),
 
             success: function (data) {
                 console.log(data);

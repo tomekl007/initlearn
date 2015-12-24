@@ -1,4 +1,5 @@
 import React from 'react';
+import $ from '../lib/jquery';
 
 import config from '../ajax/config';
 import localStorage from '../common/localStorage';
