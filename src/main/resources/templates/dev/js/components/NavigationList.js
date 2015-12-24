@@ -3,6 +3,10 @@ import React from 'react';
 import config from '../ajax/config';
 import localStorage from '../common/localStorage';
 
+/*TODO change for the react components*/
+import Modal from '../controllers/modal';
+import Form from '../controllers/form';
+
 var NavigationList = React.createClass({
 
 
@@ -71,6 +75,11 @@ var NavigationList = React.createClass({
             }
         });
     },
+    /*TODO delete in the future*/
+    openModalwithForm(event) {
+        Modal.open();
+        Form.show(event);
+    },
     render() {
 
         var $loginElements;
@@ -83,8 +92,8 @@ var NavigationList = React.createClass({
             ];
         } else {
             $loginElements = [
-                <li className='main-nav-list-item main-create-account'><a href='#create-account-form' className='is-active'>create free account</a></li>,
-                <li className='main-nav-list-item main-sign-in'><a href='#sign-in-form'>sign in</a></li>
+                <li className='main-nav-list-item main-create-account' onClick={this.openModalwithForm}><a href='#create-account-form' className='is-active'>create free account</a></li>,
+                <li className='main-nav-list-item main-sign-in' onClick={this.openModalwithForm}><a href='#sign-in-form'>sign in</a></li>
             ]
         }
 
