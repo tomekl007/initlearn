@@ -1,7 +1,5 @@
 import React from 'react';
 
-import OutsideAreaComponent from '../components/outsideArea';
-
 import HeaderView from './header';
 import ContainerView from './container';
 
@@ -11,7 +9,6 @@ class Layout extends React.Component {
             <div className='main-layout'>
                 <HeaderView />
                 <ContainerView />
-                <OutsideAreaComponent />
             </div>
         );
     }

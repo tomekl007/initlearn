@@ -1,3 +1,4 @@
+/*TODO delete*/
 import $ from '../lib/jquery';
 
 var Modal = (function () {

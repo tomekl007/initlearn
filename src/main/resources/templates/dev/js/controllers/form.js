@@ -1,3 +1,4 @@
+/*TODO delete*/
 import $ from '../lib/jquery';
 import localStorage from '../common/localStorage';
 import config from '../ajax/config';
@@ -22,37 +23,6 @@ var Form = (function () {
         $wrapper = $('.main-form-wrapper');
 
         attachEvents();
-
-        var frm = $('#sign-in-form');
-
-        frm.on('submit', function (ev) {
-
-            $.ajax({
-                type: frm.attr('method'),
-                url: frm.attr('action'),
-                data: frm.serialize(),
-
-                success: function (data) {
-                    console.log(data);
-                    if(localStorage.isAvailable()) {
-                        window.localStorage.setItem('user-token', data.access_token);
-                    }
-
-                    window.location.reload();
-                },
-
-                error: function(jqXHR, statusString, err) {
-                    console.log(jqXHR);
-                    console.log(statusString);
-                    console.log(err);
-                    console.log('login attempt failed.  Please try again.');
-                }
-
-            });
-
-            ev.preventDefault();
-
-        });
     };
 
     var attachEvents = function () {
