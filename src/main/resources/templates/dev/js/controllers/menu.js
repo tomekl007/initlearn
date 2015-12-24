@@ -4,12 +4,15 @@ import Form from './form';
 
     var Menu = (function () {
 
-        var $wrapper = $('.main-nav');
-        var $mobileOpenBtn = $('.js-main-nav-menu-open');
-        var $createAccountBtn = $('.main-create-account');
-        var $signInBtn = $('.main-sign-in');
+        var $wrapper, $mobileOpenBtn, $createAccountBtn, $signInBtn;
 
         var init = function () {
+
+            $wrapper = $('.main-nav');
+            $mobileOpenBtn = $('.js-main-nav-menu-open');
+            $createAccountBtn = $('.main-create-account');
+            $signInBtn = $('.main-sign-in');
+
             attachEvents();
         };
 

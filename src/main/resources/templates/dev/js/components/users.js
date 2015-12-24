@@ -2,13 +2,15 @@ import React from 'react';
 import $ from '../lib/jquery';
 import UserComponent from './user';
 
-/*improve Teachers class to ES6*/
+/*TODO improve Teachers class to ES6*/
 var Users = React.createClass({
 
     getInitialState() {
         return {data: []};
     },
     loadTeachersFromServer() {
+
+        /*TODO improve AJAX CALLS*/
         $.ajax({
             url: this.props.url,
             dataType: 'json',

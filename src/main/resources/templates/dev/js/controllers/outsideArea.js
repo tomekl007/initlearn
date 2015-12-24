@@ -2,9 +2,13 @@ import $ from '../lib/jquery';
 import Modal from './modal';
 
     var OutsideArea = (function () {
-        var $outsideArea = $('.main-outside-area');
+
+        var $outsideArea;
 
         var init = function () {
+
+            $outsideArea = $('.main-outside-area');
+
             attachEvents();
         };
 
@@ -14,6 +18,9 @@ import Modal from './modal';
         };
 
         var close = function () {
+
+            $outsideArea = $('.main-outside-area');
+
             $outsideArea.removeClass('is-active');
         };
 

@@ -1,10 +1,10 @@
-import Config from '../ajax/config';
+import config from '../ajax/config';
 import React from 'react';
 
 class User extends React.Component {
 
     render() {
-        var teacherNodes = this.props.data.map(function (user, key) {
+        var userNodes = this.props.data.map(function (user, key) {
 
             var userSkills = user.skills.map(function (skill, key) {
                 return (
@@ -14,7 +14,7 @@ class User extends React.Component {
 
             return (
                 <div className='col s12 m6' key={key}>
-                    <a className='card-wrapper fw-100' href={Config.usersHash + user.email}>
+                    <a className='card-wrapper fw-100' href={config.usersHash + user.email}>
                         <div className='card-header-img bg-white'>
                             <img src={user.img} alt='teacher profile image'/>
                         </div>
@@ -40,7 +40,7 @@ class User extends React.Component {
         });
         return (
             <div>
-                {teacherNodes}
+                {userNodes}
             </div>
         );
     }

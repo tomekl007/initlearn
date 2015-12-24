@@ -1,0 +1,99 @@
+import React from 'react';
+
+import config from '../ajax/config';
+import localStorage from '../common/localStorage';
+
+var NavigationList = React.createClass({
+
+
+    getInitialState() {
+        return {
+            isLoggedIn: false,
+            data: []
+        };
+    },
+    componentDidMount() {
+        this.getUserData();
+    },
+    getUserData() {
+
+        var thisComponent = this;
+
+        /*TODO improve AJAX CALLS*/
+        $.ajax({
+            url : config.isUserLoggedInUrl,
+            success: function(isLooggedIn){
+                if (isLooggedIn === true) {
+                    $.ajax({
+                        url : config.loggedUserUrl,
+                        headers: {
+                            /*TODO improve local storage*/
+                            'Authorization' : localStorage.isAvailable() ? config.authorizationPrefix + window.localStorage.getItem('user-token') || '' : ''
+                        },
+                        success: function(data){
+
+                            thisComponent.setState({
+                                isLoggedIn: true,
+                                data: data[0]
+                            });
+                        },
+                        error: function(jqXHR, statusString, err) {
+                            console.log(err);
+                        }
+                    });
+                }
+            },
+            error: function(jqXHR, statusString, err) {
+                console.log(err);
+            }
+        });
+    },
+    logout() {
+
+        $.ajax({
+            url : config.logoutUserUrl,
+            headers: {
+                'Authorization' : localStorage.isAvailable() ? config.authorizationPrefix + window.localStorage.getItem('user-token') || '' : ''
+            },
+            success: function(){
+
+                if (localStorage.isAvailable()) {
+                    /*TODO improve FB logout*/
+                    //FB.logout(function(response) {});
+                    window.localStorage.clear();
+                    this.setState({ isLoggedIn: false });
+                }
+            },
+            error: function(jqXHR, statusString, err) {
+                console.log(err);
+            }
+        });
+    },
+    render() {
+
+        var $loginElements;
+
+        if (this.state.isLoggedIn) {
+
+            $loginElements = [
+                <li className='main-nav-list-item main-user-name'><a href={config.myProfileHash}>{this.state.data.fullName}</a></li>,
+                <li className='main-nav-list-item main-user-logout' onClick={this.logout}><a href='#'>logout</a></li>
+            ];
+        } else {
+            $loginElements = [
+                <li className='main-nav-list-item main-create-account'><a href='#create-account-form' className='is-active'>create free account</a></li>,
+                <li className='main-nav-list-item main-sign-in'><a href='#sign-in-form'>sign in</a></li>
+            ]
+        }
+
+
+        return (
+            <ul className='main-nav-list sticky pos-top pos-left'>
+                <li className='main-nav-list-item'><a href='#teachers'>teachers</a></li>
+                {$loginElements}
+            </ul>
+        );
+    }
+});
+
+module.exports = NavigationList;
