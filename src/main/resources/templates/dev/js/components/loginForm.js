@@ -10,11 +10,14 @@ var LoginForm = React.createClass({
         event.preventDefault();
 
         var $target = event.target;
-        var $navigationComponent = this.props.data;
+        var $modalComponent = this.props.data.modalComponent;
+        var $navigationComponent = this.props.data.navigationComponent;
 
+        /*TODO improve AJAX CALLS*/
         $.ajax({
             type: $target.getAttribute('method'),
             url: $target.getAttribute('action'),
+            /*TODO change serialize to http://stackoverflow.com/questions/11661187/form-serialize-javascript-no-framework*/
             data: $($target).serialize(),
 
             success: function (data) {
@@ -22,6 +25,7 @@ var LoginForm = React.createClass({
                 if (localStorage.isAvailable()) {
                     window.localStorage.setItem('user-token', data.access_token);
                     $navigationComponent.login();
+                    $modalComponent.close();
                 }
             },
 
@@ -32,7 +36,6 @@ var LoginForm = React.createClass({
         });
     },
     render() {
-
         return (
             <div className='main-form-wrapper'>
                 <form id='sign-in-form' method='post' role='form' className='main-form show' action='oauth/token' onSubmit={this.getToken}>

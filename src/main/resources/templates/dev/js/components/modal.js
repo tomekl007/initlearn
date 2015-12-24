@@ -11,8 +11,8 @@ var Modal = React.createClass({
         };
     },
     close() {
-        this.setState({ isOpen: false });
-        this.props.data.setState({ isModalOpen: false });
+        this.setState({isOpen: false});
+        this.props.data.setState({isModalOpen: false});
 
     },
     render() {
@@ -20,7 +20,12 @@ var Modal = React.createClass({
         var $loginForm;
 
         if (this.props.data.state.isLoginForm) {
-            $loginForm = <LoginFormComponent data={this.props.data}/>;
+            $loginForm = <LoginFormComponent data={
+                    {
+                        navigationComponent: this.props.data,
+                        modalComponent: this
+                    }
+                }/>;
         }
 
         return (

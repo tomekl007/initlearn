@@ -63,6 +63,7 @@ var NavigationList = React.createClass({
 
         var $thisComponent = this;
 
+        /*TODO improve AJAX CALLS*/
         $.ajax({
             url: config.logoutUserUrl,
             headers: {
