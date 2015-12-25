@@ -66,8 +66,7 @@ public class FacebookRegisterController {
 
         String href = "https://api.stormpath.com/v1/directories/1Ly7Mnnag7uuPlSzTyCzPA";
         Directory directory = client.getDataStore().getResource(href, Directory.class);
-        directory.createAccount(account);
-        account.save();
+        application.createAccount(account);
         return new ResponseEntity<>(AccountUtils.mapAccountToUser(account), HttpStatus.OK);
     }
 }
