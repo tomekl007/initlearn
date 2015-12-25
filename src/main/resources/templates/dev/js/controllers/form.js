@@ -1,15 +1,16 @@
+/*TODO delete*/
 import $ from '../lib/jquery';
 import localStorage from '../common/localStorage';
 import config from '../ajax/config';
-import userLogin from '../ajax/userLogin';
 import modal from './modal';
 import outsideArea from './outsideArea';
 
 var Form = (function () {
 
-    var $wrapper = $('.main-form-wrapper');
+    var $wrapper;;
 
     var show = function (event) {
+        $wrapper = $('.main-form-wrapper');
 
         $wrapper.find('.main-form').removeClass('show');
 
@@ -19,40 +20,9 @@ var Form = (function () {
     };
 
     var init = function () {
+        $wrapper = $('.main-form-wrapper');
+
         attachEvents();
-
-        var frm = $('#sign-in-form');
-
-        frm.on('submit', function (ev) {
-
-            $.ajax({
-                type: frm.attr('method'),
-                url: frm.attr('action'),
-                data: frm.serialize(),
-
-                success: function (data) {
-                    console.log(data);
-                    if(localStorage.isAvailable()) {
-                        window.localStorage.setItem('user-token', data.access_token);
-                    }
-
-                    userLogin.get();
-                    modal.close();
-                    outsideArea.close();
-                },
-
-                error: function(jqXHR, statusString, err) {
-                    console.log(jqXHR);
-                    console.log(statusString);
-                    console.log(err);
-                    console.log('login attempt failed.  Please try again.');
-                }
-
-            });
-
-            ev.preventDefault();
-
-        });
     };
 
     var attachEvents = function () {

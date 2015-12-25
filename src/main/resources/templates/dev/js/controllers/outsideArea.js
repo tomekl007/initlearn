@@ -1,10 +1,15 @@
+/*TODO delete*/
 import $ from '../lib/jquery';
 import Modal from './modal';
 
     var OutsideArea = (function () {
-        var $outsideArea = $('.main-outside-area');
+
+        var $outsideArea;
 
         var init = function () {
+
+            $outsideArea = $('.main-modal-window-close');
+
             attachEvents();
         };
 
@@ -14,7 +19,10 @@ import Modal from './modal';
         };
 
         var close = function () {
-            $outsideArea.removeClass('is-active');
+
+            var $modal = $('.main-modal-window');
+
+            $modal.removeClass('is-active');
         };
 
         return {

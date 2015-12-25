@@ -1,5 +1,5 @@
 import React from 'react';
-import AboutUsComponent from '../components/about_us';
+import AboutUsComponent from '../components/aboutUs';
 import TeachersView from '../views/teachers';
 
 
