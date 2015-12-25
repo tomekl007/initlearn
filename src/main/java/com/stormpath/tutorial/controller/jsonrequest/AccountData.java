@@ -13,6 +13,16 @@ public class AccountData {
         return password;
     }
 
+    @Override
+    public String toString() {
+        return "AccountData{" +
+                "password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", surname='" + surname + '\'' +
+                ", givenName='" + givenName + '\'' +
+                '}';
+    }
+
     public void setPassword(String password) {
         this.password = password;
     }
