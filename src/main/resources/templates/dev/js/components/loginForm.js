@@ -39,9 +39,7 @@ var LoginForm = React.createClass({
         return (
             <div className='main-form-wrapper'>
                 <form id='sign-in-form' method='post' role='form' className='main-form show' action='oauth/token' onSubmit={this.getToken}>
-            <!-- todo handle 400 Bad Request, if this returns it then show msg and forgot password
-             
-             -->
+            <!-- todo handle 400 Bad Request, if this returns it then show msg and forgot password -->
                     <div form-group='true' className='main-input-wrapper'>
                         <input className='main-input' name='username' type='text' autofocus='autofocus' required='required'/>
                         <label className='main-label'>mail</label>
