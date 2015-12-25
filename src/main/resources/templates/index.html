@@ -17,6 +17,14 @@
     <div class="main-modal-window sticky pos-top pos-left">
         <div class="main-modal-window-content">
             <div class="main-form-wrapper">
+                <div class="alert alert-dismissable alert-danger"
+                     th:if="${errors != null and not #lists.isEmpty(errors)}">
+                    <button type="button" class="close" data-dismiss="alert"></button>
+                    <!--/*/ <th-block data-th-each="error : ${errors}"> /*/-->
+                    <p th:text="${error}">|Error message here.|</p>
+                    <!--/*/ </th-block> /*/-->
+                </div>
+
                 <form id="create-account-form" method="post" role="form" class="main-form" th:action="@{/register}">
 
                     <div form-group="true" class="main-input-wrapper">
