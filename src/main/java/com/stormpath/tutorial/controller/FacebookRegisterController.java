@@ -19,7 +19,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * Created by tomasz.lelek on 22/12/15.
@@ -49,8 +52,8 @@ public class FacebookRegisterController {
         return new ResponseEntity<>(providerData.getAccessToken(), HttpStatus.OK);
     }
     
-    @RequestMapping(value = "/registerAccount", method = RequestMethod.POST)
-    ResponseEntity<User> registerNewAccount(@ModelAttribute AccountData accountData){
+    @RequestMapping(value = "/registerAccount", method = RequestMethod.POST, consumes = "application/x-www-form-urlencoded")
+    ResponseEntity<User> registerNewAccount(@RequestBody AccountData accountData){
         Account account = client.instantiate(Account.class)
                 .setUsername(accountData.email)
                 .setEmail(accountData.email)
