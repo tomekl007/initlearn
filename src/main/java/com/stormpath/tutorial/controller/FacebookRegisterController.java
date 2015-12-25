@@ -54,6 +54,7 @@ public class FacebookRegisterController {
     
     @RequestMapping(value = "/registerAccount", method = RequestMethod.POST, consumes = "application/x-www-form-urlencoded")
     ResponseEntity<User> registerNewAccount(@RequestBody AccountData accountData){
+        logger.info("aD: " + accountData);
         Account account = client.instantiate(Account.class)
                 .setUsername(accountData.email)
                 .setEmail(accountData.email)
