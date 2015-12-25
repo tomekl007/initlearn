@@ -52,7 +52,7 @@ public class FacebookRegisterController {
         return new ResponseEntity<>(providerData.getAccessToken(), HttpStatus.OK);
     }
     
-    @RequestMapping(value = "/registerAccount", method = RequestMethod.POST, consumes = "application/x-www-form-urlencoded")
+    @RequestMapping(value = "/registerAccount", method = RequestMethod.POST, consumes = "application/json")
     ResponseEntity<User> registerNewAccount(@RequestBody AccountData accountData){
         logger.info("aD: " + accountData);
         Account account = client.instantiate(Account.class)
