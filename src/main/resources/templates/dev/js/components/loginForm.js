@@ -56,8 +56,8 @@ var LoginForm = React.createClass({
 
                         <div className='main-input-bg'></div>
                     </div>
-                    <div form-group="true" className="main-input-wrapper">
-                        <a th:href="/forgot" className="to-login" text="Forgot password">|Forgot Password?|</a>
+                    <div form-group='true' className='main-input-wrapper'>
+                        <a href='/forgot' className='to-login' text='Forgot password'>|Forgot Password?|</a>
                     </div>
     
                     <button type='submit' className='main-btn btn-primary fw-700'>login</button>
