@@ -16,6 +16,8 @@
 
 package com.stormpath.tutorial.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.ErrorAttributes;
 import org.springframework.boot.autoconfigure.web.ErrorController;
@@ -29,6 +31,7 @@ import java.util.Map;
 
 @Controller
 public class MyErrorController implements ErrorController {
+    private static final Logger logger = LoggerFactory.getLogger(MyErrorController.class);
     private static final String ERROR_PATH = "/error";
 
     @Autowired
@@ -41,6 +44,7 @@ public class MyErrorController implements ErrorController {
     @RequestMapping(ERROR_PATH)
     String error(HttpServletRequest request, Model model) {
         Map<String, Object> errorMap = errorAttributes.getErrorAttributes(new ServletRequestAttributes(request), false);
+        logger.error("error : " + errorMap);
         model.addAttribute("errors", errorMap);
         return "error";
     }
