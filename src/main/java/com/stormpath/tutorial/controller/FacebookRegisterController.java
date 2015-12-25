@@ -59,7 +59,6 @@ public class FacebookRegisterController {
                 .setUsername(accountData.email)
                 .setEmail(accountData.email)
                 .setGivenName(accountData.givenName)
-                .setMiddleName("")
                 .setSurname(accountData.surname)
                 .setPassword(accountData.password)
                 .setStatus(AccountStatus.ENABLED);
