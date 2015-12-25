@@ -39,6 +39,9 @@ var LoginForm = React.createClass({
         return (
             <div className='main-form-wrapper'>
                 <form id='sign-in-form' method='post' role='form' className='main-form show' action='oauth/token' onSubmit={this.getToken}>
+            <!-- todo handle 400 Bad Request, if this returns it then show msg and forgot password
+             
+             -->
                     <div form-group='true' className='main-input-wrapper'>
                         <input className='main-input' name='username' type='text' autofocus='autofocus' required='required'/>
                         <label className='main-label'>mail</label>
@@ -53,6 +56,10 @@ var LoginForm = React.createClass({
 
                         <div className='main-input-bg'></div>
                     </div>
+                    <div form-group="true" class="main-input-wrapper">
+                        <a th:href="/forgot" class="to-login" text="Forgot password">|Forgot Password?|</a>
+                    </div>
+    
                     <button type='submit' className='main-btn btn-primary fw-700'>login</button>
 
                 </form>
