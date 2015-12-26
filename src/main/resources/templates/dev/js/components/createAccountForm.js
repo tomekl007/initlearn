@@ -37,8 +37,9 @@ var CreateAccountForm = React.createClass({
                     }
                 });
 
+                console.log(dataToMap);
                 console.log('my serializtion');
-                console.log(JSON.stringify(dataToMap));
+                console.log($.param(dataToMap));
                 console.log('----------------');
                 console.log('default serialization');
                 console.log($($target).serialize());
@@ -65,6 +66,7 @@ var CreateAccountForm = React.createClass({
         });
     },
     render() {
+        window.zobaczymy = FormSerialize;
         return (
             <div className='main-form-wrapper'>
                 <form id='create-account-form' method='post' role='form' className='main-form show' action='/registerAccount' onSubmit={this.createAccount}>
