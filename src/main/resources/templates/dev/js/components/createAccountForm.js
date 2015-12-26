@@ -32,7 +32,8 @@ var CreateAccountForm = React.createClass({
 
                 /*TODO improve - 2 times render call*/
                 $modalComponent.setState({
-                    formData: data
+                    /*TODO change serialize method to npm serialize*/
+                    formData: $($target).serialize()
                 });
 
                 $navigationComponent.setState({
