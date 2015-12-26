@@ -15,6 +15,7 @@ var NavigationList = React.createClass({
             isModalOpen: false,
             isLoginForm: false,
             isCreateAccountForm: false,
+            isAutomaticLogin: false,
             data: []
         };
     },
@@ -83,7 +84,8 @@ var NavigationList = React.createClass({
 
         this.setState({
             isModalOpen: true,
-            isLoginForm: true
+            isLoginForm: true,
+            isCreateAccountForm: false
         });
     },
     /*TODO delete in the future*/
@@ -91,6 +93,7 @@ var NavigationList = React.createClass({
 
         this.setState({
             isModalOpen: true,
+            isLoginForm: false,
             isCreateAccountForm: true
         });
     },

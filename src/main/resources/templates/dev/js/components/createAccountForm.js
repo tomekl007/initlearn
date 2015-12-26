@@ -28,16 +28,32 @@ var CreateAccountForm = React.createClass({
             },
 
             success: function (data) {
+
+                /*TODO refactor mapping*/
+                var dataToMap = FormSerialize($target, {hash: true});
+                Object.keys(dataToMap).map(function(key, value) {
+                    if (key === 'email') {
+                        dataToMap['username'] = value;
+                    }
+                });
+
+                console.log('my serializtion');
+                console.log(JSON.stringify(dataToMap));
+                console.log('----------------');
+                console.log('default serialization');
+                console.log($($target).serialize());
+                console.log('-----------------------')
                 console.log(data);
 
                 /*TODO improve - 2 times render call*/
                 $modalComponent.setState({
                     /*TODO change serialize method to npm serialize*/
-                    formData: $($target).serialize()
+                    formData: JSON.stringify(dataToMap)
                 });
 
                 $navigationComponent.setState({
                     isCreateAccountForm: false,
+                    isAutomaticLogin: true,
                     isLoginForm: true
                 });
             },
@@ -76,6 +92,7 @@ var CreateAccountForm = React.createClass({
 
                     <div form-group='true' className='main-input-wrapper'>
                         <input className='main-input' name='password' type='password' required='required'/>
+                        <input name='grant_type' type='hidden' value='password'/>
                         <label className='main-label'>password</label>
 
                         <div className='main-input-bg'></div>

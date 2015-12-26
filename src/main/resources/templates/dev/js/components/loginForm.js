@@ -7,9 +7,14 @@ var LoginForm = React.createClass({
 
 
     componentDidMount() {
-        /*TODO improve childNodes form*/
-        var $target = this.getDOMNode().childNodes[0];
-        this.getToken(null, $target);
+
+        var $navigationComponent = this.props.data.navigationComponent;
+
+        if ($navigationComponent.state.isAutomaticLogin) {
+            /*TODO improve childNodes form*/
+            var $target = this.getDOMNode().childNodes[0];
+            this.getToken(null, $target);
+        }
     },
     getToken(event, target) {
 
@@ -30,13 +35,17 @@ var LoginForm = React.createClass({
                 console.log(data);
                 if (localStorage.isAvailable()) {
                     window.localStorage.setItem('user-token', data.access_token);
+                    /*TODO improve - 3 times render call*/
                     $navigationComponent.login();
                     $modalComponent.close();
+                    $navigationComponent.setState({ isAutomaticLogin: false });
                 }
             },
 
             error: function (jqXHR, statusString, err) {
                 console.log(err);
+                /*TODO improve - 1 time render call*/
+                $navigationComponent.setState({ isAutomaticLogin: false });
             }
 
         });
