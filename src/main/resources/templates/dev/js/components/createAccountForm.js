@@ -49,7 +49,7 @@ var CreateAccountForm = React.createClass({
                 /*TODO improve - 2 times render call*/
                 $modalComponent.setState({
                     /*TODO change serialize method to npm serialize*/
-                    formData: JSON.stringify(dataToMap)
+                    formData: $.param(dataToMap)
                 });
 
                 $navigationComponent.setState({
@@ -66,7 +66,6 @@ var CreateAccountForm = React.createClass({
         });
     },
     render() {
-        window.zobaczymy = FormSerialize;
         return (
             <div className='main-form-wrapper'>
                 <form id='create-account-form' method='post' role='form' className='main-form show' action='/registerAccount' onSubmit={this.createAccount}>
