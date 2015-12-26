@@ -5,11 +5,17 @@ import localStorage from '../common/localStorage';
 
 var LoginForm = React.createClass({
 
-    getToken(event) {
 
-        event.preventDefault();
+    componentDidMount() {
+        /*TODO improve childNodes form*/
+        var $target = this.getDOMNode().childNodes[0];
+        this.getToken(null, $target);
+    },
+    getToken(event, target) {
 
-        var $target = event.target;
+        event !== null ? event.preventDefault() : true;
+
+        var $target = event !== null ? event.target : target;
         var $modalComponent = this.props.data.modalComponent;
         var $navigationComponent = this.props.data.navigationComponent;
 
@@ -18,7 +24,7 @@ var LoginForm = React.createClass({
             type: $target.getAttribute('method'),
             url: $target.getAttribute('action'),
             /*TODO change serialize to http://stackoverflow.com/questions/11661187/form-serialize-javascript-no-framework*/
-            data: $($target).serialize(),
+            data: event !== null ? $($target).serialize() : $modalComponent.props.data.formData,
 
             success: function (data) {
                 console.log(data);

@@ -8,11 +8,13 @@ var Modal = React.createClass({
     getInitialState() {
 
         return {
-            isOpen: true
+            isOpen: true,
+            formData: {}
         };
     },
+    /*TODO improve - 2 times render call*/
     close() {
-        this.setState({isOpen: false});
+        //this.setState({isOpen: false});
         this.props.data.setState({isModalOpen: false});
 
     },

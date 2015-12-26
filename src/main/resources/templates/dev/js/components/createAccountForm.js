@@ -13,21 +13,32 @@ var CreateAccountForm = React.createClass({
 
         var $target = event.target;
         var $modalComponent = this.props.data.modalComponent;
-        //var $navigationComponent = this.props.data.navigationComponent;
+        var $navigationComponent = this.props.data.navigationComponent;
+
+        var data = JSON.stringify(FormSerialize($target, {hash: true}));
 
         /*TODO improve AJAX CALLS*/
         $.ajax({
 
             type: $target.getAttribute('method'),
             url: config.registerAccountUrl,
-            data: JSON.stringify(FormSerialize($target, {hash: true})),
+            data: data,
             headers: {
                 'Content-Type': 'application/json'
             },
 
             success: function (data) {
                 console.log(data);
-                $modalComponent.close();
+
+                /*TODO improve - 2 times render call*/
+                $modalComponent.setState({
+                    formData: data
+                });
+
+                $navigationComponent.setState({
+                    isCreateAccountForm: false,
+                    isLoginForm: true
+                });
             },
 
             error: function (jqXHR, statusString, err) {
