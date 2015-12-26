@@ -28,6 +28,7 @@ var CreateAccountForm = React.createClass({
             },
 
             success: function (data) {
+                console.log(data);
 
                 /*TODO refactor mapping*/
                 var dataToMap = FormSerialize($target, {hash: true});
@@ -36,15 +37,6 @@ var CreateAccountForm = React.createClass({
                         dataToMap['username'] = dataToMap[key];
                     }
                 });
-
-                console.log(dataToMap);
-                console.log('my serializtion');
-                console.log($.param(dataToMap));
-                console.log('----------------');
-                console.log('default serialization');
-                console.log($($target).serialize());
-                console.log('-----------------------')
-                console.log(data);
 
                 /*TODO improve - 2 times render call*/
                 $modalComponent.setState({

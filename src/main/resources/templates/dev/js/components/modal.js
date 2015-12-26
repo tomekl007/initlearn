@@ -14,6 +14,7 @@ var Modal = React.createClass({
     },
     /*TODO improve - 2 times render call*/
     close() {
+        console.log('close');
         //this.setState({isOpen: false});
         this.props.data.setState({isModalOpen: false});
 
@@ -45,7 +46,7 @@ var Modal = React.createClass({
                 {$loginForm}
                 {$createAccountForm}
                 </div>
-                <div className='main-modal-window-close' onClick={this.close}>
+                <div className='main-modal-window-close' onClick={this.close} onTouchStart={this.close}>
                 </div>
             </div>
         );
