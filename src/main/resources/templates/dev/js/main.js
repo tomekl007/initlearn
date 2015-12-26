@@ -4,7 +4,6 @@ import Router from 'react-router';
 
 import Form from './controllers/form';
 import Menu from './controllers/menu';
-import OutsideArea from './controllers/outsideArea';
 
 import routes from './Routes/routes';
 
@@ -17,5 +16,4 @@ $(function () {
 
     Form.init();
     Menu.init();
-    OutsideArea.init();
 });

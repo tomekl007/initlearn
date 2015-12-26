@@ -14,54 +14,6 @@
     <div id="main-app">
 
     </div>
-    <div class="main-modal-window sticky pos-top pos-left">
-        <div class="main-modal-window-content">
-            <div class="main-form-wrapper">
-                <div class="alert alert-dismissable alert-danger"
-                     th:if="${errors != null and not #lists.isEmpty(errors)}">
-                    <button type="button" class="close" data-dismiss="alert"></button>
-                    <!--/*/ <th-block data-th-each="error : ${errors}"> /*/-->
-                    <p th:text="${error}">|Error message here.|</p>
-                    <!--/*/ </th-block> /*/-->
-                </div>
-
-                <form id="create-account-form" method="post" role="form" class="main-form" action="/registerAccount">
-
-                    <div form-group="true" class="main-input-wrapper">
-                        <input class="main-input" name="givenName" type="text" autofocus="autofocus" value=""/>
-                        <label class="main-label">name</label>
-
-                        <div class="main-input-bg"></div>
-                    </div>
-
-                    <div form-group="true" class="main-input-wrapper">
-                        <input class="main-input" name="surname" type="text" value=""/>
-                        <label class="main-label">surname</label>
-
-                        <div class="main-input-bg"></div>
-                    </div>
-
-                    <div form-group="true" class="main-input-wrapper">
-                        <input class="main-input" name="email" type="email" required="required" value=""/>
-                        <label class="main-label">mail</label>
-
-                        <div class="main-input-bg"></div>
-                    </div>
-
-                    <div form-group="true" class="main-input-wrapper">
-                        <input class="main-input" name="password" type="password" required="required" value=""/>
-                        <label class="main-label">password</label>
-
-                        <div class="main-input-bg"></div>
-                    </div>
-
-                    <button type="submit" class="main-btn btn-primary fw-700">create account</button>
-
-                </form>
-            </div>
-        </div>
-        <div class="main-modal-window-close"></div>
-    </div>
 
     <script src="assets/js/main.min.js"></script>
 

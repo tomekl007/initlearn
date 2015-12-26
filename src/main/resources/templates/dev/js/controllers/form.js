@@ -2,22 +2,10 @@
 import $ from '../lib/jquery';
 import localStorage from '../common/localStorage';
 import config from '../ajax/config';
-import modal from './modal';
-import outsideArea from './outsideArea';
 
 var Form = (function () {
 
-    var $wrapper;;
-
-    var show = function (event) {
-        $wrapper = $('.main-form-wrapper');
-
-        $wrapper.find('.main-form').removeClass('show');
-
-        if (typeof event !== 'undefined') {
-            $wrapper.find(event.target.hash).addClass('show');
-        }
-    };
+    var $wrapper;
 
     var init = function () {
         $wrapper = $('.main-form-wrapper');
@@ -44,8 +32,7 @@ var Form = (function () {
     };
 
     return {
-        init: init,
-        show: show
+        init: init
     };
 })();
 

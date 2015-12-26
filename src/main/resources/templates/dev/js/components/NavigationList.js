@@ -6,11 +6,6 @@ import localStorage from '../common/localStorage';
 
 import ModalComponent from './modal';
 
-/*TODO change for the react components*/
-import Modal from '../controllers/modal';
-import Form from '../controllers/form';
-
-
 var NavigationList = React.createClass({
 
 
@@ -92,9 +87,12 @@ var NavigationList = React.createClass({
         });
     },
     /*TODO delete in the future*/
-    openCreateAccountForm(event) {
-        Modal.open();
-        Form.show(event);
+    openCreateAccountForm() {
+
+        this.setState({
+            isModalOpen: true,
+            isCreateAccountForm: true
+        });
     },
     render() {
 
