@@ -31,9 +31,9 @@ var CreateAccountForm = React.createClass({
 
                 /*TODO refactor mapping*/
                 var dataToMap = FormSerialize($target, {hash: true});
-                Object.keys(dataToMap).map(function(key, value) {
+                Object.keys(dataToMap).map(function(key) {
                     if (key === 'email') {
-                        dataToMap['username'] = value;
+                        dataToMap['username'] = dataToMap[key];
                     }
                 });
 
