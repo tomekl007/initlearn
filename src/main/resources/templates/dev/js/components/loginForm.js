@@ -24,7 +24,7 @@ var LoginForm = React.createClass({
             type: $target.getAttribute('method'),
             url: $target.getAttribute('action'),
             /*TODO change serialize to http://stackoverflow.com/questions/11661187/form-serialize-javascript-no-framework*/
-            data: event !== null ? $($target).serialize() : $modalComponent.props.data.formData,
+            data: event !== null ? $($target).serialize() : $modalComponent.state.formData,
 
             success: function (data) {
                 console.log(data);
@@ -42,18 +42,21 @@ var LoginForm = React.createClass({
         });
     },
     render() {
+        var $modalComponent = this.props.data.modalComponent;
+        console.log($modalComponent);
+
         return (
             <div className='main-form-wrapper'>
                 <form id='sign-in-form' method='post' role='form' className='main-form show' action='oauth/token' onSubmit={this.getToken}>
                     <div form-group='true' className='main-input-wrapper'>
-                        <input className='main-input' name='username' type='text' autofocus='autofocus' required='required'/>
+                        <input className='main-input' name='username' type='text' autofocus='autofocus' required='required' value={$modalComponent.state.formData.email} />
                         <label className='main-label'>mail</label>
 
                         <div className='main-input-bg'></div>
                     </div>
 
                     <div form-group='true' className='main-input-wrapper'>
-                        <input className='main-input' name='password' type='password' required='required'/>
+                        <input className='main-input' name='password' type='password' required='required' value={$modalComponent.state.formData.password} />
                         <input name='grant_type' type='hidden' value='password'/>
                         <label className='main-label'>password</label>
 
