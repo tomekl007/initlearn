@@ -3,6 +3,8 @@ import $ from '../lib/jquery';
 
 import localStorage from '../common/localStorage';
 
+import Input from './input';
+
 var LoginForm = React.createClass({
 
 
@@ -56,14 +58,14 @@ var LoginForm = React.createClass({
             <div className='main-form-wrapper'>
                 <form id='sign-in-form' method='post' role='form' className='main-form show' action='oauth/token' onSubmit={this.getToken}>
                     <div form-group='true' className='main-input-wrapper'>
-                        <input className='main-input' name='username' type='text' autofocus='autofocus' required='required' />
+                        <Input data={{name: 'username', type: 'text', required: 'required', autofocus: 'autofocus'}}/>
                         <label className='main-label'>mail</label>
 
                         <div className='main-input-bg'></div>
                     </div>
 
                     <div form-group='true' className='main-input-wrapper'>
-                        <input className='main-input' name='password' type='password' required='required' />
+                        <Input data={{name: 'password', type: 'password', required: 'required'}}/>
                         <input name='grant_type' type='hidden' value='password'/>
                         <label className='main-label'>password</label>
 
