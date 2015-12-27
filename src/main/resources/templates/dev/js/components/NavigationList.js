@@ -1,4 +1,5 @@
 import React from 'react';
+import tapOrClick from 'react-tap-or-click';
 import $ from '../lib/jquery';
 
 import config from '../ajax/config';
@@ -108,16 +109,16 @@ var NavigationList = React.createClass({
                 <li className='main-nav-list-item main-user-name'>
                     <a href={config.myProfileHash}>{this.state.data.fullName}</a>
                 </li>,
-                <li className='main-nav-list-item main-user-logout' onClick={this.logout}>
+                <li className='main-nav-list-item main-user-logout' {...tapOrClick(this.logout)}>
                     <a href='#'>logout</a>
                 </li>
             ];
         } else {
             $loginElements = [
-                <li className='main-nav-list-item main-create-account' onClick={this.openCreateAccountForm}>
+                <li className='main-nav-list-item main-create-account' {...tapOrClick(this.openCreateAccountForm)}>
                     <a href='#create-account-form' className='is-active'>create free account</a>
                 </li>,
-                <li className='main-nav-list-item main-sign-in' onClick={this.openLoginForm}>
+                <li className='main-nav-list-item main-sign-in' {...tapOrClick(this.openLoginForm)}>
                     <a href='#sign-in-form'>sign in</a>
                 </li>
             ]

@@ -3,7 +3,6 @@ import React from 'react';
 import Router from 'react-router';
 
 import Form from './controllers/form';
-import Menu from './controllers/menu';
 
 import routes from './Routes/routes';
 
@@ -15,5 +14,4 @@ Router.run(routes, (Handler) => React.render(<Handler /> , document.getElementBy
 $(function () {
 
     Form.init();
-    Menu.init();
 });

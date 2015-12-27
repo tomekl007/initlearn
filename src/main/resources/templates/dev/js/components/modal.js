@@ -1,4 +1,5 @@
 import React from 'react';
+import tapOrClick from 'react-tap-or-click';
 
 import LoginFormComponent from './loginForm';
 import CreateAccountForm from './createAccountForm';
@@ -46,7 +47,7 @@ var Modal = React.createClass({
                 {$loginForm}
                 {$createAccountForm}
                 </div>
-                <div className='main-modal-window-close' onClick={this.close} onTouchStart={this.close}>
+                <div className='main-modal-window-close' {...tapOrClick(this.close)}>
                 </div>
             </div>
         );
