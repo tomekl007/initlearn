@@ -1,5 +1,6 @@
 import React from 'react';
 import tapOrClick from 'react-tap-or-click';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import $ from '../lib/jquery';
 
 import config from '../ajax/config';
@@ -106,19 +107,19 @@ var NavigationList = React.createClass({
         if (this.state.isLoggedIn) {
 
             $loginElements = [
-                <li className='main-nav-list-item main-user-name'>
+                <li className='main-nav-list-item main-user-name' key={2}>
                     <a href={config.myProfileHash}>{this.state.data.fullName}</a>
                 </li>,
-                <li className='main-nav-list-item main-user-logout' {...tapOrClick(this.logout)}>
+                <li className='main-nav-list-item main-user-logout' {...tapOrClick(this.logout)} key={3}>
                     <a href='#'>logout</a>
                 </li>
             ];
         } else {
             $loginElements = [
-                <li className='main-nav-list-item main-create-account' {...tapOrClick(this.openCreateAccountForm)}>
+                <li className='main-nav-list-item main-create-account' {...tapOrClick(this.openCreateAccountForm)} key={4}>
                     <a href='#create-account-form' className='is-active'>create free account</a>
                 </li>,
-                <li className='main-nav-list-item main-sign-in' {...tapOrClick(this.openLoginForm)}>
+                <li className='main-nav-list-item main-sign-in' {...tapOrClick(this.openLoginForm)} key={5}>
                     <a href='#sign-in-form'>sign in</a>
                 </li>
             ]
@@ -131,11 +132,13 @@ var NavigationList = React.createClass({
 
         return (
             <ul className='main-nav-list sticky pos-top pos-left'>
-                <li className='main-nav-list-item'>
+                <li className='main-nav-list-item' key={1}>
                     <a href='#teachers'>teachers</a>
                 </li>
                 {$loginElements}
-                {$modalElement}
+                <ReactCSSTransitionGroup transitionName="main-modal-transition" transitionEnterTimeout={300} transitionLeaveTimeout={300}>
+                    {$modalElement}
+                </ReactCSSTransitionGroup>
             </ul>
         );
     }

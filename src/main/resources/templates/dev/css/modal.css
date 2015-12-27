@@ -1,19 +1,8 @@
 .main-modal-window {
-  display: none;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 11; }
-
-.main-modal-window.is-active {
-  display: block; }
-
-.main-modal-window.is-active .main-modal-window-content {
-  -webkit-transform: translate(-50%, -50%);
-  -moz-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  -o-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%); }
 
 .main-modal-window-content {
   position: absolute;
@@ -23,19 +12,29 @@
   width: 80%;
   max-width: 600px;
   border-radius: 2px;
-  -webkit-transform: translate(-10000px, -50%);
-  -moz-transform: translate(-10000px, -50%);
-  -ms-transform: translate(-10000px, -50%);
-  -o-transform: translate(-10000px, -50%);
-  transform: translate(-10000px, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
   background-color: #e8e8e8;
   padding: 0.625rem;
-  transition: transform .5s ease;
   z-index: 1; }
 
 .main-modal-window-close {
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%; }
+
+.main-modal-transition-enter {
+  opacity: .1; }
+
+.main-modal-transition-enter.main-modal-transition-enter-active {
+  opacity: 1;
+  transition: opacity .3s ease-in; }
+
+.main-modal-transition-leave {
+  opacity: 1; }
+
+.main-modal-transition-leave.main-modal-transition-leave-active {
+  opacity: .1;
+  transition: opacity .3s ease-in; }

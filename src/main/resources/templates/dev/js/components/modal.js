@@ -5,7 +5,6 @@ import LoginFormComponent from './loginForm';
 import CreateAccountForm from './createAccountForm';
 
 var Modal = React.createClass({
-
     getInitialState() {
 
         return {
@@ -41,12 +40,12 @@ var Modal = React.createClass({
         }
 
         return (
-            <div className='main-modal-window sticky pos-top pos-left is-active'>
+            <div className='main-modal-window sticky pos-top pos-left'>
                 <div className='main-modal-window-content'>
                 {$loginForm}
                 {$createAccountForm}
                 </div>
-                <div className='main-modal-window-close' {...tapOrClick(this.close)}>
+                <div className='main-modal-window-close sticky pos-top pos-left' {...tapOrClick(this.close)}>
                 </div>
             </div>
         );
