@@ -57,34 +57,47 @@ var CreateAccountForm = React.createClass({
 
         });
     },
+    /*TODO add input component in the future*/
+    isInputFilled(event) {
+
+        var $currentInput = event.target;
+        var textLength = $currentInput.value.trim().length;
+
+        if (textLength > 0) {
+            $currentInput.classList.add('is-filled');
+            return;
+        }
+
+        $currentInput.classList.remove('is-filled');
+    },
     render() {
         return (
             <div className='main-form-wrapper'>
                 <form id='create-account-form' method='post' role='form' className='main-form show' action='/registerAccount' onSubmit={this.createAccount}>
 
                     <div form-group='true' className='main-input-wrapper'>
-                        <input className='main-input' name='givenName' type='text' autofocus='autofocus'/>
+                        <input className='main-input' name='givenName' type='text' autofocus='autofocus' onBlur={this.isInputFilled}/>
                         <label className='main-label'>name</label>
 
                         <div className='main-input-bg'></div>
                     </div>
 
                     <div form-group='true' className='main-input-wrapper'>
-                        <input className='main-input' name='surname' type='text'/>
+                        <input className='main-input' name='surname' type='text' onBlur={this.isInputFilled}/>
                         <label className='main-label'>surname</label>
 
                         <div className='main-input-bg'></div>
                     </div>
 
                     <div form-group='true' className='main-input-wrapper'>
-                        <input className='main-input' name='email' type='email' required='required'/>
+                        <input className='main-input' name='email' type='email' required='required' onBlur={this.isInputFilled}/>
                         <label className='main-label'>mail</label>
 
                         <div className='main-input-bg'></div>
                     </div>
 
                     <div form-group='true' className='main-input-wrapper'>
-                        <input className='main-input' name='password' type='password' required='required'/>
+                        <input className='main-input' name='password' type='password' required='required' onBlur={this.isInputFilled}/>
                         <input name='grant_type' type='hidden' value='password'/>
                         <label className='main-label'>password</label>
 

@@ -5,7 +5,6 @@ import NavigationListComponent from './navigationList';
 
 var Navigation = React.createClass({
     open(event) {
-        console.log('dziala');
         event.stopPropagation();
         this.getDOMNode().classList.add('is-open');
     },
