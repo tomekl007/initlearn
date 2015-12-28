@@ -1,24 +1,33 @@
 import React from 'react';
+import tapOrClick from 'react-tap-or-click';
 
 import NavigationListComponent from './navigationList';
 
-class Navigation extends React.Component {
+var Navigation = React.createClass({
+    open(event) {
+        event.stopPropagation();
+        this.getDOMNode().classList.add('is-open');
+    },
+    close(event) {
+        event.stopPropagation();
+        this.getDOMNode().classList.remove('is-open');
+    },
     render() {
         return (
             <nav className='main-nav sticky pos-top pos-left'>
                 <a href='#'>
                     <h1 className='main-logo'>inITLearn</h1>
                 </a>
-                <div className='main-nav-icon js-main-nav-menu-open'>
+                <div className='main-nav-icon' {...tapOrClick(this.open)}>
                     <div className='main-nav-icon-line line-1'></div>
                     <div className='main-nav-icon-line line-2'></div>
                     <div className='main-nav-icon-line line-3'></div>
-                    <div className='main-nav-icon-area sticky pos-left pos-top'></div>
+                    <div className='main-nav-icon-area sticky pos-left pos-top' {...tapOrClick(this.close)}></div>
                 </div>
                 <NavigationListComponent/>
             </nav>
         );
     }
-}
+});
 
 module.exports = Navigation;

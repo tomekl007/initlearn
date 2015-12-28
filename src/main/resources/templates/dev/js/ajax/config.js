@@ -3,6 +3,7 @@ var Config = (function () {
     var appUrl = 'https://initlearn.herokuapp.com';
     var userGroupPath = '/group/users/';
     var allTeachersUrl = appUrl + userGroupPath + 'teachers';
+    var registerAccountUrl = appUrl + '/registerAccount';
     var isUserLoggedInUrl = appUrl + '/isLoggedIn';
     var loggedUserUrl = appUrl + '/me';
     var myProfileHash = '#me';
@@ -16,6 +17,7 @@ var Config = (function () {
         appUrl: appUrl,
         userGroupPath: userGroupPath,
         allTeachersUrl: allTeachersUrl,
+        registerAccountUrl: registerAccountUrl,
         isUserLoggedInUrl: isUserLoggedInUrl,
         loggedUserUrl: loggedUserUrl,
         myProfileHash: myProfileHash,
