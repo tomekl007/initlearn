@@ -115,7 +115,7 @@ public class UserController {
         return AccountUtils.actionForAuthenticatedUserOrUnauthorized(servletRequest, a -> Arrays.asList(AccountUtils.mapAccountToUser(a)));
     }
 
-    @RequestMapping(value = "users/{email:.+}/teacher/data", method = RequestMethod.POST, consumes = "application/json")
+    @RequestMapping(value = "users/{email:.+}/data", method = RequestMethod.POST, consumes = "application/json")
     public ResponseEntity<List<User>> fillTeacherWithData(@RequestBody TeacherData teacherData, @PathVariable("email") String email){
         List<User> users = userService.fillTeacherWithData(teacherData, email);
         return new ResponseEntity<>(users, HttpStatus.OK);
