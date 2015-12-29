@@ -37,7 +37,6 @@ var AddUserDataForm = React.createClass({
         });
     },
     render() {
-        console.log(this);
         return (
             <div className='main-form-wrapper'>
                 <form method='post' role='form' className='main-form' onSubmit={this.addData}>

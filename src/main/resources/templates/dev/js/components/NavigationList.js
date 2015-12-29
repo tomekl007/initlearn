@@ -26,9 +26,9 @@ var NavigationList = React.createClass({
         this.setState({modalOpen: false, automaticLogin: false, loginForm: false, createAccountForm: false, addUserDataForm: false});
     },
     componentDidMount() {
-        this.login();
+        this.automaticLogin();
     },
-    login() {
+    automaticLogin() {
 
         var $thisComponent = this;
 

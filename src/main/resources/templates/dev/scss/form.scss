@@ -27,6 +27,35 @@
   }
 }
 
+.main-form-message {
+  padding: rem-calc(5px) rem-calc(10px);
+  border-radius: $border-radius;
+
+  &.main-form-message-error {
+    background-color: $color-red;
+    border: 1px solid $color-red-dark;
+    color: #fff;
+  }
+}
+
+.main-form-message-transition-enter {
+  opacity: .1;
+
+  &.main-form-message-transition-enter-active {
+    opacity: 1;
+    transition: opacity .3s ease-in;
+  }
+}
+
+.main-form-message-transition-leave {
+  opacity: 1;
+
+  &.main-form-message-transition-leave-active {
+    opacity: .1;
+    transition: opacity .3s ease-in;
+  }
+}
+
 .main-input-wrapper {
   position: relative;
   margin-bottom: rem-calc(5px);

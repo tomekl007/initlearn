@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import $ from '../lib/jquery';
 
 import localStorage from '../common/localStorage';
@@ -7,7 +8,11 @@ import Input from './input';
 
 var LoginForm = React.createClass({
 
-
+    getInitialState() {
+        return {
+            errorMessage: false
+        }
+    },
     componentDidMount() {
 
         var $navigationComponent = this.props.data.navigationComponent;
@@ -15,14 +20,15 @@ var LoginForm = React.createClass({
         if ($navigationComponent.state.automaticLogin) {
             /*TODO improve childNodes form*/
             var $target = this.getDOMNode().childNodes[0];
-            this.getToken(null, $target);
+            this.login(null, $target);
         }
     },
-    getToken(event, target) {
+    login(event, target) {
 
         event !== null ? event.preventDefault() : true;
 
         var $target = event !== null ? event.target : target;
+        var $thisComponent = this;
         var $modalComponent = this.props.data.modalComponent;
         var $navigationComponent = this.props.data.navigationComponent;
 
@@ -40,7 +46,7 @@ var LoginForm = React.createClass({
                 if (localStorage.isAvailable()) {
                     window.localStorage.setItem('user-token', data.access_token);
                     /*TODO improve - 3 times render call*/
-                    $navigationComponent.login();
+                    $navigationComponent.automaticLogin();
 
                     if ($navigationComponent.state.addUserDataForm) {
                         $navigationComponent.openUserDataForm();
@@ -50,17 +56,28 @@ var LoginForm = React.createClass({
                 }
             },
 
-            error: function (jqXHR, statusString, err) {
-                console.log(err);
+            error: function (jqXHR) {
+                if (jqXHR.status === 400) {
+                    $thisComponent.setState({errorMessage: true});
+                }
             }
 
         });
     },
     render() {
 
+        var $errorMessage = [];
+
+        if (this.state.errorMessage) {
+            $errorMessage = <p className='main-form-message main-form-message-error' key={1}>wrong email or password</p>
+        }
+
         return (
             <div className='main-form-wrapper'>
-                <form id='sign-in-form' method='post' role='form' className='main-form' action='oauth/token' onSubmit={this.getToken}>
+                <ReactCSSTransitionGroup transitionName='main-form-message-transition' transitionEnterTimeout={300} transitionLeaveTimeout={300}>
+                    {$errorMessage}
+                </ReactCSSTransitionGroup>
+                <form id='sign-in-form' method='post' role='form' className='main-form' action='oauth/token' onSubmit={this.login}>
                     <div form-group='true' className='main-input-wrapper'>
                         <Input data={{name: 'username', type: 'text', required: 'required', autofocus: 'autofocus'}}/>
                         <label className='main-label'>mail</label>
