@@ -20,7 +20,7 @@ var LoginForm = React.createClass({
         if ($navigationComponent.state.automaticLogin) {
             /*TODO improve childNodes form*/
             var $target = this.getDOMNode().childNodes[0];
-            this.getToken(null, $target);
+            this.login(null, $target);
         }
     },
     login(event, target) {
