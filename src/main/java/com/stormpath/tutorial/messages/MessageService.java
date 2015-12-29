@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.util.UriUtils;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -68,7 +69,7 @@ public class MessageService {
 
     private String getMessageField(String email) {
         try {
-            String encode = URLEncoder.encode(email, "UTF-8");
+            String encode = UriUtils.encode(email, "UTF-8");
             return MESSAGES_FIELD + "-" + encode;
         } catch (UnsupportedEncodingException e) {
             logger.error("error while encoding " + email, e);
