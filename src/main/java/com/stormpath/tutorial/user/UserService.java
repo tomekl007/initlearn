@@ -136,6 +136,11 @@ public class UserService implements AccountFields {
         }
     }
 
+    /**
+     * *
+     * @param accountData
+     * @return None if account with that email already exists, otherwise Optional.of(Account)
+     */
     public Optional<Account> createAccount(AccountData accountData) {
         Account account = client.instantiate(Account.class)
                 .setUsername(accountData.email)
