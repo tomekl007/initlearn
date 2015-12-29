@@ -4,7 +4,7 @@ import tapOrClick from 'react-tap-or-click';
 
 import LoginFormComponent from './loginForm';
 import CreateAccountForm from './createAccountForm';
-import CreateTeacherAccountForm from './createTeacherAccountForm';
+import AddUserDataForm from './addUserDataForm';
 
 var Modal = React.createClass({
     getInitialState() {
@@ -17,14 +17,14 @@ var Modal = React.createClass({
     /*TODO improve - 2 times render call*/
     close() {
         //this.setState({open: false});
-        this.props.data.setState({modalOpen: false});
+        this.props.data.resetFormStates();
 
     },
     render() {
 
         var $loginForm;
         var $createAccountForm;
-        var $createTeacherAccountForm;
+        var $addUserDataForm;
 
         if (this.props.data.state.loginForm) {
             $loginForm = <LoginFormComponent data={
@@ -33,8 +33,8 @@ var Modal = React.createClass({
                 modalComponent: this
             }
                 }/>;
-        } else if (this.props.data.state.createTeacherAccountForm) {
-            $createTeacherAccountForm = <CreateTeacherAccountForm data={
+        } else if (this.props.data.state.addUserDataForm) {
+            $addUserDataForm = <AddUserDataForm data={
             {
                 navigationComponent: this.props.data,
                 modalComponent: this
@@ -57,7 +57,7 @@ var Modal = React.createClass({
                     {$createAccountForm}
                 </ReactCSSTransitionGroup>
                 <ReactCSSTransitionGroup transitionName='main-form-transition-step' transitionEnterTimeout={500} transitionLeaveTimeout={500}>
-                    {$createTeacherAccountForm}
+                    {$addUserDataForm}
                 </ReactCSSTransitionGroup>
                 </div>
                 <div className='main-modal-window-close sticky pos-top pos-left' {...tapOrClick(this.close)}>

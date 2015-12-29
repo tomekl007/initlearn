@@ -5,7 +5,7 @@ import config from '../ajax/config';
 
 import Input from './input';
 
-var CreateTeacherAccountForm = React.createClass({
+var AddUserDataForm = React.createClass({
     addData(event) {
 
         event.preventDefault();
@@ -97,4 +97,4 @@ var CreateTeacherAccountForm = React.createClass({
     }
 });
 
-module.exports = CreateTeacherAccountForm;
+module.exports = AddUserDataForm;

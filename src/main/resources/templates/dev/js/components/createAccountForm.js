@@ -40,6 +40,7 @@ var CreateAccountForm = React.createClass({
 
                 /*TODO refactor mapping*/
                 var dataToMap = FormSerialize($target, {hash: true});
+
                 Object.keys(dataToMap).map(function (key) {
                     if (key === 'email') {
                         dataToMap['username'] = dataToMap[key];
@@ -47,16 +48,14 @@ var CreateAccountForm = React.createClass({
                 });
 
                 /*TODO improve - 2 times render call*/
-                $modalComponent.setState({
-                    formData: dataToMap
-                });
+                $modalComponent.setState({formData: dataToMap});
 
 
                 $navigationComponent.setState({
                     automaticLogin: true,
                     createAccountForm: false,
                     loginForm: true,
-                    createTeacherAccountForm: true
+                    addUserDataForm: true
                 });
 
             },

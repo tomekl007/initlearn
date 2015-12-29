@@ -42,20 +42,10 @@ var LoginForm = React.createClass({
                     /*TODO improve - 3 times render call*/
                     $navigationComponent.login();
 
-                    if ($navigationComponent.state.createTeacherAccountForm) {
-
-                        $navigationComponent.setState({
-                            automaticLogin: false,
-                            loginForm: false,
-                            createTeacherAccountForm: true
-                        });
+                    if ($navigationComponent.state.addUserDataForm) {
+                        $navigationComponent.openUserDataForm();
                     } else {
-
                         $modalComponent.close();
-                        $navigationComponent.setState({
-                            automaticLogin: false,
-                            createTeacherAccountForm: false
-                        });
                     }
                 }
             },

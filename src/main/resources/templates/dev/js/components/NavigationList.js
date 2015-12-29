@@ -17,10 +17,13 @@ var NavigationList = React.createClass({
             modalOpen: false,
             loginForm: false,
             createAccountForm: false,
-            createTeacherAccountForm: false,
+            addUserDataForm: false,
             automaticLogin: false,
             data: []
         };
+    },
+    resetFormStates() {
+        this.setState({modalOpen: false, automaticLogin: false, loginForm: false, createAccountForm: false, addUserDataForm: false});
     },
     componentDidMount() {
         this.login();
@@ -42,10 +45,7 @@ var NavigationList = React.createClass({
                         },
                         success: function (data) {
 
-                            $thisComponent.setState({
-                                loggedIn: true,
-                                data: data[0]
-                            });
+                            $thisComponent.setState({loggedIn: true, data: data[0]});
                         },
                         error: function (jqXHR, statusString, err) {
                             console.log(err);
@@ -85,21 +85,17 @@ var NavigationList = React.createClass({
     /*TODO delete in the future*/
     openLoginForm() {
 
-        this.setState({
-            modalOpen: true,
-            loginForm: true,
-            createAccountForm: false
-        });
+        this.setState({modalOpen: true, loginForm: true, createAccountForm: false});
     },
     /*TODO delete in the future*/
     openCreateAccountForm() {
 
-        this.setState({
-            modalOpen: true,
-            loginForm: false,
-            createTeacherAccountForm: false,
-            createAccountForm: true
-        });
+        this.setState({modalOpen: true, loginForm: false, addUserDataForm: false, createAccountForm: true});
+    },
+    /*TODO delete in the future*/
+    openUserDataForm() {
+
+        this.setState({automaticLogin: false, loginForm: false, addUserDataForm: true})
     },
     render() {
 
