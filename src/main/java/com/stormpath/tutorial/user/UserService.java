@@ -2,9 +2,12 @@ package com.stormpath.tutorial.user;
 
 import com.stormpath.sdk.account.Account;
 import com.stormpath.sdk.account.AccountCriteria;
+import com.stormpath.sdk.account.AccountStatus;
 import com.stormpath.sdk.account.Accounts;
+import com.stormpath.sdk.application.Application;
 import com.stormpath.sdk.client.Client;
 import com.stormpath.tutorial.avarage.AverageCountStrategy;
+import com.stormpath.tutorial.controller.jsonrequest.AccountData;
 import com.stormpath.tutorial.controller.jsonrequest.TeacherData;
 import com.stormpath.tutorial.group.GroupService;
 import com.stormpath.tutorial.model.User;
@@ -31,6 +34,9 @@ public class UserService implements AccountFields {
 
     @Autowired
     private GroupService groupService;
+    
+    @Autowired
+    Application application;
 
     public Map<Account, User> findUsersAndAccountByEmail(String email) {
         List<Account> accounts = findAccountsByEmail(email);
@@ -127,5 +133,19 @@ public class UserService implements AccountFields {
         } else {
             return Accounts.criteria();
         }
+    }
+
+    public Account createAccount(AccountData accountData) {
+        Account account = client.instantiate(Account.class)
+                .setUsername(accountData.email)
+                .setEmail(accountData.email)
+                .setGivenName(accountData.givenName)
+                .setSurname(accountData.surname)
+                .setPassword(accountData.password)
+                .setStatus(AccountStatus.ENABLED);
+
+
+        application.createAccount(account);
+        return account;
     }
 }
