@@ -3,6 +3,7 @@ package com.stormpath.tutorial.messages;
 import com.stormpath.sdk.account.Account;
 import com.stormpath.sdk.client.Client;
 import com.stormpath.sdk.directory.CustomData;
+import com.stormpath.tutorial.user.UserService;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,16 +21,31 @@ public class MessageService {
     @Autowired
     Client client;
 
+    @Autowired
+    UserService userService;
+
     private static final Logger logger = LoggerFactory.getLogger(MessageService.class);
 
     public String sendMessageToUser(String emailTo, String text, Account from) {
 
         logger.info("send message from " + from.getEmail() + " to " + emailTo);
 
-        Stream<Account> accounts = StreamSupport.stream(Spliterators
-                .spliteratorUnknownSize(client.getAccounts().iterator(), Spliterator.ORDERED), false);
-        Optional<Account> account = accounts.filter(a -> a.getEmail().equals(emailTo)).findFirst();
-        CustomData customData = account.get().getCustomData();
+        List<Account> accountsToSendTo = userService.findAccountsByEmail(emailTo);
+
+        Message message = new Message(false, text, from.getEmail(), new DateTime().getMillis());
+        
+        addMessageForAccounts(message, accountsToSendTo);
+        return "OK";
+    }
+
+    private void addMessageForAccounts(Message message, List<Account> accountsToSendTo) {
+        for (Account account : accountsToSendTo) {
+            addMessageToCustomData(message, account);
+        }
+    }
+
+    private void addMessageToCustomData(Message message, Account account) {
+        CustomData customData = account.getCustomData();
 
         List<Message> messagesList;
         Object messages = customData.get(MESSAGES_FIELD);
@@ -38,11 +54,9 @@ public class MessageService {
         } else {
             messagesList = (List<Message>) messages;
         }
-        messagesList.add(new Message(false, text, from.getEmail(), new DateTime().getMillis()));
-        //todo add sended emails to fromEmail user
+        messagesList.add(message);
         customData.put(MESSAGES_FIELD, messagesList);
-        account.get().save();
-        return "OK";
+        account.save();
     }
 
     public List<Message> retrieveAllMessages(Account account) {
