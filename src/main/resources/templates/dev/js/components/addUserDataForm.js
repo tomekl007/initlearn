@@ -44,18 +44,6 @@ var AddUserDataForm = React.createClass({
             $userForm =
                 <form method='post' role='form' className='main-form' onSubmit={this.addData}>
                     <div form-group='true' className='main-input-wrapper'>
-                        <Input data={{name: 'screenHero', type: 'text'}}/>
-                        <label className='main-label'>screenHero</label>
-
-                        <div className='main-input-bg'></div>
-                    </div>
-
-                    <button type='submit' className='main-btn btn-primary fw-700'>add</button>
-                </form>;
-        } else {
-            $userForm =
-                <form method='post' role='form' className='main-form' onSubmit={this.addData}>
-                    <div form-group='true' className='main-input-wrapper'>
                         <Input data={{name: 'hourRate', type: 'text'}}/>
                         <label className='main-label'>hour rate</label>
 
@@ -100,6 +88,18 @@ var AddUserDataForm = React.createClass({
                     <div form-group='true' className='main-input-wrapper'>
                         <Input data={{name: 'img', type: 'text'}}/>
                         <label className='main-label'>img</label>
+
+                        <div className='main-input-bg'></div>
+                    </div>
+
+                    <button type='submit' className='main-btn btn-primary fw-700'>add</button>
+                </form>;
+        } else {
+            $userForm =
+                <form method='post' role='form' className='main-form' onSubmit={this.addData}>
+                    <div form-group='true' className='main-input-wrapper'>
+                        <Input data={{name: 'screenHero', type: 'text'}}/>
+                        <label className='main-label'>screenHero</label>
 
                         <div className='main-input-bg'></div>
                     </div>

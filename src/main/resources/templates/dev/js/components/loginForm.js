@@ -65,7 +65,6 @@ var LoginForm = React.createClass({
         });
     },
     render() {
-        console.log(this);
 
         var $errorMessage = [];
 
