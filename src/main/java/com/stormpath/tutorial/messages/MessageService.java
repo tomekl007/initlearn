@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -31,25 +30,24 @@ public class MessageService {
 
         logger.info("send message from " + from.getEmail() + " to " + emailTo);
 
-        List<Account> accountsToSendTo = userService.findAccountsByEmail(emailTo);
-        List<Account> accountToSendFrom = Arrays.asList(from);
+        Account accountsToSendTo = userService.findAccountsByEmail(emailTo).get(0);
 
         Message message = new Message(false, text, new DateTime().getMillis());
 
-        addMessageForAccounts(message, accountToSendFrom);
-        addMessageForAccounts(message, accountsToSendTo);
+        addMessageForAccounts(message, from, accountsToSendTo);
+        addMessageForAccounts(message, accountsToSendTo, from);
         return "OK";
     }
 
-    private void addMessageForAccounts(Message message, List<Account> accountsToSendTo) {
-        for (Account account : accountsToSendTo) {
-            addMessageToCustomData(message, account);
-        }
+    private void addMessageForAccounts(Message message, Account accountToSendTo, Account from) {
+
+        addMessageToCustomData(message, accountToSendTo, from);
+
     }
 
-    private void addMessageToCustomData(Message message, Account account) {
+    private void addMessageToCustomData(Message message, Account account, Account from) {
         CustomData customData = account.getCustomData();
-        String messageField = getMessageField(account.getEmail());
+        String messageField = getMessageField(from.getEmail());
         logger.info("Add account for field : " + messageField);
 
         List<Message> messagesList;
@@ -67,7 +65,7 @@ public class MessageService {
 
     private String getMessageField(String email) {
         String encode = email.replace("@", "_-_-_").replace(".", "_-_-_"); //todo think about better way of replacing
-        
+
         return MESSAGES_FIELD + "-" + encode;
     }
 
