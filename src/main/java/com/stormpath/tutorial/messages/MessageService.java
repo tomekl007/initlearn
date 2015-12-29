@@ -32,7 +32,8 @@ public class MessageService {
 
         Account accountsToSendTo = userService.findAccountsByEmail(emailTo).get(0);
 
-        Message message = new Message(false, text, new DateTime().getMillis());
+        Message message = new Message(false, text, new DateTime().getMillis(),
+                from.getEmail(), accountsToSendTo.getEmail());
 
         addMessageForAccounts(message, from, accountsToSendTo);
         addMessageForAccounts(message, accountsToSendTo, from);
