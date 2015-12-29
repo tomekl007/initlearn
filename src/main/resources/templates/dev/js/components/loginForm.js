@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import $ from '../lib/jquery';
 
 import localStorage from '../common/localStorage';
@@ -70,12 +71,14 @@ var LoginForm = React.createClass({
         var $errorMessage = [];
 
         if (this.state.errorMessage) {
-            $errorMessage = <p className='main-form-message main-form-message-error' key={1}>User Doesnt exist</p>
+            $errorMessage = <p className='main-form-message main-form-message-error' key={1}>wrong email or password</p>
         }
 
         return (
             <div className='main-form-wrapper'>
-                {$errorMessage}
+                <ReactCSSTransitionGroup transitionName='main-form-message-transition' transitionEnterTimeout={300} transitionLeaveTimeout={300}>
+                    {$errorMessage}
+                </ReactCSSTransitionGroup>
                 <form id='sign-in-form' method='post' role='form' className='main-form' action='oauth/token' onSubmit={this.login}>
                     <div form-group='true' className='main-input-wrapper'>
                         <Input data={{name: 'username', type: 'text', required: 'required', autofocus: 'autofocus'}}/>
