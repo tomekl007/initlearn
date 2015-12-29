@@ -59,9 +59,7 @@ var LoginForm = React.createClass({
             error: function (jqXHR) {
                 if (jqXHR.status === 400) {
                     $thisComponent.setState({errorMessage: true});
-                }/*
-                console.log(jqXHR);
-                console.log(err);*/
+                }
             }
 
         });

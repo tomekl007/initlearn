@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import $ from '../lib/jquery';
 import FormSerialize from 'form-serialize';
 
@@ -11,6 +12,7 @@ var CreateAccountForm = React.createClass({
 
     getInitialState() {
         return {
+            errorMessage: false,
             teacherCheckbox: false
         }
     },
@@ -78,8 +80,10 @@ var CreateAccountForm = React.createClass({
                 }
             },
 
-            error: function (jqXHR, statusString, err) {
-                console.log(err);
+            error: function (jqXHR) {
+                if (jqXHR.status === 409) {
+                    $thisComponent.setState({errorMessage: true});
+                }
             }
 
         });
@@ -91,8 +95,16 @@ var CreateAccountForm = React.createClass({
         });
     },
     render() {
+        var $errorMessage = [];
+
+        if (this.state.errorMessage) {
+            $errorMessage = <p className='main-form-message main-form-message-error' key={1}>account with that email already exists</p>
+        }
         return (
             <div className='main-form-wrapper'>
+                <ReactCSSTransitionGroup transitionName='main-form-message-transition' transitionEnterTimeout={300} transitionLeaveTimeout={300}>
+                    {$errorMessage}
+                </ReactCSSTransitionGroup>
                 <form id='create-account-form' method='post' role='form' className='main-form' action='/registerAccount' onSubmit={this.createAccount}>
                     <div form-group='true' className='main-input-wrapper'>
                         <Input data={{name: 'givenName', type: 'text'}}/>
