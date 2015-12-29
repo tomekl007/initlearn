@@ -6,7 +6,6 @@ import com.stormpath.sdk.account.AccountStatus;
 import com.stormpath.sdk.account.Accounts;
 import com.stormpath.sdk.application.Application;
 import com.stormpath.sdk.client.Client;
-import com.stormpath.sdk.resource.ResourceException;
 import com.stormpath.tutorial.avarage.AverageCountStrategy;
 import com.stormpath.tutorial.controller.jsonrequest.AccountData;
 import com.stormpath.tutorial.controller.jsonrequest.TeacherData;
@@ -138,10 +137,11 @@ public class UserService implements AccountFields {
 
     /**
      * *
+     *
      * @param accountData
      * @return None if account with that email already exists, otherwise Optional.of(Account)
      */
-    public Optional<Account> createAccount(AccountData accountData) {
+    public Account createAccount(AccountData accountData) {
         Account account = client.instantiate(Account.class)
                 .setUsername(accountData.email)
                 .setEmail(accountData.email)
@@ -150,15 +150,7 @@ public class UserService implements AccountFields {
                 .setPassword(accountData.password)
                 .setStatus(AccountStatus.ENABLED);
 
-        try {
-            application.createAccount(account);
-        } catch (ResourceException re) {
-            if (re.getCode() == 2001) {
-                return Optional.empty();
-            } else {
-                throw re;
-            }
-        }
-        return Optional.of(account);
+
+        return application.createAccount(account);
     }
 }

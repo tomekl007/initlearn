@@ -1,7 +1,7 @@
 package com.stormpath.tutorial.controller;
 
 import com.stormpath.sdk.account.Account;
-import com.stormpath.sdk.account.AccountStatus;
+import com.stormpath.sdk.resource.ResourceException;
 import com.stormpath.tutorial.controller.jsonrequest.AccountData;
 import com.stormpath.tutorial.model.User;
 import com.stormpath.tutorial.user.UserService;
@@ -16,9 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.util.Optional;
-import java.util.OptionalInt;
-
 /**
  * Created by tomasz.lelek on 29/12/15.
  */
@@ -26,17 +23,34 @@ import java.util.OptionalInt;
 public class InitlearnRegisterController {
     @Autowired
     UserService userService;
-    
+
     private static final Logger logger = LoggerFactory.getLogger(InitlearnRegisterController.class);
-    
+
     @RequestMapping(value = "/registerAccount", method = RequestMethod.POST, consumes = "application/json")
-    ResponseEntity<User> registerNewAccount(@RequestBody AccountData accountData){
+    ResponseEntity<User> registerNewAccount(@RequestBody AccountData accountData) {
         logger.info("aD: " + accountData);
-        Optional<Account> account = userService.createAccount(accountData);
-        if(account.isPresent()) {
-            return new ResponseEntity<>(AccountUtils.mapAccountToUser(account.get()), HttpStatus.OK);
-        }else{
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        try {
+            Account account = userService.createAccount(accountData);
+            return new ResponseEntity<>(AccountUtils.mapAccountToUser(account), HttpStatus.OK);
+        } catch (ResourceException re) {
+            if (accountAlreadyExists(re)) {
+                logger.warn("account " + accountData.email + " already exists");
+                return new ResponseEntity<>(HttpStatus.CONFLICT);
+            } else if (passwordHasNotEnoughtCharacters(re)) {
+                logger.warn("password with length " + accountData.password.length() + " has not enough characters");
+                return new ResponseEntity<>(HttpStatus.PRECONDITION_FAILED);
+            } else {
+                logger.error("unexpected error occurred", re);
+                throw re;
+            }
         }
+    }
+
+    private boolean passwordHasNotEnoughtCharacters(ResourceException re) {
+        return re.getCode() == 2007;
+    }
+
+    private boolean accountAlreadyExists(ResourceException re) {
+        return re.getCode() == 2001;
     }
 }
