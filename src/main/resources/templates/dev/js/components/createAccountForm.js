@@ -23,7 +23,7 @@ var CreateAccountForm = React.createClass({
         var $modalComponent = this.props.data.modalComponent;
         var $navigationComponent = this.props.data.navigationComponent;
 
-        var data = JSON.stringify(FormSerialize($target, {hash: true}));
+        var data = JSON.stringify(FormSerialize($target, {hash: true, empty: true}));
 
         /*TODO improve AJAX CALLS*/
         /*TODO code refactoring needed*/
