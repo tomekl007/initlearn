@@ -22,10 +22,10 @@ class User extends React.Component {
 
             if (user.average !== null) {
                 userRateInfo = [
-                    <p className='user-label-average-rate'>Average rate:</p>,
-                    <p className='user-average-rate'>{user.average}</p>,
-                    <p className='user-label-number-of-rates'>Number of rates:</p>,
-                    <p className='user-number-of-rates'>{user.numberOfRates}</p>
+                    <p className='user-label-average-rate'  key={1}>Average rate:</p>,
+                    <p className='user-average-rate' key={2}>{user.average}</p>,
+                    <p className='user-label-number-of-rates' key={3}>Number of rates:</p>,
+                    <p className='user-number-of-rates' key={4}>{user.numberOfRates}</p>
                 ];
             }
 

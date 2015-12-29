@@ -7,7 +7,11 @@ import Input from './input';
 
 var LoginForm = React.createClass({
 
-
+    getInitialState() {
+        return {
+            errorMessage: false
+        }
+    },
     componentDidMount() {
 
         var $navigationComponent = this.props.data.navigationComponent;
@@ -18,11 +22,12 @@ var LoginForm = React.createClass({
             this.getToken(null, $target);
         }
     },
-    getToken(event, target) {
+    login(event, target) {
 
         event !== null ? event.preventDefault() : true;
 
         var $target = event !== null ? event.target : target;
+        var $thisComponent = this;
         var $modalComponent = this.props.data.modalComponent;
         var $navigationComponent = this.props.data.navigationComponent;
 
@@ -40,7 +45,7 @@ var LoginForm = React.createClass({
                 if (localStorage.isAvailable()) {
                     window.localStorage.setItem('user-token', data.access_token);
                     /*TODO improve - 3 times render call*/
-                    $navigationComponent.login();
+                    $navigationComponent.automaticLogin();
 
                     if ($navigationComponent.state.addUserDataForm) {
                         $navigationComponent.openUserDataForm();
@@ -50,18 +55,28 @@ var LoginForm = React.createClass({
                 }
             },
 
-            error: function (jqXHR, statusString, err) {
+            error: function (jqXHR) {
+                if (jqXHR.status === 400) {
+                    $thisComponent.setState({errorMessage: true});
+                }/*
                 console.log(jqXHR);
-                console.log(err);
+                console.log(err);*/
             }
 
         });
     },
     render() {
 
+        var $errorMessage = [];
+
+        if (this.state.errorMessage) {
+            $errorMessage = <p class='main-form-error-message' key={1}>User Doesnt exist</p>
+        }
+
         return (
             <div className='main-form-wrapper'>
-                <form id='sign-in-form' method='post' role='form' className='main-form' action='oauth/token' onSubmit={this.getToken}>
+                {$errorMessage}
+                <form id='sign-in-form' method='post' role='form' className='main-form' action='oauth/token' onSubmit={this.login}>
                     <div form-group='true' className='main-input-wrapper'>
                         <Input data={{name: 'username', type: 'text', required: 'required', autofocus: 'autofocus'}}/>
                         <label className='main-label'>mail</label>
