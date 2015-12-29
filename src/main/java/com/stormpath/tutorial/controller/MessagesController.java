@@ -9,10 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletRequest;
 import java.util.List;
@@ -37,6 +34,12 @@ public class MessagesController {
     ResponseEntity<List<Message>> retrieveAllMessagesForLoggedUser(ServletRequest servletRequest) {
         return actionForUserOrNotFound(servletRequest);
 
+    }
+
+    @RequestMapping(value = "/msg/{email:.+}", method = RequestMethod.GET)
+    ResponseEntity<List<Message>> retrieveAllMessagesForLoggedUserForConversationWith(ServletRequest servletRequest, @PathVariable("email") String email) {
+        return AccountUtils.actionForAuthenticatedUserOrUnauthorized(
+                servletRequest, a -> messageService.retrieveAllMessagesInConversationWith(a, email));
     }
 
     private ResponseEntity<List<Message>> actionForUserOrNotFound(ServletRequest servletRequest) {

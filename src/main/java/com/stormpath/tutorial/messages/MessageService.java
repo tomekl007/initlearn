@@ -31,9 +31,11 @@ public class MessageService {
         logger.info("send message from " + from.getEmail() + " to " + emailTo);
 
         List<Account> accountsToSendTo = userService.findAccountsByEmail(emailTo);
-
-        Message message = new Message(false, text, from.getEmail(), new DateTime().getMillis());
+        List<Account> accountToSendFrom = Arrays.asList(from);
         
+        Message message = new Message(false, text, new DateTime().getMillis());
+
+        addMessageForAccounts(message, accountToSendFrom);
         addMessageForAccounts(message, accountsToSendTo);
         return "OK";
     }
@@ -46,21 +48,35 @@ public class MessageService {
 
     private void addMessageToCustomData(Message message, Account account) {
         CustomData customData = account.getCustomData();
-
+        String messageField = getMessageField(account.getEmail());
+        
         List<Message> messagesList;
-        Object messages = customData.get(MESSAGES_FIELD);
+        Object messages = customData.get(messageField);
         if (messages == null) {
             messagesList = new LinkedList<>();
         } else {
             messagesList = (List<Message>) messages;
         }
         messagesList.add(message);
-        customData.put(MESSAGES_FIELD, messagesList);
+        customData.put(messageField, messagesList);
         account.save();
+    }
+
+    private String getMessageField(String email) {
+        return MESSAGES_FIELD + "-" + email;
     }
 
     public List<Message> retrieveAllMessages(Account account) {
         Object messages = account.getCustomData().get(MESSAGES_FIELD);
+        if (messages == null) {
+            return Collections.emptyList();
+        } else {
+            return (List<Message>) messages;
+        }
+    }
+
+    public List<Message> retrieveAllMessagesInConversationWith(Account account, String conversationEmail) {
+        Object messages = account.getCustomData().get(getMessageField(conversationEmail));
         if (messages == null) {
             return Collections.emptyList();
         } else {
