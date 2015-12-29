@@ -39,7 +39,6 @@ public class GroupService {
     private void addGroupToAccounts(Group g, List<Account> accounts) {
         for (Account account : accounts) {
             account.addGroup(g);
-            account.save();
         }
     }
 

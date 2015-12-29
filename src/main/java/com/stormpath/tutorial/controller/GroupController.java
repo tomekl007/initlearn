@@ -30,8 +30,6 @@ public class GroupController {
     private static final Logger logger = LoggerFactory.getLogger(GroupController.class);
 
     @Autowired
-    private Client client;
-    @Autowired
     private UserService userService;
     @Autowired
     private GroupService groupService;
