@@ -51,6 +51,7 @@ var LoginForm = React.createClass({
             },
 
             error: function (jqXHR, statusString, err) {
+                console.log(jqXHR);
                 console.log(err);
             }
 
