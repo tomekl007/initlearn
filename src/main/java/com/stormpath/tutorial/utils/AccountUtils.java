@@ -75,8 +75,13 @@ public class AccountUtils implements AccountFields {
         userSkills.addAll(list);
         List<String> deduplicate =
                 new ArrayList<>(new LinkedHashSet<>(userSkills));
+        filterEmptyElements(deduplicate);
         customData.put(fieldName, deduplicate);
         a.save();
+    }
+
+    private static void filterEmptyElements(List<String> deduplicate) {
+        deduplicate.removeIf(String::isEmpty);
     }
 
     public static void addCustomFieldToAccount(Account a, String name, Object value) {
