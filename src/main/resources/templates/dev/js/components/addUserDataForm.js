@@ -13,7 +13,7 @@ var AddUserDataForm = React.createClass({
         var $target = event.target;
         var $modalComponent = this.props.data.modalComponent;
 
-        var data = JSON.stringify(FormSerialize($target, {hash: true}));
+        var data = JSON.stringify(FormSerialize($target, {hash: true, empty: true}));
 
         /*TODO improve AJAX CALLS*/
         /*TODO code refactoring needed*/
@@ -42,21 +42,21 @@ var AddUserDataForm = React.createClass({
             <div className='main-form-wrapper'>
                 <form method='post' role='form' className='main-form' onSubmit={this.addData}>
                     <div form-group='true' className='main-input-wrapper'>
-                        <Input data={{name: 'hourRate', type: 'text', defaultValue: ' '}}/>
+                        <Input data={{name: 'hourRate', type: 'text'}}/>
                         <label className='main-label'>hour rate</label>
 
                         <div className='main-input-bg'></div>
                     </div>
 
                     <div form-group='true' className='main-input-wrapper'>
-                        <Input data={{name: 'screenHero', type: 'text', defaultValue: ' '}}/>
+                        <Input data={{name: 'screenHero', type: 'text'}}/>
                         <label className='main-label'>screenHero</label>
 
                         <div className='main-input-bg'></div>
                     </div>
 
                     <div form-group='true' className='main-input-wrapper'>
-                        <Input data={{name: 'linkedIn', type: 'text', required: 'required', defaultValue: ' '}}/>
+                        <Input data={{name: 'linkedIn', type: 'text'}}/>
                         <label className='main-label'>linkedIn</label>
 
                         <div className='main-input-bg'></div>
@@ -84,7 +84,7 @@ var AddUserDataForm = React.createClass({
                     </div>
 
                     <div form-group='true' className='main-input-wrapper'>
-                        <Input data={{name: 'img', type: 'text', defaultValue: ' '}}/>
+                        <Input data={{name: 'img', type: 'text'}}/>
                         <label className='main-label'>img</label>
 
                         <div className='main-input-bg'></div>

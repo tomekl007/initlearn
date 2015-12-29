@@ -19,6 +19,7 @@ var CreateAccountForm = React.createClass({
         event.preventDefault();
 
         var $target = event.target;
+        var $thisComponent = this;
         var $modalComponent = this.props.data.modalComponent;
         var $navigationComponent = this.props.data.navigationComponent;
 
@@ -39,7 +40,7 @@ var CreateAccountForm = React.createClass({
                 console.log(data);
 
                 /*TODO refactor mapping*/
-                var dataToMap = FormSerialize($target, {hash: true});
+                var dataToMap = FormSerialize($target, {hash: true, empty: true});
 
                 Object.keys(dataToMap).map(function (key) {
                     if (key === 'email') {
@@ -58,21 +59,23 @@ var CreateAccountForm = React.createClass({
                 });
 
                 /*TODO improve add user to teacher group call*/
-                $.ajax({
+                if ($thisComponent.state.teacherCheckbox) {
+                    $.ajax({
 
-                    type: $target.getAttribute('method'),
-                    url: config.addUserToTeacherGroupUrl(dataToMap.email),
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    success: function (data) {
-                        console.log(data);
-                        console.log('dodano teachera');
-                    },
-                    error: function (jqXHR, statusString, err) {
-                        console.log(err);
-                    }
-                });
+                        type: $target.getAttribute('method'),
+                        url: config.addUserToTeacherGroupUrl(dataToMap.email),
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        success: function (data) {
+                            console.log(data);
+                            console.log('dodano teachera');
+                        },
+                        error: function (jqXHR, statusString, err) {
+                            console.log(err);
+                        }
+                    });
+                }
             },
 
             error: function (jqXHR, statusString, err) {
@@ -92,14 +95,14 @@ var CreateAccountForm = React.createClass({
             <div className='main-form-wrapper'>
                 <form id='create-account-form' method='post' role='form' className='main-form' action='/registerAccount' onSubmit={this.createAccount}>
                     <div form-group='true' className='main-input-wrapper'>
-                        <Input data={{name: 'givenName', type: 'text', defaultValue: ' '}}/>
+                        <Input data={{name: 'givenName', type: 'text'}}/>
                         <label className='main-label'>name</label>
 
                         <div className='main-input-bg'></div>
                     </div>
 
                     <div form-group='true' className='main-input-wrapper'>
-                        <Input data={{name: 'surname', type: 'text', defaultValue: ' '}}/>
+                        <Input data={{name: 'surname', type: 'text'}}/>
                         <label className='main-label'>surname</label>
 
                         <div className='main-input-bg'></div>
