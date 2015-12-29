@@ -13,6 +13,7 @@ var CreateAccountForm = React.createClass({
     getInitialState() {
         return {
             errorMessage: false,
+            errorMessageText: '',
             teacherCheckbox: false
         }
     },
@@ -81,9 +82,15 @@ var CreateAccountForm = React.createClass({
             },
 
             error: function (jqXHR) {
+                var errorMessageText = '';
+
                 if (jqXHR.status === 409) {
-                    $thisComponent.setState({errorMessage: true});
+                    errorMessageText = 'account with that email already exists';
+                } else if (jqXHR.status === 412) {
+                    errorMessageText = 'password should have at least 6 characters';
                 }
+
+                $thisComponent.setState({errorMessage: true, errorMessageText: errorMessageText});
             }
 
         });
@@ -98,7 +105,7 @@ var CreateAccountForm = React.createClass({
         var $errorMessage = [];
 
         if (this.state.errorMessage) {
-            $errorMessage = <p className='main-form-message main-form-message-error' key={1}>account with that email already exists</p>
+            $errorMessage = <p className='main-form-message main-form-message-error' key={1}>{this.state.errorMessageText}</p>
         }
         return (
             <div className='main-form-wrapper'>
