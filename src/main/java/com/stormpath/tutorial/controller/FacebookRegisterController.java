@@ -51,21 +51,5 @@ public class FacebookRegisterController {
         logger.info("token for that account" + providerData.getAccessToken());
         return new ResponseEntity<>(providerData.getAccessToken(), HttpStatus.OK);
     }
-    
-    @RequestMapping(value = "/registerAccount", method = RequestMethod.POST, consumes = "application/json")
-    ResponseEntity<User> registerNewAccount(@RequestBody AccountData accountData){
-        logger.info("aD: " + accountData);
-        Account account = client.instantiate(Account.class)
-                .setUsername(accountData.email)
-                .setEmail(accountData.email)
-                .setGivenName(accountData.givenName)
-                .setSurname(accountData.surname)
-                .setPassword(accountData.password)
-                .setStatus(AccountStatus.ENABLED);
 
-
-
-        application.createAccount(account);
-        return new ResponseEntity<>(AccountUtils.mapAccountToUser(account), HttpStatus.OK);
-    }
 }
