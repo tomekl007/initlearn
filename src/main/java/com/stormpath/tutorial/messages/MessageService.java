@@ -9,13 +9,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.util.UriUtils;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.util.*;
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 @Component
 public class MessageService {
@@ -35,7 +33,7 @@ public class MessageService {
 
         List<Account> accountsToSendTo = userService.findAccountsByEmail(emailTo);
         List<Account> accountToSendFrom = Arrays.asList(from);
-        
+
         Message message = new Message(false, text, new DateTime().getMillis());
 
         addMessageForAccounts(message, accountToSendFrom);
@@ -62,19 +60,14 @@ public class MessageService {
             messagesList = (List<Message>) messages;
         }
         messagesList.add(message);
-        
+
         customData.put(messageField, messagesList);
         account.save();
     }
 
     private String getMessageField(String email) {
-        try {
-            String encode = UriUtils.encode(email, "UTF-8");
-            return MESSAGES_FIELD + "-" + encode;
-        } catch (UnsupportedEncodingException e) {
-            logger.error("error while encoding " + email, e);
-            throw new RuntimeException(e);
-        }
+        String encode = email.replace("@", "_-_-_");
+        return MESSAGES_FIELD + "-" + encode;
     }
 
     public List<Message> retrieveAllMessages(Account account) {
