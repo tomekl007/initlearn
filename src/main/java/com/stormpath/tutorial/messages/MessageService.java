@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.*;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
@@ -65,7 +67,13 @@ public class MessageService {
     }
 
     private String getMessageField(String email) {
-        return MESSAGES_FIELD + "-" + email;
+        try {
+            String encode = URLEncoder.encode(email, "UTF-8");
+            return MESSAGES_FIELD + "-" + encode;
+        } catch (UnsupportedEncodingException e) {
+            logger.error("error while encoding " + email, e);
+            throw new RuntimeException(e);
+        }
     }
 
     public List<Message> retrieveAllMessages(Account account) {
