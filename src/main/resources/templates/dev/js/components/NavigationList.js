@@ -13,11 +13,12 @@ var NavigationList = React.createClass({
 
     getInitialState() {
         return {
-            isLoggedIn: false,
-            isModalOpen: false,
-            isLoginForm: false,
-            isCreateAccountForm: false,
-            isAutomaticLogin: false,
+            loggedIn: false,
+            modalOpen: false,
+            loginForm: false,
+            createAccountForm: false,
+            createTeacherAccountForm: false,
+            automaticLogin: false,
             data: []
         };
     },
@@ -42,7 +43,7 @@ var NavigationList = React.createClass({
                         success: function (data) {
 
                             $thisComponent.setState({
-                                isLoggedIn: true,
+                                loggedIn: true,
                                 data: data[0]
                             });
                         },
@@ -73,7 +74,7 @@ var NavigationList = React.createClass({
                     /*TODO improve FB logout*/
                     //FB.logout(function(response) {});
                     window.localStorage.clear();
-                    $thisComponent.setState({isLoggedIn: false});
+                    $thisComponent.setState({loggedIn: false});
                 }
             },
             error: function (jqXHR, statusString, err) {
@@ -85,18 +86,19 @@ var NavigationList = React.createClass({
     openLoginForm() {
 
         this.setState({
-            isModalOpen: true,
-            isLoginForm: true,
-            isCreateAccountForm: false
+            modalOpen: true,
+            loginForm: true,
+            createAccountForm: false
         });
     },
     /*TODO delete in the future*/
     openCreateAccountForm() {
 
         this.setState({
-            isModalOpen: true,
-            isLoginForm: false,
-            isCreateAccountForm: true
+            modalOpen: true,
+            loginForm: false,
+            createTeacherAccountForm: false,
+            createAccountForm: true
         });
     },
     render() {
@@ -104,7 +106,7 @@ var NavigationList = React.createClass({
         var $loginElements;
         var $modalElement;
 
-        if (this.state.isLoggedIn) {
+        if (this.state.loggedIn) {
 
             $loginElements = [
                 <li className='main-nav-list-item main-user-name' key={2}>
@@ -125,7 +127,7 @@ var NavigationList = React.createClass({
             ]
         }
 
-        if (this.state.isModalOpen) {
+        if (this.state.modalOpen) {
             $modalElement = <ModalComponent data={this}/>;
         }
 
@@ -136,7 +138,7 @@ var NavigationList = React.createClass({
                     <a href='#teachers'>teachers</a>
                 </li>
                 {$loginElements}
-                <ReactCSSTransitionGroup transitionName="main-modal-transition" transitionEnterTimeout={300} transitionLeaveTimeout={300}>
+                <ReactCSSTransitionGroup transitionName='main-modal-transition' transitionEnterTimeout={300} transitionLeaveTimeout={300}>
                     {$modalElement}
                 </ReactCSSTransitionGroup>
             </ul>

@@ -3,10 +3,27 @@
 @import "variables";
 
 .main-form {
-  display: none;
+  position: relative;
+  left: 0;
+}
 
-  &.show {
-    display: block;
+.main-form-transition-step-enter {
+  position: relative;
+  left: 200%;
+
+  &.main-form-transition-step-enter-active {
+    left: 0;
+    transition: left .5s ease-in;
+  }
+}
+
+.main-form-transition-step-leave {
+  position: relative;
+  left: 0;
+
+  &.main-form-transition-step-leave-active {
+    left: 200%;
+    transition: left .5s ease-in;
   }
 }
 
@@ -47,6 +64,12 @@
   transition: top .3s ease, left .3s ease;
   font-size: rem-calc(20px);
   z-index: -1;
+
+  &.main-label-checkbox {
+    position: relative;
+    top: 0;
+    left: 0;
+  }
 }
 
 .main-input-bg {

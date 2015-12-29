@@ -9,6 +9,11 @@ import Input from './input';
 
 var CreateAccountForm = React.createClass({
 
+    getInitialState() {
+        return {
+            teacherCheckbox: false
+        }
+    },
     createAccount(event) {
 
         event.preventDefault();
@@ -20,6 +25,7 @@ var CreateAccountForm = React.createClass({
         var data = JSON.stringify(FormSerialize($target, {hash: true}));
 
         /*TODO improve AJAX CALLS*/
+        /*TODO code refactoring needed*/
         $.ajax({
 
             type: $target.getAttribute('method'),
@@ -34,7 +40,7 @@ var CreateAccountForm = React.createClass({
 
                 /*TODO refactor mapping*/
                 var dataToMap = FormSerialize($target, {hash: true});
-                Object.keys(dataToMap).map(function(key) {
+                Object.keys(dataToMap).map(function (key) {
                     if (key === 'email') {
                         dataToMap['username'] = dataToMap[key];
                     }
@@ -42,15 +48,17 @@ var CreateAccountForm = React.createClass({
 
                 /*TODO improve - 2 times render call*/
                 $modalComponent.setState({
-                    /*TODO change serialize method to npm serialize*/
-                    formData: $.param(dataToMap)
+                    formData: dataToMap
                 });
 
+
                 $navigationComponent.setState({
-                    isCreateAccountForm: false,
-                    isAutomaticLogin: true,
-                    isLoginForm: true
+                    automaticLogin: true,
+                    createAccountForm: false,
+                    loginForm: true,
+                    createTeacherAccountForm: true
                 });
+
             },
 
             error: function (jqXHR, statusString, err) {
@@ -59,11 +67,16 @@ var CreateAccountForm = React.createClass({
 
         });
     },
+    isTeacher() {
+
+        this.setState({
+            teacherCheckbox: !this.state.teacherCheckbox
+        });
+    },
     render() {
         return (
             <div className='main-form-wrapper'>
-                <form id='create-account-form' method='post' role='form' className='main-form show' action='/registerAccount' onSubmit={this.createAccount}>
-
+                <form id='create-account-form' method='post' role='form' className='main-form' action='/registerAccount' onSubmit={this.createAccount}>
                     <div form-group='true' className='main-input-wrapper'>
                         <Input data={{name: 'givenName', type: 'text'}}/>
                         <label className='main-label'>name</label>
@@ -92,9 +105,12 @@ var CreateAccountForm = React.createClass({
 
                         <div className='main-input-bg'></div>
                     </div>
+                    <div form-group='true' className='main-input-wrapper'>
+                        <input type='checkbox' onChange={this.isTeacher}/>
+                        <label className='main-label main-label-checkbox'>Teacher</label>
+                    </div>
 
                     <button type='submit' className='main-btn btn-primary fw-700'>create account</button>
-
                 </form>
             </div>
         );
