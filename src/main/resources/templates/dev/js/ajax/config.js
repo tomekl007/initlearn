@@ -10,6 +10,8 @@ var Config = (function () {
     var logoutUserUrl = appUrl + '/logout';
     var userUrl = appUrl + '/users';
     var usersHash = '#users/';
+    var updateUserDataUrl = function(email) {return userUrl + '/' + email + '/data'};
+    var addUserToTeacherGroupUrl = function(email) {return userUrl + '/' + email + '/teachers'};
 
     var authorizationPrefix = 'Bearer ';
 
@@ -24,7 +26,9 @@ var Config = (function () {
         logoutUserUrl: logoutUserUrl,
         userUrl: userUrl,
         usersHash: usersHash,
-        authorizationPrefix: authorizationPrefix
+        authorizationPrefix: authorizationPrefix,
+        updateUserDataUrl: updateUserDataUrl,
+        addUserToTeacherGroupUrl: addUserToTeacherGroupUrl
     };
 })();
 

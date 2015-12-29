@@ -12,7 +12,7 @@ var LoginForm = React.createClass({
 
         var $navigationComponent = this.props.data.navigationComponent;
 
-        if ($navigationComponent.state.isAutomaticLogin) {
+        if ($navigationComponent.state.automaticLogin) {
             /*TODO improve childNodes form*/
             var $target = this.getDOMNode().childNodes[0];
             this.getToken(null, $target);
@@ -27,11 +27,13 @@ var LoginForm = React.createClass({
         var $navigationComponent = this.props.data.navigationComponent;
 
         /*TODO improve AJAX CALLS*/
+        /*TODO code refactoring needed*/
         $.ajax({
             type: $target.getAttribute('method'),
             url: $target.getAttribute('action'),
             /*TODO change serialize to http://stackoverflow.com/questions/11661187/form-serialize-javascript-no-framework*/
-            data: event !== null ? $($target).serialize() : $modalComponent.state.formData,
+            /*TODO change serialize method to npm serialize*/
+            data: event !== null ? $($target).serialize() : $.param($modalComponent.state.formData),
 
             success: function (data) {
                 console.log(data);
@@ -39,15 +41,17 @@ var LoginForm = React.createClass({
                     window.localStorage.setItem('user-token', data.access_token);
                     /*TODO improve - 3 times render call*/
                     $navigationComponent.login();
-                    $modalComponent.close();
-                    $navigationComponent.setState({ isAutomaticLogin: false });
+
+                    if ($navigationComponent.state.addUserDataForm) {
+                        $navigationComponent.openUserDataForm();
+                    } else {
+                        $modalComponent.close();
+                    }
                 }
             },
 
             error: function (jqXHR, statusString, err) {
                 console.log(err);
-                /*TODO improve - 1 time render call*/
-                $navigationComponent.setState({ isAutomaticLogin: false });
             }
 
         });
@@ -56,7 +60,7 @@ var LoginForm = React.createClass({
 
         return (
             <div className='main-form-wrapper'>
-                <form id='sign-in-form' method='post' role='form' className='main-form show' action='oauth/token' onSubmit={this.getToken}>
+                <form id='sign-in-form' method='post' role='form' className='main-form' action='oauth/token' onSubmit={this.getToken}>
                     <div form-group='true' className='main-input-wrapper'>
                         <Input data={{name: 'username', type: 'text', required: 'required', autofocus: 'autofocus'}}/>
                         <label className='main-label'>mail</label>

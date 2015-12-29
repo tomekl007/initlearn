@@ -9,17 +9,24 @@ import Input from './input';
 
 var CreateAccountForm = React.createClass({
 
+    getInitialState() {
+        return {
+            teacherCheckbox: false
+        }
+    },
     createAccount(event) {
 
         event.preventDefault();
 
         var $target = event.target;
+        var $thisComponent = this;
         var $modalComponent = this.props.data.modalComponent;
         var $navigationComponent = this.props.data.navigationComponent;
 
-        var data = JSON.stringify(FormSerialize($target, {hash: true}));
+        var data = JSON.stringify(FormSerialize($target, {hash: true, empty: true}));
 
         /*TODO improve AJAX CALLS*/
+        /*TODO code refactoring needed*/
         $.ajax({
 
             type: $target.getAttribute('method'),
@@ -33,24 +40,42 @@ var CreateAccountForm = React.createClass({
                 console.log(data);
 
                 /*TODO refactor mapping*/
-                var dataToMap = FormSerialize($target, {hash: true});
-                Object.keys(dataToMap).map(function(key) {
+                var dataToMap = FormSerialize($target, {hash: true, empty: true});
+
+                Object.keys(dataToMap).map(function (key) {
                     if (key === 'email') {
                         dataToMap['username'] = dataToMap[key];
                     }
                 });
 
                 /*TODO improve - 2 times render call*/
-                $modalComponent.setState({
-                    /*TODO change serialize method to npm serialize*/
-                    formData: $.param(dataToMap)
-                });
+                $modalComponent.setState({formData: dataToMap});
 
                 $navigationComponent.setState({
-                    isCreateAccountForm: false,
-                    isAutomaticLogin: true,
-                    isLoginForm: true
+                    automaticLogin: true,
+                    createAccountForm: false,
+                    loginForm: true,
+                    addUserDataForm: true
                 });
+
+                /*TODO improve add user to teacher group call*/
+                if ($thisComponent.state.teacherCheckbox) {
+                    $.ajax({
+
+                        type: $target.getAttribute('method'),
+                        url: config.addUserToTeacherGroupUrl(dataToMap.email),
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        success: function (data) {
+                            console.log(data);
+                            console.log('dodano teachera');
+                        },
+                        error: function (jqXHR, statusString, err) {
+                            console.log(err);
+                        }
+                    });
+                }
             },
 
             error: function (jqXHR, statusString, err) {
@@ -59,11 +84,16 @@ var CreateAccountForm = React.createClass({
 
         });
     },
+    isTeacher() {
+
+        this.setState({
+            teacherCheckbox: !this.state.teacherCheckbox
+        });
+    },
     render() {
         return (
             <div className='main-form-wrapper'>
-                <form id='create-account-form' method='post' role='form' className='main-form show' action='/registerAccount' onSubmit={this.createAccount}>
-
+                <form id='create-account-form' method='post' role='form' className='main-form' action='/registerAccount' onSubmit={this.createAccount}>
                     <div form-group='true' className='main-input-wrapper'>
                         <Input data={{name: 'givenName', type: 'text'}}/>
                         <label className='main-label'>name</label>
@@ -92,9 +122,12 @@ var CreateAccountForm = React.createClass({
 
                         <div className='main-input-bg'></div>
                     </div>
+                    <div form-group='true' className='main-input-wrapper'>
+                        <input type='checkbox' onChange={this.isTeacher}/>
+                        <label className='main-label main-label-checkbox'>Teacher</label>
+                    </div>
 
                     <button type='submit' className='main-btn btn-primary fw-700'>create account</button>
-
                 </form>
             </div>
         );
