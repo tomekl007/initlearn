@@ -18,6 +18,15 @@
   left: 200%;
   transition: left .5s ease-in; }
 
+.main-form-message {
+  padding: 0.3125rem 0.625rem;
+  border-radius: 2px; }
+
+.main-form-message.main-form-message-error {
+  background-color: #e57e6f;
+  border: 1px solid #e04832;
+  color: #fff; }
+
 .main-input-wrapper {
   position: relative;
   margin-bottom: 0.3125rem; }

@@ -27,6 +27,17 @@
   }
 }
 
+.main-form-message {
+  padding: rem-calc(5px) rem-calc(10px);
+  border-radius: $border-radius;
+
+  &.main-form-message-error {
+    background-color: $color-red;
+    border: 1px solid $color-red-dark;
+    color: #fff;
+  }
+}
+
 .main-input-wrapper {
   position: relative;
   margin-bottom: rem-calc(5px);

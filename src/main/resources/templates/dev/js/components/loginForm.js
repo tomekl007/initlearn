@@ -70,7 +70,7 @@ var LoginForm = React.createClass({
         var $errorMessage = [];
 
         if (this.state.errorMessage) {
-            $errorMessage = <p class='main-form-error-message' key={1}>User Doesnt exist</p>
+            $errorMessage = <p className='main-form-message main-form-message-error' key={1}>User Doesnt exist</p>
         }
 
         return (
