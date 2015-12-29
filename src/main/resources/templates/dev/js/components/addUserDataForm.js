@@ -63,14 +63,14 @@ var AddUserDataForm = React.createClass({
                     </div>
 
                     <div form-group='true' className='main-input-wrapper'>
-                        <Input data={{name: 'skills[]', type: 'text', defaultValue: ' '}}/>
+                        <Input data={{name: 'skills[]', type: 'text'}}/>
                         <label className='main-label'>skills</label>
 
                         <div className='main-input-bg'></div>
                     </div>
 
                     <div form-group='true' className='main-input-wrapper'>
-                        <Input data={{name: 'links[]', type: 'text', defaultValue: ' '}}/>
+                        <Input data={{name: 'links[]', type: 'text'}}/>
                         <label className='main-label'>links</label>
 
                         <div className='main-input-bg'></div>
