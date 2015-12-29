@@ -33,7 +33,7 @@ public class MessagesController {
                 a -> messageService.sendMessageToUser(messageData.emailTo, messageData.text, a));
     }
 
-    @RequestMapping("/allMsg")    //should be get
+    @RequestMapping(value = "/msg", method = RequestMethod.GET)
     ResponseEntity<List<Message>> retrieveAllMessagesForLoggedUser(ServletRequest servletRequest) {
         return actionForUserOrNotFound(servletRequest);
 
