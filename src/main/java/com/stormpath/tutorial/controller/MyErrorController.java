@@ -29,7 +29,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
-//@Controller
+@Controller
 public class MyErrorController implements ErrorController {
     private static final Logger logger = LoggerFactory.getLogger(MyErrorController.class);
     private static final String ERROR_PATH = "/error";
