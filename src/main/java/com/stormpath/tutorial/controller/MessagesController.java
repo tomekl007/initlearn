@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletRequest;
 import java.util.List;
+import java.util.Optional;
 
 
 @Controller
@@ -37,9 +38,11 @@ public class MessagesController {
     }
 
     @RequestMapping(value = "/msg/{email:.+}", method = RequestMethod.GET)
-    ResponseEntity<List<Message>> retrieveAllMessagesForLoggedUserForConversationWith(ServletRequest servletRequest, @PathVariable("email") String email) {
+    ResponseEntity<List<Message>> retrieveAllMessagesForLoggedUserForConversationWith(ServletRequest servletRequest,
+                                                                                      @PathVariable("email") String email,
+                                                                                      @RequestParam(value = "read", required = false) Optional<Boolean> read) {
         return AccountUtils.actionForAuthenticatedUserOrUnauthorized(
-                servletRequest, a -> messageService.retrieveAllMessagesInConversationWith(a, email));
+                servletRequest, a -> messageService.retrieveAllMessagesInConversationWith(a, email, read));
     }
 
     private ResponseEntity<List<Message>> actionForUserOrNotFound(ServletRequest servletRequest) {

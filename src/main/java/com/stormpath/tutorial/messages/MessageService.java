@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class MessageService {
@@ -65,7 +66,9 @@ public class MessageService {
     }
 
     private String getMessageField(String email) {
-        String encode = email.replace("@", "_-_-_").replace(".", "_-_-_"); //todo think about better way of replacing
+        String encode = email
+                .replace("@", "_-_-_")
+                .replace(".", "_-_-_"); //todo think about better way of replacing
 
         return MESSAGES_FIELD + "-" + encode;
     }
@@ -79,7 +82,7 @@ public class MessageService {
         }
     }
 
-    public List<Message> retrieveAllMessagesInConversationWith(Account account, String conversationEmail) {
+    public List<Message> retrieveAllMessagesInConversationWith(Account account, String conversationEmail, Optional<Boolean> markAsRead) {
         Object messages = account.getCustomData().get(getMessageField(conversationEmail));
         if (messages == null) {
             return Collections.emptyList();
