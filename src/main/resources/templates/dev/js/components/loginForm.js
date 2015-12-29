@@ -19,7 +19,7 @@ var LoginForm = React.createClass({
 
         if ($navigationComponent.state.automaticLogin) {
             /*TODO improve childNodes form*/
-            var $target = this.getDOMNode().childNodes[0];
+            var $target = this.refs.mainForm.getDOMNode();
             this.login(null, $target);
         }
     },
@@ -65,6 +65,7 @@ var LoginForm = React.createClass({
         });
     },
     render() {
+        console.log(this);
 
         var $errorMessage = [];
 
@@ -77,7 +78,7 @@ var LoginForm = React.createClass({
                 <ReactCSSTransitionGroup transitionName='main-form-message-transition' transitionEnterTimeout={300} transitionLeaveTimeout={300}>
                     {$errorMessage}
                 </ReactCSSTransitionGroup>
-                <form id='sign-in-form' method='post' role='form' className='main-form' action='oauth/token' onSubmit={this.login}>
+                <form id='sign-in-form' ref='mainForm' method='post' role='form' className='main-form' action='oauth/token' onSubmit={this.login}>
                     <div form-group='true' className='main-input-wrapper'>
                         <Input data={{name: 'username', type: 'text', required: 'required', autofocus: 'autofocus'}}/>
                         <label className='main-label'>mail</label>

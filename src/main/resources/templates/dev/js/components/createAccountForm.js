@@ -107,14 +107,14 @@ var CreateAccountForm = React.createClass({
                 </ReactCSSTransitionGroup>
                 <form id='create-account-form' method='post' role='form' className='main-form' action='/registerAccount' onSubmit={this.createAccount}>
                     <div form-group='true' className='main-input-wrapper'>
-                        <Input data={{name: 'givenName', type: 'text'}}/>
+                        <Input data={{name: 'givenName', type: 'text', required: 'required'}}/>
                         <label className='main-label'>name</label>
 
                         <div className='main-input-bg'></div>
                     </div>
 
                     <div form-group='true' className='main-input-wrapper'>
-                        <Input data={{name: 'surname', type: 'text'}}/>
+                        <Input data={{name: 'surname', type: 'text', required: 'required'}}/>
                         <label className='main-label'>surname</label>
 
                         <div className='main-input-bg'></div>
