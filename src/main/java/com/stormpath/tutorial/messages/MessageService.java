@@ -49,7 +49,8 @@ public class MessageService {
     private void addMessageToCustomData(Message message, Account account) {
         CustomData customData = account.getCustomData();
         String messageField = getMessageField(account.getEmail());
-        
+        logger.info("Add account for field : " + messageField);
+
         List<Message> messagesList;
         Object messages = customData.get(messageField);
         if (messages == null) {
@@ -58,6 +59,7 @@ public class MessageService {
             messagesList = (List<Message>) messages;
         }
         messagesList.add(message);
+        
         customData.put(messageField, messagesList);
         account.save();
     }
