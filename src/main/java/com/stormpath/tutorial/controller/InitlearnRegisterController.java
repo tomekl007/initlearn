@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.Optional;
+import java.util.OptionalInt;
+
 /**
  * Created by tomasz.lelek on 29/12/15.
  */
@@ -29,7 +32,11 @@ public class InitlearnRegisterController {
     @RequestMapping(value = "/registerAccount", method = RequestMethod.POST, consumes = "application/json")
     ResponseEntity<User> registerNewAccount(@RequestBody AccountData accountData){
         logger.info("aD: " + accountData);
-        Account account = userService.createAccount(accountData);
-        return new ResponseEntity<>(AccountUtils.mapAccountToUser(account), HttpStatus.OK);
+        Optional<Account> account = userService.createAccount(accountData);
+        if(account.isPresent()) {
+            return new ResponseEntity<>(AccountUtils.mapAccountToUser(account.get()), HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
     }
 }

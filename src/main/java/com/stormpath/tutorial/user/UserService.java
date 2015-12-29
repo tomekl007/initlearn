@@ -6,6 +6,7 @@ import com.stormpath.sdk.account.AccountStatus;
 import com.stormpath.sdk.account.Accounts;
 import com.stormpath.sdk.application.Application;
 import com.stormpath.sdk.client.Client;
+import com.stormpath.sdk.resource.ResourceException;
 import com.stormpath.tutorial.avarage.AverageCountStrategy;
 import com.stormpath.tutorial.controller.jsonrequest.AccountData;
 import com.stormpath.tutorial.controller.jsonrequest.TeacherData;
@@ -34,7 +35,7 @@ public class UserService implements AccountFields {
 
     @Autowired
     private GroupService groupService;
-    
+
     @Autowired
     Application application;
 
@@ -109,8 +110,8 @@ public class UserService implements AccountFields {
                 .collect(Collectors.toList());
     }
 
-    public List<User> getAllUsers(Optional<String> sort, Optional<Integer> offset , Optional<Integer> limit) {
-       return getAllUsers(sort, offset, limit, client);
+    public List<User> getAllUsers(Optional<String> sort, Optional<Integer> offset, Optional<Integer> limit) {
+        return getAllUsers(sort, offset, limit, client);
     }
 
     public static List<User> getAllUsers(Optional<String> sort, Optional<Integer> offset, Optional<Integer> limit, Client client) {
@@ -122,7 +123,7 @@ public class UserService implements AccountFields {
     }
 
     private static List<Account> sortBy(List<Account> list, Optional<String> sort) {
-        
+
         return list;
     }
 
@@ -135,7 +136,7 @@ public class UserService implements AccountFields {
         }
     }
 
-    public Account createAccount(AccountData accountData) {
+    public Optional<Account> createAccount(AccountData accountData) {
         Account account = client.instantiate(Account.class)
                 .setUsername(accountData.email)
                 .setEmail(accountData.email)
@@ -144,8 +145,15 @@ public class UserService implements AccountFields {
                 .setPassword(accountData.password)
                 .setStatus(AccountStatus.ENABLED);
 
-
-        application.createAccount(account);
-        return account;
+        try {
+            application.createAccount(account);
+        } catch (ResourceException re) {
+            if (re.getCode() == 2001) {
+                return Optional.empty();
+            } else {
+                throw re;
+            }
+        }
+        return Optional.of(account);
     }
 }
