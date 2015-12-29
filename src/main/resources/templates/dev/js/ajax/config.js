@@ -11,6 +11,7 @@ var Config = (function () {
     var userUrl = appUrl + '/users';
     var usersHash = '#users/';
     var updateUserDataUrl = function(email) {return userUrl + '/' + email + '/data'};
+    var addUserToTeacherGroupUrl = function(email) {return userUrl + '/' + email + '/teachers'};
 
     var authorizationPrefix = 'Bearer ';
 
@@ -26,7 +27,8 @@ var Config = (function () {
         userUrl: userUrl,
         usersHash: usersHash,
         authorizationPrefix: authorizationPrefix,
-        updateUserDataUrl: updateUserDataUrl
+        updateUserDataUrl: updateUserDataUrl,
+        addUserToTeacherGroupUrl: addUserToTeacherGroupUrl
     };
 })();
 

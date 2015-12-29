@@ -50,7 +50,6 @@ var CreateAccountForm = React.createClass({
                 /*TODO improve - 2 times render call*/
                 $modalComponent.setState({formData: dataToMap});
 
-
                 $navigationComponent.setState({
                     automaticLogin: true,
                     createAccountForm: false,
@@ -58,6 +57,22 @@ var CreateAccountForm = React.createClass({
                     addUserDataForm: true
                 });
 
+                /*TODO improve add user to teacher group call*/
+                $.ajax({
+
+                    type: $target.getAttribute('method'),
+                    url: config.addUserToTeacherGroupUrl(dataToMap.email),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    success: function (data) {
+                        console.log(data);
+                        console.log('dodano teachera');
+                    },
+                    error: function (jqXHR, statusString, err) {
+                        console.log(err);
+                    }
+                });
             },
 
             error: function (jqXHR, statusString, err) {
