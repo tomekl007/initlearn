@@ -52,7 +52,7 @@ var CreateAccountForm = React.createClass({
                 });
 
                 /*TODO improve - 2 times render call*/
-                $modalComponent.setState({formData: dataToMap});
+                $modalComponent.setState({formData: dataToMap, teacherCheckbox: $thisComponent.state.teacherCheckbox});
 
                 $navigationComponent.setState({
                     automaticLogin: true,

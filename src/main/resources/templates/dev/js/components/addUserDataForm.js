@@ -37,8 +37,23 @@ var AddUserDataForm = React.createClass({
         });
     },
     render() {
-        return (
-            <div className='main-form-wrapper'>
+        var $userForm;
+        var $modalComponent = this.props.data.modalComponent;
+
+        if ($modalComponent.state.teacherCheckbox) {
+            $userForm =
+                <form method='post' role='form' className='main-form' onSubmit={this.addData}>
+                    <div form-group='true' className='main-input-wrapper'>
+                        <Input data={{name: 'screenHero', type: 'text'}}/>
+                        <label className='main-label'>screenHero</label>
+
+                        <div className='main-input-bg'></div>
+                    </div>
+
+                    <button type='submit' className='main-btn btn-primary fw-700'>add</button>
+                </form>;
+        } else {
+            $userForm =
                 <form method='post' role='form' className='main-form' onSubmit={this.addData}>
                     <div form-group='true' className='main-input-wrapper'>
                         <Input data={{name: 'hourRate', type: 'text'}}/>
@@ -76,7 +91,7 @@ var AddUserDataForm = React.createClass({
                     </div>
 
                     <div form-group='true' className='main-input-wrapper'>
-                        <textarea className='main-input' name='bio' type='text' value=' '/>
+                        <textarea className='main-input' name='bio' type='text'/>
                         <label className='main-label'>bio</label>
 
                         <div className='main-input-bg'></div>
@@ -90,7 +105,13 @@ var AddUserDataForm = React.createClass({
                     </div>
 
                     <button type='submit' className='main-btn btn-primary fw-700'>add</button>
-                </form>
+                </form>;
+        }
+
+
+        return (
+            <div className='main-form-wrapper'>
+                {$userForm}
             </div>
         );
     }

@@ -23,7 +23,13 @@ var NavigationList = React.createClass({
         };
     },
     resetFormStates() {
-        this.setState({modalOpen: false, automaticLogin: false, loginForm: false, createAccountForm: false, addUserDataForm: false});
+        this.setState({
+            modalOpen: false,
+            automaticLogin: false,
+            loginForm: false,
+            createAccountForm: false,
+            addUserDataForm: false
+        });
     },
     componentDidMount() {
         this.automaticLogin();
