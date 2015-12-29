@@ -66,7 +66,8 @@ public class MessageService {
     }
 
     private String getMessageField(String email) {
-        String encode = email.replace("@", "_-_-_");
+        String encode = email.replace("@", "_-_-_").replace(".", "_-_-_"); //todo think about better way of replacing
+        
         return MESSAGES_FIELD + "-" + encode;
     }
 
