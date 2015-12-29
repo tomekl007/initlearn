@@ -42,49 +42,49 @@ var AddUserDataForm = React.createClass({
             <div className='main-form-wrapper'>
                 <form method='post' role='form' className='main-form' onSubmit={this.addData}>
                     <div form-group='true' className='main-input-wrapper'>
-                        <Input data={{name: 'hourRate', type: 'text'}}/>
+                        <Input data={{name: 'hourRate', type: 'text', defaultValue: ' '}}/>
                         <label className='main-label'>hour rate</label>
 
                         <div className='main-input-bg'></div>
                     </div>
 
                     <div form-group='true' className='main-input-wrapper'>
-                        <Input data={{name: 'screenHero', type: 'text'}}/>
+                        <Input data={{name: 'screenHero', type: 'text', defaultValue: ' '}}/>
                         <label className='main-label'>screenHero</label>
 
                         <div className='main-input-bg'></div>
                     </div>
 
                     <div form-group='true' className='main-input-wrapper'>
-                        <Input data={{name: 'linkedIn', type: 'text', required: 'required'}}/>
+                        <Input data={{name: 'linkedIn', type: 'text', required: 'required', defaultValue: ' '}}/>
                         <label className='main-label'>linkedIn</label>
 
                         <div className='main-input-bg'></div>
                     </div>
 
                     <div form-group='true' className='main-input-wrapper'>
-                        <Input data={{name: 'skills[]', type: 'text'}}/>
+                        <Input data={{name: 'skills[]', type: 'text', defaultValue: ' '}}/>
                         <label className='main-label'>skills</label>
 
                         <div className='main-input-bg'></div>
                     </div>
 
                     <div form-group='true' className='main-input-wrapper'>
-                        <Input data={{name: 'links[]', type: 'text'}}/>
+                        <Input data={{name: 'links[]', type: 'text', defaultValue: ' '}}/>
                         <label className='main-label'>links</label>
 
                         <div className='main-input-bg'></div>
                     </div>
 
                     <div form-group='true' className='main-input-wrapper'>
-                        <textarea className='main-input' name='bio' type='text' />
+                        <textarea className='main-input' name='bio' type='text' value=' '/>
                         <label className='main-label'>bio</label>
 
                         <div className='main-input-bg'></div>
                     </div>
 
                     <div form-group='true' className='main-input-wrapper'>
-                        <Input data={{name: 'img', type: 'text'}}/>
+                        <Input data={{name: 'img', type: 'text', defaultValue: ' '}}/>
                         <label className='main-label'>img</label>
 
                         <div className='main-input-bg'></div>
