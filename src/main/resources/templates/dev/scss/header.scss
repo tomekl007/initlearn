@@ -101,7 +101,7 @@
   .main-nav-list {
     position: relative;
     background-color: transparent;
-    width: 400px;
+    width: auto;
     height: auto;
     float: right;
 
@@ -114,6 +114,7 @@
     width: auto;
     border-bottom: none;
     cursor: pointer;
+    margin: 0 rem-calc(5px);
 
     a {
       transition: background-color .3s ease, color .3s ease, border .3s ease;
