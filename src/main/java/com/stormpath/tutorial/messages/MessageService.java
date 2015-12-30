@@ -20,9 +20,6 @@ public class MessageService {
     public static final String MESSAGES_FIELD = "messages";
 
     @Autowired
-    Client client;
-
-    @Autowired
     UserService userService;
 
     private static final Logger logger = LoggerFactory.getLogger(MessageService.class);
