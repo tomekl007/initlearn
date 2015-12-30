@@ -1,7 +1,6 @@
 package com.stormpath.tutorial.messages;
 
 import com.stormpath.sdk.account.Account;
-import com.stormpath.sdk.client.Client;
 import com.stormpath.sdk.directory.CustomData;
 import com.stormpath.tutorial.user.UserService;
 import org.joda.time.DateTime;
@@ -13,7 +12,7 @@ import org.springframework.stereotype.Component;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 public class MessageService {
@@ -55,7 +54,7 @@ public class MessageService {
             messagesList = (List<Message>) messages;
         }
         messagesList.add(message);
-        
+
         customData.put(messageField, messagesList);
         sender.save();
     }
@@ -72,12 +71,30 @@ public class MessageService {
                 .replace(".", "_-_-_");
     }
 
-    public List<Message> retrieveAllMessagesInConversationWith(Account account, String conversationEmail, Optional<Boolean> markAsRead) {
+    public List<Message> retrieveAllMessagesInConversationWith(Account account, String conversationEmail) {
         Object messages = account.getCustomData().get(getMessageField(conversationEmail));
         if (messages == null) {
             return Collections.emptyList();
         } else {
             return (List<Message>) messages;
         }
+    }
+
+    public List<Message> retrieveAllMessagesInConversationWith(Account account, String conversationEmail, boolean markAsRead) {
+        if (markAsRead) {
+            return markAllMessagesInConversationAsRead(account, conversationEmail);
+        } else {
+            return retrieveAllMessagesInConversationWith(account, conversationEmail);
+        }
+    }
+
+    private List<Message> markAllMessagesInConversationAsRead(Account account, String conversationEmail) {
+        List<Message> messages = retrieveAllMessagesInConversationWith(account, conversationEmail);
+        List<Message> messagesMarkedAsRead = messages
+                .stream()
+                .map(m -> new Message(true, m.text, m.timestamp, m.fromEmail, m.toEmail))
+                .collect(Collectors.toList());
+        account.getCustomData().put(getMessageField(conversationEmail), messagesMarkedAsRead);
+        return messagesMarkedAsRead;
     }
 }

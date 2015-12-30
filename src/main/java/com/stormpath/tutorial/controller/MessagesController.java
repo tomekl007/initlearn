@@ -35,7 +35,7 @@ public class MessagesController {
     @RequestMapping(value = "/msg/{email:.+}", method = RequestMethod.GET)
     ResponseEntity<List<Message>> retrieveAllMessagesForLoggedUserForConversationWith(ServletRequest servletRequest,
                                                                                       @PathVariable("email") String email,
-                                                                                      @RequestParam(value = "read", required = false) Optional<Boolean> read) {
+                                                                                      @RequestParam(value = "read", defaultValue = "false", required = false) Boolean read) {
         return AccountUtils.actionForAuthenticatedUserOrUnauthorized(
                 servletRequest, a -> messageService.retrieveAllMessagesInConversationWith(a, email, read));
     }
