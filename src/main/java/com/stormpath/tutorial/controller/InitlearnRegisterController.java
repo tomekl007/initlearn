@@ -39,7 +39,10 @@ public class InitlearnRegisterController {
             } else if (passwordHasNotEnoughtCharacters(re)) {
                 logger.warn("password with length " + accountData.password.length() + " has not enough characters");
                 return new ResponseEntity<>(HttpStatus.PRECONDITION_FAILED);
-            } else {
+            } else if(re.getCode() == 2006) {
+                logger.warn("Account email address is in an invalid format");
+                return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+            }else {
                 logger.error("unexpected error occurred", re);
                 throw re;
             }
