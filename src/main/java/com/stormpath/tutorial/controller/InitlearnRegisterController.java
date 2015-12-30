@@ -34,12 +34,12 @@ public class InitlearnRegisterController {
             return new ResponseEntity<>(AccountUtils.mapAccountToUser(account), HttpStatus.OK);
         } catch (ResourceException re) {
             if (accountAlreadyExists(re)) {
-                logger.warn("account " + accountData.email + " already exists");
+                logger.warn("account with an email address : " + accountData.email + " already exists");
                 return new ResponseEntity<>(HttpStatus.CONFLICT);
-            } else if (passwordHasNotEnoughtCharacters(re)) {
+            } else if (passwordHasNotEnoughCharacters(re)) {
                 logger.warn("password with length " + accountData.password.length() + " has not enough characters");
                 return new ResponseEntity<>(HttpStatus.PRECONDITION_FAILED);
-            } else if(re.getCode() == 2006) {
+            } else if(invalidEmailFormat(re)) {
                 logger.warn("Account email address is in an invalid format");
                 return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
             }else {
@@ -49,7 +49,11 @@ public class InitlearnRegisterController {
         }
     }
 
-    private boolean passwordHasNotEnoughtCharacters(ResourceException re) {
+    private boolean invalidEmailFormat(ResourceException re) {
+        return re.getCode() == 2006;
+    }
+
+    private boolean passwordHasNotEnoughCharacters(ResourceException re) {
         return re.getCode() == 2007;
     }
 
