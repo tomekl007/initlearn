@@ -4,13 +4,13 @@ package com.stormpath.tutorial.controller.jsonrequest;
  * Created by tomasz.lelek on 21/12/15.
  */
 public class ScreenHero {
-    public String screenhero;
+    public String screenHero;
 
-    public String getScreenhero() {
-        return screenhero;
+    public String getScreenHero() {
+        return screenHero;
     }
 
-    public void setScreenhero(String screenhero) {
-        this.screenhero = screenhero;
+    public void setScreenHero(String screenhero) {
+        this.screenHero = screenhero;
     }
 }
