@@ -46,7 +46,7 @@ public class UserController {
     @RequestMapping(value = "users/{email:.+}/screenhero", method = RequestMethod.POST)
     public ResponseEntity<List<User>> addScreenHeroToUser(@RequestBody ScreenHero screenHero, @PathVariable("email") String email) {
         List<Account> accountsByEmail = userService.findAccountsByEmail(email);
-        accountsByEmail.forEach(a -> AccountUtils.addScreenheroField(a, screenHero.getScreenhero()));
+        accountsByEmail.forEach(a -> AccountUtils.addScreenheroField(a, screenHero.getScreenHero()));
         return new ResponseEntity<>(AccountUtils.mapToUsers(accountsByEmail), HttpStatus.OK);
     }
 
