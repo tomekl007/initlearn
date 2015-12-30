@@ -84,10 +84,12 @@ var CreateAccountForm = React.createClass({
             error: function (jqXHR) {
                 var errorMessageText = '';
 
-                if (jqXHR.status === 409) {
-                    errorMessageText = 'account with that email already exists';
+                if (jqXHR.status === 406) {
+                    errorMessageText = 'Account email address is in an invalid format';
+                } else if (jqXHR.status === 409) {
+                    errorMessageText = 'Account with that email already exists';
                 } else if (jqXHR.status === 412) {
-                    errorMessageText = 'password should have at least 6 characters';
+                    errorMessageText = 'Password should have at least 6 characters';
                 }
 
                 $thisComponent.setState({errorMessage: true, errorMessageText: errorMessageText});
