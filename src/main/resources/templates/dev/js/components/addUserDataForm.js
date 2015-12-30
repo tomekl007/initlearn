@@ -14,13 +14,15 @@ var AddUserDataForm = React.createClass({
         var $modalComponent = this.props.data.modalComponent;
 
         var data = JSON.stringify(FormSerialize($target, {hash: true, empty: true}));
+        var userEmail = $modalComponent.state.formData.email;
+        var url = $modalComponent.state.teacherCheckbox ? config.updateUserDataUrl(userEmail) : config.updateScreenheroUrl(userEmail);
 
         /*TODO improve AJAX CALLS*/
         /*TODO code refactoring needed*/
         $.ajax({
 
             type: $target.getAttribute('method'),
-            url: config.updateUserDataUrl($modalComponent.state.formData.email),
+            url: url,
             data: data,
             headers: {
                 'Content-Type': 'application/json'
@@ -37,8 +39,11 @@ var AddUserDataForm = React.createClass({
         });
     },
     render() {
-        return (
-            <div className='main-form-wrapper'>
+        var $userForm;
+        var $modalComponent = this.props.data.modalComponent;
+
+        if ($modalComponent.state.teacherCheckbox) {
+            $userForm =
                 <form method='post' role='form' className='main-form' onSubmit={this.addData}>
                     <div form-group='true' className='main-input-wrapper'>
                         <Input data={{name: 'hourRate', type: 'text'}}/>
@@ -76,7 +81,7 @@ var AddUserDataForm = React.createClass({
                     </div>
 
                     <div form-group='true' className='main-input-wrapper'>
-                        <textarea className='main-input' name='bio' type='text' value=' '/>
+                        <textarea className='main-input' name='bio' type='text'/>
                         <label className='main-label'>bio</label>
 
                         <div className='main-input-bg'></div>
@@ -90,7 +95,25 @@ var AddUserDataForm = React.createClass({
                     </div>
 
                     <button type='submit' className='main-btn btn-primary fw-700'>add</button>
-                </form>
+                </form>;
+        } else {
+            $userForm =
+                <form method='post' role='form' className='main-form' onSubmit={this.addData}>
+                    <div form-group='true' className='main-input-wrapper'>
+                        <Input data={{name: 'screenHero', type: 'text'}}/>
+                        <label className='main-label'>screenHero</label>
+
+                        <div className='main-input-bg'></div>
+                    </div>
+
+                    <button type='submit' className='main-btn btn-primary fw-700'>add</button>
+                </form>;
+        }
+
+
+        return (
+            <div className='main-form-wrapper'>
+                {$userForm}
             </div>
         );
     }

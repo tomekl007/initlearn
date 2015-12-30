@@ -12,6 +12,7 @@ var Config = (function () {
     var usersHash = '#users/';
     var updateUserDataUrl = function(email) {return userUrl + '/' + email + '/data'};
     var addUserToTeacherGroupUrl = function(email) {return userUrl + '/' + email + '/teachers'};
+    var updateScreenheroUrl = function(email) {return userUrl + '/' + email + '/screenhero'};
 
     var authorizationPrefix = 'Bearer ';
 
@@ -28,7 +29,8 @@ var Config = (function () {
         usersHash: usersHash,
         authorizationPrefix: authorizationPrefix,
         updateUserDataUrl: updateUserDataUrl,
-        addUserToTeacherGroupUrl: addUserToTeacherGroupUrl
+        addUserToTeacherGroupUrl: addUserToTeacherGroupUrl,
+        updateScreenheroUrl: updateScreenheroUrl
     };
 })();
 
