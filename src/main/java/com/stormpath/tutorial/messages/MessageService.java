@@ -80,15 +80,7 @@ public class MessageService {
         }
     }
 
-    public List<Message> retrieveAllMessagesInConversationWith(Account account, String conversationEmail, boolean markAsRead) {
-        if (markAsRead) {
-            return markAllMessagesInConversationAsRead(account, conversationEmail);
-        } else {
-            return retrieveAllMessagesInConversationWith(account, conversationEmail);
-        }
-    }
-
-    private List<Message> markAllMessagesInConversationAsRead(Account account, String conversationEmail) {
+    public List<Message> markAllMessagesInConversationAsRead(Account account, String conversationEmail) {
         List<Message> messages = retrieveAllMessagesInConversationWith(account, conversationEmail);
         List<Message> messagesMarkedAsRead = messages
                 .stream()
