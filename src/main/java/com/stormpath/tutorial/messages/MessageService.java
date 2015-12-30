@@ -20,9 +20,6 @@ public class MessageService {
     public static final String MESSAGES_FIELD = "messages";
 
     @Autowired
-    Client client;
-
-    @Autowired
     UserService userService;
 
     private static final Logger logger = LoggerFactory.getLogger(MessageService.class);
@@ -66,11 +63,15 @@ public class MessageService {
     }
 
     private String getMessageField(String email) {
-        String encode = email
-                .replace("@", "_-_-_")
-                .replace(".", "_-_-_"); //todo think about better way of replacing
+        String encode = cleanEmailFromSpecialCharacters(email); //todo think about better way of replacing
 
         return MESSAGES_FIELD + "-" + encode;
+    }
+
+    private String cleanEmailFromSpecialCharacters(String email) {
+        return email
+                .replace("@", "_-_-_")
+                .replace(".", "_-_-_");
     }
 
     public List<Message> retrieveAllMessages(Account account) {
