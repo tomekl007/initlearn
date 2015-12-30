@@ -80,7 +80,7 @@
   .main-nav-list {
     position: relative;
     background-color: transparent;
-    width: 400px;
+    width: auto;
     height: auto;
     float: right; }
   .main-nav-list.pos-left {
@@ -88,7 +88,8 @@
   .main-nav-list-item {
     width: auto;
     border-bottom: none;
-    cursor: pointer; }
+    cursor: pointer;
+    margin: 0 0.3125rem; }
   .main-nav-list-item a {
     transition: background-color .3s ease, color .3s ease, border .3s ease;
     padding: 0.3125rem;
