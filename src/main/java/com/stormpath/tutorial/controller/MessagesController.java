@@ -31,11 +31,6 @@ public class MessagesController {
                 a -> messageService.sendMessageToUser(messageData.emailTo, messageData.text, a));
     }
 
-    @RequestMapping(value = "/msg", method = RequestMethod.GET)
-    ResponseEntity<List<Message>> retrieveAllMessagesForLoggedUser(ServletRequest servletRequest) {
-        return actionForUserOrNotFound(servletRequest);
-
-    }
 
     @RequestMapping(value = "/msg/{email:.+}", method = RequestMethod.GET)
     ResponseEntity<List<Message>> retrieveAllMessagesForLoggedUserForConversationWith(ServletRequest servletRequest,
@@ -43,9 +38,5 @@ public class MessagesController {
                                                                                       @RequestParam(value = "read", required = false) Optional<Boolean> read) {
         return AccountUtils.actionForAuthenticatedUserOrUnauthorized(
                 servletRequest, a -> messageService.retrieveAllMessagesInConversationWith(a, email, read));
-    }
-
-    private ResponseEntity<List<Message>> actionForUserOrNotFound(ServletRequest servletRequest) {
-        return AccountUtils.actionForAuthenticatedUserOrUnauthorized(servletRequest, messageService::retrieveAllMessages);
     }
 }

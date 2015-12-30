@@ -72,15 +72,6 @@ public class MessageService {
                 .replace(".", "_-_-_");
     }
 
-    public List<Message> retrieveAllMessages(Account account) {
-        Object messages = account.getCustomData().get(MESSAGES_FIELD);
-        if (messages == null) {
-            return Collections.emptyList();
-        } else {
-            return (List<Message>) messages;
-        }
-    }
-
     public List<Message> retrieveAllMessagesInConversationWith(Account account, String conversationEmail, Optional<Boolean> markAsRead) {
         Object messages = account.getCustomData().get(getMessageField(conversationEmail));
         if (messages == null) {
