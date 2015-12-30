@@ -10,7 +10,7 @@ public class ScreenHero {
         return screenHero;
     }
 
-    public void setScreenHero(String screenhero) {
-        this.screenHero = screenhero;
+    public void setScreenHero(String screenHero) {
+        this.screenHero = screenHero;
     }
 }
