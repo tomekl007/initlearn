@@ -24,30 +24,28 @@ public class MessageService {
 
     private static final Logger logger = LoggerFactory.getLogger(MessageService.class);
 
-    public String sendMessageToUser(String emailTo, String text, Account from) {
+    public String sendMessageToUser(String emailTo, String text, Account sender) {
 
-        logger.info("send message from " + from.getEmail() + " to " + emailTo);
+        logger.info("send message from " + sender.getEmail() + " to " + emailTo);
 
-        Account accountsToSendTo = userService.findAccountsByEmail(emailTo).get(0);
+        Account receiver = userService.findAccountsByEmail(emailTo).get(0);
 
-        Message message = new Message(false, text, new DateTime().getMillis(),
-                from.getEmail(), accountsToSendTo.getEmail());
-
-        addMessageForAccounts(message, from, accountsToSendTo);
-        addMessageForAccounts(message, accountsToSendTo, from);
+        addMessageToConversation(text, sender, receiver);
         return "OK";
     }
 
-    private void addMessageForAccounts(Message message, Account accountToSendTo, Account from) {
+    public static void addMessageToConversation(String text, Account sender, Account receiver) {
+        Message message = new Message(false, text, new DateTime().getMillis(),
+                sender.getEmail(), receiver.getEmail());
 
-        addMessageToCustomData(message, accountToSendTo, from);
-
+        addMessageToCustomData(message, sender, receiver);
+        addMessageToCustomData(message, receiver, sender);
     }
 
-    private void addMessageToCustomData(Message message, Account account, Account from) {
-        CustomData customData = account.getCustomData();
-        String messageField = getMessageField(from.getEmail());
-        logger.info("Add account for field : " + messageField);
+    public static void addMessageToCustomData(Message message, Account sender, Account receiver) {
+        CustomData customData = sender.getCustomData();
+        String messageField = getMessageField(receiver.getEmail());
+        logger.info("sender : " + sender + ", receiver: " + receiver + " add message for field : " + messageField);
 
         List<Message> messagesList;
         Object messages = customData.get(messageField);
@@ -57,18 +55,18 @@ public class MessageService {
             messagesList = (List<Message>) messages;
         }
         messagesList.add(message);
-
+        
         customData.put(messageField, messagesList);
-        account.save();
+        sender.save();
     }
 
-    private String getMessageField(String email) {
+    public static String getMessageField(String email) {
         String encode = cleanEmailFromSpecialCharacters(email); //todo think about better way of replacing
 
         return MESSAGES_FIELD + "-" + encode;
     }
 
-    private String cleanEmailFromSpecialCharacters(String email) {
+    private static String cleanEmailFromSpecialCharacters(String email) {
         return email
                 .replace("@", "_-_-_")
                 .replace(".", "_-_-_");

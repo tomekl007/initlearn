@@ -10,6 +10,17 @@ public class Message {
     public final String fromEmail;
     public final String toEmail;
 
+    @Override
+    public String toString() {
+        return "Message{" +
+                "wasRead=" + wasRead +
+                ", text='" + text + '\'' +
+                ", timestamp=" + timestamp +
+                ", fromEmail='" + fromEmail + '\'' +
+                ", toEmail='" + toEmail + '\'' +
+                '}';
+    }
+
     public Message(boolean wasRead, String text, Long timestamp, String fromEmail, String toEmail) {
         this.wasRead = wasRead;
         this.text = text;
