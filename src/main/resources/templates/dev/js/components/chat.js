@@ -55,14 +55,14 @@ var Chat = React.createClass({
     },
     componentDidMount() {
         this.getMessages();
-        setInterval(this.getMessages(), 5000);
+        setInterval(this.getMessages, 5000);
     },
     render() {
         console.log(this);
 
         var messagesListItems = this.state.messages.map(function (message, key) {
             return (
-                <li className='main-chat-messages-list-item' key={key}>{message}</li>
+                <li className='main-chat-messages-list-item' key={key}>{message.text}</li>
             );
         });
 
@@ -87,7 +87,7 @@ var Chat = React.createClass({
                         </ul>
 
                         <div className='main-chat-text-input-wrapper'>
-                            <textarea className='main-chat-text-input' ref='mainInput' type='text'>cos wpisz...</textarea>
+                            <textarea className='main-chat-text-input' ref='mainInput' type='text'></textarea>
                             <button className='main-chat-button-submit main-btn btn-green fw-700' {...tapOrClick(this.sendMessage)}>send</button>
                         </div>
                     </div>

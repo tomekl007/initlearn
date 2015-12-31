@@ -70,4 +70,11 @@
     width: 70%;
     height: 350px;
   }
+
+  .main-chat-messages-list {
+    overflow-y: scroll;
+    height: 70%;
+    margin: 0;
+    padding: 0;
+  }
 }
