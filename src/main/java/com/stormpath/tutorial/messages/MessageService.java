@@ -80,12 +80,13 @@ public class MessageService {
         return messagesMarkedAsRead;
     }
 
-    public static List<Message> markMessagesAsRead(List<Message> messages) {
+    public static List<Message> markMessagesAsRead(List messages) {
         List<Message> res = new LinkedList<>();
 
         logger.info("messages.size : " + messages.size());
+        logger.info("messages.class : " + messages.getClass());
         for (int i = 0; i < messages.size(); i++) {
-            Message m = messages.get(i);
+            Message m = (Message) messages.get(i);
             logger.info("message: " + m);
             res.add(new Message(true, m.text, m.timestamp, m.fromEmail, m.toEmail));
         }
