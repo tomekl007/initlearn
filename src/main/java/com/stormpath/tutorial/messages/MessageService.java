@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -82,19 +81,16 @@ public class MessageService {
 
     public List<Message> markAllMessagesInConversationAsRead(Account account, String conversationEmail) {
         List<Message> messages = retrieveAllMessagesInConversationWith(account, conversationEmail);
-        logger.info("messages : " + messages);
         List<Message> messagesMarkedAsRead = markMessagesAsRead(messages);
-        logger.info("marked as read : " + messagesMarkedAsRead);
         account.getCustomData().put(getMessageField(conversationEmail), messagesMarkedAsRead);
         account.save();
         return messagesMarkedAsRead;
     }
 
     public static List<Message> markMessagesAsRead(List<Message> messages) {
-        logger.info("messages class :" + messages.getClass());
         List<Message> res = new LinkedList<>();
 
-        for(int i = 0; i < messages.size(); i++){
+        for (int i = 0; i < messages.size(); i++) {
             Message m = messages.get(i);
             res.add(new Message(true, m.text, m.timestamp, m.fromEmail, m.toEmail));
         }
