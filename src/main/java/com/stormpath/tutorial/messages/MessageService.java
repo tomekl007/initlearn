@@ -82,6 +82,7 @@ public class MessageService {
 
     public List<Message> markAllMessagesInConversationAsRead(Account account, String conversationEmail) {
         List<Message> messages = retrieveAllMessagesInConversationWith(account, conversationEmail);
+        logger.info("messages : " + messages);
         List<Message> messagesMarkedAsRead = messages
                 .stream()
                 .map(m -> new Message(true, m.text, m.timestamp, m.fromEmail, m.toEmail))
