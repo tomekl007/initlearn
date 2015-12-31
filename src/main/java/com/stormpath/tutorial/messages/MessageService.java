@@ -85,6 +85,7 @@ public class MessageService {
         String messageOffsetField = getMessageOffsetField(conversationEmail);
         int newOffset = getReadOffset(messages);
         account.getCustomData().put(messageOffsetField, newOffset);
+        account.save();
         return newOffset;
     }
 
