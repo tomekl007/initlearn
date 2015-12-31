@@ -83,10 +83,10 @@ public class MessageServiceTest {
         List<Message> messages = Arrays.asList(new Message("txt", DateTime.now().getMillis(), "to", "from"));
 
         //when
-        List<Message> res = MessageService.getReadOffset(messages);
+        int offset = MessageService.getReadOffset(messages);
 
         //then
-        assertThat(res.get(0)).isEqualTo(true);
+        assertThat(offset).isEqualTo(0);
 
     }
     
