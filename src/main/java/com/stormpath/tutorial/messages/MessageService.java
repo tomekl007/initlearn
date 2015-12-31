@@ -94,7 +94,7 @@ public class MessageService {
         logger.info("messages class :" + messages.getClass());
         List<Message> res = new LinkedList<>();
 
-        for(int i = 0; i < res.size(); i++){
+        for(int i = 0; i < messages.size(); i++){
             Message m = messages.get(i);
             res.add(new Message(true, m.text, m.timestamp, m.fromEmail, m.toEmail));
         }
