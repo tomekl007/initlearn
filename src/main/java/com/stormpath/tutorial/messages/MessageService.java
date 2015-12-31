@@ -90,6 +90,7 @@ public class MessageService {
     }
 
     public static List<Message> markMessagesAsRead(List<Message> messages) {
+        logger.info("messages class :" + messages.getClass());
         List<Message> res = new LinkedList<>();
         for (Message m : messages) {
             res.add(new Message(true, m.text, m.timestamp, m.fromEmail, m.toEmail));
