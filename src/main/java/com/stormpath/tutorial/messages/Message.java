@@ -4,7 +4,6 @@ package com.stormpath.tutorial.messages;
  * Created by tomasz.lelek on 10/12/15.
  */
 public class Message {
-    public final boolean wasRead;
     public final String text;
     public final Long timestamp;
     public final String fromEmail;
@@ -13,7 +12,6 @@ public class Message {
     @Override
     public String toString() {
         return "Message{" +
-                "wasRead=" + wasRead +
                 ", text='" + text + '\'' +
                 ", timestamp=" + timestamp +
                 ", fromEmail='" + fromEmail + '\'' +
@@ -21,8 +19,7 @@ public class Message {
                 '}';
     }
 
-    public Message(boolean wasRead, String text, Long timestamp, String fromEmail, String toEmail) {
-        this.wasRead = wasRead;
+    public Message(String text, Long timestamp, String fromEmail, String toEmail) {
         this.text = text;
         this.timestamp = timestamp;
         this.fromEmail = fromEmail;

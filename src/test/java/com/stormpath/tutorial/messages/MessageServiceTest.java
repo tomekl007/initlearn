@@ -6,6 +6,8 @@ import org.joda.time.DateTime;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -14,9 +16,9 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 
 public class MessageServiceTest {
-    
+
     @Test
-    public void shouldAddMessageToCustomData(){
+    public void shouldAddMessageToCustomData() {
         //given
         CustomData fromCustomData = Mockito.mock(CustomData.class);
         CustomData toCustomData = Mockito.mock(CustomData.class);
@@ -24,19 +26,19 @@ public class MessageServiceTest {
         String toEmail = "to@gmail.com";
         Account from = createAccount(fromEmail, fromCustomData);
         Account to = createAccount(toEmail, toCustomData);
-        
-        Message message = new Message(false, "txt", DateTime.now().getMillis(), fromEmail, toEmail);
-        
+
+        Message message = new Message("txt", DateTime.now().getMillis(), fromEmail, toEmail);
+
         //when
         MessageService.addMessageToCustomData(message, from, to);
-        
+
         //then
         Mockito.verify(fromCustomData).put(eq(MessageService.getMessageField(toEmail)), any(Message.class));
-       
+
     }
 
     @Test
-    public void shouldAddMessageToConversation(){
+    public void shouldAddMessageToConversation() {
         //given
         CustomData fromCustomData = Mockito.mock(CustomData.class);
         CustomData toCustomData = Mockito.mock(CustomData.class);
@@ -55,7 +57,7 @@ public class MessageServiceTest {
     }
 
     @Test
-    public void shouldAddMessageToConversationThatHasAlreadyOneMessage(){
+    public void shouldAddMessageToConversationThatHasAlreadyOneMessage() {
         //given
         CustomData fromCustomData = Mockito.mock(CustomData.class);
         CustomData toCustomData = Mockito.mock(CustomData.class);
@@ -75,7 +77,59 @@ public class MessageServiceTest {
         assertThat(((List<Message>) toCustomData.get(MessageService.getMessageField(fromEmail))).size()).isEqualTo(2);
 
     }
-    
+
+    @Test
+    public void shouldMarkAllMessagesAsRead() {
+        //given
+        List<Message> messages = Arrays.asList(new Message("txt", DateTime.now().getMillis(), "to", "from"));
+
+        //when
+        int offset = MessageService.markNewReadOffset(messages);
+
+        //then
+        assertThat(offset).isEqualTo(1);
+
+    }
+
+
+    @Test
+    public void shouldGetNotReadMessagesEmpty() {
+        //given
+        List<Message> messages = Arrays.asList(new Message("txt", DateTime.now().getMillis(), "to", "from"));
+
+        //when
+        List<Message> notReadMessages = MessageService.getNotReadMessages(messages, 1);
+
+        //then
+        assertThat(notReadMessages.isEmpty()).isEqualTo(true);
+
+    }
+
+    @Test
+    public void shouldGetNotReadMessagesNotEmpty() {
+        //given
+        List<Message> messages = Arrays.asList(new Message("txt", DateTime.now().getMillis(), "to", "from"),
+                new Message("txt", DateTime.now().getMillis(), "to", "from"),
+                new Message("txt", DateTime.now().getMillis(), "to", "from")
+        );
+
+        //when
+        List<Message> notReadMessages = MessageService.getNotReadMessages(messages, 1);
+
+        //then
+        assertThat(notReadMessages.size()).isEqualTo(2);
+
+    }
+
+    @Test
+    public void shouldGetNotReadMessagesEmptyWhenMessagesEmpty() {
+        //when
+        List<Message> notReadMessages = MessageService.getNotReadMessages(Collections.emptyList(), 0);
+
+        //then
+        assertThat(notReadMessages.size()).isEqualTo(0);
+
+    }
 
     private Account createAccount(String email, CustomData customData) {
         Account from = Mockito.mock(Account.class);
@@ -87,7 +141,7 @@ public class MessageServiceTest {
 
     private Account createAccountWithOneMessage(String fromEmail, CustomData customData, String toEmail) {
         List<Message> messages = new LinkedList<>();
-        messages.add(new Message(false, "oldText", DateTime.now().getMillis(), fromEmail, toEmail));
+        messages.add(new Message("oldText", DateTime.now().getMillis(), fromEmail, toEmail));
         Mockito.when(customData.get(MessageService.getMessageField(toEmail))).thenReturn(messages);
         return createAccount(fromEmail, customData);
     }
