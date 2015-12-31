@@ -83,13 +83,16 @@ public class MessageService {
     public List<Message> markAllMessagesInConversationAsRead(Account account, String conversationEmail) {
         List<Message> messages = retrieveAllMessagesInConversationWith(account, conversationEmail);
         logger.info("messages : " + messages);
-        List<Message> messagesMarkedAsRead = messages
-                .stream()
-                .map(m -> new Message(true, m.text, m.timestamp, m.fromEmail, m.toEmail))
-                .collect(Collectors.toList());
+        List<Message> messagesMarkedAsRead = markMessagesAsRead(messages);
         logger.info("marked as read : " + messagesMarkedAsRead);
         account.getCustomData().put(getMessageField(conversationEmail), messagesMarkedAsRead);
         account.save();
         return messagesMarkedAsRead;
+    }
+
+    public static List<Message> markMessagesAsRead(List<Message> messages) {
+        List<Message> res = messages.stream().map(m -> new Message(true, m.text, m.timestamp, m.fromEmail, m.toEmail)).collect(Collectors.toCollection(LinkedList::new));
+        return res;
+
     }
 }

@@ -6,6 +6,7 @@ import org.joda.time.DateTime;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -73,6 +74,19 @@ public class MessageServiceTest {
 
         assertThat(((List<Message>) fromCustomData.get(MessageService.getMessageField(toEmail))).size()).isEqualTo(2);
         assertThat(((List<Message>) toCustomData.get(MessageService.getMessageField(fromEmail))).size()).isEqualTo(2);
+
+    }
+
+    @Test
+    public void shouldMarkAllMessagesAsRead(){
+        //given
+        List<Message> messages = Arrays.asList(new Message(false, "txt", DateTime.now().getMillis(), "to", "from"));
+
+        //when
+        List<Message> res = MessageService.markMessagesAsRead(messages);
+
+        //then
+        assertThat(res.get(0).wasRead).isEqualTo(true);
 
     }
     
