@@ -14,6 +14,7 @@ import java.util.List;
 @Component
 public class MessageService {
     public static final String MESSAGES_FIELD = "messages";
+    public static final String MESSAGES_READ_OFFSET_FIELD = "messages-offset";
 
     private static final Logger logger = LoggerFactory.getLogger(MessageService.class);
 
@@ -26,7 +27,7 @@ public class MessageService {
     }
 
     public static void addMessageToConversation(String text, Account sender, Account receiver) {
-        Message message = new Message(false, text, new DateTime().getMillis(),
+        Message message = new Message(text, new DateTime().getMillis(),
                 sender.getEmail(), receiver.getEmail());
 
         addMessageToCustomData(message, sender, receiver);
@@ -36,11 +37,13 @@ public class MessageService {
     public static void addMessageToCustomData(Message message, Account sender, Account receiver) {
         CustomData customData = sender.getCustomData();
         String messageField = getMessageField(receiver.getEmail());
+        String messageOffsetField = getMessageOffsetField(receiver.getEmail());
         logger.info("sender : " + sender + ", receiver: " + receiver + " add message for field : " + messageField);
 
         List<Message> messagesList;
         Object messages = customData.get(messageField);
         if (messages == null) {
+            customData.put(messageOffsetField, 0);
             messagesList = new LinkedList<>();
         } else {
             messagesList = (List<Message>) messages;
@@ -49,6 +52,11 @@ public class MessageService {
 
         customData.put(messageField, messagesList);
         sender.save();
+    }
+
+    private static String getMessageOffsetField(String email) {
+        String encode = cleanEmailFromSpecialCharacters(email); //todo think about better way of replacing
+        return MESSAGES_READ_OFFSET_FIELD + "-" + encode;
     }
 
     public static String getMessageField(String email) {
@@ -72,26 +80,18 @@ public class MessageService {
         }
     }
 
-    public List<Message> markAllMessagesInConversationAsRead(Account account, String conversationEmail) {
+    public Integer markAllMessagesInConversationAsRead(Account account, String conversationEmail) {
         List<Message> messages = retrieveAllMessagesInConversationWith(account, conversationEmail);
-        List<Message> messagesMarkedAsRead = markMessagesAsRead(messages);
-        account.getCustomData().put(getMessageField(conversationEmail), messagesMarkedAsRead);
-        account.save();
-        return messagesMarkedAsRead;
+        String messageOffsetField = getMessageOffsetField(conversationEmail);
+        int newOffset = getReadOffset(messages);
+        account.getCustomData().put(messageOffsetField, newOffset);
+        return newOffset;
     }
 
-    public static List<Message> markMessagesAsRead(List messages) {
-        List<Message> res = new LinkedList<>();
-
-        logger.info("messages.size : " + messages.size());
-        logger.info("messages.class : " + messages.getClass());
-        for (int i = 0; i < messages.size(); i++) {
-            Message m = (Message) messages.get(i);
-            logger.info("message: " + m);
-            res.add(new Message(true, m.text, m.timestamp, m.fromEmail, m.toEmail));
+    public static Integer getReadOffset(List messages) {
+        if(messages.size() == 0) {
+            return 0;
         }
-
-        return res;
-
+        return messages.size() - 1;
     }
 }

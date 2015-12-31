@@ -26,7 +26,7 @@ public class MessageServiceTest {
         Account from = createAccount(fromEmail, fromCustomData);
         Account to = createAccount(toEmail, toCustomData);
         
-        Message message = new Message(false, "txt", DateTime.now().getMillis(), fromEmail, toEmail);
+        Message message = new Message("txt", DateTime.now().getMillis(), fromEmail, toEmail);
         
         //when
         MessageService.addMessageToCustomData(message, from, to);
@@ -80,13 +80,13 @@ public class MessageServiceTest {
     @Test
     public void shouldMarkAllMessagesAsRead(){
         //given
-        List<Message> messages = Arrays.asList(new Message(false, "txt", DateTime.now().getMillis(), "to", "from"));
+        List<Message> messages = Arrays.asList(new Message("txt", DateTime.now().getMillis(), "to", "from"));
 
         //when
-        List<Message> res = MessageService.markMessagesAsRead(messages);
+        List<Message> res = MessageService.getReadOffset(messages);
 
         //then
-        assertThat(res.get(0).wasRead).isEqualTo(true);
+        assertThat(res.get(0)).isEqualTo(true);
 
     }
     
@@ -101,7 +101,7 @@ public class MessageServiceTest {
 
     private Account createAccountWithOneMessage(String fromEmail, CustomData customData, String toEmail) {
         List<Message> messages = new LinkedList<>();
-        messages.add(new Message(false, "oldText", DateTime.now().getMillis(), fromEmail, toEmail));
+        messages.add(new Message("oldText", DateTime.now().getMillis(), fromEmail, toEmail));
         Mockito.when(customData.get(MessageService.getMessageField(toEmail))).thenReturn(messages);
         return createAccount(fromEmail, customData);
     }
