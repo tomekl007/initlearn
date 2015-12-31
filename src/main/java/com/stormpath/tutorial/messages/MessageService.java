@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class MessageService {
@@ -91,7 +90,10 @@ public class MessageService {
     }
 
     public static List<Message> markMessagesAsRead(List<Message> messages) {
-        List<Message> res = messages.stream().map(m -> new Message(true, m.text, m.timestamp, m.fromEmail, m.toEmail)).collect(Collectors.toCollection(LinkedList::new));
+        List<Message> res = new LinkedList<>();
+        for (Message m : messages) {
+            res.add(new Message(true, m.text, m.timestamp, m.fromEmail, m.toEmail));
+        }
         return res;
 
     }
