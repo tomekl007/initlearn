@@ -2,11 +2,9 @@ package com.stormpath.tutorial.messages;
 
 import com.stormpath.sdk.account.Account;
 import com.stormpath.sdk.directory.CustomData;
-import com.stormpath.tutorial.user.UserService;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
@@ -17,16 +15,11 @@ import java.util.List;
 public class MessageService {
     public static final String MESSAGES_FIELD = "messages";
 
-    @Autowired
-    UserService userService;
-
     private static final Logger logger = LoggerFactory.getLogger(MessageService.class);
 
-    public String sendMessageToUser(String emailTo, String text, Account sender) {
+    public String sendMessageToUser(Account receiver, String text, Account sender) {
 
-        logger.info("send message from " + sender.getEmail() + " to " + emailTo);
-
-        Account receiver = userService.findAccountsByEmail(emailTo).get(0);
+        logger.info("send message from " + sender.getEmail() + " to " + receiver.getEmail());
 
         addMessageToConversation(text, sender, receiver);
         return "OK";
