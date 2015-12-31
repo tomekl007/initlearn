@@ -10,9 +10,19 @@ var Config = (function () {
     var logoutUserUrl = appUrl + '/logout';
     var userUrl = appUrl + '/users';
     var usersHash = '#users/';
-    var updateUserDataUrl = function(email) {return userUrl + '/' + email + '/data'};
-    var addUserToTeacherGroupUrl = function(email) {return userUrl + '/' + email + '/teachers'};
-    var updateScreenheroUrl = function(email) {return userUrl + '/' + email + '/screenhero'};
+    var messageUrl = appUrl + '/msg';
+    var updateUserDataUrl = function (email) {
+        return userUrl + '/' + email + '/data';
+    };
+    var addUserToTeacherGroupUrl = function (email) {
+        return userUrl + '/' + email + '/teachers';
+    };
+    var updateScreenheroUrl = function (email) {
+        return userUrl + '/' + email + '/screenhero';
+    };
+    var getMessageUrl = function (email) {
+        return messageUrl + '/' + email;
+    };
 
     var authorizationPrefix = 'Bearer ';
 
@@ -28,9 +38,11 @@ var Config = (function () {
         userUrl: userUrl,
         usersHash: usersHash,
         authorizationPrefix: authorizationPrefix,
+        messageUrl: messageUrl,
         updateUserDataUrl: updateUserDataUrl,
         addUserToTeacherGroupUrl: addUserToTeacherGroupUrl,
-        updateScreenheroUrl: updateScreenheroUrl
+        updateScreenheroUrl: updateScreenheroUrl,
+        getMessageUrl: getMessageUrl
     };
 })();
 
