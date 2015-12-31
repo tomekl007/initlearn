@@ -44,8 +44,9 @@ public class MessagesController {
     }
 
     @RequestMapping(value = "/msg/{email:.+}", method = RequestMethod.GET)
-    ResponseEntity<List<Message>> retrieveAllMessagesForLoggedUserForConversationWith(ServletRequest servletRequest,
-                                                                                      @PathVariable("email") String email) {
+    ResponseEntity<List<Message>>
+    retrieveAllMessagesForLoggedUserForConversationWith(ServletRequest servletRequest,
+                                                        @PathVariable("email") String email) {
         return AccountUtils.actionForAuthenticatedUserOrUnauthorized(
                 servletRequest, a -> messageService.retrieveAllMessagesInConversationWith(a, email));
     }
@@ -56,5 +57,13 @@ public class MessagesController {
         return AccountUtils.actionForAuthenticatedUserOrUnauthorized(
                 servletRequest, a -> messageService.markAllMessagesInConversationAsRead(a, email));
         
+    }
+
+    @RequestMapping(value = "/msg/{email:.+}/notread", method = RequestMethod.GET)
+    ResponseEntity getAllNotReadMessages(ServletRequest servletRequest,
+                                         @PathVariable("email") String email){
+        return AccountUtils.actionForAuthenticatedUserOrUnauthorized(
+                servletRequest, a -> messageService.getAllNotReadMessages(a, email));
+
     }
 }

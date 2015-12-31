@@ -2,6 +2,7 @@ package com.stormpath.tutorial.messages;
 
 import com.stormpath.sdk.account.Account;
 import com.stormpath.sdk.directory.CustomData;
+import com.stormpath.tutorial.utils.AccountUtils;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -83,16 +84,25 @@ public class MessageService {
     public Integer markAllMessagesInConversationAsRead(Account account, String conversationEmail) {
         List<Message> messages = retrieveAllMessagesInConversationWith(account, conversationEmail);
         String messageOffsetField = getMessageOffsetField(conversationEmail);
-        int newOffset = getReadOffset(messages);
+        int newOffset = markNewReadOffset(messages);
         account.getCustomData().put(messageOffsetField, newOffset);
         account.save();
         return newOffset;
     }
 
-    public static Integer getReadOffset(List messages) {
-        if(messages.size() == 0) {
-            return 0;
-        }
-        return messages.size() - 1;
+    public static Integer markNewReadOffset(List messages) {
+        return messages.size();
+    }
+
+
+
+    public List<Message> getAllNotReadMessages(Account account, String conversationEmail){
+        List<Message> messages = retrieveAllMessagesInConversationWith(account, conversationEmail);
+        Integer readOffset = AccountUtils.getCustomIntegerValue(account, getMessageOffsetField(conversationEmail));
+        return getNotReadMessages(messages, readOffset);
+    }
+
+    public static List<Message> getNotReadMessages(List<Message> messages, Integer readOffset) {
+        return messages.subList(readOffset, messages.size());
     }
 }
