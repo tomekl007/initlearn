@@ -18,6 +18,12 @@ var Chat = React.createClass({
         var sendToMail = this.refs.sendToMail.getDOMNode();
         var input = this.refs.mainInput.getDOMNode();
 
+        console.log('input: ');
+        console.log(input.value);
+
+        console.log('mail: ');
+        console.log(sendToMail.value);
+
         $.ajax({
             method: 'post',
             url: config.messageUrl,
