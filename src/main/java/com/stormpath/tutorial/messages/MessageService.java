@@ -92,8 +92,7 @@ public class MessageService {
 
     public static List<Message> markMessagesAsRead(List<Message> messages) {
         logger.info("messages class :" + messages.getClass());
-        logger.info("first  : " + messages.get(0));
-        List<Message> res = new ArrayList<>();
+        List<Message> res = new LinkedList<>();
 
         for(int i = 0; i < res.size(); i++){
             Message m = messages.get(i);
