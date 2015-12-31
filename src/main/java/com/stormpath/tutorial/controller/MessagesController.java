@@ -39,7 +39,7 @@ public class MessagesController {
                 servletRequest, a -> messageService.retrieveAllMessagesInConversationWith(a, email));
     }
 
-    @RequestMapping(value = "/msg/{email:.+}/read", method = RequestMethod.GET)
+    @RequestMapping(value = "/msg/{email:.+}/read", method = RequestMethod.POST)
     ResponseEntity markAllMessagesAsRead(ServletRequest servletRequest,
                                          @PathVariable("email") String email){
         return AccountUtils.actionForAuthenticatedUserOrUnauthorized(

@@ -86,6 +86,7 @@ public class MessageService {
                 .stream()
                 .map(m -> new Message(true, m.text, m.timestamp, m.fromEmail, m.toEmail))
                 .collect(Collectors.toList());
+        logger.info("marked as read : " + messagesMarkedAsRead);
         account.getCustomData().put(getMessageField(conversationEmail), messagesMarkedAsRead);
         return messagesMarkedAsRead;
     }
