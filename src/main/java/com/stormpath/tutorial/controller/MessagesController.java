@@ -6,6 +6,7 @@ import com.stormpath.tutorial.messages.Message;
 import com.stormpath.tutorial.messages.MessageService;
 import com.stormpath.tutorial.user.UserService;
 import com.stormpath.tutorial.utils.AccountUtils;
+import org.javatuples.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletRequest;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 
@@ -68,8 +70,8 @@ public class MessagesController {
     }
 
     @RequestMapping(value = "/msg/overview", method = RequestMethod.GET)
-    ResponseEntity<List<String>> getMessagesOverview(ServletRequest servletRequest){
+    ResponseEntity<List<Pair<String, Message>>> getMessagesOverview(ServletRequest servletRequest){
         return AccountUtils.actionForAuthenticatedUserOrUnauthorized(
-                servletRequest, a -> messageService.getConversationWithField(a));
+                servletRequest, a -> messageService.getMessagesOverview(a));
     }
 }
