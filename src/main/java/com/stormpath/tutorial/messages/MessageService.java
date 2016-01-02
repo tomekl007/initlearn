@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -128,7 +129,7 @@ public class MessageService {
     }
 
     public static void addLastMessage(Message message, Account account, String email) {
-        account.getCustomData().put(getLastMessageField(email), message);
+        account.getCustomData().put(getLastMessageField(email), Collections.singletonList(message));
         account.save();
     }
 
@@ -137,7 +138,8 @@ public class MessageService {
         if(o == null){
             return new MessageOverview(email, null);
         }else{
-            return new MessageOverview(email, (Message) o);
+            List<Message> messages = (List<Message>) o;
+            return new MessageOverview(email, messages.get(0));
         }
     }
 
