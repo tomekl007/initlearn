@@ -1,62 +1,24 @@
 import React from 'react';
+import Router from 'react-router';
 
-class Messages extends React.Component {
+import config from '../ajax/config';
+
+import MessagesComponent from '../components/chat';
+
+var Messages = React.createClass({
+
+    getUserEmail() {
+        var pathArray = Router.HashLocation.getCurrentPath().split('/');
+
+        return pathArray[pathArray.length - 1];
+    },
     render() {
         return (
-            <section id='teachers' className='main-section-messages'>
-                <div className='row'>
-                    <div className='col s12'>
-                        <h2 className='section-header color-purple'>Messages</h2>
-                        <div className="main-messages-container">
-                            <div className="row">
-                                <div className='col s12 m3'>
-                                    <div className='main-messages-user-name'>
-                                        Name Surname
-                                    </div>
-                                </div>
-                                <div className='main-messages-user-messages col s12 m9'>
-                                    <div className='main-messages-user-messages'>
-                                        Message
-                                    </div>
-                                    <div className='main-messages-text-input'>
-                                        <textarea type='text' ></textarea>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="row">
-                                <div className='col s12 m3'>
-                                    <div className='main-messages-user-name'>
-                                        Name Surname
-                                    </div>
-                                </div>
-                                <div className='main-messages-user-messages col s12 m9'>
-                                    <div className='main-messages-user-messages'>
-                                        Message
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="row">
-                                <div className='col s12 m3'>
-                                    <div className='main-messages-user-name'>
-                                        Name Surname
-                                    </div>
-                                </div>
-                                <div className='main-messages-user-messages col s12 m9'>
-                                    <div className='main-messages-user-messages'>
-                                        Message
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </div>
-                </div>
+            <section id='messages' className='main-section-messages'>
+                <MessagesComponent url={config.appUrl + Router.HashLocation.getCurrentPath()} email={this.getUserEmail()}/>
             </section>
         );
     }
-}
+});
 
 module.exports = Messages;

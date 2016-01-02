@@ -13,7 +13,7 @@ var routes = (
     <Route name='app' path='/'>
         <Route name='teachers' handler={TeachersView}/>
         <Route name='users/*' handler={UserProfileView} />
-        <Route name='messages' handler={MessagesView} />
+        <Route name='msg/*' handler={MessagesView} />
         <Route name='me' handler={MyProfileView} />
         <Route name='*' path='*' handler={HomeView}/>
         <DefaultRoute handler={HomeView}/>

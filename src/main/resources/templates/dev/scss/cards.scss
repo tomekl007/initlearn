@@ -24,6 +24,24 @@
     background-color: $color-purple;
   }
 
+  .user-nav-profile {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+  }
+
+  .user-nav-messages {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: rem-calc(5px);
+    z-index: 3;
+    background-color: #fff;
+  }
+
   .user-skill {
     padding: rem-calc(5px);
     margin: 0 rem-calc(5px);

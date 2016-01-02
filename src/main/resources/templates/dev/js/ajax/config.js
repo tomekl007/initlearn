@@ -10,7 +10,8 @@ var Config = (function () {
     var logoutUserUrl = appUrl + '/logout';
     var userUrl = appUrl + '/users';
     var usersHash = '#users/';
-    var messageUrl = appUrl + '/msg';
+    var messagesHash = '#msg/';
+    var messagesUrl = appUrl + '/msg';
     var updateUserDataUrl = function (email) {
         return userUrl + '/' + email + '/data';
     };
@@ -20,8 +21,8 @@ var Config = (function () {
     var updateScreenheroUrl = function (email) {
         return userUrl + '/' + email + '/screenhero';
     };
-    var getMessageUrl = function (email) {
-        return messageUrl + '/' + email;
+    var getMessagesUrl = function (email) {
+        return messagesUrl + '/' + email;
     };
 
     var authorizationPrefix = 'Bearer ';
@@ -38,11 +39,12 @@ var Config = (function () {
         userUrl: userUrl,
         usersHash: usersHash,
         authorizationPrefix: authorizationPrefix,
-        messageUrl: messageUrl,
+        messagesHash: messagesHash,
+        messagesUrl: messagesUrl,
         updateUserDataUrl: updateUserDataUrl,
         addUserToTeacherGroupUrl: addUserToTeacherGroupUrl,
         updateScreenheroUrl: updateScreenheroUrl,
-        getMessageUrl: getMessageUrl
+        getMessagesUrl: getMessagesUrl
     };
 })();
 

@@ -31,10 +31,11 @@ class User extends React.Component {
 
             return (
                 <div className='col s12 m6' key={key}>
-                    <a className='card-wrapper fw-100' href={config.usersHash + user.email}>
-                        <div className='card-header-img bg-white'>
+                    <div className='card-wrapper fw-100'>
+                        <a className='user-nav-profile' href={config.usersHash + user.email}></a>
+                        <a className='card-header-img bg-white' href={config.usersHash + user.email}>
                             <img src={user.img} alt='teacher profile image'/>
-                        </div>
+                        </a>
                         <div className='card-header'>
                             <h3 className='user-name color-white'>{user.fullName}</h3>
                         </div>
@@ -58,7 +59,10 @@ class User extends React.Component {
 
                             <div className='user-more-info-btn main-btn fw-700 color-purple bg-white'>more</div>
                         </div>
-                    </a>
+                        <a className='user-nav-messages' href={config.messagesHash + user.email}>
+                            messages
+                        </a>
+                    </div>
                 </div>
             );
 

@@ -6,6 +6,10 @@
 
   .card-wrapper {
 
+    .user-nav-profile {
+      display: none;
+    }
+
     .user-skill {
       display: block;
       margin: rem-calc(5px) 0;

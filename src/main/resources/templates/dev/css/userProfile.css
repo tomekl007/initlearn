@@ -1,6 +1,9 @@
 .main-section-user-profile {
   margin-top: 150px; }
 
+.main-section-user-profile .card-wrapper .user-nav-profile {
+  display: none; }
+
 .main-section-user-profile .card-wrapper .user-skill {
   display: block;
   margin: 0.3125rem 0; }
