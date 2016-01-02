@@ -136,4 +136,10 @@ public class UserController {
             return new ResponseEntity<>(false, HttpStatus.OK);
         }
     }
+
+    @RequestMapping("/skills")
+    ResponseEntity<List<String>> getAllSkills(){
+        List<String> allSkillsAvailable = userService.getAllSkillsAvailable();
+        return new ResponseEntity<>(allSkillsAvailable, HttpStatus.OK);
+    }
 }

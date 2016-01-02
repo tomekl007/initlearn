@@ -16,6 +16,7 @@ import com.stormpath.tutorial.utils.AccountUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -109,6 +110,10 @@ public class UserService implements AccountFields {
                 .collect(Collectors.toList());
     }
 
+    public List<User> getAllUsers() {
+        return getAllUsers(Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty());
+    }
+
     public List<User> getAllUsers(Optional<String> sort,
                                   Optional<Integer> sortOrder, Optional<Integer> offset, Optional<Integer> limit) {
         return getAllUsers(sort, sortOrder, offset, limit, client);
@@ -150,5 +155,9 @@ public class UserService implements AccountFields {
 
 
         return application.createAccount(account);
+    }
+
+    public List<String> getAllSkillsAvailable() {
+        return getAllUsers().stream().map(u -> u.skills).flatMap(Collection::stream).collect(Collectors.toList());
     }
 }
