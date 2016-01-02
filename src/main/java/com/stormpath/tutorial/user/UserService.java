@@ -109,20 +109,24 @@ public class UserService implements AccountFields {
                 .collect(Collectors.toList());
     }
 
-    public List<User> getAllUsers(Optional<String> sort, Optional<Integer> offset, Optional<Integer> limit) {
-        return getAllUsers(sort, offset, limit, client);
+    public List<User> getAllUsers(Optional<String> sort,
+                                  Optional<Integer> sortOrder, Optional<Integer> offset, Optional<Integer> limit) {
+        return getAllUsers(sort, sortOrder, offset, limit, client);
     }
 
-    public static List<User> getAllUsers(Optional<String> sort, Optional<Integer> offset, Optional<Integer> limit, Client client) {
+    public static List<User> getAllUsers(Optional<String> sort, Optional<Integer> sortOrder,
+                                         Optional<Integer> offset, Optional<Integer> limit, Client client) {
         List<Account> list = new ArrayList<>();
         client.getAccounts(pagination(offset, limit))
                 .iterator()
                 .forEachRemaining(list::add);
-        return AccountUtils.mapToUsers(sortBy(list, sort));
+        return sortBy(AccountUtils.mapToUsers(list), sort, sortOrder);
     }
 
-    private static List<Account> sortBy(List<Account> list, Optional<String> sort) {
-
+    private static List<User> sortBy(List<User> list, Optional<String> sort, Optional<Integer> sortOrder) {
+        if(sort.isPresent() && sortOrder.isPresent()) {
+           AccountUtils.sortUsersBy(list, sort.get(), sortOrder.get());
+        }
         return list;
     }
 
