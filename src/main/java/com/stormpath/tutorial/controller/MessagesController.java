@@ -2,10 +2,12 @@ package com.stormpath.tutorial.controller;
 
 import com.stormpath.sdk.account.Account;
 import com.stormpath.tutorial.controller.jsonrequest.MessageData;
+import com.stormpath.tutorial.controller.jsonrequest.MessageOverview;
 import com.stormpath.tutorial.messages.Message;
 import com.stormpath.tutorial.messages.MessageService;
 import com.stormpath.tutorial.user.UserService;
 import com.stormpath.tutorial.utils.AccountUtils;
+import org.javatuples.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletRequest;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 
@@ -65,5 +68,11 @@ public class MessagesController {
         return AccountUtils.actionForAuthenticatedUserOrUnauthorized(
                 servletRequest, a -> messageService.getAllNotReadMessages(a, email));
 
+    }
+
+    @RequestMapping(value = "/msg/overview", method = RequestMethod.GET)
+    ResponseEntity<List<MessageOverview>> getMessagesOverview(ServletRequest servletRequest){
+        return AccountUtils.actionForAuthenticatedUserOrUnauthorized(
+                servletRequest, a -> messageService.getMessagesOverview(a));
     }
 }

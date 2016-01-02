@@ -50,4 +50,5 @@ dependencies {
     compile group: 'com.google.collections', name: 'stormpath-sdk-servlet', version:'1.0.RC7.7'
     compile group: 'com.stormpath.sdk', name: 'google-collections', version:'1.0'
     compile group: 'com.google.guava', name: 'guava', version:'19.0'
+    compile group: 'org.javatuples', name: 'javatuples', version:'1.2'
 }
