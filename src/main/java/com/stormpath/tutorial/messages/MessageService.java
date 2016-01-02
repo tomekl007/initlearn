@@ -2,6 +2,7 @@ package com.stormpath.tutorial.messages;
 
 import com.stormpath.sdk.account.Account;
 import com.stormpath.sdk.directory.CustomData;
+import com.stormpath.tutorial.controller.jsonrequest.MessageOverview;
 import com.stormpath.tutorial.utils.AccountUtils;
 import org.javatuples.Pair;
 import org.joda.time.DateTime;
@@ -136,10 +137,11 @@ public class MessageService {
         return new Pair<>(email, (Message) account.getCustomData().get(getLastMessageField(email)));
     }
 
-    public List<Pair<String, Message>> getMessagesOverview(Account a) {
+    public List<MessageOverview> getMessagesOverview(Account a) {
         return getConversationWithField(a)
                 .stream()
                 .map(email -> getLastMessage(a, email))
+                .map(pair -> new MessageOverview(pair.getValue0(), pair.getValue1()))
                 .collect(Collectors.toList());
     }
 }

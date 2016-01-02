@@ -2,6 +2,7 @@ package com.stormpath.tutorial.controller;
 
 import com.stormpath.sdk.account.Account;
 import com.stormpath.tutorial.controller.jsonrequest.MessageData;
+import com.stormpath.tutorial.controller.jsonrequest.MessageOverview;
 import com.stormpath.tutorial.messages.Message;
 import com.stormpath.tutorial.messages.MessageService;
 import com.stormpath.tutorial.user.UserService;
@@ -70,7 +71,7 @@ public class MessagesController {
     }
 
     @RequestMapping(value = "/msg/overview", method = RequestMethod.GET)
-    ResponseEntity<List<Pair<String, Message>>> getMessagesOverview(ServletRequest servletRequest){
+    ResponseEntity<List<MessageOverview>> getMessagesOverview(ServletRequest servletRequest){
         return AccountUtils.actionForAuthenticatedUserOrUnauthorized(
                 servletRequest, a -> messageService.getMessagesOverview(a));
     }
