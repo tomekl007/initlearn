@@ -1,7 +1,8 @@
 package com.stormpath.tutorial.utils;
 
 import com.stormpath.sdk.account.Account;
-import com.stormpath.sdk.directory.CustomData;
+import com.stormpath.tutorial.model.User;
+import com.stormpath.tutorial.model.UserBuilder;
 import org.junit.Test;
 import org.mockito.Mockito;
 import static org.assertj.core.api.Assertions.*;
@@ -85,6 +86,86 @@ public class AccountUtilsTest {
         assertThat(res).isEqualTo(2.3425);
 
     }
-        
+
+    @Test
+    public void shouldSortUsersHourRate(){
+        //given
+        List<User> users = Arrays.asList(new UserBuilder().setHourRate(2).createUser(), new UserBuilder().setHourRate(1).createUser());
+
+        //when
+        AccountUtils.sortUsersBy(users, AccountUtils.HOUR_RATE_FIELD, 1);
+
+        //then
+        assertThat(users.get(0).hourRate).isEqualTo(1);
+        assertThat(users.get(1).hourRate).isEqualTo(2);
+    }
+
+
+    @Test
+    public void shouldSortUsersWhenValueIsNullHourRate(){
+        //given
+        List<User> users = Arrays.asList(new UserBuilder().setHourRate(1).createUser(), new UserBuilder().createUser());
+
+        //when
+        AccountUtils.sortUsersBy(users, AccountUtils.HOUR_RATE_FIELD, 1);
+
+        //then
+        assertThat(users.get(0).hourRate).isEqualTo(null);
+        assertThat(users.get(1).hourRate).isEqualTo(1);
+    }
+
+    @Test
+    public void shouldSortUsersAverage(){
+        //given
+        List<User> users = Arrays.asList(new UserBuilder().setAverage(2.1d).createUser(), new UserBuilder().setAverage(1.3d).createUser());
+
+        //when
+        AccountUtils.sortUsersBy(users, AccountUtils.AVERAGE_FIELD, 1);
+
+        //then
+        assertThat(users.get(0).average).isEqualTo(1.3d);
+        assertThat(users.get(1).average).isEqualTo(2.1d);
+    }
+
+
+    @Test
+    public void shouldSortUsersWhenValueIsNullAverage(){
+        //given
+        List<User> users = Arrays.asList(new UserBuilder().setAverage(1d).createUser(), new UserBuilder().createUser());
+
+        //when
+        AccountUtils.sortUsersBy(users, AccountUtils.AVERAGE_FIELD, 1);
+
+        //then
+        assertThat(users.get(0).average).isEqualTo(null);
+        assertThat(users.get(1).average).isEqualTo(1d);
+    }
+
+    @Test
+    public void shouldSortUsersWhenValueIsNullAverageReversed(){
+        //given
+        List<User> users = Arrays.asList(new UserBuilder().setAverage(1d).createUser(), new UserBuilder().createUser());
+
+        //when
+        AccountUtils.sortUsersBy(users, AccountUtils.AVERAGE_FIELD, -1);
+
+        //then
+        assertThat(users.get(0).average).isEqualTo(1d);
+        assertThat(users.get(1).average).isEqualTo(null);
+    }
+
+    @Test
+    public void shouldSortUsersAverageReversed(){
+        //given
+        List<User> users = Arrays.asList(new UserBuilder().setAverage(2.1d).createUser(), new UserBuilder().setAverage(1.3d).createUser());
+
+        //when
+        AccountUtils.sortUsersBy(users, AccountUtils.AVERAGE_FIELD, -1);
+
+        //then
+        assertThat(users.get(0).average).isEqualTo(2.1d);
+        assertThat(users.get(1).average).isEqualTo(1.3d);
+    }
+
 
 }

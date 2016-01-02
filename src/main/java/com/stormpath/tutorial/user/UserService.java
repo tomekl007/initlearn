@@ -16,6 +16,7 @@ import com.stormpath.tutorial.utils.AccountUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -109,20 +110,28 @@ public class UserService implements AccountFields {
                 .collect(Collectors.toList());
     }
 
-    public List<User> getAllUsers(Optional<String> sort, Optional<Integer> offset, Optional<Integer> limit) {
-        return getAllUsers(sort, offset, limit, client);
+    public List<User> getAllUsers() {
+        return getAllUsers(Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty());
     }
 
-    public static List<User> getAllUsers(Optional<String> sort, Optional<Integer> offset, Optional<Integer> limit, Client client) {
+    public List<User> getAllUsers(Optional<String> sort,
+                                  Optional<Integer> sortOrder, Optional<Integer> offset, Optional<Integer> limit) {
+        return getAllUsers(sort, sortOrder, offset, limit, client);
+    }
+
+    public static List<User> getAllUsers(Optional<String> sort, Optional<Integer> sortOrder,
+                                         Optional<Integer> offset, Optional<Integer> limit, Client client) {
         List<Account> list = new ArrayList<>();
         client.getAccounts(pagination(offset, limit))
                 .iterator()
                 .forEachRemaining(list::add);
-        return AccountUtils.mapToUsers(sortBy(list, sort));
+        return sortBy(AccountUtils.mapToUsers(list), sort, sortOrder);
     }
 
-    private static List<Account> sortBy(List<Account> list, Optional<String> sort) {
-
+    private static List<User> sortBy(List<User> list, Optional<String> sort, Optional<Integer> sortOrder) {
+        if(sort.isPresent() && sortOrder.isPresent()) {
+           AccountUtils.sortUsersBy(list, sort.get(), sortOrder.get());
+        }
         return list;
     }
 
@@ -146,5 +155,9 @@ public class UserService implements AccountFields {
 
 
         return application.createAccount(account);
+    }
+
+    public List<String> getAllSkillsAvailable() {
+        return getAllUsers().stream().map(u -> u.skills).flatMap(Collection::stream).collect(Collectors.toList());
     }
 }

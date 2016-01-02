@@ -1,12 +1,12 @@
 package com.stormpath.tutorial.utils;
 
+import com.google.common.collect.Ordering;
 import com.stormpath.sdk.account.Account;
 import com.stormpath.sdk.account.AccountList;
 import com.stormpath.sdk.directory.CustomData;
 import com.stormpath.sdk.servlet.account.AccountResolver;
 import com.stormpath.tutorial.model.User;
 import com.stormpath.tutorial.model.UserBuilder;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -190,4 +190,26 @@ public class AccountUtils implements AccountFields {
         }
     }
 
+    public static void sortUsersBy(List<User> list, String sort, Integer sortOrder) {
+        Comparator<User> userComparator = (User o1, User o2) -> {
+            if (sort.equals(HOUR_RATE_FIELD)) {
+                Integer hourRate1 = o1.hourRate == null ? 0 : o1.hourRate;
+                Integer hourRate2 = o2.hourRate == null ? 0 : o2.hourRate;
+                return hourRate1.compareTo(hourRate2);
+            } else if (sort.equals(AVERAGE_FIELD)) {
+                Double average1 = o1.average == null ? 0d : o1.average;
+                Double average2 = o2.average == null ? 0d : o2.average;
+                return average1.compareTo(average2);
+            } else {
+                return o1.givenName.compareTo(o2.givenName);
+            }
+        };
+
+        if(sortOrder == -1){
+            Collections.sort(list, Ordering.from(userComparator).reverse());
+        }else{
+            Collections.sort(list, Ordering.from(userComparator));
+        }
+
+    }
 }

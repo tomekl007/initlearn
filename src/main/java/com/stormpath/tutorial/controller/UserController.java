@@ -29,10 +29,10 @@ public class UserController {
 
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     public ResponseEntity<List<User>> getAllUsers(@RequestParam(required = false) Optional<String> sort,
+                                                  @RequestParam(required = false, defaultValue = "1") Optional<Integer> sortOrder,
                                                   @RequestParam(required = false) Optional<Integer> offset,
                                                   @RequestParam(required = false) Optional<Integer> limit) {
-        logger.info("get params : " + sort.orElse("nothing") + " " + offset.orElse(-100) + limit.orElse(-100));
-        return new ResponseEntity<>(userService.getAllUsers(sort, offset, limit), HttpStatus.OK);
+        return new ResponseEntity<>(userService.getAllUsers(sort, sortOrder, offset, limit), HttpStatus.OK);
     }
 
 
@@ -135,5 +135,11 @@ public class UserController {
         }else{
             return new ResponseEntity<>(false, HttpStatus.OK);
         }
+    }
+
+    @RequestMapping("/skills")
+    ResponseEntity<List<String>> getAllSkills(){
+        List<String> allSkillsAvailable = userService.getAllSkillsAvailable();
+        return new ResponseEntity<>(allSkillsAvailable, HttpStatus.OK);
     }
 }
