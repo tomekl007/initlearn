@@ -1,0 +1,60 @@
+.main-chat {
+  width: 100%;
+  max-width: 768px;
+  height: 400px;
+  color: #fff;
+  margin: auto;
+  overflow: hidden;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  background-color: #34495d;
+  box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.3); }
+
+.main-chat .green {
+  color: #1bbc9c; }
+
+.main-chat-header {
+  padding: 0.9375rem; }
+
+.main-chat-header-bar {
+  float: right; }
+
+.main-chat-header-bar span {
+  margin-left: 0.625rem;
+  cursor: pointer; }
+
+.main-chat-user-description, .main-chat-messages-container {
+  position: relative;
+  width: 100%;
+  float: left;
+  padding: 0.9375rem; }
+
+.main-chat-user-description {
+  text-align: center; }
+
+.main-chat-messages-container {
+  background-color: #fff;
+  color: #bbb; }
+
+.main-chat-text-input-wrapper {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 30%;
+  background-color: #e8e8e8; }
+
+.main-chat-text-input {
+  border-radius: 5px; }
+
+@media only screen and (min-width: 601px) {
+  .main-chat-user-description {
+    width: 30%; }
+  .main-chat-messages-container {
+    width: 70%;
+    height: 350px; }
+  .main-chat-messages-list {
+    overflow-y: scroll;
+    height: 70%;
+    margin: 0;
+    padding: 0; } }
