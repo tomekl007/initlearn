@@ -29,9 +29,9 @@ public class UserController {
 
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     public ResponseEntity<List<User>> getAllUsers(@RequestParam(required = false) Optional<String> sort,
-                                                  @RequestParam(required = false) Optional<Integer> sortOrder,
+                                                  @RequestParam(required = false, defaultValue = "1") Optional<Integer> sortOrder,
                                                   @RequestParam(required = false) Optional<Integer> offset,
-                                                  @RequestParam(required = false, defaultValue = "1") Optional<Integer> limit) {
+                                                  @RequestParam(required = false) Optional<Integer> limit) {
         return new ResponseEntity<>(userService.getAllUsers(sort, sortOrder, offset, limit), HttpStatus.OK);
     }
 
