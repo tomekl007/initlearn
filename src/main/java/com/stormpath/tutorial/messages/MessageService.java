@@ -4,7 +4,6 @@ import com.stormpath.sdk.account.Account;
 import com.stormpath.sdk.directory.CustomData;
 import com.stormpath.tutorial.controller.jsonrequest.MessageOverview;
 import com.stormpath.tutorial.utils.AccountUtils;
-import org.javatuples.Pair;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -133,15 +132,19 @@ public class MessageService {
         account.save();
     }
 
-    public static Pair<String, Message> getLastMessage(Account account, String email) {
-        return new Pair<>(email, (Message) account.getCustomData().get(getLastMessageField(email)));
+    public static MessageOverview getLastMessage(Account account, String email) {
+        Object o = account.getCustomData().get(getLastMessageField(email));
+        if(o == null){
+            return new MessageOverview(email, null);
+        }else{
+            return new MessageOverview(email, (Message) o);
+        }
     }
 
     public List<MessageOverview> getMessagesOverview(Account a) {
         return getConversationWithField(a)
                 .stream()
                 .map(email -> getLastMessage(a, email))
-                .map(pair -> new MessageOverview(pair.getValue0(), pair.getValue1()))
                 .collect(Collectors.toList());
     }
 }
