@@ -29,7 +29,7 @@
         <dependency>
             <groupId>com.stormpath.spring</groupId>
             <artifactId>stormpath-default-spring-boot-starter</artifactId>
-            <version>1.0.RC6</version>
+            <version>1.0.RC7.7</version>
         </dependency>
         <dependency>
             <groupId>commons-dbcp</groupId>
@@ -89,12 +89,12 @@
         <dependency>
             <groupId>com.stormpath.sdk</groupId>
             <artifactId>stormpath-sdk-api</artifactId>
-            <version>1.0.RC6</version>
+            <version>1.0.RC7.7</version>
         </dependency>
         <dependency>
             <groupId>com.stormpath.sdk</groupId>
             <artifactId>stormpath-sdk-servlet</artifactId>
-            <version>1.0.RC6</version>
+            <version>1.0.RC7.7</version>
         </dependency>
     </dependencies>
     <properties>
