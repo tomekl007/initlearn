@@ -3,7 +3,6 @@ import tapOrClick from 'react-tap-or-click';
 import $ from '../lib/jquery';
 
 import config from '../ajax/config';
-import localStorage from '../common/localStorage';
 
 /*TODO improve Teachers class to ES6*/
 var Chat = React.createClass({
@@ -11,7 +10,8 @@ var Chat = React.createClass({
     getInitialState() {
         return {
             open: false,
-            messages: []
+            messages: [],
+            messageThreadList: []
         };
     },
     sendMessage() {
@@ -20,10 +20,7 @@ var Chat = React.createClass({
         $.ajax({
             method: 'post',
             url: config.messagesUrl,
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': localStorage.isAvailable() ? config.authorizationPrefix + window.localStorage.getItem('user-token') || '' : ''
-            },
+            headers: config.loggedHeader,
             data: JSON.stringify({
                 text: input.value,
                 emailTo: this.props.email
@@ -41,10 +38,7 @@ var Chat = React.createClass({
         $.ajax({
             method: 'get',
             url: this.props.url,
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': localStorage.isAvailable() ? config.authorizationPrefix + window.localStorage.getItem('user-token') || '' : ''
-            },
+            headers: config.loggedHeader,
             success: function (messages) {
                 this.setState({messages: messages});
             }.bind(this),
@@ -53,11 +47,32 @@ var Chat = React.createClass({
             }
         });
     },
+    getMessageThreadList() {
+
+        $.ajax({
+            method: 'get',
+            url: config.messagesOverviewUrl,
+            headers: config.loggedHeader,
+            success: function (messageThreadList) {
+                this.setState({messageThreadList: messageThreadList});
+            }.bind(this),
+            error: function (jqXHR, statusString, err) {
+                console.log(err);
+            }
+        });
+    },
     componentDidMount() {
+        this.getMessageThreadList();
         this.getMessages();
         setInterval(this.getMessages, 5000);
     },
     render() {
+
+        var messageThreadList = this.state.messageThreadList.map(function(messageThread, key) {
+            return (
+              <li key={key}>{messageThread.emailTo}</li>
+            );
+        });
 
         var messagesListItems = this.state.messages.map(function (message, key) {
             return (
@@ -79,6 +94,7 @@ var Chat = React.createClass({
                         <div className='main-chat-user-img'>img</div>
                         <div className='main-chat-user-name fw-700'>
                             {this.props.email}
+                            {messageThreadList}
                         </div>
                         <div className='main-chat-user-status'>online</div>
                     </div>
