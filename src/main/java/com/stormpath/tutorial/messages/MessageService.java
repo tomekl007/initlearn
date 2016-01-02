@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.List;
 public class MessageService {
     public static final String MESSAGES_FIELD = "messages";
     public static final String MESSAGES_READ_OFFSET_FIELD = "messages-offset";
+    public static final String CONVERSATIONS_WITH_FIELD = "conversations-with";
 
     private static final Logger logger = LoggerFactory.getLogger(MessageService.class);
 
@@ -28,11 +30,20 @@ public class MessageService {
     }
 
     public static void addMessageToConversation(String text, Account sender, Account receiver) {
+        AccountUtils.addCustomListFieldToAccount(sender,
+                CONVERSATIONS_WITH_FIELD, Collections.singletonList(receiver.getEmail()), sender.getCustomData());
+        AccountUtils.addCustomListFieldToAccount(receiver,
+                CONVERSATIONS_WITH_FIELD, Collections.singletonList(sender.getEmail()), receiver.getCustomData());
+
         Message message = new Message(text, new DateTime().getMillis(),
                 sender.getEmail(), receiver.getEmail());
 
         addMessageToCustomData(message, sender, receiver);
         addMessageToCustomData(message, receiver, sender);
+    }
+
+    public List<String> getConversationWithField(Account account){
+        return AccountUtils.getCustomListFieldValue(account, CONVERSATIONS_WITH_FIELD);
     }
 
     public static void addMessageToCustomData(Message message, Account sender, Account receiver) {

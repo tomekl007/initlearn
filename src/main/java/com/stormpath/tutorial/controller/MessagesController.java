@@ -66,4 +66,10 @@ public class MessagesController {
                 servletRequest, a -> messageService.getAllNotReadMessages(a, email));
 
     }
+
+    @RequestMapping(value = "/msg/overview", method = RequestMethod.GET)
+    ResponseEntity<List<String>> getMessagesOverview(ServletRequest servletRequest){
+        return AccountUtils.actionForAuthenticatedUserOrUnauthorized(
+                servletRequest, a -> messageService.getConversationWithField(a));
+    }
 }
