@@ -129,7 +129,8 @@ public class MessageService {
     }
 
     public static void addLastMessage(Message message, Account account, String email) {
-        account.getCustomData().put(getLastMessageField(email), Collections.singletonList(message));
+        LinkedHashMap linkedHashMap = Message.toLinkedHashMap(message);
+        account.getCustomData().put(getLastMessageField(email), Collections.singletonList(linkedHashMap));
         account.save();
     }
 

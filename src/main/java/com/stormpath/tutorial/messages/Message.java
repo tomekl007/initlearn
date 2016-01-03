@@ -35,4 +35,13 @@ public class Message {
         String toEmail = (String) linkedHashMap.get("toEmail");
         return new Message(text, timestamp, fromEmail, toEmail);
     }
+
+    public static LinkedHashMap toLinkedHashMap(Message message) {
+        LinkedHashMap linkedHashMap = new LinkedHashMap();
+        linkedHashMap.put("text", message.text);
+        linkedHashMap.put("timestamp", message.timestamp);
+        linkedHashMap.put("fromEmail", message.fromEmail);
+        linkedHashMap.put("toEmail", message.toEmail);
+        return linkedHashMap;
+    }
 }
