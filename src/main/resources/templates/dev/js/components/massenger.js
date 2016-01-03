@@ -91,14 +91,19 @@ var Massenger = React.createClass({
 
             return (
                 <li key={key + 1}>
-                    <a className='main-massenger-message-thread-list-item' href={config.messagesHash + messageThread.emailTo}>{messageThread.emailTo}</a>
+                    <a className='main-massenger-message-thread-list-item' href={config.messagesHash + messageThread.emailTo}>
+                        <span className='main-massenger-message-thread-list-item-email' >{messageThread.emailTo}</span>
+                        <span className='main-massenger-message-thread-list-item-last-message' >{messageThread.lastMessage.text}</span>
+                    </a>
                 </li>
             );
         });
 
         if (isSameEmail || messageThreadList.length < 1) {
             currentThreadListItem = <li key={0}>
-                <a className='main-massenger-message-thread-list-item' href={config.messagesHash + this.props.email}>{this.props.email}</a>
+                <a className='main-massenger-message-thread-list-item' href={config.messagesHash + this.props.email}>
+                    <span className='main-massenger-message-thread-list-item-email' >{this.props.email}</span>
+                </a>
             </li>;
         }
         var messagesListItems = this.state.messages.map(function (message, key) {

@@ -33,6 +33,12 @@
   height: 1px;
   background-color: #9ea7b3; }
 
+.main-massenger-message-thread-list-item-email {
+  display: block; }
+
+.main-massenger-message-thread-list-item-last-message {
+  font-size: 0.75rem; }
+
 .main-massenger-messages-wrapper {
   float: left;
   width: 70%;
