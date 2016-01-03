@@ -5,9 +5,11 @@ import $ from '../lib/jquery';
 import config from '../ajax/config';
 
 /*TODO improve Teachers class to ES6*/
-var Chat = React.createClass({
+var Massenger = React.createClass({
 
+    getMessagesIntervalId: 0,
     getInitialState() {
+
         return {
             open: false,
             messages: [],
@@ -16,6 +18,12 @@ var Chat = React.createClass({
     },
     sendMessage() {
         var input = this.refs.mainInput.getDOMNode();
+        var messages = this.state.messages;
+
+        messages.push({text: input.value});
+        this.setState({
+            messages: messages
+        });
 
         $.ajax({
             method: 'post',
@@ -32,6 +40,8 @@ var Chat = React.createClass({
                 console.log(err);
             }
         });
+
+        input.value = '';
     },
     getMessages() {
 
@@ -62,50 +72,58 @@ var Chat = React.createClass({
         });
     },
     componentDidMount() {
+
         this.getMessageThreadList();
         this.getMessages();
-        setInterval(this.getMessages, 5000);
+        this.getMessagesIntervalId = setInterval(this.getMessages, 5000);
+    },
+    componentWillUnmount() {
+        clearInterval(this.getMessagesIntervalId);
     },
     render() {
 
+        var $thisComponent = this;
+
+        var currentThreadListItem = <li key={0}>
+            <a className='main-massenger-message-thread-list-item' href={config.messagesHash + this.props.email}>{this.props.email}</a>
+        </li>;
+
         var messageThreadList = this.state.messageThreadList.map(function(messageThread, key) {
             return (
-              <li key={key}>{messageThread.emailTo}</li>
+              <li key={key + 1}>
+                <a className='main-massenger-message-thread-list-item' href={config.messagesHash + messageThread.emailTo}>{messageThread.emailTo}</a>
+              </li>
             );
         });
 
         var messagesListItems = this.state.messages.map(function (message, key) {
+
+            var listClass = message.text === $thisComponent.props.email ? 'main-massenger-messages-list-item email-to' : 'main-massenger-messages-list-item';
             return (
-                <li className='main-chat-messages-list-item' key={key}>{message.text}</li>
+                <li className={listClass} key={key}><span>{message.text}</span></li>
             );
         });
 
         return (
-            <div className='main-chat'>
-                <div className='main-chat-wrapper'>
-                    <div className='main-chat-header fw-700'>
-                        <span className='main-chat-user-name'>conversation with:</span>
-                        <span className='main-chat-header-bar'>
-                            <span className='main-chat-button-minimize green'>-</span>
-                            <span className='main-chat-button-close green'>x</span>
-                        </span>
+            <div className='main-massenger'>
+                <div className='main-massenger-wrapper'>
+                    <div className='main-massenger-header fw-700'>
+                        conversation with: {this.props.email}
                     </div>
-                    <div className='main-chat-user-description'>
-                        <div className='main-chat-user-img'>img</div>
-                        <div className='main-chat-user-name fw-700'>
-                            {this.props.email}
+                    <div className='main-massenger-message-thread-list-wrapper'>
+                        <ul className='main-massenger-message-thread-list'>
+                            {currentThreadListItem}
                             {messageThreadList}
-                        </div>
-                        <div className='main-chat-user-status'>online</div>
+                        </ul>
                     </div>
-                    <div className='main-chat-messages-container'>
-                        <ul className='main-chat-messages-list' ref='mainChatList'>
+                    <div className='main-massenger-messages-wrapper'>
+                        <ul className='main-massenger-messages-list'>
                             {messagesListItems}
                         </ul>
 
-                        <div className='main-chat-text-input-wrapper'>
-                            <textarea className='main-chat-text-input' ref='mainInput' type='text'></textarea>
-                            <button className='main-chat-button-submit main-btn btn-green fw-700' {...tapOrClick(this.sendMessage)}>send</button>
+                        <div className='main-massenger-text-input-wrapper'>
+                            <textarea className='main-massenger-text-input' ref='mainInput' type='text'></textarea>
+                            <button className='main-massenger-button-submit main-btn btn-blue fw-700' {...tapOrClick(this.sendMessage)}>send</button>
                         </div>
                     </div>
                 </div>
@@ -114,4 +132,4 @@ var Chat = React.createClass({
     }
 });
 
-module.exports = Chat;
+module.exports = Massenger;

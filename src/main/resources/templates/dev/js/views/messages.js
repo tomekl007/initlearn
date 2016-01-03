@@ -3,7 +3,7 @@ import Router from 'react-router';
 
 import config from '../ajax/config';
 
-import MessagesComponent from '../components/chat';
+import MessagesComponent from '../components/massenger';
 
 var Messages = React.createClass({
 
