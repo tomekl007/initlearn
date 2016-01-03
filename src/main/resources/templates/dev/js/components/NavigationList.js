@@ -110,16 +110,16 @@ var NavigationList = React.createClass({
                     <a href={config.myProfileHash}>{this.state.data.fullName}</a>
                 </li>,
                 <li className='main-nav-list-item main-user-logout' {...tapOrClick(this.logout)} key={3}>
-                    <a href='#'>logout</a>
+                    <a href='#'>logout <i className='fa fa-sign-out'></i></a>
                 </li>
             ];
         } else {
             $loginElements = [
                 <li className='main-nav-list-item main-create-account' {...tapOrClick(this.openCreateAccountForm)} key={4}>
-                    <a href='#create-account-form' className='is-active'>create free account</a>
+                    <a href='#create-account-form' className='is-active'>create free account<i className='fa fa-key'></i></a>
                 </li>,
                 <li className='main-nav-list-item main-sign-in' {...tapOrClick(this.openLoginForm)} key={5}>
-                    <a href='#sign-in-form'>sign in</a>
+                    <a href='#sign-in-form'>sign in<i className='fa fa-sign-in'></i></a>
                 </li>
             ]
         }
@@ -132,7 +132,7 @@ var NavigationList = React.createClass({
         return (
             <ul className='main-nav-list sticky pos-top pos-left'>
                 <li className='main-nav-list-item' key={1}>
-                    <a href='#teachers'>teachers</a>
+                    <a href='#teachers'>teachers<i className='fa fa-users'></i></a>
                 </li>
                 {$loginElements}
                 <ReactCSSTransitionGroup transitionName='main-modal-transition' transitionEnterTimeout={300} transitionLeaveTimeout={300}>

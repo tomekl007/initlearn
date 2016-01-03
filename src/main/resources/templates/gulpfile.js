@@ -30,7 +30,7 @@ gulp.task('minify-css', function () {
 });
 
 gulp.task('sass', function () {
-    gulp.src('dev/scss/*.scss')
+    gulp.src('dev/scss/**/*.scss')
         .pipe(sass().on('error', sass.logError))
         .pipe(sass({outputStyle: 'compressed'}))
         .pipe(sass())
@@ -40,13 +40,13 @@ gulp.task('sass', function () {
 gulp.task('browser-sync', function () {
     browserSync.init({
         server: {
-            baseDir: "./"
+            baseDir: './'
         }
     });
 
-    gulp.watch("dev/scss/*.scss", ['sass', 'minify-css']).on('change', browserSync.reload);
-    gulp.watch("dev/js/**/*.js", ['compile-js']).on('change', browserSync.reload);
-    gulp.watch("./*.html").on('change', browserSync.reload);
+    gulp.watch('dev/scss/**/*.scss', ['sass', 'minify-css']).on('change', browserSync.reload);
+    gulp.watch('dev/js/**/*.js', ['compile-js']).on('change', browserSync.reload);
+    gulp.watch('./*.html').on('change', browserSync.reload);
 });
 
 gulp.task('default', ['browser-sync']);
