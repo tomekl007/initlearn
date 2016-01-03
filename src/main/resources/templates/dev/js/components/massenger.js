@@ -103,8 +103,9 @@ var Massenger = React.createClass({
         }
 
         var messagesListItems = this.state.messages.map(function (message, key) {
+            console.log(message);
+            var listClass = message.toEmail !== $thisComponent.props.email ? 'main-massenger-messages-list-item' : 'main-massenger-messages-list-item email-to';
 
-            var listClass = message.toEmail !== $thisComponent.props.email ? 'main-massenger-messages-list-item email-to' : 'main-massenger-messages-list-item';
             return (
                 <li className={listClass} key={key}>
                     <span>{message.text}</span>
