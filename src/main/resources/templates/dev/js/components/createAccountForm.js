@@ -4,7 +4,6 @@ import $ from '../lib/jquery';
 import FormSerialize from 'form-serialize';
 
 import config from '../ajax/config';
-import localStorage from '../common/localStorage';
 
 import Input from './input';
 
