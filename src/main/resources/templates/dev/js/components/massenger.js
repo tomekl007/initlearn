@@ -20,7 +20,7 @@ var Massenger = React.createClass({
         var input = this.refs.mainInput.getDOMNode();
         var messages = this.state.messages;
 
-        messages.push({text: input.value, toEmail: ''});
+        messages.push({text: input.value});
         this.setState({
             messages: messages
         });
@@ -102,11 +102,7 @@ var Massenger = React.createClass({
             </li>;
         }
         var messagesListItems = this.state.messages.map(function (message, key) {
-            console.log('----------');
-            console.log(message);
-            console.log($thisComponent.props.email);
-            console.log('----------');
-            var listClass = message.toEmail !== $thisComponent.props.email ? 'main-massenger-messages-list-item' : 'main-massenger-messages-list-item email-to';
+            var listClass = message.fromEmail !== $thisComponent.props.email ? 'main-massenger-messages-list-item' : 'main-massenger-messages-list-item email-to';
 
             return (
                 <li className={listClass} key={key}>
