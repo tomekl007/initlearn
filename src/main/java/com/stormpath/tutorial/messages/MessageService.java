@@ -138,8 +138,8 @@ public class MessageService {
         if(o == null){
             return new MessageOverview(email, null);
         }else{
-            List<Message> messages = (List<Message>) o;
-            return new MessageOverview(email, messages.get(0));
+            List<LinkedHashMap> messages = (List<LinkedHashMap>) o;
+            return new MessageOverview(email, Message.mapFromLinkedHashMap(messages.get(0)));
         }
     }
 
