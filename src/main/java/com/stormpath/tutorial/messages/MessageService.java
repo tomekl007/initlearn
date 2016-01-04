@@ -148,6 +148,7 @@ public class MessageService {
         return getConversationWithField(a)
                 .stream()
                 .map(email -> getLastMessage(a, email))
+                .filter(m -> m.lastMessage != null)
                 .collect(Collectors.toList());
     }
 }
