@@ -48,7 +48,7 @@ var NavigationList = React.createClass({
                         headers: config.apiCallHeader(),
                         success: function () {
 
-                            $thisComponent.setState({loggedIn: true});
+                            $thisComponent.setState({loggedIn: true, visibility: true});
                         },
                         error: function (jqXHR, statusString, err) {
                             console.log(err);
@@ -77,7 +77,7 @@ var NavigationList = React.createClass({
                     /*TODO improve FB logout*/
                     //FB.logout(function(response) {});
                     window.localStorage.clear();
-                    $thisComponent.setState({loggedIn: false, visibility: true});
+                    $thisComponent.setState({loggedIn: false});
                 }
             },
             error: function (jqXHR, statusString, err) {
@@ -137,10 +137,10 @@ var NavigationList = React.createClass({
                 ]
             }
         } else {
-            $Loader = <li className='main-nav-list-item main-load'>
-                <i className='fa fa-circle'></i>
-                <i className='fa fa-circle'></i>
-                <i className='fa fa-circle'></i>
+            $Loader = <li className='main-nav-list-item main-load txt-center'>
+                <i className='fa fa-circle main-loader-inline-item-1'></i>
+                <i className='fa fa-circle main-loader-inline-item-2'></i>
+                <i className='fa fa-circle main-loader-inline-item-3'></i>
             </li>;
         }
 
