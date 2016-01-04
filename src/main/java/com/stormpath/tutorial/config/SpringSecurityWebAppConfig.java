@@ -16,7 +16,9 @@
 
 package com.stormpath.tutorial.config;
 
+import com.paypal.base.util.OAuthSignature;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -36,9 +38,11 @@ public class SpringSecurityWebAppConfig extends WebSecurityConfigurerAdapter {
         http
                 .apply(stormpath()).and()
                 .authorizeRequests()
-                .antMatchers("/", "/login", "/users", "/users/**", "/group/users/*", "users/*/*", "users/**/skills", "/isLoggedIn", "/registerFacebookAccount/**", "/register/**", "/registerAccount")
+                .antMatchers(HttpMethod.GET, "/", "/login", "/users", "/users/**", "/group/users/*", "users/*/*",
+                        "users/**/skills", "/isLoggedIn", "/registerFacebookAccount/**", "/register/**", "/registerAccount")
                 .permitAll()
                 .and()
+                .antMatcher(HttpMethod.POST,  "/login", "/registerFacebookAccount/**", "/register/**", "/registerAccount")
                 .antMatcher("/users/**").csrf().disable()
                 .antMatcher("/register/**").csrf().disable()
                 .antMatcher("/registerAccount").csrf().disable()
