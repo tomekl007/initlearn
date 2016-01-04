@@ -19,7 +19,8 @@ var NavigationList = React.createClass({
             loginForm: false,
             createAccountForm: false,
             addUserDataForm: false,
-            automaticLogin: false
+            automaticLogin: false,
+            data: []
         };
     },
     resetFormStates() {
@@ -46,9 +47,9 @@ var NavigationList = React.createClass({
                     $.ajax({
                         url: config.loggedUserUrl,
                         headers: config.apiCallHeader(),
-                        success: function () {
+                        success: function (data) {
 
-                            $thisComponent.setState({loggedIn: true, visibility: true});
+                            $thisComponent.setState({visibility: true, loggedIn: true, data: data[0]});
                         },
                         error: function (jqXHR, statusString, err) {
                             console.log(err);
