@@ -60,7 +60,7 @@ class User extends React.Component {
                             <div className='user-more-info-btn main-btn fw-700 color-purple bg-white'>more</div>
                         </div>
                         <a className='user-nav-messages' href={config.messagesHash + user.email}>
-                            messages
+                            <i className='fa fa-envelope'></i>
                         </a>
                     </div>
                 </div>

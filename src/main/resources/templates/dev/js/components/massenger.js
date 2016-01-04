@@ -83,24 +83,36 @@ var Massenger = React.createClass({
     render() {
 
         var $thisComponent = this;
+        var isSameEmail = false;
+        var currentThreadListItem = [];
 
-        var currentThreadListItem = <li key={0}>
-            <a className='main-massenger-message-thread-list-item' href={config.messagesHash + this.props.email}>{this.props.email}</a>
-        </li>;
+        var messageThreadList = this.state.messageThreadList.map(function (messageThread, key) {
+            messageThread.toEmail === $thisComponent.props.email ? (isSameEmail = true) : false;
 
-        var messageThreadList = this.state.messageThreadList.map(function(messageThread, key) {
             return (
-              <li key={key + 1}>
-                <a className='main-massenger-message-thread-list-item' href={config.messagesHash + messageThread.emailTo}>{messageThread.emailTo}</a>
-              </li>
+                <li key={key + 1}>
+                    <a className='main-massenger-message-thread-list-item' href={config.messagesHash + messageThread.emailTo}>
+                        <span className='main-massenger-message-thread-list-item-email' >{messageThread.emailTo}</span>
+                        <span className='main-massenger-message-thread-list-item-last-message' >{messageThread.lastMessage.text}</span>
+                    </a>
+                </li>
             );
         });
 
+        if (isSameEmail || messageThreadList.length < 1) {
+            currentThreadListItem = <li key={0}>
+                <a className='main-massenger-message-thread-list-item' href={config.messagesHash + this.props.email}>
+                    <span className='main-massenger-message-thread-list-item-email' >{this.props.email}</span>
+                </a>
+            </li>;
+        }
         var messagesListItems = this.state.messages.map(function (message, key) {
+            var listClass = message.fromEmail !== $thisComponent.props.email ? 'main-massenger-messages-list-item' : 'main-massenger-messages-list-item email-to';
 
-            var listClass = message.text === $thisComponent.props.email ? 'main-massenger-messages-list-item email-to' : 'main-massenger-messages-list-item';
             return (
-                <li className={listClass} key={key}><span>{message.text}</span></li>
+                <li className={listClass} key={key}>
+                    <span>{message.text}</span>
+                </li>
             );
         });
 

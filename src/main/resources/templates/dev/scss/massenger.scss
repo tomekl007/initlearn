@@ -42,6 +42,14 @@
   }
 }
 
+.main-massenger-message-thread-list-item-email {
+  display: block;
+}
+
+.main-massenger-message-thread-list-item-last-message {
+  font-size: rem-calc(12px);
+}
+
 .main-massenger-messages-wrapper {
   float: left;
   width: 70%;
