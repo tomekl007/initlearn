@@ -32,9 +32,21 @@ var Config = (function () {
     /*calls*/
     var authorizationPrefix = 'Bearer ';
 
-    var loggedHeader = {
-        'Content-Type': 'application/json',
-        'Authorization': localStorage.isAvailable() ? authorizationPrefix + window.localStorage.getItem('user-token') : ''
+    var apiCallHeader = function () {
+
+        var header = {
+            'Content-Type': 'application/json'
+        };
+
+        if (localStorage.isAvailable()) {
+            var userToken = window.localStorage.getItem('user-token');
+
+            if (typeof userToken === 'string') {
+                header.Authorization = userToken;
+            }
+        }
+
+        return header;
     };
 
     return {
@@ -56,7 +68,7 @@ var Config = (function () {
         addUserToTeacherGroupUrl: addUserToTeacherGroupUrl,
         updateScreenheroUrl: updateScreenheroUrl,
         getMessagesUrl: getMessagesUrl,
-        loggedHeader: loggedHeader
+        apiCallHeader: apiCallHeader
     };
 })();
 

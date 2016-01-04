@@ -45,7 +45,7 @@ var NavigationList = React.createClass({
                 if (isLooggedIn === true) {
                     $.ajax({
                         url: config.loggedUserUrl,
-                        headers: config.loggedHeader,
+                        headers: config.apiCallHeader(),
                         success: function (data) {
 
                             $thisComponent.setState({loggedIn: true, data: data[0]});
@@ -68,7 +68,7 @@ var NavigationList = React.createClass({
         /*TODO improve AJAX CALLS*/
         $.ajax({
             url: config.logoutUserUrl,
-            headers: config.loggedHeader,
+            headers: config.apiCallHeader(),
             success: function () {
 
                 if (localStorage.isAvailable()) {

@@ -29,6 +29,9 @@
 .fa-envelope:before {
   content: ""; }
 
+.fa-spinner:before {
+  content: ""; }
+
 .main-header {
   position: relative;
   text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
@@ -84,6 +87,9 @@
 .main-nav-list-item a:hover {
   color: #f79f00; }
 
+.main-nav-list-item .fa {
+  margin: 0 0.625rem; }
+
 .main-nav-icon {
   position: absolute;
   top: 0;
@@ -131,6 +137,4 @@
   .main-nav-list-item a.is-active:hover {
     border: 2px solid #f79f00;
     background-color: #f79f00;
-    color: #fff; }
-  .main-nav-list-item .fa {
-    margin: 0 0.625rem; } }
+    color: #fff; } }

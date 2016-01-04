@@ -29,6 +29,9 @@
 .fa-envelope:before {
   content: ""; }
 
+.fa-spinner:before {
+  content: ""; }
+
 .main-section-teachers .card-wrapper {
   height: 300px;
   max-height: 300px; }
