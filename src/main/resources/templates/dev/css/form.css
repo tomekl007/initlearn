@@ -29,6 +29,9 @@
 .fa-envelope:before {
   content: ""; }
 
+.fa-spinner:before {
+  content: ""; }
+
 .main-form {
   position: relative;
   left: 0; }

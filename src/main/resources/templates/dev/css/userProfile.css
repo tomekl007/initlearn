@@ -29,6 +29,9 @@
 .fa-envelope:before {
   content: ""; }
 
+.fa-spinner:before {
+  content: ""; }
+
 .main-section-user-profile {
   margin-top: 150px; }
 

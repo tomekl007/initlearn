@@ -11,9 +11,9 @@ var Massenger = React.createClass({
     getInitialState() {
 
         return {
-            open: false,
             messages: [],
-            messageThreadList: []
+            messageThreadList: [],
+            messagesListVisibility: false
         };
     },
     sendMessage() {
@@ -28,7 +28,7 @@ var Massenger = React.createClass({
         $.ajax({
             method: 'post',
             url: config.messagesUrl,
-            headers: config.loggedHeader,
+            headers: config.apiCallHeader(),
             data: JSON.stringify({
                 text: input.value,
                 emailTo: this.props.email
@@ -48,9 +48,9 @@ var Massenger = React.createClass({
         $.ajax({
             method: 'get',
             url: this.props.url,
-            headers: config.loggedHeader,
+            headers: config.apiCallHeader(),
             success: function (messages) {
-                this.setState({messages: messages});
+                this.setState({messages: messages, messagesListVisibility: true});
             }.bind(this),
             error: function (jqXHR, statusString, err) {
                 console.log(err);
@@ -62,7 +62,7 @@ var Massenger = React.createClass({
         $.ajax({
             method: 'get',
             url: config.messagesOverviewUrl,
-            headers: config.loggedHeader,
+            headers: config.apiCallHeader(),
             success: function (messageThreadList) {
                 this.setState({messageThreadList: messageThreadList});
             }.bind(this),
@@ -82,39 +82,48 @@ var Massenger = React.createClass({
     },
     render() {
 
-        var $thisComponent = this;
         var isSameEmail = false;
-        var currentThreadListItem = [];
+        var $thisComponent = this;
+        var $currentThreadListItem = [];
+        var $messagesListItems = [];
+        var $Loader = [];
 
-        var messageThreadList = this.state.messageThreadList.map(function (messageThread, key) {
+        var $messageThreadList = this.state.messageThreadList.map(function (messageThread, key) {
             messageThread.toEmail === $thisComponent.props.email ? (isSameEmail = true) : false;
 
             return (
                 <li key={key + 1}>
                     <a className='main-massenger-message-thread-list-item' href={config.messagesHash + messageThread.emailTo}>
-                        <span className='main-massenger-message-thread-list-item-email' >{messageThread.emailTo}</span>
-                        <span className='main-massenger-message-thread-list-item-last-message' >{messageThread.lastMessage.text}</span>
+                        <span className='main-massenger-message-thread-list-item-email ellipsis' >{messageThread.emailTo}</span>
+                        <span className='main-massenger-message-thread-list-item-last-message ellipsis' >{messageThread.lastMessage.text}</span>
                     </a>
                 </li>
             );
         });
 
-        if (isSameEmail || messageThreadList.length < 1) {
-            currentThreadListItem = <li key={0}>
+        if (isSameEmail || $messageThreadList.length < 1) {
+            $currentThreadListItem = <li key={0}>
                 <a className='main-massenger-message-thread-list-item' href={config.messagesHash + this.props.email}>
-                    <span className='main-massenger-message-thread-list-item-email' >{this.props.email}</span>
+                    <span className='main-massenger-message-thread-list-item-email ellipsis' >{this.props.email}</span>
                 </a>
             </li>;
         }
-        var messagesListItems = this.state.messages.map(function (message, key) {
-            var listClass = message.fromEmail !== $thisComponent.props.email ? 'main-massenger-messages-list-item' : 'main-massenger-messages-list-item email-to';
 
-            return (
-                <li className={listClass} key={key}>
-                    <span>{message.text}</span>
-                </li>
-            );
-        });
+        if (this.state.messagesListVisibility) {
+            $messagesListItems = this.state.messages.map(function (message, key) {
+                var listClass = message.fromEmail !== $thisComponent.props.email ? 'main-massenger-messages-list-item' : 'main-massenger-messages-list-item email-to';
+
+                return (
+                    <li className={listClass} key={key}>
+                        <span>{message.text}</span>
+                    </li>
+                );
+            });
+        } else {
+            $Loader = <div className='main-loader'>
+                        <i className='fa fa-spinner'></i>
+                    </div>;
+        }
 
         return (
             <div className='main-massenger'>
@@ -124,15 +133,15 @@ var Massenger = React.createClass({
                     </div>
                     <div className='main-massenger-message-thread-list-wrapper'>
                         <ul className='main-massenger-message-thread-list'>
-                            {currentThreadListItem}
-                            {messageThreadList}
+                            {$currentThreadListItem}
+                            {$messageThreadList}
                         </ul>
                     </div>
                     <div className='main-massenger-messages-wrapper'>
                         <ul className='main-massenger-messages-list'>
-                            {messagesListItems}
+                            {$messagesListItems}
                         </ul>
-
+                        {$Loader}
                         <div className='main-massenger-text-input-wrapper'>
                             <textarea className='main-massenger-text-input' ref='mainInput' type='text'></textarea>
                             <button className='main-massenger-button-submit main-btn btn-blue fw-700' {...tapOrClick(this.sendMessage)}>send</button>

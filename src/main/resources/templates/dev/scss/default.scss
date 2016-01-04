@@ -1,4 +1,5 @@
 @import "variables";
+@import "prefixer";
 
 /*all*/
 
@@ -25,6 +26,15 @@ body {
 
 .fw-700 {
   font-weight: 700;
+}
+
+/*text*/
+
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: normal;
 }
 
 /*list*/
@@ -76,4 +86,19 @@ a {
 
 .bg-white {
   background-color: #fff;
+}
+
+/*loader*/
+
+.main-loader {
+  i {
+    display: block;
+    padding: 50px;
+    text-align: center;
+    color: $color-blue;
+    @include animation(spin 1s linear infinite);
+  }
+}
+@include keyframes(spin) {
+  100% { transform: rotate(360deg); }
 }

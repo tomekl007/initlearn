@@ -29,6 +29,9 @@
 .fa-envelope:before {
   content: ""; }
 
+.fa-spinner:before {
+  content: ""; }
+
 .main-massenger {
   width: 100%;
   min-height: 400px;

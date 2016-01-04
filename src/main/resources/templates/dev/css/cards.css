@@ -29,6 +29,9 @@
 .fa-envelope:before {
   content: ""; }
 
+.fa-spinner:before {
+  content: ""; }
+
 .card-wrapper {
   font-family: "Roboto", sans-serif;
   display: block;

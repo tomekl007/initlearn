@@ -67,6 +67,10 @@
       color: $color-gold;
     }
   }
+
+  .fa {
+    margin: 0 rem-calc(10px);
+  }
 }
 
 .main-nav-icon {
@@ -135,10 +139,6 @@
           color: #fff;
         }
       }
-    }
-
-    .fa {
-      margin: 0 rem-calc(10px);
     }
   }
 }

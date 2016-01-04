@@ -29,6 +29,9 @@
 .fa-envelope:before {
   content: ""; }
 
+.fa-spinner:before {
+  content: ""; }
+
 *, *:before, *:after {
   box-sizing: inherit; }
 
@@ -46,6 +49,12 @@ body {
 
 .fw-700 {
   font-weight: 700; }
+
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: normal; }
 
 li {
   position: relative;
@@ -77,3 +86,26 @@ a {
 
 .bg-white {
   background-color: #fff; }
+
+.main-loader i {
+  display: block;
+  padding: 50px;
+  text-align: center;
+  color: #65c3df;
+  -webkit-animation: spin 1s linear infinite;
+  -moz-animation: spin 1s linear infinite;
+  -ms-animation: spin 1s linear infinite;
+  -o-animation: spin 1s linear infinite;
+  animation: spin 1s linear infinite; }
+
+@-webkit-keyframes spin {
+  100% {
+    transform: rotate(360deg); } }
+
+@-moz-keyframes spin {
+  100% {
+    transform: rotate(360deg); } }
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg); } }
