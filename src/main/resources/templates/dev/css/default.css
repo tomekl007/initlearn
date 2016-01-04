@@ -35,6 +35,9 @@
 .fa-circle:before {
   content: ""; }
 
+.fa-comments:before {
+  content: ""; }
+
 *, *:before, *:after {
   box-sizing: inherit; }
 
