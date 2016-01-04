@@ -96,7 +96,7 @@ var Massenger = React.createClass({
             messageThread.toEmail === $thisComponent.props.email ? (isSameEmail = true) : false;
 
             return (
-                <li key={key + 1} {...tapOrClick(this.reloadMessagesList)} >
+                <li key={key + 1} {...tapOrClick($thisComponent.reloadMessagesList)} >
                     <a className='main-massenger-message-thread-list-item' href={config.messagesHash + messageThread.emailTo}>
                         <span className='main-massenger-message-thread-list-item-email ellipsis' >{messageThread.emailTo}</span>
                         <span className='main-massenger-message-thread-list-item-last-message ellipsis' >{messageThread.lastMessage.text}</span>
