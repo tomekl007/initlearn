@@ -32,6 +32,9 @@
 .fa-spinner:before {
   content: ""; }
 
+.fa-circle:before {
+  content: ""; }
+
 .main-modal-window {
   width: 100%;
   height: 100%;

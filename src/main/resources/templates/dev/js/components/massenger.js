@@ -98,8 +98,8 @@ var Massenger = React.createClass({
             return (
                 <li key={key + 1} {...tapOrClick($thisComponent.reloadMessagesList)} >
                     <a className='main-massenger-message-thread-list-item' href={config.messagesHash + messageThread.emailTo}>
-                        <span className='main-massenger-message-thread-list-item-email ellipsis' >{messageThread.emailTo}</span>
-                        <span className='main-massenger-message-thread-list-item-last-message ellipsis' >{messageThread.lastMessage.text}</span>
+                        <span className='main-massenger-message-thread-list-item-email txt-ellipsis' >{messageThread.emailTo}</span>
+                        <span className='main-massenger-message-thread-list-item-last-message txt-ellipsis' >{messageThread.lastMessage.text}</span>
                     </a>
                 </li>
             );
@@ -108,7 +108,7 @@ var Massenger = React.createClass({
         if (isSameEmail || $messageThreadList.length < 1) {
             $currentThreadListItem = <li key={0} {...tapOrClick(this.reloadMessagesList)} >
                 <a className='main-massenger-message-thread-list-item' href={config.messagesHash + this.props.email}>
-                    <span className='main-massenger-message-thread-list-item-email ellipsis' >{this.props.email}</span>
+                    <span className='main-massenger-message-thread-list-item-email txt-ellipsis' >{this.props.email}</span>
                 </a>
             </li>;
         }

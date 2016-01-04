@@ -32,6 +32,9 @@
 .fa-spinner:before {
   content: ""; }
 
+.fa-circle:before {
+  content: ""; }
+
 .main-container {
   margin-top: 80px; }
 

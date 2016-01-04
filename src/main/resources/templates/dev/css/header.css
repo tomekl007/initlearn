@@ -32,6 +32,9 @@
 .fa-spinner:before {
   content: ""; }
 
+.fa-circle:before {
+  content: ""; }
+
 .main-header {
   position: relative;
   text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);

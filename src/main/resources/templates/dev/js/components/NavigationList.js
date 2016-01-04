@@ -13,13 +13,13 @@ var NavigationList = React.createClass({
 
     getInitialState() {
         return {
+            visibility: false,
             loggedIn: false,
             modalOpen: false,
             loginForm: false,
             createAccountForm: false,
             addUserDataForm: false,
-            automaticLogin: false,
-            data: []
+            automaticLogin: false
         };
     },
     resetFormStates() {
@@ -46,14 +46,16 @@ var NavigationList = React.createClass({
                     $.ajax({
                         url: config.loggedUserUrl,
                         headers: config.apiCallHeader(),
-                        success: function (data) {
+                        success: function () {
 
-                            $thisComponent.setState({loggedIn: true, data: data[0]});
+                            $thisComponent.setState({loggedIn: true});
                         },
                         error: function (jqXHR, statusString, err) {
                             console.log(err);
                         }
                     });
+                } else {
+                    $thisComponent.hideLoader();
                 }
             },
             error: function (jqXHR, statusString, err) {
@@ -75,13 +77,16 @@ var NavigationList = React.createClass({
                     /*TODO improve FB logout*/
                     //FB.logout(function(response) {});
                     window.localStorage.clear();
-                    $thisComponent.setState({loggedIn: false});
+                    $thisComponent.setState({loggedIn: false, visibility: true});
                 }
             },
             error: function (jqXHR, statusString, err) {
                 console.log(err);
             }
         });
+    },
+    hideLoader() {
+        this.setState({visibility: true});
     },
     /*TODO delete in the future*/
     openLoginForm() {
@@ -102,26 +107,41 @@ var NavigationList = React.createClass({
 
         var $loginElements;
         var $modalElement;
+        var $Loader;
 
-        if (this.state.loggedIn) {
+        if (this.state.visibility) {
+            if (this.state.loggedIn) {
 
-            $loginElements = [
-                <li className='main-nav-list-item main-user-name' key={2}>
-                    <a href={config.myProfileHash}>{this.state.data.fullName}</a>
-                </li>,
-                <li className='main-nav-list-item main-user-logout' {...tapOrClick(this.logout)} key={3}>
-                    <a href='#'>logout <i className='fa fa-sign-out'></i></a>
-                </li>
-            ];
+                $loginElements = [
+                    <li className='main-nav-list-item main-user-name' key={2}>
+                        <a href={config.myProfileHash}>{this.state.data.fullName}</a>
+                    </li>,
+                    <li className='main-nav-list-item main-user-logout' {...tapOrClick(this.logout)} key={3}>
+                        <a href='#'>logout
+                            <i className='fa fa-sign-out'></i>
+                        </a>
+                    </li>
+                ];
+            } else {
+                $loginElements = [
+                    <li className='main-nav-list-item main-create-account' {...tapOrClick(this.openCreateAccountForm)} key={4}>
+                        <a href='#create-account-form' className='is-active'>create free account
+                            <i className='fa fa-key'></i>
+                        </a>
+                    </li>,
+                    <li className='main-nav-list-item main-sign-in' {...tapOrClick(this.openLoginForm)} key={5}>
+                        <a href='#sign-in-form'>sign in
+                            <i className='fa fa-sign-in'></i>
+                        </a>
+                    </li>
+                ]
+            }
         } else {
-            $loginElements = [
-                <li className='main-nav-list-item main-create-account' {...tapOrClick(this.openCreateAccountForm)} key={4}>
-                    <a href='#create-account-form' className='is-active'>create free account<i className='fa fa-key'></i></a>
-                </li>,
-                <li className='main-nav-list-item main-sign-in' {...tapOrClick(this.openLoginForm)} key={5}>
-                    <a href='#sign-in-form'>sign in<i className='fa fa-sign-in'></i></a>
-                </li>
-            ]
+            $Loader = <li className='main-nav-list-item main-load'>
+                <i className='fa fa-circle'></i>
+                <i className='fa fa-circle'></i>
+                <i className='fa fa-circle'></i>
+            </li>;
         }
 
         if (this.state.modalOpen) {
@@ -132,8 +152,11 @@ var NavigationList = React.createClass({
         return (
             <ul className='main-nav-list sticky pos-top pos-left'>
                 <li className='main-nav-list-item' key={1}>
-                    <a href='#teachers'>teachers<i className='fa fa-users'></i></a>
+                    <a href='#teachers'>teachers
+                        <i className='fa fa-users'></i>
+                    </a>
                 </li>
+                {$Loader}
                 {$loginElements}
                 <ReactCSSTransitionGroup transitionName='main-modal-transition' transitionEnterTimeout={300} transitionLeaveTimeout={300}>
                     {$modalElement}

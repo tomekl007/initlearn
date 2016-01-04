@@ -32,6 +32,9 @@
 .fa-spinner:before {
   content: ""; }
 
+.fa-circle:before {
+  content: ""; }
+
 .main-section-teachers .card-wrapper {
   height: 300px;
   max-height: 300px; }

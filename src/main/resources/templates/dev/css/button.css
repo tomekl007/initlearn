@@ -32,6 +32,9 @@
 .fa-spinner:before {
   content: ""; }
 
+.fa-circle:before {
+  content: ""; }
+
 .main-btn {
   display: block;
   text-decoration: none;

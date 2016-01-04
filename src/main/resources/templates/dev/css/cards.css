@@ -32,6 +32,9 @@
 .fa-spinner:before {
   content: ""; }
 
+.fa-circle:before {
+  content: ""; }
+
 .card-wrapper {
   font-family: "Roboto", sans-serif;
   display: block;
