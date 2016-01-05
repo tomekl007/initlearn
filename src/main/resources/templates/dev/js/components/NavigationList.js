@@ -41,10 +41,13 @@ var NavigationList = React.createClass({
 
         /*TODO improve AJAX CALLS*/
         $.ajax({
+            type: 'get',
             url: config.isUserLoggedInUrl,
+            headers: config.apiCallHeader(),
             success: function (isLooggedIn) {
                 if (isLooggedIn === true) {
                     $.ajax({
+                        type: 'get',
                         url: config.loggedUserUrl,
                         headers: config.apiCallHeader(),
                         success: function (data) {
@@ -70,6 +73,7 @@ var NavigationList = React.createClass({
 
         /*TODO improve AJAX CALLS*/
         $.ajax({
+            type: 'post',
             url: config.logoutUserUrl,
             headers: config.apiCallHeader(),
             success: function () {
