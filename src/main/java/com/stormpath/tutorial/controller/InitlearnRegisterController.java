@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.ServletRequest;
+
 /**
  * Created by tomasz.lelek on 29/12/15.
  */
@@ -59,5 +61,13 @@ public class InitlearnRegisterController {
 
     private boolean accountAlreadyExists(ResourceException re) {
         return re.getCode() == 2001;
+    }
+
+    @RequestMapping(value = "/deleteAccount", method = RequestMethod.DELETE)
+    ResponseEntity<String> deleteAccount(ServletRequest servletRequest){
+        return AccountUtils.actionResponseEntityForAuthenticatedUserOrUnauthorized(servletRequest, a -> {
+            a.delete();
+            return new ResponseEntity<>("Deleted account : " + a.getEmail(), HttpStatus.OK);
+        });
     }
 }
