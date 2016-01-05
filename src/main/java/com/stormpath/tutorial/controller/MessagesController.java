@@ -37,7 +37,7 @@ public class MessagesController {
     ResponseEntity msg(ServletRequest servletRequest, @RequestBody MessageData messageData) {
         List<Account> receiver = userService.findAccountsByEmail(messageData.emailTo);
         if(receiver.size() == 0){
-            return new ResponseEntity("there is no user with emailTo : " + messageData.emailTo,
+            return new ResponseEntity<>("there is no user with emailTo : " + messageData.emailTo,
                     HttpStatus.BAD_REQUEST);
         }
         else {

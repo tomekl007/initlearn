@@ -14,7 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletRequest;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -43,33 +43,41 @@ public class UserController {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "users/{email:.+}/screenhero", method = RequestMethod.POST)
-    public ResponseEntity<List<User>> addScreenHeroToUser(@RequestBody ScreenHero screenHero, @PathVariable("email") String email) {
-        List<Account> accountsByEmail = userService.findAccountsByEmail(email);
-        accountsByEmail.forEach(a -> AccountUtils.addScreenheroField(a, screenHero.getScreenHero()));
-        return new ResponseEntity<>(AccountUtils.mapToUsers(accountsByEmail), HttpStatus.OK);
+    @RequestMapping(value = "users/screenhero", method = RequestMethod.POST)
+    public ResponseEntity<List<User>> addScreenHeroToUser(@RequestBody ScreenHero screenHero, ServletRequest servletRequest) {
+        return AccountUtils.actionForAuthenticatedUserOrUnauthorized(servletRequest, account -> {
+            List<Account> accountsByEmail = Collections.singletonList(account);
+            accountsByEmail.forEach(a -> AccountUtils.addScreenheroField(a, screenHero.getScreenHero()));
+            return AccountUtils.mapToUsers(accountsByEmail);
+        });
     }
 
-    @RequestMapping(value = "users/{email:.+}/linkedin", method = RequestMethod.POST)
-    public ResponseEntity<List<User>> addLinkedInToUser(@RequestBody Link link, @PathVariable("email") String email) {
-        List<Account> accountsByEmail = userService.findAccountsByEmail(email);
-        accountsByEmail.forEach(a -> AccountUtils.addLinkedInField(a, link.getLink()));
-        return new ResponseEntity<>(AccountUtils.mapToUsers(accountsByEmail), HttpStatus.OK);
+    @RequestMapping(value = "users/linkedin", method = RequestMethod.POST)
+    public ResponseEntity<List<User>> addLinkedInToUser(@RequestBody Link link, ServletRequest servletRequest) {
+        return AccountUtils.actionForAuthenticatedUserOrUnauthorized(servletRequest, account -> {
+            List<Account> accountsByEmail = Collections.singletonList(account);
+            accountsByEmail.forEach(a -> AccountUtils.addLinkedInField(a, link.getLink()));
+            return AccountUtils.mapToUsers(accountsByEmail);
+        });
     }
 
-    @RequestMapping(value = "users/{email:.+}/hourRate", method = RequestMethod.POST)
-    public ResponseEntity<List<User>> addHourRateToUser(@RequestBody HourRate hourRate, @PathVariable("email") String email) {
-        List<Account> accountsByEmail = userService.findAccountsByEmail(email);
-        accountsByEmail.forEach(a -> AccountUtils.addHourRateForTeacher(a, hourRate.getHourRate()));
-        return new ResponseEntity<>(AccountUtils.mapToUsers(accountsByEmail), HttpStatus.OK);
+    @RequestMapping(value = "users/hourRate", method = RequestMethod.POST)
+    public ResponseEntity<List<User>> addHourRateToUser(@RequestBody HourRate hourRate, ServletRequest servletRequest) {
+        return AccountUtils.actionForAuthenticatedUserOrUnauthorized(servletRequest, account -> {
+            List<Account> accountsByEmail = Collections.singletonList(account);
+            accountsByEmail.forEach(a -> AccountUtils.addHourRateForTeacher(a, hourRate.getHourRate()));
+            return AccountUtils.mapToUsers(accountsByEmail);
+        });
     }
 
 
-    @RequestMapping(value = "users/{email:.+}/skills", method = RequestMethod.POST)
-    public ResponseEntity<List<User>> addSkillsToTeacher(@RequestBody Skills skills, @PathVariable("email") String email) {
-        List<Account> accountsByEmail = userService.findAccountsByEmail(email);
-        accountsByEmail.forEach(a -> AccountUtils.addSkillsForTeacher(a, skills.getSkills()));
-        return new ResponseEntity<>(AccountUtils.mapToUsers(accountsByEmail), HttpStatus.OK);
+    @RequestMapping(value = "users/skills", method = RequestMethod.POST)
+    public ResponseEntity<List<User>> addSkillsToTeacher(@RequestBody Skills skills, ServletRequest servletRequest) {
+        return AccountUtils.actionForAuthenticatedUserOrUnauthorized(servletRequest, account -> {
+            List<Account> accountsByEmail = Collections.singletonList(account);
+            accountsByEmail.forEach(a -> AccountUtils.addSkillsForTeacher(a, skills.getSkills()));
+            return AccountUtils.mapToUsers(accountsByEmail);
+        });
     }
 
     @RequestMapping(value = "users/{email:.+}/skills", method = RequestMethod.GET)
@@ -83,62 +91,69 @@ public class UserController {
     }
 
 
-    @RequestMapping(value = "users/{email:.+}/links", method = RequestMethod.POST)
-    public ResponseEntity<List<User>> addLinksToTeacher(@RequestBody Links links, @PathVariable("email") String email) {
-        List<Account> accountsByEmail = userService.findAccountsByEmail(email);
-        accountsByEmail.forEach(a -> AccountUtils.addLinksField(a, links.getLinks()));
-        return new ResponseEntity<>(AccountUtils.mapToUsers(accountsByEmail), HttpStatus.OK);
+    @RequestMapping(value = "users/links", method = RequestMethod.POST)
+    public ResponseEntity<List<User>> addLinksToTeacher(@RequestBody Links links, ServletRequest servletRequest) {
+        return AccountUtils.actionForAuthenticatedUserOrUnauthorized(servletRequest, account -> {
+            List<Account> accountsByEmail = Collections.singletonList(account);
+            accountsByEmail.forEach(a -> AccountUtils.addLinksField(a, links.getLinks()));
+            return AccountUtils.mapToUsers(accountsByEmail);
+        });
     }
 
-    @RequestMapping(value = "users/{email:.+}/bio", method = RequestMethod.POST)
-    public ResponseEntity<List<User>> addBioToTeacher(@RequestBody Bio bio, @PathVariable("email") String email) {
-        List<Account> accountsByEmail = userService.findAccountsByEmail(email);
-        accountsByEmail.forEach(a -> AccountUtils.addBioField(a, bio.getBio()));
-        return new ResponseEntity<>(AccountUtils.mapToUsers(accountsByEmail), HttpStatus.OK);
+    @RequestMapping(value = "users/bio", method = RequestMethod.POST)
+    public ResponseEntity<List<User>> addBioToTeacher(@RequestBody Bio bio, ServletRequest servletRequest) {
+        return AccountUtils.actionForAuthenticatedUserOrUnauthorized(servletRequest, account -> {
+            List<Account> accountsByEmail = Collections.singletonList(account);
+            accountsByEmail.forEach(a -> AccountUtils.addBioField(a, bio.getBio()));
+            return AccountUtils.mapToUsers(accountsByEmail);
+        });
     }
 
-    @RequestMapping(value = "users/{email:.+}/img", method = RequestMethod.POST)
-    public ResponseEntity<List<User>> addImgToTeacher(@RequestBody Link link, @PathVariable("email") String email) {
-        List<Account> accountsByEmail = userService.findAccountsByEmail(email);
-        accountsByEmail.forEach(a -> AccountUtils.addImgField(a, link.getLink()));
-        return new ResponseEntity<>(AccountUtils.mapToUsers(accountsByEmail), HttpStatus.OK);
+    @RequestMapping(value = "users/img", method = RequestMethod.POST)
+    public ResponseEntity<List<User>> addImgToTeacher(@RequestBody Link link, ServletRequest servletRequest) {
+        return AccountUtils.actionForAuthenticatedUserOrUnauthorized(servletRequest, account -> {
+            List<Account> accountsByEmail = Collections.singletonList(account);
+            accountsByEmail.forEach(a -> AccountUtils.addImgField(a, link.getLink()));
+            return AccountUtils.mapToUsers(accountsByEmail);
+        });
     }
 
-    @RequestMapping(value = "users/{email:.+}/rate", method = RequestMethod.POST, consumes = "application/json")
-    public ResponseEntity<List<User>> addRateForTeacher(@RequestBody Rate rate, @PathVariable("email") String email) {
-        List<User> users = userService.rateTeacher(rate.getRate(), email);
-        return new ResponseEntity<>(users, HttpStatus.OK);
+    @RequestMapping(value = "users/rate", method = RequestMethod.POST, consumes = "application/json")
+    public ResponseEntity<List<User>> addRateForTeacher(@RequestBody Rate rate, ServletRequest servletRequest) {
+        return AccountUtils.actionForAuthenticatedUserOrUnauthorized(servletRequest,
+                account -> userService.rateTeacher(rate.getRate(), account.getEmail()));
     }
 
     @RequestMapping("/me")
     ResponseEntity<List<User>> me(ServletRequest servletRequest) {
-        return AccountUtils.actionForAuthenticatedUserOrUnauthorized(servletRequest, a -> Arrays.asList(AccountUtils.mapAccountToUser(a)));
+        return AccountUtils.actionForAuthenticatedUserOrUnauthorized(servletRequest,
+                a -> Collections.singletonList(AccountUtils.mapAccountToUser(a)));
     }
 
-    @RequestMapping(value = "users/{email:.+}/data", method = RequestMethod.POST, consumes = "application/json")
-    public ResponseEntity<List<User>> fillTeacherWithData(@RequestBody TeacherData teacherData, @PathVariable("email") String email){
-        List<User> users = userService.fillTeacherWithData(teacherData, email);
-        return new ResponseEntity<>(users, HttpStatus.OK);
+    @RequestMapping(value = "users/data", method = RequestMethod.POST, consumes = "application/json")
+    public ResponseEntity<List<User>> fillTeacherWithData(@RequestBody TeacherData teacherData, ServletRequest servletRequest) {
+        return AccountUtils.actionForAuthenticatedUserOrUnauthorized(servletRequest,
+                account -> userService.fillTeacherWithData(teacherData, account.getEmail()));
     }
-    
+
     @RequestMapping(value = "/users/search", method = RequestMethod.GET)
-    public ResponseEntity<List<User>> getUsersBySkill(@RequestParam("skill") String skill){
+    public ResponseEntity<List<User>> getUsersBySkill(@RequestParam("skill") String skill) {
         List<User> users = userService.findUsersBySkill(skill);
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
-    
+
     @RequestMapping("/isLoggedIn")
-    ResponseEntity<Boolean> isLoggedIn(ServletRequest servletRequest){
-        Optional<User> accountIfUserLoggedIn = AccountUtils.getAccountIfUserLoggedIn(servletRequest);
-        if(accountIfUserLoggedIn.isPresent()){
+    ResponseEntity<Boolean> isLoggedIn(ServletRequest servletRequest) {
+        Optional<User> accountIfUserLoggedIn = AccountUtils.getUserIfUserLoggedIn(servletRequest);
+        if (accountIfUserLoggedIn.isPresent()) {
             return new ResponseEntity<>(true, HttpStatus.OK);
-        }else{
+        } else {
             return new ResponseEntity<>(false, HttpStatus.OK);
         }
     }
 
     @RequestMapping("/skills")
-    ResponseEntity<List<String>> getAllSkills(){
+    ResponseEntity<List<String>> getAllSkills() {
         List<String> allSkillsAvailable = userService.getAllSkillsAvailable();
         return new ResponseEntity<>(allSkillsAvailable, HttpStatus.OK);
     }

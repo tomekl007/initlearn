@@ -34,7 +34,7 @@ public class PaymentController {
 
     @RequestMapping("/adaptivePayment") //toto pathParam toEmail
     public String executeAdaptivePayment(ServletRequest servletRequest){
-        Optional<User> accountIfUserLoggedIn = AccountUtils.getAccountIfUserLoggedIn(servletRequest);
+        Optional<User> accountIfUserLoggedIn = AccountUtils.getUserIfUserLoggedIn(servletRequest);
         if(accountIfUserLoggedIn.isPresent()) {
             return "redirect:"+ paypalConfiguration.getUrl() + paymentService.pay(accountIfUserLoggedIn.get());
         }
