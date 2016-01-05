@@ -14,7 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletRequest;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -145,7 +144,7 @@ public class UserController {
 
     @RequestMapping("/isLoggedIn")
     ResponseEntity<Boolean> isLoggedIn(ServletRequest servletRequest) {
-        Optional<User> accountIfUserLoggedIn = AccountUtils.getAccountIfUserLoggedIn(servletRequest);
+        Optional<User> accountIfUserLoggedIn = AccountUtils.getUserIfUserLoggedIn(servletRequest);
         if (accountIfUserLoggedIn.isPresent()) {
             return new ResponseEntity<>(true, HttpStatus.OK);
         } else {

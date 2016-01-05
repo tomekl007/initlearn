@@ -171,8 +171,7 @@ public class AccountUtils implements AccountFields {
         return mapToUsers(accounts);
     }
 
-
-    public static Optional<User> getAccountIfUserLoggedIn(ServletRequest servletRequest) {
+    public static Optional<User> getUserIfUserLoggedIn(ServletRequest servletRequest) {
         if (AccountResolver.INSTANCE.hasAccount(servletRequest)) {
             Account authenticatedAccount = AccountResolver.INSTANCE.getRequiredAccount(servletRequest);
             return Optional.of(mapAccountToUser(authenticatedAccount));
@@ -185,6 +184,16 @@ public class AccountUtils implements AccountFields {
         if (AccountResolver.INSTANCE.hasAccount(servletRequest)) {
             Account authenticatedAccount = AccountResolver.INSTANCE.getRequiredAccount(servletRequest);
             return new ResponseEntity<>(action.apply(authenticatedAccount), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+    }
+
+    public static <T> ResponseEntity<T> actionResponseEntityForAuthenticatedUserOrUnauthorized(ServletRequest servletRequest,
+                                                                                               Function<Account, ResponseEntity<T>> action) {
+        if (AccountResolver.INSTANCE.hasAccount(servletRequest)) {
+            Account authenticatedAccount = AccountResolver.INSTANCE.getRequiredAccount(servletRequest);
+            return action.apply(authenticatedAccount);
         } else {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
