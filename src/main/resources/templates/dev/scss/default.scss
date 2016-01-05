@@ -30,11 +30,15 @@ body {
 
 /*text*/
 
-.ellipsis {
+.txt-ellipsis {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   word-wrap: normal;
+}
+
+.txt-center {
+  text-align: center;
 }
 
 /*list*/
@@ -88,7 +92,7 @@ a {
   background-color: #fff;
 }
 
-/*loader*/
+/*loaders*/
 
 .main-loader {
   i {
@@ -99,6 +103,25 @@ a {
     @include animation(spin 1s linear infinite);
   }
 }
+
+.main-loader-inline-item-1 {
+  @include animation(spin-inline 2s linear infinite);
+}
+
+.main-loader-inline-item-2 {
+  @include animation(spin-inline 2s linear .2s infinite);
+}
+
+.main-loader-inline-item-3 {
+  @include animation(spin-inline 2s linear .4s infinite);
+}
+
+@include keyframes(spin-inline) {
+  0% { transform: scale(0); }
+  50% { transform: scale(1); }
+  100% { transform: scale(0); }
+}
+
 @include keyframes(spin) {
   100% { transform: rotate(360deg); }
 }

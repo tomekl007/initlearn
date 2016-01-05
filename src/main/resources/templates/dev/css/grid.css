@@ -32,6 +32,12 @@
 .fa-spinner:before {
   content: ""; }
 
+.fa-circle:before {
+  content: ""; }
+
+.fa-comments:before {
+  content: ""; }
+
 .container {
   margin: 0 auto;
   max-width: 1280px;

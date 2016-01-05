@@ -32,6 +32,12 @@
 .fa-spinner:before {
   content: ""; }
 
+.fa-circle:before {
+  content: ""; }
+
+.fa-comments:before {
+  content: ""; }
+
 .main-header {
   position: relative;
   text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
@@ -137,4 +143,6 @@
   .main-nav-list-item a.is-active:hover {
     border: 2px solid #f79f00;
     background-color: #f79f00;
-    color: #fff; } }
+    color: #fff; }
+  .main-messages:hover .main-nav-message-thread-list {
+    display: block; } }

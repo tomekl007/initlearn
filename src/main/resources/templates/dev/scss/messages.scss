@@ -1,9 +1,11 @@
 @import "functions";
 
-
-.main-messages-user-name,
-.main-messages-user-messages {
-
-  padding: rem-calc(20px);
+.main-nav-message-thread-list {
+  display: none;
+  position: absolute;
+  top: 35px;
+  width: 100%;
+  padding: rem-calc(10px);
   background-color: #fff;
+  color: #000;
 }

@@ -141,4 +141,12 @@
       }
     }
   }
+
+  .main-messages {
+    &:hover {
+      .main-nav-message-thread-list {
+        display: block;
+      }
+    }
+  }
 }

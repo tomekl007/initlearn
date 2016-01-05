@@ -32,6 +32,12 @@
 .fa-spinner:before {
   content: ""; }
 
+.fa-circle:before {
+  content: ""; }
+
+.fa-comments:before {
+  content: ""; }
+
 .main-form {
   position: relative;
   left: 0; }
