@@ -43,13 +43,14 @@ public class TestRegisterAndLoginFlow {
         HttpResponse execute = httpClient.execute(post);
 
         //then
-        assertThat(execute.getStatusLine()).isEqualTo(200);
+        assertThat(execute.getStatusLine().getStatusCode()).isEqualTo(200);
 
 
     }
 
     @Test
     public void shouldLoginUser() throws IOException {
+        //given
         HttpClient httpClient = HttpClients.createDefault();
         HttpPost post = new HttpPost("https://initlearn.herokuapp.com/oauth/token");
         post.setHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
@@ -87,7 +88,9 @@ public class TestRegisterAndLoginFlow {
 
         HttpResponse responseDelete = httpClient.execute(delete);
 
-        System.out.println(responseDelete);
+        System.out.println(IOUtils.toString(responseDelete.getEntity().getContent()));
+
+        assertThat(responseDelete.getStatusLine().getStatusCode()).isEqualTo(200);
 
     }
 
