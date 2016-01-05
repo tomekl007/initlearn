@@ -6,6 +6,26 @@ import config from '../ajax/config';
 import Input from './input';
 
 var AddUserDataForm = React.createClass({
+    componentDidMount() {
+
+        var $modalComponent = this.props.data.modalComponent;
+
+        if ($modalComponent.state.teacherCheckbox) {
+            /*TODO AJAX Improvement */
+            $.ajax({
+                type: $target.getAttribute('method'),
+                url: config.addUserToTeacherGroupUrl,
+                headers: config.apiCallHeader(),
+                success: function (data) {
+                    console.log(data);
+                    console.log('dodano teachera');
+                },
+                error: function (jqXHR, statusString, err) {
+                    console.log(err);
+                }
+            });
+        }
+    },
     addData(event) {
 
         event.preventDefault();

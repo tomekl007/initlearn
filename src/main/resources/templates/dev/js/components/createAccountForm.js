@@ -57,23 +57,6 @@ var CreateAccountForm = React.createClass({
                     loginForm: true,
                     addUserDataForm: true
                 });
-
-                /*TODO improve add user to teacher group call*/
-                if ($thisComponent.state.teacherCheckbox) {
-                    $.ajax({
-
-                        type: $target.getAttribute('method'),
-                        url: config.addUserToTeacherGroupUrl,
-                        headers: config.apiCallHeader(),
-                        success: function (data) {
-                            console.log(data);
-                            console.log('dodano teachera');
-                        },
-                        error: function (jqXHR, statusString, err) {
-                            console.log(err);
-                        }
-                    });
-                }
             },
 
             error: function (jqXHR) {
