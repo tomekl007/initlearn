@@ -15,7 +15,7 @@ var AddUserDataForm = React.createClass({
 
         var data = JSON.stringify(FormSerialize($target, {hash: true, empty: true}));
         var userEmail = $modalComponent.state.formData.email;
-        var url = $modalComponent.state.teacherCheckbox ? config.updateUserDataUrl(userEmail) : config.updateScreenheroUrl(userEmail);
+        var url = $modalComponent.state.teacherCheckbox ? config.updateUserDataUrl(userEmail) : config.updateScreenheroUrl;
 
         /*TODO improve AJAX CALLS*/
         /*TODO code refactoring needed*/
@@ -24,9 +24,7 @@ var AddUserDataForm = React.createClass({
             type: $target.getAttribute('method'),
             url: url,
             data: data,
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: config.apiCallHeader(),
             success: function (data) {
                 console.log(data);
 
