@@ -13,7 +13,7 @@ var AddUserDataForm = React.createClass({
         if ($modalComponent.state.teacherCheckbox) {
             /*TODO AJAX Improvement */
             $.ajax({
-                type: $target.getAttribute('method'),
+                type: 'post',
                 url: config.addUserToTeacherGroupUrl,
                 headers: config.apiCallHeader(),
                 success: function (data) {
