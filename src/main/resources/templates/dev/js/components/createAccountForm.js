@@ -34,9 +34,7 @@ var CreateAccountForm = React.createClass({
             type: $target.getAttribute('method'),
             url: config.registerAccountUrl,
             data: data,
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: config.apiCallHeader(),
 
             success: function (data) {
                 console.log(data);
@@ -65,10 +63,8 @@ var CreateAccountForm = React.createClass({
                     $.ajax({
 
                         type: $target.getAttribute('method'),
-                        url: config.addUserToTeacherGroupUrl(dataToMap.email),
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
+                        url: config.addUserToTeacherGroupUrl,
+                        headers: config.apiCallHeader(),
                         success: function (data) {
                             console.log(data);
                             console.log('dodano teachera');

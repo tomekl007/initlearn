@@ -16,15 +16,13 @@ var Config = (function () {
     var messagesHash = '#msg/';
     var messagesUrl = appUrl + '/msg';
     var messagesOverviewUrl = messagesUrl + '/overview';
+    var addUserToTeacherGroupUrl = userUrl + '/teachers';
+    var updateScreenheroUrl = userUrl + '/screenhero';
+
     var updateUserDataUrl = function (email) {
         return userUrl + '/' + email + '/data';
     };
-    var addUserToTeacherGroupUrl = function (email) {
-        return userUrl + '/' + email + '/teachers';
-    };
-    var updateScreenheroUrl = function (email) {
-        return userUrl + '/' + email + '/screenhero';
-    };
+
     var getMessagesUrl = function (email) {
         return messagesUrl + '/' + email;
     };
