@@ -51,4 +51,5 @@ dependencies {
     compile group: 'com.stormpath.sdk', name: 'google-collections', version:'1.0'
     compile group: 'com.google.guava', name: 'guava', version:'19.0'
     compile group: 'org.javatuples', name: 'javatuples', version:'1.2'
+    compile group: 'org.apache.commons', name: 'commons-io', version:'1.3.2'
 }
