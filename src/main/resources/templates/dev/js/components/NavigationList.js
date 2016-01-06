@@ -126,7 +126,7 @@ var NavigationList = React.createClass({
                         <a href='#msg/willbesoon'>messages
                             <i className='fa fa-comments'></i>
                         </a>
-                        <MessageThreadList email={''} messengerComponent={this}/>
+                        <MessageThreadList />
                     </li>,
                     <li className='main-nav-list-item main-user-logout' {...tapOrClick(this.logout)} key={4}>
                         <a href='#'>logout

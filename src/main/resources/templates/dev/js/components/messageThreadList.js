@@ -29,6 +29,13 @@ var MessageThreadList = React.createClass({
             }
         });
     },
+    reloadMessangerMessagesList() {
+
+        var $messengerComponent = this.props.messengerComponent;
+        if (typeof $messengerComponent !== 'undefined') {
+            $messengerComponent.reloadMessagesList();
+        }
+    },
     componentDidMount() {
 
         this.getMessageThreadList();
@@ -38,7 +45,6 @@ var MessageThreadList = React.createClass({
         clearInterval(this.getMessageThreadListIntervalId);
     },
     render() {
-        console.log(this);
 
         var isSameEmail = false;
         var $thisComponent = this;
@@ -51,7 +57,7 @@ var MessageThreadList = React.createClass({
                 messageThread.toEmail === $thisComponent.props.email ? (isSameEmail = true) : false;
 
                 return (
-                    <li key={key + 1} {...tapOrClick($thisComponent.props.messengerComponent.reloadMessagesList)} >
+                    <li key={key + 1} {...tapOrClick($thisComponent.reloadMessangerMessagesList)} >
                         <a className='main-massenger-message-thread-list-item' href={config.messagesHash + messageThread.emailTo}>
                             <span className='main-massenger-message-thread-list-item-email txt-ellipsis' >{messageThread.emailTo}</span>
                             <span className='main-massenger-message-thread-list-item-last-message txt-ellipsis' >{messageThread.lastMessage.text}</span>
@@ -61,7 +67,7 @@ var MessageThreadList = React.createClass({
             });
 
             if (isSameEmail || $messageThreadList.length < 1) {
-                $currentThreadListItem = <li key={0} {...tapOrClick(this.props.messengerComponent.reloadMessagesList)} >
+                $currentThreadListItem = <li key={0} {...tapOrClick(this.reloadMessangerMessagesList)} >
                     <a className='main-massenger-message-thread-list-item' href={config.messagesHash + this.props.email}>
                         <span className='main-massenger-message-thread-list-item-email txt-ellipsis' >{this.props.email}</span>
                     </a>
