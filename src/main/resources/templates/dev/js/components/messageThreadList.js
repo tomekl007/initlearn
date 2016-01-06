@@ -45,17 +45,14 @@ var MessageThreadList = React.createClass({
         clearInterval(this.getMessageThreadListIntervalId);
     },
     render() {
-        console.log(this.props.email);
+        console.log(this);
 
-        var isSameEmail = false;
         var $thisComponent = this;
-        var $currentThreadListItem = [];
         var $messageThreadList = [];
         var $Loader = [];
 
         if (this.state.messageThreadListVisibility) {
             $messageThreadList = this.state.messageThreadList.map(function (messageThread, key) {
-                messageThread.toEmail === $thisComponent.props.email ? (isSameEmail = true) : false;
 
                 return (
                     <li key={key + 1} {...tapOrClick($thisComponent.reloadMessangerMessagesList)} >
@@ -67,12 +64,14 @@ var MessageThreadList = React.createClass({
                 );
             });
 
-            if (isSameEmail && $messageThreadList.length < 1) {
-                $currentThreadListItem = <li key={0} {...tapOrClick(this.reloadMessangerMessagesList)} >
-                    <a className='main-massenger-message-thread-list-item' href={config.messagesHash + this.props.email}>
-                        <span className='main-massenger-message-thread-list-item-email txt-ellipsis' >{this.props.email}</span>
-                    </a>
-                </li>;
+            if ($messageThreadList.length < 1) {
+                if (typeof this.props.email !== 'undefined') {
+                    $messageThreadList = <li key={0} {...tapOrClick(this.reloadMessangerMessagesList)} >
+                        <a className='main-massenger-message-thread-list-item' href={config.messagesHash + this.props.email}>
+                            <span className='main-massenger-message-thread-list-item-email txt-ellipsis' >{this.props.email}</span>
+                        </a>
+                    </li>;
+                }
             }
         } else {
             $Loader = <div className='main-loader'>
@@ -82,7 +81,6 @@ var MessageThreadList = React.createClass({
 
         return (
             <ul className='main-message-thread-list'>
-                {$currentThreadListItem}
                 {$messageThreadList}
                 {$Loader}
             </ul>
