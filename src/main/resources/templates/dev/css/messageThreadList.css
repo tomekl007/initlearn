@@ -42,7 +42,8 @@
   display: none;
   position: absolute;
   top: 33px;
-  width: 100%;
+  left: -20px;
+  width: 200px;
   padding: 0;
   padding-top: 0.8125rem;
   color: #000;
