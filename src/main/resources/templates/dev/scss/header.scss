@@ -110,6 +110,7 @@
     float: right;
 
     &.pos-left {
+      /*TODO change property - doesnt work on IE*/
       left: initial;
     }
   }

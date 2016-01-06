@@ -121,6 +121,14 @@ var NavigationList = React.createClass({
                     <li className='main-nav-list-item main-user-name' key={2}>
                         <a href={config.myProfileHash}>{this.state.data.fullName}</a>
                     </li>,
+                    <li className='main-nav-list-item main-user-logout' {...tapOrClick(this.logout)} key={4}>
+                        <a href='#'>logout
+                            <i className='fa fa-sign-out'></i>
+                        </a>
+                    </li>
+                ];
+            } else {
+                $loginElements = [
                     <li className='main-nav-list-item main-messages' key={3}>
                         <a href='#msg/willbesoon'>messages
                             <i className='fa fa-comments'></i>
@@ -132,14 +140,6 @@ var NavigationList = React.createClass({
                             <li className='txt-ellipsis'>message thread</li>
                         </ul>
                     </li>,
-                    <li className='main-nav-list-item main-user-logout' {...tapOrClick(this.logout)} key={4}>
-                        <a href='#'>logout
-                            <i className='fa fa-sign-out'></i>
-                        </a>
-                    </li>
-                ];
-            } else {
-                $loginElements = [
                     <li className='main-nav-list-item main-create-account' {...tapOrClick(this.openCreateAccountForm)} key={5}>
                         <a href='#create-account-form' className='is-active'>create free account
                             <i className='fa fa-key'></i>
