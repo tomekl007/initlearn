@@ -38,33 +38,48 @@
 .fa-comments:before {
   content: ""; }
 
-.main-massenger {
+.main-nav-messages .main-message-thread-list {
+  display: none;
+  position: absolute;
+  top: 33px;
   width: 100%;
-  min-height: 400px;
-  color: #9ea7b3;
-  overflow: hidden;
-  background-color: #f5f5f5;
-  box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.3); }
+  padding: 0;
+  padding-top: 0.8125rem;
+  color: #000;
+  max-height: 150px;
+  overflow-y: scroll; }
 
-.main-massenger ul {
-  margin: 0;
-  padding: 0; }
+.main-nav-messages .main-message-thread-list .main-loader {
+  background-color: #fff; }
 
-.main-massenger-header {
-  text-align: center;
-  padding: 0.9375rem; }
+.main-nav-messages .main-message-thread-list .main-loader i {
+  padding: 0.625rem; }
 
-.main-massenger-message-thread-list-wrapper {
-  float: left;
-  width: 30%; }
+.main-nav-messages .main-message-thread-list > li {
+  border-left: 1px solid #9ea7b3;
+  border-right: 1px solid #9ea7b3; }
 
-.main-massenger-message-thread-list-item {
+.main-nav-messages .main-message-thread-list > li:first-child {
+  border-top: 1px solid #9ea7b3; }
+
+.main-nav-messages .main-message-thread-list > li:last-child {
+  border-bottom: 1px solid #9ea7b3; }
+
+.main-nav-messages .main-message-thread-list-item, .main-nav-messages a.main-message-thread-list-item {
+  background-color: #fff; }
+
+.main-nav-messages .main-message-thread-list-item:hover, .main-nav-messages a.main-message-thread-list-item:hover {
+  background-color: #f5f5f5; }
+
+.main-message-thread-list-item, a.main-message-thread-list-item {
   display: block;
   padding: 0.625rem;
   text-align: center;
-  color: #9ea7b3; }
+  color: #9ea7b3;
+  transition: color .3s ease;
+  text-shadow: none; }
 
-.main-massenger-message-thread-list-item:after {
+.main-message-thread-list-item:after, a.main-message-thread-list-item:after {
   content: '';
   position: absolute;
   bottom: 0;
@@ -73,36 +88,9 @@
   height: 1px;
   background-color: #9ea7b3; }
 
-.main-massenger-message-thread-list-item-email {
-  display: block; }
-
-.main-massenger-message-thread-list-item-last-message {
-  font-size: 0.75rem; }
-
-.main-massenger-messages-wrapper {
-  float: left;
-  width: 70%;
-  background-color: #fff; }
-
-.main-massenger-messages-list-item {
-  margin: 0.625rem;
-  overflow: hidden; }
-
-.main-massenger-messages-list-item span {
-  padding: 0.3125rem;
-  border-radius: 20px;
-  float: right;
-  background-color: #65c3df;
-  color: #fff; }
-
-.main-massenger-messages-list-item.email-to span {
-  float: left;
-  background-color: #f5f5f5;
+.main-message-thread-list-item-email {
+  display: block;
   color: #000; }
 
-.main-massenger-text-input-wrapper {
-  background-color: #f5f5f5;
-  overflow: hidden; }
-
-.main-massenger-text-input {
-  float: left; }
+.main-message-thread-list-item-last-message {
+  font-size: 0.75rem; }

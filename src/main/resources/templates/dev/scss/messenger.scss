@@ -1,0 +1,60 @@
+@import "variables";
+@import "functions";
+
+.main-messenger {
+  width: 100%;
+  min-height: 400px;
+  color: $messenger-color-grey-dark;
+  overflow: hidden;
+  background-color: $messenger-color-grey;
+  box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.3);
+
+  ul {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.main-messenger-header {
+  text-align: center;
+  padding: rem-calc(15px);
+}
+
+.main-messenger-message-thread-list-wrapper {
+  float: left;
+  width: 30%;
+}
+
+.main-messenger-messages-wrapper {
+  float: left;
+  width: 70%;
+  background-color: #fff;
+}
+
+.main-messenger-messages-list-item {
+  margin: rem-calc(10px);
+  overflow: hidden;
+
+  span {
+    padding: rem-calc(5px);
+    border-radius: 20px;
+    float: right;
+    background-color: $color-blue;
+    color: #fff;
+  }
+
+  &.email-to span {
+    float: left;
+    background-color: $messenger-color-grey;
+    color: #000;
+  }
+}
+
+.main-messenger-text-input-wrapper {
+  background-color: $messenger-color-grey;
+  overflow: hidden;
+}
+
+.main-messenger-text-input {
+  float: left;
+}

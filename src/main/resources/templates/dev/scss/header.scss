@@ -54,7 +54,7 @@
   color: #fff;
   border-bottom: 1px solid $color-grey;
 
-  a {
+  > a {
     display: block;
     padding: rem-calc(28px);
     text-decoration: none;
@@ -121,7 +121,7 @@
     cursor: pointer;
     margin: 0 rem-calc(5px);
 
-    a {
+    > a {
       transition: background-color .3s ease, color .3s ease, border .3s ease;
       padding: rem-calc(5px);
       color: #fff;
@@ -144,8 +144,11 @@
   }
 
   .main-nav-messages {
+    padding-bottom: rem-calc(20px);
+
     &:hover {
       .main-message-thread-list {
+        margin-top: rem-calc(10px);
         display: block;
       }
     }

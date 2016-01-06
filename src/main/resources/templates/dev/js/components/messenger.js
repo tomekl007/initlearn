@@ -7,7 +7,7 @@ import config from '../ajax/config';
 import MessageThreadList from './messageThreadList';
 
 /*TODO improve Teachers class to ES6*/
-var Massenger = React.createClass({
+var Messenger = React.createClass({
 
     getMessagesIntervalId: 0,
     getInitialState() {
@@ -79,7 +79,7 @@ var Massenger = React.createClass({
 
         if (this.state.messagesListVisibility) {
             $messagesListItems = this.state.messages.map(function (message, key) {
-                var listClass = message.fromEmail !== $thisComponent.props.email ? 'main-massenger-messages-list-item' : 'main-massenger-messages-list-item email-to';
+                var listClass = message.fromEmail !== $thisComponent.props.email ? 'main-messenger-messages-list-item' : 'main-messenger-messages-list-item email-to';
 
                 return (
                     <li className={listClass} key={key}>
@@ -94,22 +94,22 @@ var Massenger = React.createClass({
         }
 
         return (
-            <div className='main-massenger'>
-                <div className='main-massenger-wrapper'>
-                    <div className='main-massenger-header fw-700'>
+            <div className='main-messenger'>
+                <div className='main-messenger-wrapper'>
+                    <div className='main-messenger-header fw-700'>
                         conversation with: {this.props.email}
                     </div>
-                    <div className='main-massenger-message-thread-list-wrapper'>
+                    <div className='main-messenger-message-thread-list-wrapper'>
                         <MessageThreadList email={this.props.email} messengerComponent={this}/>
                     </div>
-                    <div className='main-massenger-messages-wrapper'>
-                        <ul className='main-massenger-messages-list'>
+                    <div className='main-messenger-messages-wrapper'>
+                        <ul className='main-messenger-messages-list'>
                             {$messagesListItems}
                         </ul>
                         {$Loader}
-                        <div className='main-massenger-text-input-wrapper'>
-                            <textarea className='main-massenger-text-input' ref='mainInput' type='text'></textarea>
-                            <button className='main-massenger-button-submit main-btn btn-blue fw-700' {...tapOrClick(this.sendMessage)}>send</button>
+                        <div className='main-messenger-text-input-wrapper'>
+                            <textarea className='main-messenger-text-input' ref='mainInput' type='text'></textarea>
+                            <button className='main-messenger-button-submit main-btn btn-blue fw-700' {...tapOrClick(this.sendMessage)}>send</button>
                         </div>
                     </div>
                 </div>
@@ -118,4 +118,4 @@ var Massenger = React.createClass({
     }
 });
 
-module.exports = Massenger;
+module.exports = Messenger;

@@ -3,7 +3,7 @@ import Router from 'react-router';
 
 import config from '../ajax/config';
 
-import MessagesComponent from '../components/massenger';
+import MessengerComponent from '../components/messenger';
 
 var Messages = React.createClass({
 
@@ -15,7 +15,7 @@ var Messages = React.createClass({
     render() {
         return (
             <section id='messages' className='main-section-messages'>
-                <MessagesComponent url={config.appUrl + Router.HashLocation.getCurrentPath()} email={this.getUserEmail()}/>
+                <MessengerComponent url={config.appUrl + Router.HashLocation.getCurrentPath()} email={this.getUserEmail()}/>
             </section>
         );
     }
