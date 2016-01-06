@@ -66,7 +66,7 @@ var MessageThreadList = React.createClass({
                 );
             });
 
-            if (isSameEmail || $messageThreadList.length < 1) {
+            if (isSameEmail && $messageThreadList.length < 1) {
                 $currentThreadListItem = <li key={0} {...tapOrClick(this.reloadMessangerMessagesList)} >
                     <a className='main-massenger-message-thread-list-item' href={config.messagesHash + this.props.email}>
                         <span className='main-massenger-message-thread-list-item-email txt-ellipsis' >{this.props.email}</span>
