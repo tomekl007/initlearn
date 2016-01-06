@@ -7,6 +7,7 @@ import config from '../ajax/config';
 import localStorage from '../common/localStorage';
 
 import ModalComponent from './modal';
+import MessageThreadList from './messageThreadList';
 
 var NavigationList = React.createClass({
 
@@ -121,6 +122,12 @@ var NavigationList = React.createClass({
                     <li className='main-nav-list-item main-user-name' key={2}>
                         <a href={config.myProfileHash}>{this.state.data.fullName}</a>
                     </li>,
+                    <li className='main-nav-list-item main-nav-messages' key={3}>
+                        <a href='#msg/willbesoon'>messages
+                            <i className='fa fa-comments'></i>
+                        </a>
+                        <MessageThreadList email={''} messengerComponent={this}/>
+                    </li>,
                     <li className='main-nav-list-item main-user-logout' {...tapOrClick(this.logout)} key={4}>
                         <a href='#'>logout
                             <i className='fa fa-sign-out'></i>
@@ -129,17 +136,6 @@ var NavigationList = React.createClass({
                 ];
             } else {
                 $loginElements = [
-                    <li className='main-nav-list-item main-messages' key={3}>
-                        <a href='#msg/willbesoon'>messages
-                            <i className='fa fa-comments'></i>
-                        </a>
-                        <ul className='main-nav-message-thread-list'>
-                            <li className='txt-ellipsis'>message thread</li>
-                            <li className='txt-ellipsis'>message thread</li>
-                            <li className='txt-ellipsis'>message thread</li>
-                            <li className='txt-ellipsis'>message thread</li>
-                        </ul>
-                    </li>,
                     <li className='main-nav-list-item main-create-account' {...tapOrClick(this.openCreateAccountForm)} key={5}>
                         <a href='#create-account-form' className='is-active'>create free account
                             <i className='fa fa-key'></i>

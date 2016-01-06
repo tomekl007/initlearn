@@ -74,11 +74,11 @@ var MessageThreadList = React.createClass({
         }
 
         return (
-            <div>
+            <ul className='main-message-thread-list'>
                 {$currentThreadListItem}
                 {$messageThreadList}
                 {$Loader}
-            </div>
+            </ul>
         );
     }
 });

@@ -100,9 +100,7 @@ var Massenger = React.createClass({
                         conversation with: {this.props.email}
                     </div>
                     <div className='main-massenger-message-thread-list-wrapper'>
-                        <ul className='main-massenger-message-thread-list'>
-                            <MessageThreadList email={this.props.email} messengerComponent={this}/>
-                        </ul>
+                        <MessageThreadList email={this.props.email} messengerComponent={this}/>
                     </div>
                     <div className='main-massenger-messages-wrapper'>
                         <ul className='main-massenger-messages-list'>

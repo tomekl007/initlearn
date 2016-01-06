@@ -1,11 +1,18 @@
 @import "functions";
 
-.main-nav-message-thread-list {
-  display: none;
-  position: absolute;
-  top: 35px;
-  width: 100%;
-  padding: rem-calc(10px);
-  background-color: #fff;
-  color: #000;
+/*TODO code refactoring */
+.main-nav-messages {
+  .main-message-thread-list {
+    display: none;
+    position: absolute;
+    top: 33px;
+    width: 100%;
+    padding: rem-calc(10px);
+    background-color: #fff;
+    color: #000;
+
+    .main-loader {
+      padding: rem-calc(10px);
+    }
+  }
 }
