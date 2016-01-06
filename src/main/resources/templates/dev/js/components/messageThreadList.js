@@ -45,6 +45,7 @@ var MessageThreadList = React.createClass({
         clearInterval(this.getMessageThreadListIntervalId);
     },
     render() {
+        console.log(this.props.email);
 
         var isSameEmail = false;
         var $thisComponent = this;
