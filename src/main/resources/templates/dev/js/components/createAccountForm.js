@@ -17,7 +17,6 @@ var CreateAccountForm = React.createClass({
         }
     },
     createAccount(event) {
-
         event.preventDefault();
 
         var $target = event.target;

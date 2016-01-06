@@ -4,6 +4,8 @@ import $ from '../lib/jquery';
 
 import config from '../ajax/config';
 
+import MessageThreadList from './messageThreadList';
+
 /*TODO improve Teachers class to ES6*/
 var Massenger = React.createClass({
 
@@ -12,7 +14,6 @@ var Massenger = React.createClass({
 
         return {
             messages: [],
-            messageThreadList: [],
             messagesListVisibility: false
         };
     },
@@ -58,26 +59,11 @@ var Massenger = React.createClass({
             }
         });
     },
-    getMessageThreadList() {
-
-        $.ajax({
-            method: 'get',
-            url: config.messagesOverviewUrl,
-            headers: config.apiCallHeader(),
-            success: function (messageThreadList) {
-                this.setState({messageThreadList: messageThreadList});
-            }.bind(this),
-            error: function (jqXHR, statusString, err) {
-                console.log(err);
-            }
-        });
-    },
     reloadMessagesList() {
         this.setState({messagesListVisibility: false})
     },
     componentDidMount() {
 
-        this.getMessageThreadList();
         this.getMessages();
         this.getMessagesIntervalId = setInterval(this.getMessages, 5000);
     },
@@ -86,32 +72,10 @@ var Massenger = React.createClass({
     },
     render() {
 
-        var isSameEmail = false;
         var $thisComponent = this;
-        var $currentThreadListItem = [];
         var $messagesListItems = [];
         var $Loader = [];
 
-        var $messageThreadList = this.state.messageThreadList.map(function (messageThread, key) {
-            messageThread.toEmail === $thisComponent.props.email ? (isSameEmail = true) : false;
-
-            return (
-                <li key={key + 1} {...tapOrClick($thisComponent.reloadMessagesList)} >
-                    <a className='main-massenger-message-thread-list-item' href={config.messagesHash + messageThread.emailTo}>
-                        <span className='main-massenger-message-thread-list-item-email txt-ellipsis' >{messageThread.emailTo}</span>
-                        <span className='main-massenger-message-thread-list-item-last-message txt-ellipsis' >{messageThread.lastMessage.text}</span>
-                    </a>
-                </li>
-            );
-        });
-
-        if (isSameEmail || $messageThreadList.length < 1) {
-            $currentThreadListItem = <li key={0} {...tapOrClick(this.reloadMessagesList)} >
-                <a className='main-massenger-message-thread-list-item' href={config.messagesHash + this.props.email}>
-                    <span className='main-massenger-message-thread-list-item-email txt-ellipsis' >{this.props.email}</span>
-                </a>
-            </li>;
-        }
 
         if (this.state.messagesListVisibility) {
             $messagesListItems = this.state.messages.map(function (message, key) {
@@ -137,8 +101,7 @@ var Massenger = React.createClass({
                     </div>
                     <div className='main-massenger-message-thread-list-wrapper'>
                         <ul className='main-massenger-message-thread-list'>
-                            {$currentThreadListItem}
-                            {$messageThreadList}
+                            <MessageThreadList email={this.props.email} messengerComponent={this}/>
                         </ul>
                     </div>
                     <div className='main-massenger-messages-wrapper'>

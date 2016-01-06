@@ -18,10 +18,7 @@ var Config = (function () {
     var messagesOverviewUrl = messagesUrl + '/overview';
     var addUserToTeacherGroupUrl = userUrl + '/teachers';
     var updateScreenheroUrl = userUrl + '/screenhero';
-
-    var updateUserDataUrl = function (email) {
-        return userUrl + '/' + email + '/data';
-    };
+    var updateUserDataUrl = userUrl + '/data';
 
     var getMessagesUrl = function (email) {
         return messagesUrl + '/' + email;
@@ -40,7 +37,7 @@ var Config = (function () {
             var userToken = window.localStorage.getItem('user-token');
 
             if (typeof userToken === 'string') {
-                header.Authorization = userToken;
+                header.Authorization = authorizationPrefix + userToken;
             }
         }
 
