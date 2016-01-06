@@ -135,22 +135,3 @@ a {
     transform: rotate(360deg);
   }
 }
-
-/*arrows*/
-
-.arrow {
-  &:after {
-    position: absolute;
-    content: '';
-    border-color: #fff rgba(0, 0, 0, 0);
-    border-style: solid;
-    border-width: 0 13px 13px;
-    display: block;
-    z-index: 1;
-  }
-
-  &.arrow-top:after {
-    top: 1px;
-    left: 15%;
-  }
-}

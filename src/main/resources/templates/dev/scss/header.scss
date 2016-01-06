@@ -147,8 +147,7 @@
     padding-bottom: rem-calc(20px);
 
     &:hover {
-      .main-message-thread-list {
-        margin-top: rem-calc(10px);
+      .main-tooltip {
         display: block;
       }
     }

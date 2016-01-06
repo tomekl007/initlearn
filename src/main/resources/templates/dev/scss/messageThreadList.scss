@@ -1,67 +1,42 @@
 @import "functions";
 @import "variables";
 
-/*TODO code refactoring */
-.main-nav-messages {
+.main-tooltip {
   .main-message-thread-list {
-    display: none;
-    position: absolute;
-    top: 33px;
-    left: -20px;
-    width: 200px;
-    padding: 0;
-    padding-top: rem-calc(13px);
-    color: #000;
-    max-height: 150px;
+    max-height: 180px;
     overflow-y: scroll;
-
-    .main-loader {
-      background-color: #fff;
-
-      i {
-        padding: rem-calc(10px);
-      }
-    }
-
-    > li {
-      border-left: 1px solid $messenger-color-grey-dark;
-      border-right: 1px solid $messenger-color-grey-dark;
-    }
-
-    > li:first-child {
-      border-top: 1px solid $messenger-color-grey-dark;
-    }
-
-    > li:last-child {
-      border-bottom: 1px solid $messenger-color-grey-dark;
-    }
   }
 
-  .main-message-thread-list-item,
-  a.main-message-thread-list-item {
-    background-color: #fff;
-
+  .main-message-thread-list-item {
     &:hover {
-      background-color: $messenger-color-grey;
+      background-color: $color-grey;
     }
   }
 }
 
-.main-message-thread-list-item,
-a.main-message-thread-list-item {
+.main-message-thread-list {
+  margin: 0;
+  padding: 0;
+}
+
+.main-message-thread-list-item {
   display: block;
   padding: rem-calc(10px);
   text-align: center;
   color: $messenger-color-grey-dark;
-  transition: color .3s ease;
+  transition: background-color .3s ease;
   text-shadow: none;
+
+  &:hover {
+    background-color: #fff;
+  }
 
   &:after {
     content: '';
     position: absolute;
     bottom: 0;
-    left: 10%;
-    width: 80%;
+    left: 0;
+    width: 100%;
     height: 1px;
     background-color: $messenger-color-grey-dark;
   }

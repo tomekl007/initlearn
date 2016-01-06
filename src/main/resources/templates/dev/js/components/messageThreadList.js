@@ -56,7 +56,7 @@ var MessageThreadList = React.createClass({
 
                 return (
                     <li key={key + 1} {...tapOrClick($thisComponent.reloadMessangerMessagesList)} >
-                        <a className='main-message-thread-list-item txt-ellipsis' href={config.messagesHash + messageThread.emailTo}>
+                        <a className='main-message-thread-list-item' href={config.messagesHash + messageThread.emailTo}>
                             <span className='main-message-thread-list-item-email txt-ellipsis' >{messageThread.emailTo}</span>
                             <span className='main-message-thread-list-item-last-message txt-ellipsis' >{messageThread.lastMessage.text}</span>
                         </a>
@@ -67,7 +67,7 @@ var MessageThreadList = React.createClass({
             if ($messageThreadList.length < 1) {
                 if (typeof this.props.email !== 'undefined') {
                     $messageThreadList = <li key={0} {...tapOrClick(this.reloadMessangerMessagesList)} >
-                        <a className='main-message-thread-list-item txt-ellipsis' href={config.messagesHash + this.props.email}>
+                        <a className='main-message-thread-list-item' href={config.messagesHash + this.props.email}>
                             <span className='main-message-thread-list-item-email txt-ellipsis' >{this.props.email}</span>
                         </a>
                     </li>;
@@ -80,7 +80,7 @@ var MessageThreadList = React.createClass({
         }
 
         return (
-            <ul className='main-message-thread-list arrow arrow-top'>
+            <ul className='main-message-thread-list'>
                 {$messageThreadList}
                 {$Loader}
             </ul>

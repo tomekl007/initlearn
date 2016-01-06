@@ -23,6 +23,8 @@
 .main-messenger-message-thread-list-wrapper {
   float: left;
   width: 30%;
+  border-right: 1px solid $messenger-color-grey-dark;
+  border-top: 1px solid $messenger-color-grey-dark;
 }
 
 .main-messenger-messages-wrapper {

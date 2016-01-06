@@ -146,6 +146,5 @@
     color: #fff; }
   .main-nav-messages {
     padding-bottom: 1.25rem; }
-  .main-nav-messages:hover .main-message-thread-list {
-    margin-top: 0.625rem;
+  .main-nav-messages:hover .main-tooltip {
     display: block; } }
