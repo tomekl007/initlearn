@@ -61,7 +61,7 @@ public class IntegrationTestHelper {
     public HttpResponse deleteAccount(String token) throws IOException {
         HttpDelete delete = new HttpDelete(APPLICATION_URL + "/deleteAccount");
         delete.setHeader("Authorization", token);
-
+        System.out.println("will delete account : " + token);
         return httpClient.execute(delete);
     }
 
@@ -69,6 +69,41 @@ public class IntegrationTestHelper {
     public HttpResponse createHttpGetWithAuthorizationToken(String suffix, String token) throws IOException {
         HttpGet httpGet = new HttpGet(APPLICATION_URL + "/" + suffix);
         httpGet.setHeader("Authorization", token);
+        System.out.println("request : " + httpGet);
         return httpClient.execute(httpGet);
     }
+
+
+    public HttpPost createHttpPostWithAuthorizationToken(String suffix, String token) throws IOException {
+        HttpPost httpPost = new HttpPost(APPLICATION_URL + "/" + suffix);
+        httpPost.setHeader("Authorization", token);
+        return httpPost;
+    }
+
+    public HttpResponse sendMessageToUser(String firstUserToken, String emailUserSendTo, String text) throws IOException {
+        HttpPost post = createHttpPostWithAuthorizationToken("msg", firstUserToken);
+        String json = "{\n" +
+                "\t\"emailTo\" :\"" + emailUserSendTo + "\",\n" +
+                "\t\"text\" :\"" + text + "\"\n" +
+                "}";
+        post.setEntity(new StringEntity(json));
+        post.setHeader("Content-Type", "application/json");
+        System.out.println("post " + post + " msg : " + text);
+        return httpClient.execute(post);
+    }
+
+
+    public String getMessagesForConversationWith(String firstUserToken, String conversationWithEmail) throws IOException {
+        HttpResponse httpResponse = createHttpGetWithAuthorizationToken("msg/" + conversationWithEmail, firstUserToken);
+        System.out.println(httpResponse);
+        String s = IOUtils.toString(httpResponse.getEntity().getContent());
+        return s;
+
+    }
+
+    public String getMessageOverview(String token) throws IOException {
+        HttpResponse res = createHttpGetWithAuthorizationToken("msg/overview", token);
+        return IOUtils.toString(res.getEntity().getContent());
+    }
+
 }
