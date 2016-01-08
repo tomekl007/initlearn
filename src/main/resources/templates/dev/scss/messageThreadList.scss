@@ -1,0 +1,52 @@
+@import "functions";
+@import "variables";
+
+.main-tooltip {
+  .main-message-thread-list {
+    max-height: 180px;
+    overflow-y: scroll;
+  }
+
+  .main-message-thread-list-item {
+    &:hover {
+      background-color: $color-grey;
+    }
+  }
+}
+
+.main-message-thread-list {
+  margin: 0;
+  padding: 0;
+}
+
+.main-message-thread-list-item {
+  display: block;
+  padding: rem-calc(10px);
+  text-align: center;
+  color: $messenger-color-grey-dark;
+  transition: background-color .3s ease;
+  text-shadow: none;
+
+  &:hover {
+    background-color: #fff;
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: $messenger-color-grey-dark;
+  }
+}
+
+.main-message-thread-list-item-email {
+  display: block;
+  color: #000;
+}
+
+.main-message-thread-list-item-last-message {
+  font-size: rem-calc(12px);
+}

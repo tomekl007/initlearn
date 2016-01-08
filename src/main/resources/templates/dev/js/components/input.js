@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 var Input = React.createClass({
     componentDidMount() {
@@ -6,7 +7,7 @@ var Input = React.createClass({
     },
     isInputFilled() {
 
-        var $input = this.getDOMNode();
+        var $input = ReactDOM.findDOMNode(this);
         var textLength = $input.value.trim().length;
 
         if (textLength > 0) {

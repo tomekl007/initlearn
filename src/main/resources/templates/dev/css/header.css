@@ -81,7 +81,7 @@
   color: #fff;
   border-bottom: 1px solid #e8e8e8; }
 
-.main-nav-list-item a {
+.main-nav-list-item > a {
   display: block;
   padding: 1.75rem;
   text-decoration: none;
@@ -90,7 +90,7 @@
   border-radius: 2px;
   color: #000; }
 
-.main-nav-list-item a:hover {
+.main-nav-list-item > a:hover {
   color: #f79f00; }
 
 .main-nav-list-item .fa {
@@ -117,6 +117,17 @@
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5); }
 
+.typeahead {
+  display: inline-block; }
+
+.typeahead-selector {
+  position: absolute;
+  top: 30px;
+  padding: 0; }
+
+.typeahead-selector .hover {
+  background-color: #fff; }
+
 @media only screen and (min-width: 601px) {
   .main-nav-icon {
     display: none; }
@@ -133,16 +144,18 @@
     border-bottom: none;
     cursor: pointer;
     margin: 0 0.3125rem; }
-  .main-nav-list-item a {
+  .main-nav-list-item > a {
     transition: background-color .3s ease, color .3s ease, border .3s ease;
     padding: 0.3125rem;
     color: #fff; }
-  .main-nav-list-item a:hover, .main-nav-list-item a.is-active {
+  .main-nav-list-item > a:hover, .main-nav-list-item > a.is-active {
     border: 2px solid #ffee9c;
     color: #ffee9c; }
-  .main-nav-list-item a.is-active:hover {
+  .main-nav-list-item > a.is-active:hover {
     border: 2px solid #f79f00;
     background-color: #f79f00;
     color: #fff; }
-  .main-messages:hover .main-nav-message-thread-list {
+  .main-nav-messages {
+    padding-bottom: 1.25rem; }
+  .main-nav-messages:hover .main-tooltip {
     display: block; } }

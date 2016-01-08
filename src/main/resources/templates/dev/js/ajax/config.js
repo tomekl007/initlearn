@@ -19,6 +19,8 @@ var Config = (function () {
     var addUserToTeacherGroupUrl = userUrl + '/teachers';
     var updateScreenheroUrl = userUrl + '/screenhero';
     var updateUserDataUrl = userUrl + '/data';
+    var searchUrl = '/search?';
+    var searchTeachersBySkillPath = usersHash + searchUrl + 'skill=';
 
     var getMessagesUrl = function (email) {
         return messagesUrl + '/' + email;
@@ -63,7 +65,8 @@ var Config = (function () {
         addUserToTeacherGroupUrl: addUserToTeacherGroupUrl,
         updateScreenheroUrl: updateScreenheroUrl,
         getMessagesUrl: getMessagesUrl,
-        apiCallHeader: apiCallHeader
+        apiCallHeader: apiCallHeader,
+        searchTeachersBySkillPath: searchTeachersBySkillPath
     };
 })();
 

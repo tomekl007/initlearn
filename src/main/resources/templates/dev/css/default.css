@@ -96,6 +96,9 @@ a {
 .bg-white {
   background-color: #fff; }
 
+.main-loader {
+  overflow: hidden; }
+
 .main-loader i {
   display: block;
   padding: 50px;

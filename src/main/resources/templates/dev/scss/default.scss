@@ -95,6 +95,8 @@ a {
 /*loaders*/
 
 .main-loader {
+  overflow: hidden;
+
   i {
     display: block;
     padding: 50px;
@@ -117,11 +119,19 @@ a {
 }
 
 @include keyframes(spin-inline) {
-  0% { transform: scale(0); }
-  50% { transform: scale(1); }
-  100% { transform: scale(0); }
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
 }
 
 @include keyframes(spin) {
-  100% { transform: rotate(360deg); }
+  100% {
+    transform: rotate(360deg);
+  }
 }

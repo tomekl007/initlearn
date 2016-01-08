@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import $ from '../lib/jquery';
 
@@ -19,7 +20,8 @@ var LoginForm = React.createClass({
 
         if ($navigationComponent.state.automaticLogin) {
             /*TODO improve childNodes form*/
-            var $target = this.refs.mainForm.getDOMNode();
+            var $target = ReactDOM.findDOMNode(this.refs.mainForm);
+            console.log($target);
             this.login(null, $target);
         }
     },

@@ -1,12 +1,14 @@
 import React from 'react';
 import tapOrClick from 'react-tap-or-click';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import ReactTypeahead from 'react-typeahead';
 import $ from '../lib/jquery';
 
 import config from '../ajax/config';
 import localStorage from '../common/localStorage';
 
 import ModalComponent from './modal';
+import MessageThreadList from './messageThreadList';
 
 var NavigationList = React.createClass({
 
@@ -121,6 +123,14 @@ var NavigationList = React.createClass({
                     <li className='main-nav-list-item main-user-name' key={2}>
                         <a href={config.myProfileHash}>{this.state.data.fullName}</a>
                     </li>,
+                    <li className='main-nav-list-item main-nav-messages' key={3}>
+                        <a href='#msg/willbesoon'>messages
+                            <i className='fa fa-comments'></i>
+                        </a>
+                        <span className='main-tooltip'>
+                            <MessageThreadList />
+                        </span>
+                    </li>,
                     <li className='main-nav-list-item main-user-logout' {...tapOrClick(this.logout)} key={4}>
                         <a href='#'>logout
                             <i className='fa fa-sign-out'></i>
@@ -129,17 +139,6 @@ var NavigationList = React.createClass({
                 ];
             } else {
                 $loginElements = [
-                    <li className='main-nav-list-item main-messages' key={3}>
-                        <a href='#msg/willbesoon'>messages
-                            <i className='fa fa-comments'></i>
-                        </a>
-                        <ul className='main-nav-message-thread-list'>
-                            <li className='txt-ellipsis'>message thread</li>
-                            <li className='txt-ellipsis'>message thread</li>
-                            <li className='txt-ellipsis'>message thread</li>
-                            <li className='txt-ellipsis'>message thread</li>
-                        </ul>
-                    </li>,
                     <li className='main-nav-list-item main-create-account' {...tapOrClick(this.openCreateAccountForm)} key={5}>
                         <a href='#create-account-form' className='is-active'>create free account
                             <i className='fa fa-key'></i>
@@ -164,9 +163,22 @@ var NavigationList = React.createClass({
             $modalElement = <ModalComponent data={this}/>;
         }
 
-
+        /*TODO move search component */
         return (
             <ul className='main-nav-list sticky pos-top pos-left'>
+
+                <ReactTypeahead.Typeahead
+                    options={['Java', 'JavaScript', 'Scala', 'HTML']}
+                    onTokenAdd={function(token) {
+                        console.log('token added: ', token);
+                    }}
+                    onOptionSelected={function(skill) {
+                        console.log(skill);
+                        /*TODO change to react route*/
+                        window.document.location.hash = config.searchTeachersBySkillPath + skill;
+                    }}
+
+                    />
                 <li className='main-nav-list-item' key={1}>
                     <a href='#teachers'>teachers
                         <i className='fa fa-users'></i>

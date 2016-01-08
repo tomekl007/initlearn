@@ -29,6 +29,13 @@ var MessageThreadList = React.createClass({
             }
         });
     },
+    reloadMessangerMessagesList() {
+
+        var $messengerComponent = this.props.messengerComponent;
+        if (typeof $messengerComponent !== 'undefined') {
+            $messengerComponent.reloadMessagesList();
+        }
+    },
     componentDidMount() {
 
         this.getMessageThreadList();
@@ -40,32 +47,33 @@ var MessageThreadList = React.createClass({
     render() {
         console.log(this);
 
-        var isSameEmail = false;
         var $thisComponent = this;
-        var $currentThreadListItem = [];
         var $messageThreadList = [];
         var $Loader = [];
 
         if (this.state.messageThreadListVisibility) {
             $messageThreadList = this.state.messageThreadList.map(function (messageThread, key) {
-                messageThread.toEmail === $thisComponent.props.email ? (isSameEmail = true) : false;
 
                 return (
-                    <li key={key + 1} {...tapOrClick($thisComponent.props.messengerComponent.reloadMessagesList)} >
-                        <a className='main-massenger-message-thread-list-item' href={config.messagesHash + messageThread.emailTo}>
-                            <span className='main-massenger-message-thread-list-item-email txt-ellipsis' >{messageThread.emailTo}</span>
-                            <span className='main-massenger-message-thread-list-item-last-message txt-ellipsis' >{messageThread.lastMessage.text}</span>
+                    <li key={key + 1} >
+                        <a className='main-message-thread-list-item' href={config.messagesHash + messageThread.emailTo}
+                        {...tapOrClick($thisComponent.reloadMessangerMessagesList)}>
+                            <span className='main-message-thread-list-item-email txt-ellipsis' >{messageThread.emailTo}</span>
+                            <span className='main-message-thread-list-item-last-message txt-ellipsis' >{messageThread.lastMessage.text}</span>
                         </a>
                     </li>
                 );
             });
 
-            if (isSameEmail || $messageThreadList.length < 1) {
-                $currentThreadListItem = <li key={0} {...tapOrClick(this.props.messengerComponent.reloadMessagesList)} >
-                    <a className='main-massenger-message-thread-list-item' href={config.messagesHash + this.props.email}>
-                        <span className='main-massenger-message-thread-list-item-email txt-ellipsis' >{this.props.email}</span>
-                    </a>
-                </li>;
+            if ($messageThreadList.length < 1) {
+                if (typeof this.props.email !== 'undefined') {
+                    $messageThreadList = <li key={0} >
+                        <a className='main-message-thread-list-item' href={config.messagesHash + this.props.email}
+                        {...tapOrClick(this.reloadMessangerMessagesList)} >
+                            <span className='main-message-thread-list-item-email txt-ellipsis' >{this.props.email}</span>
+                        </a>
+                    </li>;
+                }
             }
         } else {
             $Loader = <div className='main-loader'>
@@ -74,11 +82,10 @@ var MessageThreadList = React.createClass({
         }
 
         return (
-            <div>
-                {$currentThreadListItem}
+            <ul className='main-message-thread-list'>
                 {$messageThreadList}
                 {$Loader}
-            </div>
+            </ul>
         );
     }
 });
