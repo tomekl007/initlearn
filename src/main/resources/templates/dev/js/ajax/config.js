@@ -19,7 +19,7 @@ var Config = (function () {
     var addUserToTeacherGroupUrl = userUrl + '/teachers';
     var updateScreenheroUrl = userUrl + '/screenhero';
     var updateUserDataUrl = userUrl + '/data';
-    var searchUrl = '/search?';
+    var searchUrl = 'search?';
     var searchTeachersBySkillPath = usersHash + searchUrl + 'skill=';
 
     var getMessagesUrl = function (email) {

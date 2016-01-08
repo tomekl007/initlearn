@@ -1,7 +1,6 @@
 import React from 'react';
 import tapOrClick from 'react-tap-or-click';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import ReactTypeahead from 'react-typeahead';
 import $ from '../lib/jquery';
 
 import config from '../ajax/config';
@@ -9,6 +8,7 @@ import localStorage from '../common/localStorage';
 
 import ModalComponent from './modal';
 import MessageThreadList from './messageThreadList';
+import Search from './search';
 
 var NavigationList = React.createClass({
 
@@ -166,19 +166,7 @@ var NavigationList = React.createClass({
         /*TODO move search component */
         return (
             <ul className='main-nav-list sticky pos-top pos-left'>
-
-                <ReactTypeahead.Typeahead
-                    options={['Java', 'JavaScript', 'Scala', 'HTML']}
-                    onTokenAdd={function(token) {
-                        console.log('token added: ', token);
-                    }}
-                    onOptionSelected={function(skill) {
-                        console.log(skill);
-                        /*TODO change to react route*/
-                        window.document.location.hash = config.searchTeachersBySkillPath + skill;
-                    }}
-
-                    />
+                <Search />
                 <li className='main-nav-list-item' key={1}>
                     <a href='#teachers'>teachers
                         <i className='fa fa-users'></i>

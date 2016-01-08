@@ -5,26 +5,31 @@ import UserComponent from './user';
 /*TODO improve Teachers class to ES6*/
 var Users = React.createClass({
 
-    getInitialState() {
-        return {data: []};
+    componentWillReceiveProps(updatedProps) {
+        this.loadTeachersFromServer(updatedProps.url);
     },
-    loadTeachersFromServer() {
+    getInitialState() {
+        return {
+            data: []
+        };
+    },
+    loadTeachersFromServer(url) {
 
         /*TODO improve AJAX CALLS*/
         $.ajax({
-            url: this.props.url,
+            url: url,
             dataType: 'json',
             cache: false,
-            success: function(data) {
+            success: function (data) {
                 this.setState({data: data});
             }.bind(this),
-            error: function(xhr, status, err) {
+            error: function (xhr, status, err) {
                 console.error(this.props.url, status, err.toString());
             }.bind(this)
         });
     },
-    componentDidMount() {
-        this.loadTeachersFromServer();
+    componentWillMount() {
+        this.loadTeachersFromServer(this.props.url);
     },
     render() {
         return (
