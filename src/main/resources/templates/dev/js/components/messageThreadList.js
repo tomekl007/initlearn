@@ -29,6 +29,7 @@ var MessageThreadList = React.createClass({
             }
         });
     },
+    /*TODO code refactoring needed*/
     reloadMessangerMessagesList() {
 
         var $messengerComponent = this.props.messengerComponent;
