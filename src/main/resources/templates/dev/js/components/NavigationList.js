@@ -9,6 +9,7 @@ import localStorage from '../common/localStorage';
 import ModalComponent from './modal';
 import MessageThreadList from './messageThreadList';
 import Search from './search';
+import Tooltip from './tooltip';
 
 var NavigationList = React.createClass({
 
@@ -110,7 +111,13 @@ var NavigationList = React.createClass({
 
         this.setState({automaticLogin: false, loginForm: false, addUserDataForm: true})
     },
+    /*TODO delete in the future*/
+    refreshTooltip() {
+
+        this.refs.tooltip.forceUpdate();
+    },
     render() {
+        console.log(this);
 
         var $loginElements;
         var $modalElement;
@@ -123,13 +130,11 @@ var NavigationList = React.createClass({
                     <li className='main-nav-list-item main-user-name' key={2}>
                         <a href={config.myProfileHash}>{this.state.data.fullName}</a>
                     </li>,
-                    <li className='main-nav-list-item main-nav-messages' key={3}>
-                        <a href='#msg/willbesoon'>messages
+                    <li className='main-nav-list-item main-nav-messages' key={3} onMouseEnter={this.refreshTooltip} {...tapOrClick(this.refreshTooltip)}>
+                        <a href='javascript: void 0;'>messages
                             <i className='fa fa-comments'></i>
                         </a>
-                        <span className='main-tooltip'>
-                            <MessageThreadList />
-                        </span>
+                        <Tooltip content={<MessageThreadList interval={false} />} ref='tooltip' />
                     </li>,
                     <li className='main-nav-list-item main-user-logout' {...tapOrClick(this.logout)} key={4}>
                         <a href='#'>logout

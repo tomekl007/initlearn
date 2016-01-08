@@ -39,13 +39,15 @@ var MessageThreadList = React.createClass({
     componentDidMount() {
 
         this.getMessageThreadList();
-        this.getMessageThreadListIntervalId = setInterval(this.getMessageThreadList, 5000);
+
+        if (this.props.interval) {
+            this.getMessageThreadListIntervalId = setInterval(this.getMessageThreadList, 5000);
+        }
     },
     componentWillUnmount() {
         clearInterval(this.getMessageThreadListIntervalId);
     },
     render() {
-        console.log(this);
 
         var $thisComponent = this;
         var $messageThreadList = [];

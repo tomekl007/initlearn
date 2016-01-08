@@ -90,8 +90,8 @@ var Messenger = React.createClass({
             });
         } else {
             $Loader = <div className='main-loader'>
-                        <i className='fa fa-spinner'></i>
-                    </div>;
+                <i className='fa fa-spinner'></i>
+            </div>;
         }
 
         return (
@@ -101,7 +101,7 @@ var Messenger = React.createClass({
                         conversation with: {this.props.email}
                     </div>
                     <div className='main-messenger-message-thread-list-wrapper'>
-                        <MessageThreadList email={this.props.email} messengerComponent={this}/>
+                        <MessageThreadList email={this.props.email} messengerComponent={this} interval={true} />
                     </div>
                     <div className='main-messenger-messages-wrapper'>
                         <ul className='main-messenger-messages-list'>
