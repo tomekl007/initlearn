@@ -36,8 +36,10 @@ var AddUserDataForm = React.createClass({
         var serializedData = FormSerialize($target, {hash: true, empty: true});
 
         Object.keys(serializedData).map(function (key) {
-            if (key === 'skills' || key === 'links') {
-                serializedData[key] = serializedData[key].split(' ');
+            var value = serializedData[key];
+
+            if (Array.isArray(value)) {
+                serializedData[key] = serializedData[key][0].split(' ');
             }
         });
 
