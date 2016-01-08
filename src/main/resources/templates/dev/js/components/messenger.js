@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import tapOrClick from 'react-tap-or-click';
 import $ from '../lib/jquery';
 
@@ -18,7 +19,7 @@ var Messenger = React.createClass({
         };
     },
     sendMessage() {
-        var input = this.refs.mainInput.getDOMNode();
+        var input = ReactDOM.findDOMNode(this.refs.mainInput);
         var messages = this.state.messages;
 
         messages.push({text: input.value});

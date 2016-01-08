@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import tapOrClick from 'react-tap-or-click';
 
 import NavigationListComponent from './navigationList';
@@ -6,11 +7,11 @@ import NavigationListComponent from './navigationList';
 var Navigation = React.createClass({
     open(event) {
         event.stopPropagation();
-        this.getDOMNode().classList.add('is-open');
+        ReactDOM.findDOMNode(this).classList.add('is-open');
     },
     close(event) {
         event.stopPropagation();
-        this.getDOMNode().classList.remove('is-open');
+        ReactDOM.findDOMNode(this).classList.remove('is-open');
     },
     render() {
         return (

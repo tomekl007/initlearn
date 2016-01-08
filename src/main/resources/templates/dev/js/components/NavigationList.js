@@ -163,13 +163,19 @@ var NavigationList = React.createClass({
             $modalElement = <ModalComponent data={this}/>;
         }
 
-
+        /*TODO move search component */
         return (
             <ul className='main-nav-list sticky pos-top pos-left'>
+
                 <ReactTypeahead.Typeahead
                     options={['Java', 'JavaScript', 'Scala', 'HTML']}
                     onTokenAdd={function(token) {
                         console.log('token added: ', token);
+                    }}
+                    onOptionSelected={function(skill) {
+                        console.log(skill);
+                        /*TODO change to react route*/
+                        window.document.location.hash = config.searchTeachersBySkillPath + skill;
                     }}
 
                     />
