@@ -97,6 +97,23 @@
   background-color: rgba(0, 0, 0, 0.5);
 }
 
+/*TODO code refactoring*/
+.typeahead {
+  display: inline-block;
+}
+
+.typeahead-selector {
+  position: absolute;
+  top: 30px;
+  padding: 0;
+
+  .hover {
+    background-color: #fff;
+  }
+}
+
+/* ends */
+
 @media #{$medium-and-up} {
   .main-nav-icon {
     display: none;

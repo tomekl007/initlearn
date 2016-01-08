@@ -1,6 +1,7 @@
 import React from 'react';
 import tapOrClick from 'react-tap-or-click';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import ReactTypeahead from 'react-typeahead';
 import $ from '../lib/jquery';
 
 import config from '../ajax/config';
@@ -165,6 +166,13 @@ var NavigationList = React.createClass({
 
         return (
             <ul className='main-nav-list sticky pos-top pos-left'>
+                <ReactTypeahead.Typeahead
+                    options={['Java', 'JavaScript', 'Scala', 'HTML']}
+                    onTokenAdd={function(token) {
+                        console.log('token added: ', token);
+                    }}
+
+                    />
                 <li className='main-nav-list-item' key={1}>
                     <a href='#teachers'>teachers
                         <i className='fa fa-users'></i>

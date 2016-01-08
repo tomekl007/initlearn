@@ -117,6 +117,17 @@
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5); }
 
+.typeahead {
+  display: inline-block; }
+
+.typeahead-selector {
+  position: absolute;
+  top: 30px;
+  padding: 0; }
+
+.typeahead-selector .hover {
+  background-color: #fff; }
+
 @media only screen and (min-width: 601px) {
   .main-nav-icon {
     display: none; }
