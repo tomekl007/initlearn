@@ -16,7 +16,7 @@ var MessageThreadList = React.createClass({
         };
     },
     getMessageThreadList() {
-
+        console.log('get message thread list');
         $.ajax({
             method: 'get',
             url: config.messagesOverviewUrl,

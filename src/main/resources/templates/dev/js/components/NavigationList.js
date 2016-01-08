@@ -112,10 +112,8 @@ var NavigationList = React.createClass({
         this.setState({automaticLogin: false, loginForm: false, addUserDataForm: true})
     },
     /*TODO delete in the future*/
-    refreshMessagesThreadList() {
-        this.refs.messageThreadList.setState({
-            messageThreadListVisibility: false
-        });
+    loadMessageThreadList() {
+        this.refs.messageThreadList.getMessageThreadList();
     },
     render() {
 
@@ -131,8 +129,8 @@ var NavigationList = React.createClass({
                         <a href={config.myProfileHash}>{this.state.data.fullName}</a>
                     </li>,
                     <li className='main-nav-list-item main-nav-messages' key={3}
-                        onMouseEnter={this.refreshMessagesThreadList}
-                    {...tapOrClick(this.refreshMessagesThreadList)}>
+                        onMouseEnter={this.loadMessageThreadList}
+                    {...tapOrClick(this.loadMessageThreadList)}>
                         <a href='javascript: void 0;'>messages
                             <i className='fa fa-comments'></i>
                         </a>
