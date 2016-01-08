@@ -77,6 +77,12 @@ var MessageThreadList = React.createClass({
                         </a>
                     </li>;
                 }
+            } else {
+                $messageThreadList = <li key={0} >
+                    <a className='main-message-thread-list-item'>
+                        <span className='main-message-thread-list-item-email txt-ellipsis' >0 messages</span>
+                    </a>
+                </li>;
             }
         } else {
             $Loader = <div className='main-loader'>
