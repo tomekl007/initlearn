@@ -163,6 +163,7 @@ public class UserService implements AccountFields {
                 .map(u -> u.skills)
                 .filter( s -> !s.isEmpty())
                 .flatMap(Collection::stream)
+                .distinct()
                 .collect(Collectors.toList());
     }
 }
