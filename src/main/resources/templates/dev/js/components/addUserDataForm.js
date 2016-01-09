@@ -18,7 +18,6 @@ var AddUserDataForm = React.createClass({
                 headers: config.apiCallHeader(),
                 success: function (data) {
                     console.log(data);
-                    console.log('dodano teachera');
                 },
                 error: function (jqXHR, statusString, err) {
                     console.log(err);
@@ -31,7 +30,8 @@ var AddUserDataForm = React.createClass({
         event.preventDefault();
 
         var $target = event.target;
-        var $modalComponent = this.props.navigation.refs.modal;
+        var $navigationComponent = this.props.navigation;
+        var $modalComponent = $navigationComponent.refs.modal;
         /*TODO code refactoring*/
         var serializedData = FormSerialize($target, {hash: true, empty: true});
 
@@ -58,7 +58,7 @@ var AddUserDataForm = React.createClass({
             success: function (data) {
                 console.log(data);
 
-                $modalComponent.close();
+                $modalComponent.close($navigationComponent.resetFormStates);
             },
             error: function (jqXHR, statusString, err) {
                 console.log(err);

@@ -129,7 +129,7 @@ var NavigationList = React.createClass({
         this.refs.messageThreadList.getMessageThreadList();
     },
     render() {
-        console.log(this);
+
         var $loginElements;
         var $Loader;
         var $modalElement;
@@ -178,7 +178,7 @@ var NavigationList = React.createClass({
         }
 
         if (this.state.modalOpen) {
-            $modalElement = <ModalComponent ref='modal' data={this} content={this.state.modalContent}/>;
+            $modalElement = <ModalComponent ref='modal' parent={this} content={this.state.modalContent}/>;
         }
 
         /*TODO move search component */

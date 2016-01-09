@@ -52,7 +52,7 @@ var LoginForm = React.createClass({
                     if ($navigationComponent.state.addUserDataForm) {
                         $navigationComponent.openUserDataForm();
                     } else {
-                        $modalComponent.close();
+                        $modalComponent.close($navigationComponent.resetFormStates);
                     }
                 }
             },

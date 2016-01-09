@@ -46,3 +46,37 @@
     transition: opacity .3s ease-in;
   }
 }
+
+.main-modal-message-notification {
+  &.success {
+    .main-modal-message-notification-icon.success {
+      display: block;
+      color: $color-green;
+    }
+
+    .main-modal-message-notification-content {
+      color: $color-green;
+    }
+  }
+
+  &.cancel {
+    .main-modal-message-notification-icon.cancel {
+      display: block;
+      color: $color-red;
+    }
+
+    .main-modal-message-notification-content {
+      color: $color-red;
+    }
+  }
+}
+
+.main-modal-message-notification-icon {
+  display: none;
+  font-size: rem-calc(70px);
+  text-align: center;
+}
+
+.main-modal-message-notification-content {
+  text-align: center;
+}

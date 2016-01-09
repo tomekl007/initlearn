@@ -1,22 +1,27 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import tapOrClick from 'react-tap-or-click';
 
 var Modal = React.createClass({
-    getInitialState() {
 
+    getInitialState() {
         return {
-            open: true,
             formData: {}
         };
     },
     /*TODO improve - 2 times render call*/
-    close() {
-        //this.setState({open: false});
-        this.props.data.resetFormStates();
+    close(callback) {
+
+        if (typeof(callback) === typeof(Function)) {
+            callback();
+            return true;
+        }
+        this.props.parent.setState({modalOpen: false});
 
     },
     render() {
+        /*TODO react css transition group is not working */
         return (
             <div className='main-modal-window sticky pos-top pos-left'>
                 <div className='main-modal-window-content'>

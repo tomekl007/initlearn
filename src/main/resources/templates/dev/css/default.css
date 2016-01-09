@@ -41,6 +41,12 @@
 .fa-search:before {
   content: ""; }
 
+.fa-check-circle-o:before {
+  content: ""; }
+
+.fa-times-circle-o:before {
+  content: ""; }
+
 *, *:before, *:after {
   box-sizing: inherit; }
 

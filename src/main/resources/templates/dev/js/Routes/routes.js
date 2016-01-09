@@ -8,11 +8,15 @@ import HomeView from '../views/home';
 import UserProfileView from '../views/userProfile';
 import MyProfileView from '../views/myProfile';
 import MessagesView from '../views/messages';
+import CancelPaymentView from '../views/cancelPayment';
+import SuccessPaymentView from '../views/successPayment';
 
 var routes = (
     <Route name='app' path='/'>
         <Route name='teachers' handler={TeachersView}/>
         <Route name='users/*' handler={UserProfileView} />
+        <Route name='successPayment' handler={SuccessPaymentView} />
+        <Route name='cancelPayment' handler={CancelPaymentView} />
         <Route name='msg/*' handler={MessagesView} />
         <Route name='me' handler={MyProfileView} />
         <Route name='*' path='*' handler={HomeView}/>
