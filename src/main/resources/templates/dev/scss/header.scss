@@ -13,15 +13,15 @@
 }
 
 .main-nav {
-  padding: rem-calc(24px) rem-calc(20px);
+  padding: rem-calc(15) rem-calc(20px);
   background: #4dbdeb; /* Old browsers */
   background: -moz-linear-gradient(-45deg, #4dbdeb 0%, #009ec3 100%);
   background: -webkit-linear-gradient(-45deg, #4dbdeb 0%, #009ec3 100%);
   background: linear-gradient(135deg, #4dbdeb 0%, #009ec3 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#4dbdeb', endColorstr='#009ec3', GradientType=1);
-  font-size: rem-calc(16px);
+  font-size: rem-calc(14px);
   width: 100%;
-  height: 80px;
+  height: 70px;
 
   &.is-open {
 
