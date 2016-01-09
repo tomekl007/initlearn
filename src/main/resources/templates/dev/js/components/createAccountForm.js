@@ -21,8 +21,8 @@ var CreateAccountForm = React.createClass({
 
         var $target = event.target;
         var $thisComponent = this;
-        var $modalComponent = this.props.data.modalComponent;
-        var $navigationComponent = this.props.data.navigationComponent;
+        var $navigationComponent = this.props.navigation;
+        var $modalComponent = $navigationComponent.refs.modal;
 
         var data = JSON.stringify(FormSerialize($target, {hash: true, empty: true}));
 
@@ -49,13 +49,8 @@ var CreateAccountForm = React.createClass({
 
                 /*TODO improve - 2 times render call*/
                 $modalComponent.setState({formData: dataToMap, teacherCheckbox: $thisComponent.state.teacherCheckbox});
-
-                $navigationComponent.setState({
-                    automaticLogin: true,
-                    createAccountForm: false,
-                    loginForm: true,
-                    addUserDataForm: true
-                });
+                $navigationComponent.setState({automaticLogin: true, addUserDataForm: true});
+                $navigationComponent.openLoginForm();
             },
 
             error: function (jqXHR) {

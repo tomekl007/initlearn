@@ -7,6 +7,9 @@ import config from '../ajax/config';
 import localStorage from '../common/localStorage';
 
 import ModalComponent from './modal';
+import LoginFormComponent from './loginForm';
+import CreateAccountForm from './createAccountForm';
+import AddUserDataForm from './addUserDataForm';
 import MessageThreadList from './messageThreadList';
 import Search from './search';
 import Tooltip from './tooltip';
@@ -23,6 +26,7 @@ var NavigationList = React.createClass({
             createAccountForm: false,
             addUserDataForm: false,
             automaticLogin: false,
+            modalContent: [],
             data: []
         };
     },
@@ -99,27 +103,36 @@ var NavigationList = React.createClass({
     /*TODO delete in the future*/
     openLoginForm() {
 
-        this.setState({modalOpen: true, loginForm: true, createAccountForm: false});
+        var $modalContent = <LoginFormComponent navigation={this}/>;
+        this.setState({modalOpen: true, loginForm: true, createAccountForm: false, modalContent: $modalContent});
     },
     /*TODO delete in the future*/
     openCreateAccountForm() {
 
-        this.setState({modalOpen: true, loginForm: false, addUserDataForm: false, createAccountForm: true});
+        var $modalContent = <CreateAccountForm navigation={this}/>;
+        this.setState({
+            modalOpen: true,
+            loginForm: false,
+            addUserDataForm: false,
+            createAccountForm: true,
+            modalContent: $modalContent
+        });
     },
     /*TODO delete in the future*/
     openUserDataForm() {
 
-        this.setState({automaticLogin: false, loginForm: false, addUserDataForm: true})
+        var $modalContent = <AddUserDataForm navigation={this}/>;
+        this.setState({automaticLogin: false, loginForm: false, addUserDataForm: true, modalContent: $modalContent})
     },
     /*TODO delete in the future*/
     loadMessageThreadList() {
         this.refs.messageThreadList.getMessageThreadList();
     },
     render() {
-
+        console.log(this);
         var $loginElements;
-        var $modalElement;
         var $Loader;
+        var $modalElement;
 
         if (this.state.visibility) {
             if (this.state.loggedIn) {
@@ -165,7 +178,7 @@ var NavigationList = React.createClass({
         }
 
         if (this.state.modalOpen) {
-            $modalElement = <ModalComponent data={this}/>;
+            $modalElement = <ModalComponent ref='modal' data={this} content={this.state.modalContent}/>;
         }
 
         /*TODO move search component */

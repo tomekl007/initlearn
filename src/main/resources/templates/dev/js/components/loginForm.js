@@ -16,12 +16,11 @@ var LoginForm = React.createClass({
     },
     componentDidMount() {
 
-        var $navigationComponent = this.props.data.navigationComponent;
+        var $navigationComponent = this.props.navigation;
 
         if ($navigationComponent.state.automaticLogin) {
             /*TODO improve childNodes form*/
             var $target = ReactDOM.findDOMNode(this.refs.mainForm);
-            console.log($target);
             this.login(null, $target);
         }
     },
@@ -31,8 +30,8 @@ var LoginForm = React.createClass({
 
         var $target = event !== null ? event.target : target;
         var $thisComponent = this;
-        var $modalComponent = this.props.data.modalComponent;
-        var $navigationComponent = this.props.data.navigationComponent;
+        var $navigationComponent = this.props.navigation;
+        var $modalComponent = $navigationComponent.refs.modal;
 
         /*TODO improve AJAX CALLS*/
         /*TODO code refactoring needed*/
