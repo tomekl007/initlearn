@@ -29,14 +29,13 @@ public class PaymentService {
     @Autowired
     PaypalConfiguration paypalConfiguration;
 
-    public String pay(User sender) { //todo add User teacher
+    public String pay(User sender, String toEmail) {
 
-        String toEmail = "pupil2@gmail.com";
         paymentsRepository.save(new Payment(sender.email, toEmail, 10.00d, DateTime.now().toDate()));//todo hourRate
 
         PayRequest payRequest = new PayRequest();
 
-        List<Receiver> receivers = new ArrayList<Receiver>();
+        List<Receiver> receivers = new ArrayList<>();
         Receiver secondaryReceiver = createCompanyReceiver();
         receivers.add(secondaryReceiver);
 
