@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
@@ -32,11 +33,11 @@ public class PaymentController {
     @Autowired
     PaypalConfiguration paypalConfiguration;
 
-    @RequestMapping("/adaptivePayment") //toto pathParam toEmail
-    public String executeAdaptivePayment(ServletRequest servletRequest){
+    @RequestMapping("/adaptivePayment")
+    public String executeAdaptivePayment(ServletRequest servletRequest, @RequestParam("toEmail") String toEmail){
         Optional<User> accountIfUserLoggedIn = AccountUtils.getUserIfUserLoggedIn(servletRequest);
         if(accountIfUserLoggedIn.isPresent()) {
-            return "redirect:"+ paypalConfiguration.getUrl() + paymentService.pay(accountIfUserLoggedIn.get());
+            return "redirect:"+ paypalConfiguration.getUrl() + paymentService.pay(accountIfUserLoggedIn.get(), toEmail);
         }
         else{
             return "redirect:/login";
