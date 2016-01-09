@@ -39,7 +39,7 @@ var AddUserDataForm = React.createClass({
             var value = serializedData[key];
 
             if (Array.isArray(value)) {
-                serializedData[key] = serializedData[key][0].split(' ');
+                serializedData[key] = serializedData[key][0].split(',');
             }
         });
 
