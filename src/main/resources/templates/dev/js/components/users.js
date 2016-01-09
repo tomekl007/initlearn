@@ -1,5 +1,8 @@
 import React from 'react';
 import $ from '../lib/jquery';
+
+import config from '../ajax/config';
+
 import UserComponent from './user';
 
 /*TODO improve Teachers class to ES6*/
@@ -19,6 +22,7 @@ var Users = React.createClass({
         $.ajax({
             url: url,
             dataType: 'json',
+            headers: config.apiCallHeader(),
             cache: false,
             success: function (data) {
                 this.setState({data: data});

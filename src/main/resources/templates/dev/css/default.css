@@ -38,6 +38,9 @@
 .fa-comments:before {
   content: ""; }
 
+.fa-search:before {
+  content: ""; }
+
 *, *:before, *:after {
   box-sizing: inherit; }
 

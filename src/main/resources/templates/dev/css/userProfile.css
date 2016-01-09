@@ -38,6 +38,9 @@
 .fa-comments:before {
   content: ""; }
 
+.fa-search:before {
+  content: ""; }
+
 .main-section-user-profile {
   margin-top: 150px; }
 

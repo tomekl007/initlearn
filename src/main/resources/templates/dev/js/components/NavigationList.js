@@ -9,6 +9,7 @@ import localStorage from '../common/localStorage';
 import ModalComponent from './modal';
 import MessageThreadList from './messageThreadList';
 import Search from './search';
+import Tooltip from './tooltip';
 
 var NavigationList = React.createClass({
 
@@ -110,6 +111,10 @@ var NavigationList = React.createClass({
 
         this.setState({automaticLogin: false, loginForm: false, addUserDataForm: true})
     },
+    /*TODO delete in the future*/
+    loadMessageThreadList() {
+        this.refs.messageThreadList.getMessageThreadList();
+    },
     render() {
 
         var $loginElements;
@@ -123,13 +128,13 @@ var NavigationList = React.createClass({
                     <li className='main-nav-list-item main-user-name' key={2}>
                         <a href={config.myProfileHash}>{this.state.data.fullName}</a>
                     </li>,
-                    <li className='main-nav-list-item main-nav-messages' key={3}>
-                        <a href='#msg/willbesoon'>messages
+                    <li className='main-nav-list-item main-nav-messages' key={3}
+                        onMouseEnter={this.loadMessageThreadList}
+                    {...tapOrClick(this.loadMessageThreadList)}>
+                        <a href='javascript: void 0;'>messages
                             <i className='fa fa-comments'></i>
                         </a>
-                        <span className='main-tooltip'>
-                            <MessageThreadList />
-                        </span>
+                        <Tooltip content={<MessageThreadList interval={false} ref='messageThreadList' />} />
                     </li>,
                     <li className='main-nav-list-item main-user-logout' {...tapOrClick(this.logout)} key={4}>
                         <a href='#'>logout
@@ -166,7 +171,12 @@ var NavigationList = React.createClass({
         /*TODO move search component */
         return (
             <ul className='main-nav-list sticky pos-top pos-left'>
-                <Search />
+                <li className='main-nav-list-item main-search fw-700' key={0}>
+                    <a href='javascript: void 0;'>
+                        <i className='fa fa-search main-search-icon'></i>
+                        <Search />
+                    </a>
+                </li>
                 <li className='main-nav-list-item' key={1}>
                     <a href='#teachers'>teachers
                         <i className='fa fa-users'></i>

@@ -38,6 +38,9 @@
 .fa-comments:before {
   content: ""; }
 
+.fa-search:before {
+  content: ""; }
+
 .main-header {
   position: relative;
   text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
@@ -116,17 +119,6 @@
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5); }
-
-.typeahead {
-  display: inline-block; }
-
-.typeahead-selector {
-  position: absolute;
-  top: 30px;
-  padding: 0; }
-
-.typeahead-selector .hover {
-  background-color: #fff; }
 
 @media only screen and (min-width: 601px) {
   .main-nav-icon {

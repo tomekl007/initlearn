@@ -34,6 +34,16 @@ var Search = React.createClass({
         return (
             <ReactTypeahead.Typeahead
                 options={this.state.options}
+                placeholder={'search for skills'}
+                customClasses={
+                {
+                    input: 'main-search-input',
+                    results: 'main-search-list',
+                    listItem: 'main-search-list-item',
+                    listAnchor: 'main-search-list-item-anchor',
+                    hover: 'main-search-list-item-hover'
+                }
+                    }
                 onOptionSelected={function (skill) {
                     console.log(skill);
                     /*TODO change to react route*/

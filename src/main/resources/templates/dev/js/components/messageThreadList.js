@@ -16,7 +16,7 @@ var MessageThreadList = React.createClass({
         };
     },
     getMessageThreadList() {
-
+        console.log('get message thread list');
         $.ajax({
             method: 'get',
             url: config.messagesOverviewUrl,
@@ -29,6 +29,7 @@ var MessageThreadList = React.createClass({
             }
         });
     },
+    /*TODO code refactoring needed*/
     reloadMessangerMessagesList() {
 
         var $messengerComponent = this.props.messengerComponent;
@@ -39,13 +40,15 @@ var MessageThreadList = React.createClass({
     componentDidMount() {
 
         this.getMessageThreadList();
-        this.getMessageThreadListIntervalId = setInterval(this.getMessageThreadList, 5000);
+
+        if (this.props.interval) {
+            this.getMessageThreadListIntervalId = setInterval(this.getMessageThreadList, 5000);
+        }
     },
     componentWillUnmount() {
         clearInterval(this.getMessageThreadListIntervalId);
     },
     render() {
-        console.log(this);
 
         var $thisComponent = this;
         var $messageThreadList = [];
@@ -71,6 +74,12 @@ var MessageThreadList = React.createClass({
                         <a className='main-message-thread-list-item' href={config.messagesHash + this.props.email}
                         {...tapOrClick(this.reloadMessangerMessagesList)} >
                             <span className='main-message-thread-list-item-email txt-ellipsis' >{this.props.email}</span>
+                        </a>
+                    </li>;
+                } else {
+                    $messageThreadList = <li key={0} >
+                        <a className='main-message-thread-list-item'>
+                            <span className='main-message-thread-list-item-email txt-ellipsis' >0 messages</span>
                         </a>
                     </li>;
                 }

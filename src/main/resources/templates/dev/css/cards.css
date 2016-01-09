@@ -38,6 +38,9 @@
 .fa-comments:before {
   content: ""; }
 
+.fa-search:before {
+  content: ""; }
+
 .card-wrapper {
   font-family: "Roboto", sans-serif;
   display: block;

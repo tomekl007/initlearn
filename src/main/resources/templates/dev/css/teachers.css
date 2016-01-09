@@ -38,6 +38,9 @@
 .fa-comments:before {
   content: ""; }
 
+.fa-search:before {
+  content: ""; }
+
 .main-section-teachers .card-wrapper {
   height: 300px;
   max-height: 300px; }

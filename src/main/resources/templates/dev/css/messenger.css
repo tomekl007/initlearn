@@ -38,6 +38,9 @@
 .fa-comments:before {
   content: ""; }
 
+.fa-search:before {
+  content: ""; }
+
 .main-messenger {
   width: 100%;
   min-height: 400px;

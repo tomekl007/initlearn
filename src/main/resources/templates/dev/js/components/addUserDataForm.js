@@ -32,8 +32,19 @@ var AddUserDataForm = React.createClass({
 
         var $target = event.target;
         var $modalComponent = this.props.data.modalComponent;
+        /*TODO code refactoring*/
+        var serializedData = FormSerialize($target, {hash: true, empty: true});
 
-        var data = JSON.stringify(FormSerialize($target, {hash: true, empty: true}));
+        Object.keys(serializedData).map(function (key) {
+            var value = serializedData[key];
+
+            if (Array.isArray(value)) {
+                serializedData[key] = serializedData[key][0].split(',');
+            }
+        });
+
+        serializedData = JSON.stringify(serializedData);
+
         var url = $modalComponent.state.teacherCheckbox ? config.updateUserDataUrl : config.updateScreenheroUrl;
 
         /*TODO improve AJAX CALLS*/
@@ -42,7 +53,7 @@ var AddUserDataForm = React.createClass({
 
             type: $target.getAttribute('method'),
             url: url,
-            data: data,
+            data: serializedData,
             headers: config.apiCallHeader(),
             success: function (data) {
                 console.log(data);
