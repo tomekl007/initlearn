@@ -171,7 +171,12 @@ var NavigationList = React.createClass({
         /*TODO move search component */
         return (
             <ul className='main-nav-list sticky pos-top pos-left'>
-                <Search />
+                <li className='main-nav-list-item main-search fw-700' key={0}>
+                    <a href='javascript: void 0;'>
+                        <i className='fa fa-search main-search-icon'></i>
+                        <Search />
+                    </a>
+                </li>
                 <li className='main-nav-list-item' key={1}>
                     <a href='#teachers'>teachers
                         <i className='fa fa-users'></i>

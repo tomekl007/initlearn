@@ -38,6 +38,9 @@
 .fa-comments:before {
   content: ""; }
 
+.fa-search:before {
+  content: ""; }
+
 .main-tooltip .main-message-thread-list {
   max-height: 180px;
   overflow-y: scroll; }
