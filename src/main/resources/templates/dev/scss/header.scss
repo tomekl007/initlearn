@@ -19,7 +19,7 @@
   background: -webkit-linear-gradient(-45deg, #4dbdeb 0%, #009ec3 100%);
   background: linear-gradient(135deg, #4dbdeb 0%, #009ec3 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#4dbdeb', endColorstr='#009ec3', GradientType=1);
-  font-size: rem-calc(14px);
+  font-size: rem-calc(16px);
   width: 100%;
   height: 70px;
 
@@ -100,6 +100,11 @@
 @media #{$medium-and-up} {
   .main-nav-icon {
     display: none;
+  }
+
+  .main-nav {
+    font-size: rem-calc(14px);
+    border-bottom: 4px solid $color-blue;
   }
 
   .main-nav-list {

@@ -14,7 +14,7 @@
   background: -webkit-linear-gradient(-45deg, #4dbdeb 0%, #009ec3 100%);
   background: linear-gradient(135deg, #4dbdeb 0%, #009ec3 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#4dbdeb', endColorstr='#009ec3', GradientType=1);
-  font-size: 0.875rem;
+  font-size: 1rem;
   width: 100%;
   height: 70px; }
 
@@ -80,6 +80,9 @@
 @media only screen and (min-width: 601px) {
   .main-nav-icon {
     display: none; }
+  .main-nav {
+    font-size: 0.875rem;
+    border-bottom: 4px solid #65c3df; }
   .main-nav-list {
     position: relative;
     background-color: transparent;
