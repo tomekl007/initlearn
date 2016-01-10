@@ -8,7 +8,7 @@ import Input from './input';
 var AddUserDataForm = React.createClass({
     componentDidMount() {
 
-        var $modalComponent = this.props.data.modalComponent;
+        var $modalComponent = this.props.navigation.refs.modal;
 
         if ($modalComponent.state.teacherCheckbox) {
             /*TODO AJAX Improvement */
@@ -18,7 +18,6 @@ var AddUserDataForm = React.createClass({
                 headers: config.apiCallHeader(),
                 success: function (data) {
                     console.log(data);
-                    console.log('dodano teachera');
                 },
                 error: function (jqXHR, statusString, err) {
                     console.log(err);
@@ -31,7 +30,8 @@ var AddUserDataForm = React.createClass({
         event.preventDefault();
 
         var $target = event.target;
-        var $modalComponent = this.props.data.modalComponent;
+        var $navigationComponent = this.props.navigation;
+        var $modalComponent = $navigationComponent.refs.modal;
         /*TODO code refactoring*/
         var serializedData = FormSerialize($target, {hash: true, empty: true});
 
@@ -58,7 +58,7 @@ var AddUserDataForm = React.createClass({
             success: function (data) {
                 console.log(data);
 
-                $modalComponent.close();
+                $modalComponent.close($navigationComponent.resetFormStates);
             },
             error: function (jqXHR, statusString, err) {
                 console.log(err);
@@ -68,7 +68,7 @@ var AddUserDataForm = React.createClass({
     },
     render() {
         var $userForm;
-        var $modalComponent = this.props.data.modalComponent;
+        var $modalComponent = this.props.navigation.refs.modal;
 
         if ($modalComponent.state.teacherCheckbox) {
             $userForm =

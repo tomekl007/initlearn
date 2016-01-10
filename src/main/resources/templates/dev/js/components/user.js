@@ -62,6 +62,9 @@ class User extends React.Component {
                         <a className='user-nav-messages' href={config.messagesHash + user.email}>
                             <i className='fa fa-envelope'></i>
                         </a>
+                        <a href={config.paymentPath + user.email} data-paypal-button='true'>
+                            <img src='//www.paypalobjects.com/en_US/i/btn/btn_paynow_LG.gif' alt='Pay Now' />
+                        </a>
                     </div>
                 </div>
             );

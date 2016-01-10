@@ -1,46 +1,3 @@
-@charset "UTF-8";
-@font-face {
-  font-family: 'FontAwesome';
-  src: url("../fonts/font-awesome/fontawesome-webfont.eot?v=4.5.0");
-  src: url("../fonts/font-awesome/fontawesome-webfont.eot?v=4.5.0#iefix") format("embedded-opentype"), url("../fonts/font-awesome/fontawesome-webfont.woff2?v=4.5.0") format("woff2"), url("../fonts/font-awesome/fontawesome-webfont.woff?v=4.5.0") format("woff"), url("../fonts/font-awesome/fontawesome-webfont.ttf?v=4.5.0") format("truetype"), url("../fonts/font-awesome/fontawesome-webfont.svg?v=4.5.0#fontawesomeregular") format("svg");
-  font-weight: normal;
-  font-style: normal; }
-
-.fa {
-  display: inline-block;
-  font: normal normal normal 14px / 1 FontAwesome;
-  font-size: inherit;
-  text-rendering: auto;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale; }
-
-.fa-sign-in:before {
-  content: ""; }
-
-.fa-sign-out:before {
-  content: ""; }
-
-.fa-users:before {
-  content: ""; }
-
-.fa-key:before {
-  content: ""; }
-
-.fa-envelope:before {
-  content: ""; }
-
-.fa-spinner:before {
-  content: ""; }
-
-.fa-circle:before {
-  content: ""; }
-
-.fa-comments:before {
-  content: ""; }
-
-.fa-search:before {
-  content: ""; }
-
 .main-modal-window {
   width: 100%;
   height: 100%;
@@ -82,3 +39,25 @@
 .main-modal-transition-leave.main-modal-transition-leave-active {
   opacity: .1;
   transition: opacity .3s ease-in; }
+
+.main-modal-message-notification.success .main-modal-message-notification-icon.success {
+  display: block;
+  color: #1bbc9c; }
+
+.main-modal-message-notification.success .main-modal-message-notification-content {
+  color: #1bbc9c; }
+
+.main-modal-message-notification.cancel .main-modal-message-notification-icon.cancel {
+  display: block;
+  color: #e57e6f; }
+
+.main-modal-message-notification.cancel .main-modal-message-notification-content {
+  color: #e57e6f; }
+
+.main-modal-message-notification-icon {
+  display: none;
+  font-size: 4.375rem;
+  text-align: center; }
+
+.main-modal-message-notification-content {
+  text-align: center; }

@@ -1,63 +1,32 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import tapOrClick from 'react-tap-or-click';
 
-import LoginFormComponent from './loginForm';
-import CreateAccountForm from './createAccountForm';
-import AddUserDataForm from './addUserDataForm';
-
 var Modal = React.createClass({
-    getInitialState() {
 
+    getInitialState() {
         return {
-            open: true,
             formData: {}
         };
     },
     /*TODO improve - 2 times render call*/
-    close() {
-        //this.setState({open: false});
-        this.props.data.resetFormStates();
+    close(callback) {
+
+        if (typeof(callback) === typeof(Function)) {
+            callback();
+            return true;
+        }
+        this.props.parent.setState({modalOpen: false});
 
     },
     render() {
-
-        var $loginForm;
-        var $createAccountForm;
-        var $addUserDataForm;
-
-        if (this.props.data.state.loginForm) {
-            $loginForm = <LoginFormComponent data={
-            {
-                navigationComponent: this.props.data,
-                modalComponent: this
-            }
-                }/>;
-        } else if (this.props.data.state.addUserDataForm) {
-            $addUserDataForm = <AddUserDataForm data={
-            {
-                navigationComponent: this.props.data,
-                modalComponent: this
-            }
-                }/>;
-        } else if (this.props.data.state.createAccountForm) {
-            $createAccountForm = <CreateAccountForm data={
-            {
-                navigationComponent: this.props.data,
-                modalComponent: this
-            }
-                }/>;
-        }
-
+        /*TODO react css transition group is not working */
         return (
             <div className='main-modal-window sticky pos-top pos-left'>
                 <div className='main-modal-window-content'>
-                {$loginForm}
                 <ReactCSSTransitionGroup transitionName='main-form-transition-step' transitionEnterTimeout={500} transitionLeave={false}>
-                    {$createAccountForm}
-                </ReactCSSTransitionGroup>
-                <ReactCSSTransitionGroup transitionName='main-form-transition-step' transitionEnterTimeout={500} transitionLeaveTimeout={500}>
-                    {$addUserDataForm}
+                    {this.props.content}
                 </ReactCSSTransitionGroup>
                 </div>
                 <div className='main-modal-window-close sticky pos-top pos-left' {...tapOrClick(this.close)}>

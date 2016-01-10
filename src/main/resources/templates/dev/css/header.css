@@ -1,46 +1,3 @@
-@charset "UTF-8";
-@font-face {
-  font-family: 'FontAwesome';
-  src: url("../fonts/font-awesome/fontawesome-webfont.eot?v=4.5.0");
-  src: url("../fonts/font-awesome/fontawesome-webfont.eot?v=4.5.0#iefix") format("embedded-opentype"), url("../fonts/font-awesome/fontawesome-webfont.woff2?v=4.5.0") format("woff2"), url("../fonts/font-awesome/fontawesome-webfont.woff?v=4.5.0") format("woff"), url("../fonts/font-awesome/fontawesome-webfont.ttf?v=4.5.0") format("truetype"), url("../fonts/font-awesome/fontawesome-webfont.svg?v=4.5.0#fontawesomeregular") format("svg");
-  font-weight: normal;
-  font-style: normal; }
-
-.fa {
-  display: inline-block;
-  font: normal normal normal 14px / 1 FontAwesome;
-  font-size: inherit;
-  text-rendering: auto;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale; }
-
-.fa-sign-in:before {
-  content: ""; }
-
-.fa-sign-out:before {
-  content: ""; }
-
-.fa-users:before {
-  content: ""; }
-
-.fa-key:before {
-  content: ""; }
-
-.fa-envelope:before {
-  content: ""; }
-
-.fa-spinner:before {
-  content: ""; }
-
-.fa-circle:before {
-  content: ""; }
-
-.fa-comments:before {
-  content: ""; }
-
-.fa-search:before {
-  content: ""; }
-
 .main-header {
   position: relative;
   text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
@@ -51,7 +8,7 @@
   color: #fff; }
 
 .main-nav {
-  padding: 1.5rem 1.25rem;
+  padding: 0.9375rem 1.25rem;
   background: #4dbdeb;
   background: -moz-linear-gradient(-45deg, #4dbdeb 0%, #009ec3 100%);
   background: -webkit-linear-gradient(-45deg, #4dbdeb 0%, #009ec3 100%);
@@ -59,7 +16,7 @@
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#4dbdeb', endColorstr='#009ec3', GradientType=1);
   font-size: 1rem;
   width: 100%;
-  height: 80px; }
+  height: 70px; }
 
 .main-nav.is-open .main-nav-list {
   left: 0; }
@@ -123,6 +80,9 @@
 @media only screen and (min-width: 601px) {
   .main-nav-icon {
     display: none; }
+  .main-nav {
+    font-size: 0.875rem;
+    border-bottom: 4px solid #65c3df; }
   .main-nav-list {
     position: relative;
     background-color: transparent;

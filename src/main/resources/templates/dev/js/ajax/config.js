@@ -21,6 +21,7 @@ var Config = (function () {
     var updateUserDataUrl = userUrl + '/data';
     var searchUrl = 'search?';
     var searchTeachersBySkillPath = usersHash + searchUrl + 'skill=';
+    var paymentPath = '/adaptivePayment?toEmail=';
 
     var getMessagesUrl = function (email) {
         return messagesUrl + '/' + email;
@@ -66,7 +67,8 @@ var Config = (function () {
         updateScreenheroUrl: updateScreenheroUrl,
         getMessagesUrl: getMessagesUrl,
         apiCallHeader: apiCallHeader,
-        searchTeachersBySkillPath: searchTeachersBySkillPath
+        searchTeachersBySkillPath: searchTeachersBySkillPath,
+        paymentPath: paymentPath
     };
 })();
 
