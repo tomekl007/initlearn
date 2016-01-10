@@ -16,7 +16,6 @@ import com.stormpath.tutorial.utils.AccountUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -51,6 +50,16 @@ public class UserService implements AccountFields {
     public List<User> findUsersByEmail(String email) {
         List<Account> accounts = findAccountsByEmail(email);
         return AccountUtils.mapToUsers(accounts);
+    }
+
+    public Optional<User> findUserByEmail(String email) {
+        List<Account> accounts = findAccountsByEmail(email);
+        List<User> users = AccountUtils.mapToUsers(accounts);
+        if(users.size() == 0 ){
+            return Optional.empty();
+        }else{
+            return Optional.of(users.get(0));
+        }
     }
 
     public List<Account> findAccountsByEmail(String email) {

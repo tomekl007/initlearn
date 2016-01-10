@@ -16,9 +16,10 @@ public class User {
     public final String img;
     public final Double average;
     public final Integer numberOfRates;
+    public final Boolean isATeacher;
 
     public User(String email, String fullName, String givenName, String middleName, String screenHero, Integer hourRate,
-                String linkedIn, List<String> skills, List<String> links, String bio, String img, Double average, Integer numberOfRates) {
+                String linkedIn, List<String> skills, List<String> links, String bio, String img, Double average, Integer numberOfRates, Boolean isATeacher) {
         this.email = email;
         this.fullName = fullName;
         this.givenName = givenName;
@@ -32,6 +33,7 @@ public class User {
         this.img = img;
         this.average = average;
         this.numberOfRates = numberOfRates;
+        this.isATeacher = isATeacher;
     }
 
     @Override

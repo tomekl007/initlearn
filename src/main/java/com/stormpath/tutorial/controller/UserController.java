@@ -118,10 +118,10 @@ public class UserController {
         });
     }
 
-    @RequestMapping(value = "users/rate", method = RequestMethod.POST, consumes = "application/json")
-    public ResponseEntity<List<User>> addRateForTeacher(@RequestBody Rate rate, ServletRequest servletRequest) {
-        return AccountUtils.actionForAuthenticatedUserOrUnauthorized(servletRequest,
-                account -> userService.rateTeacher(rate.getRate(), account.getEmail()));
+    @RequestMapping(value = "users/{email:.+}/rate", method = RequestMethod.POST, consumes = "application/json")
+    public ResponseEntity<List<User>> addRateForTeacher(@RequestBody Rate rate, @PathVariable("email") String email) {
+        List<User> users = userService.rateTeacher(rate.getRate(), email);
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     @RequestMapping("/me")

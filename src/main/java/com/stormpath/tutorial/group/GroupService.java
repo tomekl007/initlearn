@@ -3,6 +3,7 @@ package com.stormpath.tutorial.group;
 import com.stormpath.sdk.account.Account;
 import com.stormpath.sdk.client.Client;
 import com.stormpath.sdk.group.Group;
+import com.stormpath.sdk.group.GroupList;
 import com.stormpath.tutorial.model.User;
 import com.stormpath.tutorial.utils.AccountUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,11 @@ public class GroupService {
                 .map(Group::getAccounts)
                 .map(AccountUtils::mapToUsers)
                 .orElse(Collections.emptyList());
+    }
+
+    public static boolean isATeacher(Account a) {
+        GroupList groups = a.getGroups(Collections.singletonMap("name", TEACHERS_GROUP_NAME));
+        return groups.getSize() == 1;
     }
 }
 

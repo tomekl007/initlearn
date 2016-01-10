@@ -5,6 +5,7 @@ import com.stormpath.sdk.account.Account;
 import com.stormpath.sdk.account.AccountList;
 import com.stormpath.sdk.directory.CustomData;
 import com.stormpath.sdk.servlet.account.AccountResolver;
+import com.stormpath.tutorial.group.GroupService;
 import com.stormpath.tutorial.model.User;
 import com.stormpath.tutorial.model.UserBuilder;
 import org.springframework.http.HttpStatus;
@@ -139,6 +140,7 @@ public class AccountUtils implements AccountFields {
 
 
     public static User mapAccountToUser(Account a) {
+        boolean isATeacher = GroupService.isATeacher(a);
         return new UserBuilder()
                 .setEmail(a.getEmail())
                 .setFullName(a.getFullName())
@@ -153,6 +155,7 @@ public class AccountUtils implements AccountFields {
                 .setImg(AccountUtils.getCustomFieldValue(a, IMG_FIELD))
                 .setAverage(AccountUtils.getCustomFieldValueAsDouble(a, AVERAGE_FIELD))
                 .setNumberOfRates(AccountUtils.getCustomIntegerValue(a, NUMBER_OF_RATES_FIELD))
+                .setIsATeacher(isATeacher)
                 .createUser();
     }
 
