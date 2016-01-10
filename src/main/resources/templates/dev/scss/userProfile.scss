@@ -25,7 +25,7 @@
 
 /*TODO user rating and payment btn should be rendered in react, delete display none prop*/
 
-.main-user-profile-rating,
+.main-user-profile-rating-wrapper,
 .main-user-profile-payment-btn {
   display: none;
 }
@@ -46,19 +46,31 @@
     display: none;
   }
 
-  .main-user-profile-rating,
+  .main-user-profile-rating-wrapper,
   .main-user-profile-payment-btn {
     display: block;
   }
 
-  .main-user-profile-rating {
+  .main-user-profile-rating-wrapper {
+    position: relative;
     width: 140px;
     margin: auto;
     overflow: hidden;
     font-size: rem-calc(30px);
+
+    &.disable:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #fff;
+      opacity: .5;
+    }
   }
 
-  .main-user-profile-rating-star-wrapper {
+  .main-user-profile-rating-star {
     position: relative;
     float: right;
 
