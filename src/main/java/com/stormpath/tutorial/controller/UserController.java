@@ -119,9 +119,16 @@ public class UserController {
     }
 
     @RequestMapping(value = "users/{email:.+}/rate", method = RequestMethod.POST, consumes = "application/json")
-    public ResponseEntity<List<User>> addRateForTeacher(@RequestBody Rate rate, @PathVariable("email") String email) {
-        List<User> users = userService.rateTeacher(rate.getRate(), email);
-        return new ResponseEntity<>(users, HttpStatus.OK);
+    public ResponseEntity<List<User>> addRateForTeacher(@RequestBody Rate rate, @PathVariable("email") String email,
+                                                        ServletRequest servletRequest) {
+        return AccountUtils.actionResponseEntityForAuthenticatedUserOrUnauthorized(servletRequest, userThatRate -> {
+            if(userService.alreadyRateThatTeacher(userThatRate, email)){
+                return new ResponseEntity<>(HttpStatus.PRECONDITION_FAILED);
+            }
+
+            List<User> users = userService.rateTeacher(userThatRate, rate.getRate(), email);
+            return new ResponseEntity<>(users, HttpStatus.OK);
+        });
     }
 
     @RequestMapping("/me")

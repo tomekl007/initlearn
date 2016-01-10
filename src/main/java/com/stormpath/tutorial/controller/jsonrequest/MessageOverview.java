@@ -7,10 +7,12 @@ import com.stormpath.tutorial.messages.Message;
  */
 public class MessageOverview {
     public final String emailTo;
+    public final String userFullName;
     public final Message lastMessage;
 
-    public MessageOverview(String emailTo, Message lastMessage) {
+    public MessageOverview(String emailTo, String userFullName, Message lastMessage) {
         this.emailTo = emailTo;
+        this.userFullName = userFullName;
         this.lastMessage = lastMessage;
     }
 }

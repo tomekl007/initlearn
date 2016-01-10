@@ -74,7 +74,7 @@ public class UserService implements AccountFields {
         return accounts;
     }
 
-    public List<User> rateTeacher(Integer newValue, String email) {
+    public List<User> rateTeacher(Account userThatRate, Integer newValue, String email) {
         Map<Account, User> usersByEmail = findUsersAndAccountByEmail(email);
         for (Map.Entry<Account, User> entry : usersByEmail.entrySet()) {
             Double currentAverage = Optional.ofNullable(entry.getValue().average).orElse(newValue.doubleValue());
@@ -82,14 +82,15 @@ public class UserService implements AccountFields {
 
             double newAverageRate = AverageCountStrategy.countApproxAverage(currentAverage, newValue, numberOfRates);
             logger.info("rateTeacher, new rate: " + newAverageRate);
-            addNewRateAndAverage(entry.getKey(), numberOfRates, newAverageRate);
+            addNewRateAndAverage(entry.getKey(), numberOfRates, newAverageRate, userThatRate);
         }
         return new ArrayList<>(findUsersAndAccountByEmail(email).values());
     }
 
-    private void addNewRateAndAverage(Account a, Integer numberOfRates, double newAverageRate) {
+    private void addNewRateAndAverage(Account a, Integer numberOfRates, double newAverageRate, Account userThatRate) {
         AccountUtils.addAverageForTeacher(a, newAverageRate);
         AccountUtils.addNumberOfRateForTeacher(a, numberOfRates + 1);
+        AccountUtils.addRatedBy(a, userThatRate);
     }
 
     public List<User> fillTeacherWithData(TeacherData teacherData, String email) {
@@ -174,5 +175,15 @@ public class UserService implements AccountFields {
                 .flatMap(Collection::stream)
                 .distinct()
                 .collect(Collectors.toList());
+    }
+
+    public boolean alreadyRateThatTeacher(Account userThatRate, String email) {
+        Optional<User> userByEmail = findUserByEmail(email);
+        if(userByEmail.isPresent()){
+            User user = userByEmail.get();
+            return user.ratedBy.contains(userThatRate.getEmail());
+        }else{
+            return false;
+        }
     }
 }

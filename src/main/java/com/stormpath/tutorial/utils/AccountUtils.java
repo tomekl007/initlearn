@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import javax.servlet.ServletRequest;
+import java.text.DecimalFormat;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -156,6 +157,7 @@ public class AccountUtils implements AccountFields {
                 .setAverage(AccountUtils.getCustomFieldValueAsDouble(a, AVERAGE_FIELD))
                 .setNumberOfRates(AccountUtils.getCustomIntegerValue(a, NUMBER_OF_RATES_FIELD))
                 .setIsATeacher(isATeacher)
+                .setRatedBy(AccountUtils.getCustomListFieldValue(a, RATED_BY))
                 .createUser();
     }
 
@@ -223,5 +225,10 @@ public class AccountUtils implements AccountFields {
             Collections.sort(list, Ordering.from(userComparator));
         }
 
+    }
+
+    public static void addRatedBy(Account a, Account userThatRate) {
+        addCustomListFieldToAccount(a, RATED_BY,
+                Collections.singletonList(userThatRate.getEmail()), a.getCustomData());
     }
 }
