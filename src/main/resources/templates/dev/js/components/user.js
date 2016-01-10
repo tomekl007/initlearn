@@ -11,6 +11,7 @@ var User = React.createClass({
         var rate = {
             rate: parseInt(event.currentTarget.getAttribute('data-rate'))
         };
+
         $.ajax({
             type: 'post',
             url: config.userRatingUrl(this.props.email),
@@ -27,6 +28,8 @@ var User = React.createClass({
     },
     render() {
 
+        var userRateInfo;
+
         var userSkills = this.props.data.skills.map(function (skill, key) {
             return (
                 <span className='main-user-profile-skill color-white fw-700' key={key}>{skill}</span>
@@ -39,15 +42,17 @@ var User = React.createClass({
             );
         });
 
-        var userRateInfo;
-
         if (this.props.data.average !== null) {
             userRateInfo =
-                <p className='main-user-profile-label-average-rate'>Average rate:</p>,
-                <p className='main-user-profile-average-rate'>{this.props.data.average}</p>,
-                <p className='main-user-profile-label-number-of-rates'>Number of rates:</p>,
-                <p className='main-user-profile-number-of-rates'>{this.props.data.numberOfRates}</p>;
+                [<p className='main-user-profile-label-average-rate' key={1} >Average rate:</p>,
+                <p className='main-user-profile-average-rate'key={2} >
+                    <i className='fa fa-star color-gold'></i>
+                    {this.props.data.average}
+                </p>,
+                <p className='main-user-profile-label-number-of-rates'key={3} >Number of rates:</p>,
+                <p className='main-user-profile-number-of-rates'key={4} >{this.props.data.numberOfRates}</p>];
         }
+        
         return (
             <div className='col s12 m6'>
                 <div className='card-wrapper fw-100'>
@@ -78,23 +83,23 @@ var User = React.createClass({
                         <div className='main-user-profile-rating'>
                             <span className='main-user-profile-rating-star-wrapper' data-rate='5' {...tapOrClick(this.rate)}>
                                 <i className='fa fa-star-o'></i>
-                                <i className='fa fa-star full-star'></i>
+                                <i className='fa fa-star full-star color-gold'></i>
                             </span>
                             <span className='main-user-profile-rating-star-wrapper ' data-rate='4' {...tapOrClick(this.rate)}>
                                 <i className='fa fa-star-o'></i>
-                                <i className='fa fa-star full-star'></i>
+                                <i className='fa fa-star full-star color-gold'></i>
                             </span>
                             <span className='main-user-profile-rating-star-wrapper' data-rate='3' {...tapOrClick(this.rate)}>
                                 <i className='fa fa-star-o'></i>
-                                <i className='fa fa-star full-star'></i>
+                                <i className='fa fa-star full-star color-gold'></i>
                             </span>
                             <span className='main-user-profile-rating-star-wrapper' data-rate='2' {...tapOrClick(this.rate)}>
                                 <i className='fa fa-star-o'></i>
-                                <i className='fa fa-star full-star'></i>
+                                <i className='fa fa-star full-star color-gold'></i>
                             </span>
                             <span className='main-user-profile-rating-star-wrapper' data-rate='1' {...tapOrClick(this.rate)}>
                                 <i className='fa fa-star-o'></i>
-                                <i className='fa fa-star full-star'></i>
+                                <i className='fa fa-star full-star color-gold'></i>
                             </span>
                         </div>
 
