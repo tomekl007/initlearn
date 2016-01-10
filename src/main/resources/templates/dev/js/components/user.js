@@ -46,7 +46,7 @@ var User = React.createClass({
                 console.log(jqXHR);
                 var message = 'something went wrong';
                 if (jqXHR.status === 412) {
-                    message = 'vote error';
+                    message = 'You already rate that teacher';
                 }
                 this.setState({modalOpen: true, rateFeedbackType: 'cancel', rateFeedbackMessage: message});
             }.bind(this)
