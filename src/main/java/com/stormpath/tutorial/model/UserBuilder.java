@@ -16,6 +16,7 @@ public class UserBuilder {
     private String img;
     private Double average;
     private Integer numberOfRates;
+    private Boolean isATeacher;
 
     public UserBuilder setEmail(String email) {
         this.email = email;
@@ -82,7 +83,13 @@ public class UserBuilder {
         return this;
     }
 
+    public UserBuilder setIsATeacher(boolean isATeacher) {
+        this.isATeacher = isATeacher;
+        return this;
+    }
+
     public User createUser() {
-        return new User(email, fullName, givenName, middleName, screenHero, hourRate, linkedIn, skills, links, bio, img, average, numberOfRates);
+        return new User(email, fullName, givenName, middleName, screenHero, hourRate,
+                linkedIn, skills, links, bio, img, average, numberOfRates, isATeacher);
     }
 }
