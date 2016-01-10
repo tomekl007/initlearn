@@ -17,6 +17,7 @@ public class UserBuilder {
     private Double average;
     private Integer numberOfRates;
     private Boolean isATeacher;
+    private List<String> ratedBy;
 
     public UserBuilder setEmail(String email) {
         this.email = email;
@@ -90,6 +91,11 @@ public class UserBuilder {
 
     public User createUser() {
         return new User(email, fullName, givenName, middleName, screenHero, hourRate,
-                linkedIn, skills, links, bio, img, average, numberOfRates, isATeacher);
+                linkedIn, skills, links, bio, img, average, numberOfRates, isATeacher, ratedBy);
+    }
+
+    public UserBuilder setRatedBy(List<String> ratedBy) {
+        this.ratedBy = ratedBy;
+        return this;
     }
 }

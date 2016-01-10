@@ -157,6 +157,7 @@ public class AccountUtils implements AccountFields {
                 .setAverage(AccountUtils.getCustomFieldValueAsDouble(a, AVERAGE_FIELD))
                 .setNumberOfRates(AccountUtils.getCustomIntegerValue(a, NUMBER_OF_RATES_FIELD))
                 .setIsATeacher(isATeacher)
+                .setRatedBy(AccountUtils.getCustomListFieldValue(a, RATED_BY))
                 .createUser();
     }
 

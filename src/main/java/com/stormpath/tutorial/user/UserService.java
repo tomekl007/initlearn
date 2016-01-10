@@ -176,4 +176,14 @@ public class UserService implements AccountFields {
                 .distinct()
                 .collect(Collectors.toList());
     }
+
+    public boolean alreadyRateThatTeacher(Account userThatRate, String email) {
+        Optional<User> userByEmail = findUserByEmail(email);
+        if(userByEmail.isPresent()){
+            User user = userByEmail.get();
+            return user.ratedBy.contains(userThatRate.getEmail());
+        }else{
+            return false;
+        }
+    }
 }
