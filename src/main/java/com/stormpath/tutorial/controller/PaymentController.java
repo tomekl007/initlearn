@@ -58,7 +58,7 @@ public class PaymentController {
         Optional<String> payKey = getPayKeyValue(request);
         handlePaymentStatus(payKey, "success");
 
-        return "redirect/#/successPayment";
+        return "redirect:/#/successPayment";
     }
 
     private ResponseEntity handlePaymentStatus(Optional<String> payKey, String msg) throws IOException, OAuthException, InvalidResponseDataException, SSLConfigurationException, ClientActionRequiredException, MissingCredentialException, HttpErrorException, InvalidCredentialException, InterruptedException {
