@@ -51,7 +51,7 @@ public class GroupService {
     }
 
     public static boolean isATeacher(Account a) {
-        GroupList groups = a.getGroups(Collections.singletonMap("name", "teachers"));
+        GroupList groups = a.getGroups(Collections.singletonMap("name", TEACHERS_GROUP_NAME));
         return groups.getSize() == 1;
     }
 }
