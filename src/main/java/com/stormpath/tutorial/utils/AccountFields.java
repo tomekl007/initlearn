@@ -14,4 +14,5 @@ public interface AccountFields {
     public static final String IMG_FIELD = "img";
     public static final String NUMBER_OF_RATES_FIELD = "numberOfRates";
     public static final String AVERAGE_FIELD = "average";
+    public static final String RATED_BY = "rated_by";
 }

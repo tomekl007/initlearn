@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import javax.servlet.ServletRequest;
+import java.text.DecimalFormat;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -223,5 +224,10 @@ public class AccountUtils implements AccountFields {
             Collections.sort(list, Ordering.from(userComparator));
         }
 
+    }
+
+    public static void addRatedBy(Account a, Account userThatRate) {
+        addCustomListFieldToAccount(a, RATED_BY,
+                Collections.singletonList(userThatRate.getEmail()), a.getCustomData());
     }
 }
