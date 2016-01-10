@@ -47,6 +47,12 @@
 .fa-times-circle-o:before {
   content: ""; }
 
+.fa-star:before {
+  content: ""; }
+
+.fa-star-o:before {
+  content: ""; }
+
 *, *:before, *:after {
   box-sizing: inherit; }
 
@@ -98,6 +104,9 @@ a {
 
 .color-purple {
   color: #83639c; }
+
+.color-gold {
+  color: #f79f00; }
 
 .bg-gold {
   background-color: #f79f00; }

@@ -1,32 +1,65 @@
+.main-user-profile-nav-messages {
+  position: absolute;
+  top: 8px;
+  right: 0;
+  padding: 0.3125rem;
+  z-index: 3;
+  color: #fff;
+  font-size: 1.875rem;
+  transition: color .3s ease; }
+
+.main-user-profile-nav-messages:hover {
+  color: #ffee9c; }
+
+.main-user-profile-skill {
+  padding: 0.3125rem;
+  margin: 0 0.3125rem;
+  background-color: #f26377;
+  border-radius: 2px; }
+
+.main-user-profile-rating, .main-user-profile-payment-btn {
+  display: none; }
+
 .main-section-user-profile {
   margin-top: 150px; }
 
-.main-section-user-profile .card-wrapper .user-nav-profile {
+.main-section-user-profile .main-user-profile-nav-profile {
   display: none; }
 
-.main-section-user-profile .card-wrapper .user-skill {
+.main-section-user-profile .main-user-profile-skill {
   display: block;
   margin: 0.3125rem 0; }
 
-.main-section-user-profile .card-wrapper .user-more-info-btn {
+.main-section-user-profile .main-user-profile-more-info-btn {
   display: none; }
 
-.main-section-user-profile .card-header {
-  display: none; }
+.main-section-user-profile .main-user-profile-rating, .main-section-user-profile .main-user-profile-payment-btn {
+  display: block; }
+
+.main-section-user-profile .main-user-profile-rating {
+  width: 140px;
+  margin: auto;
+  overflow: hidden;
+  font-size: 1.875rem; }
+
+.main-section-user-profile .main-user-profile-rating-star-wrapper {
+  position: relative;
+  float: right; }
+
+.main-section-user-profile .main-user-profile-rating-star-wrapper .full-star {
+  display: none;
+  position: absolute;
+  top: 1px;
+  left: 0; }
+
+.main-section-user-profile .main-user-profile-rating-star-wrapper:hover .full-star {
+  display: block; }
+
+.main-section-user-profile .main-user-profile-rating-star-wrapper:hover ~ span .full-star {
+  display: block; }
 
 @media only screen and (min-width: 601px) {
-  .main-section-user-profile .card-wrapper:before {
-    height: 104px; }
-  .main-section-user-profile .card-header-img {
-    top: 2px;
-    left: 2px;
-    margin: 0;
-    border-radius: 0; }
-  .main-section-user-profile .card-header {
-    display: block; }
-  .main-section-user-profile .card-header .user-name {
+  .main-section-user-profile .card-header .main-user-profile-name {
     margin: 0 0 45px 0; }
-  .main-section-user-profile .card-content {
-    text-align: left; }
-  .main-section-user-profile .card-content .user-name {
+  .main-section-user-profile .card-content .main-user-profile-name {
     display: none; } }

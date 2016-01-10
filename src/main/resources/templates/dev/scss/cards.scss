@@ -23,37 +23,6 @@
     height: 60px;
     background-color: $color-purple;
   }
-
-  .user-nav-profile {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 2;
-  }
-
-  .user-nav-messages {
-    position: absolute;
-    top: 8px;
-    right: 0;
-    padding: rem-calc(5px);
-    z-index: 3;
-    color: #fff;
-    font-size: rem-calc(30px);
-    transition: color .3s ease;
-
-    &:hover {
-      color: $color-yellow;
-    }
-  }
-
-  .user-skill {
-    padding: rem-calc(5px);
-    margin: 0 rem-calc(5px);
-    background-color: $cardsUserSkillsBackground;
-    border-radius: $border-radius;
-  }
 }
 
 .card-header,
@@ -77,5 +46,65 @@
 
   img {
     width: 100%;
+  }
+}
+
+.main-section-teachers {
+
+  .card-wrapper {
+    height: 300px;
+    max-height: 300px;
+
+    &:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 70px;
+      @include linear-gradient-top3(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0), 0%, rgba(255, 255, 255, 0.9), 30%, rgba(255, 255, 255, 1), 70%, rgba(255, 255, 255, 1), 100%);
+    }
+  }
+
+  .card-header {
+    display: none;
+  }
+
+  .card-content {
+    height: 100%;
+    overflow: hidden;
+  }
+}
+
+.main-section-user-profile {
+
+  .card-header {
+    display: none;
+  }
+}
+
+@media #{$medium-and-up} {
+  .main-section-user-profile {
+    .card-wrapper {
+
+      &:before {
+        height: 104px;
+      }
+    }
+
+    .card-header-img {
+      top: 2px;
+      left: 2px;
+      margin: 0;
+      border-radius: 0;
+    }
+
+    .card-header {
+      display: block;
+    }
+
+    .card-content {
+      text-align: left;
+    }
   }
 }
