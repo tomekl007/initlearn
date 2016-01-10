@@ -45,17 +45,20 @@ public class PaymentController {
     }
 
     @RequestMapping("/ap_chained_payment_cancel")
-    public ResponseEntity paymentCancelled(HttpServletRequest request) throws URISyntaxException, IOException, InvalidResponseDataException, SSLConfigurationException, OAuthException, MissingCredentialException, InvalidCredentialException, HttpErrorException, ClientActionRequiredException, InterruptedException {
+    public String paymentCancelled(HttpServletRequest request) throws URISyntaxException, IOException, InvalidResponseDataException, SSLConfigurationException, OAuthException, MissingCredentialException, InvalidCredentialException, HttpErrorException, ClientActionRequiredException, InterruptedException {
         logger.info("payment cancelled");
         Optional<String> payKey = getPayKeyValue(request);
-        return handlePaymentStatus(payKey, "cancel");
+        handlePaymentStatus(payKey, "cancel");
+
+        return "redirect:/#/cancelPayment";
     }
 
     @RequestMapping("/ap_chained_payment_success")
-    public ResponseEntity paymentSucceed(HttpServletRequest request) throws URISyntaxException, IOException, InvalidResponseDataException, SSLConfigurationException, OAuthException, MissingCredentialException, InvalidCredentialException, HttpErrorException, ClientActionRequiredException, InterruptedException {
+    public String paymentSucceed(HttpServletRequest request) throws URISyntaxException, IOException, InvalidResponseDataException, SSLConfigurationException, OAuthException, MissingCredentialException, InvalidCredentialException, HttpErrorException, ClientActionRequiredException, InterruptedException {
         Optional<String> payKey = getPayKeyValue(request);
+        handlePaymentStatus(payKey, "success");
 
-        return handlePaymentStatus(payKey, "success");
+        return "/redirect/#/successPayment";
     }
 
     private ResponseEntity handlePaymentStatus(Optional<String> payKey, String msg) throws IOException, OAuthException, InvalidResponseDataException, SSLConfigurationException, ClientActionRequiredException, MissingCredentialException, HttpErrorException, InvalidCredentialException, InterruptedException {
