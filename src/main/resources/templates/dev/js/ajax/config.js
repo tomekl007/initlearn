@@ -27,6 +27,10 @@ var Config = (function () {
         return messagesUrl + '/' + email;
     };
 
+    var userRatingUrl = function(email) {
+      return userUrl + email + '/rate';
+    };
+
     /*calls*/
     var authorizationPrefix = 'Bearer ';
 
@@ -58,6 +62,7 @@ var Config = (function () {
         logoutUserUrl: logoutUserUrl,
         userUrl: userUrl,
         usersHash: usersHash,
+        userRatingUrl: userRatingUrl,
         authorizationPrefix: authorizationPrefix,
         messagesHash: messagesHash,
         messagesUrl: messagesUrl,

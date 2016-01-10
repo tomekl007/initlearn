@@ -9,14 +9,14 @@ import UserComponent from './user';
 var Users = React.createClass({
 
     componentWillReceiveProps(updatedProps) {
-        this.loadTeachersFromServer(updatedProps.url);
+        this.loadUsersFromServer(updatedProps.url);
     },
     getInitialState() {
         return {
             data: []
         };
     },
-    loadTeachersFromServer(url) {
+    loadUsersFromServer(url) {
 
         /*TODO improve AJAX CALLS*/
         $.ajax({
@@ -33,11 +33,15 @@ var Users = React.createClass({
         });
     },
     componentWillMount() {
-        this.loadTeachersFromServer(this.props.url);
+        this.loadUsersFromServer(this.props.url);
     },
     render() {
         return (
-            <UserComponent data={this.state.data} />
+            <div>
+            {this.state.data.map(function (data, key) {
+                return <UserComponent data={data} email={data.email} key={key}/>
+            })}
+            </div>
         );
     }
 });

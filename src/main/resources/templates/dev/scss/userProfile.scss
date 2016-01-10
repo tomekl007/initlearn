@@ -1,56 +1,97 @@
 @import "variables";
 @import "functions";
 
+.main-user-profile-nav-messages {
+  position: absolute;
+  top: 8px;
+  right: 0;
+  padding: rem-calc(5px);
+  z-index: 3;
+  color: #fff;
+  font-size: rem-calc(30px);
+  transition: color .3s ease;
+
+  &:hover {
+    color: $color-yellow;
+  }
+}
+
+.main-user-profile-skill {
+  padding: rem-calc(5px);
+  margin: 0 rem-calc(5px);
+  background-color: $cardsUserSkillsBackground;
+  border-radius: $border-radius;
+}
+
+/*TODO user rating and payment btn should be rendered in react, delete display none prop*/
+
+.main-user-profile-rating,
+.main-user-profile-payment-btn {
+  display: none;
+}
+
 .main-section-user-profile {
   margin-top: 150px;
 
-  .card-wrapper {
-
-    .user-nav-profile {
-      display: none;
-    }
-
-    .user-skill {
-      display: block;
-      margin: rem-calc(5px) 0;
-    }
-
-    .user-more-info-btn {
-      display: none;
-    }
-  }
-
-  .card-header {
+  .main-user-profile-nav-profile {
     display: none;
   }
 
-  @media #{$medium-and-up} {
-    .card-wrapper {
+  .main-user-profile-skill {
+    display: block;
+    margin: rem-calc(5px) 0;
+  }
 
-      &:before {
-        height: 104px;
+  .main-user-profile-more-info-btn {
+    display: none;
+  }
+
+  .main-user-profile-rating,
+  .main-user-profile-payment-btn {
+    display: block;
+  }
+
+  .main-user-profile-rating {
+    width: 140px;
+    margin: auto;
+    overflow: hidden;
+    font-size: rem-calc(30px);
+  }
+
+  .main-user-profile-rating-star-wrapper {
+    position: relative;
+    float: right;
+
+    .full-star {
+      display: none;
+      position: absolute;
+      top: 1px;
+      left: 0;
+      color: $color-gold;
+    }
+
+    &:hover {
+      .full-star {
+        display: block;
+      }
+
+      ~ span .full-star {
+        display: block;
       }
     }
+  }
+}
 
-    .card-header-img {
-      top: 2px;
-      left: 2px;
-      margin: 0;
-      border-radius: 0;
-    }
-
+@media #{$medium-and-up} {
+  .main-section-user-profile {
     .card-header {
-      display: block;
-
-      .user-name {
+      .main-user-profile-name {
         margin: 0 0 45px 0;
       }
     }
 
     .card-content {
-      text-align: left;
-
-      .user-name {
+      .main-user-profile-name {
         display: none;
       }
     }
