@@ -17,15 +17,17 @@ var Users = React.createClass({
         };
     },
     loadUsersFromServer(url) {
-
         /*TODO improve AJAX CALLS*/
         $.ajax({
-            url: url,
+            url: url || this.props.url,
             dataType: 'json',
             headers: config.apiCallHeader(),
             cache: false,
             success: function (data) {
-                this.setState({data: data});
+                this.setState({
+                    data: data,
+                    url: url
+                });
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(this.props.url, status, err.toString());
@@ -36,10 +38,11 @@ var Users = React.createClass({
         this.loadUsersFromServer(this.props.url);
     },
     render() {
+        var $thisComponent = this;
         return (
             <div>
             {this.state.data.map(function (data, key) {
-                return <UserComponent data={data} email={data.email} key={key}/>
+                return <UserComponent parent={$thisComponent} data={data} email={data.email} key={key}/>
             })}
             </div>
         );
