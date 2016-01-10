@@ -3,20 +3,23 @@ package com.stormpath.tutorial.messages;
 import com.stormpath.sdk.account.Account;
 import com.stormpath.sdk.directory.CustomData;
 import com.stormpath.tutorial.controller.jsonrequest.MessageOverview;
+import com.stormpath.tutorial.model.User;
+import com.stormpath.tutorial.user.UserService;
 import com.stormpath.tutorial.utils.AccountUtils;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
 public class MessageService {
+
+    @Autowired
+    UserService userService;
     public static final String MESSAGES_FIELD = "messages";
     public static final String MESSAGES_READ_OFFSET_FIELD = "messages-offset";
     public static final String CONVERSATIONS_WITH_FIELD = "conversations-with";
@@ -134,13 +137,15 @@ public class MessageService {
         account.save();
     }
 
-    public static MessageOverview getLastMessage(Account account, String email) {
+    public MessageOverview getLastMessage(Account account, String email) {
         Object o = account.getCustomData().get(getLastMessageField(email));
+        String userFullName = userService.findUserByEmail(email).map(u -> u.fullName).orElse("");
+
         if(o == null){
-            return new MessageOverview(email, null);
+            return new MessageOverview(email, userFullName, null);
         }else{
             List<LinkedHashMap> messages = (List<LinkedHashMap>) o;
-            return new MessageOverview(email, Message.mapFromLinkedHashMap(messages.get(0)));
+            return new MessageOverview(email, userFullName, Message.mapFromLinkedHashMap(messages.get(0)));
         }
     }
 
