@@ -84,7 +84,7 @@ public class UserService implements AccountFields {
             logger.info("rateTeacher, new rate: " + newAverageRate);
             addNewRateAndAverage(entry.getKey(), numberOfRates, newAverageRate);
         }
-        return new ArrayList<>(usersByEmail.values());
+        return new ArrayList<>(findUsersAndAccountByEmail(email).values());
     }
 
     private void addNewRateAndAverage(Account a, Integer numberOfRates, double newAverageRate) {

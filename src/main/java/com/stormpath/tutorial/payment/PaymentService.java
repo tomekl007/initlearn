@@ -9,6 +9,8 @@ import com.stormpath.tutorial.db.payment.Payment;
 import com.stormpath.tutorial.db.payment.PaymentsRepository;
 import com.stormpath.tutorial.db.payment.PaypalConfiguration;
 import com.stormpath.tutorial.model.User;
+import com.stormpath.tutorial.user.UserService;
+import com.stormpath.tutorial.utils.AccountUtils;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,22 +18,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Component
 public class PaymentService {
     private static final Logger logger = LoggerFactory.getLogger(PaymentService.class);
+    public static final double COMPANY_PROVISION = 5.00;//todo move to configuration
     @Autowired
     PaymentsRepository paymentsRepository;
     @Autowired
     PaypalConfiguration paypalConfiguration;
+    @Autowired
+    UserService userService;
+
 
     public String pay(User sender, String toEmail) {
 
-        paymentsRepository.save(new Payment(sender.email, toEmail, 10.00d, DateTime.now().toDate()));//todo hourRate
+        Optional<User> receiver = userService.findUserByEmail(toEmail);
+        Double receiverHourRate = receiver.get().hourRate.doubleValue();//todo handle absence
+
+        paymentsRepository.save(new Payment(sender.email, toEmail, receiverHourRate, DateTime.now().toDate()));
 
         PayRequest payRequest = new PayRequest();
 
@@ -39,7 +45,7 @@ public class PaymentService {
         Receiver secondaryReceiver = createCompanyReceiver();
         receivers.add(secondaryReceiver);
 
-        createTeacherReceiver(toEmail, receivers);
+        createTeacherReceiver(toEmail, receivers, receiverHourRate);
         ReceiverList receiverList = new ReceiverList(receivers);
 
         payRequest.setReceiverList(receiverList);
@@ -62,9 +68,9 @@ public class PaymentService {
         }
     }
 
-    private void createTeacherReceiver(String toEmail, List<Receiver> receivers) {
+    private void createTeacherReceiver(String toEmail, List<Receiver> receivers, Double receiverHourRate) {
         Receiver primaryReceiver = new Receiver();
-        primaryReceiver.setAmount(10.00);
+        primaryReceiver.setAmount(receiverHourRate);
         primaryReceiver.setEmail(toEmail);
         primaryReceiver.setPrimary(true);
         receivers.add(primaryReceiver);
@@ -72,7 +78,7 @@ public class PaymentService {
 
     private Receiver createCompanyReceiver() {
         Receiver secondaryReceiver = new Receiver();
-        secondaryReceiver.setAmount(5.00);
+        secondaryReceiver.setAmount(COMPANY_PROVISION);
         secondaryReceiver.setEmail("initlearn@gmail.com");
         return secondaryReceiver;
     }
