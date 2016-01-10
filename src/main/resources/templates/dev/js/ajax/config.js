@@ -28,7 +28,7 @@ var Config = (function () {
     };
 
     var userRatingUrl = function(email) {
-      return userUrl + email + '/rate';
+      return userUrl + '/' + email + '/rate';
     };
 
     /*calls*/
