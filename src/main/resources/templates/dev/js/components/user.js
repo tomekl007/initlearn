@@ -27,11 +27,11 @@ var User = React.createClass({
 
         api.addUserRating(this.props.email, rate)
             .then(this.successRate)
-            .catch(this.failureRate);
+            ['catch'](this.failureRate);
 
         $rateWrapper.classList.add('disable');
     },
-    successRate() {
+    successRate(data) {
         console.log('add vote');
         this.setState({
             data: data[0],

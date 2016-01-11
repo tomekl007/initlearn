@@ -7,7 +7,7 @@ function $http(url) {
     var core = {
 
         // Method that performs the ajax request
-        ajax: function (method, url, args, dataType) {
+        ajax: function (method, url, args) {
 
             // Creating a promise
             var promise = new PromiseP(function(resolve, reject) {
@@ -19,19 +19,17 @@ function $http(url) {
 
                 client.withCredentials = true;
                 client.open(method, url + (params || ''), true);
-                client.overrideMimeType(dataType || 'json');
 
                 if (args.headers) {
                     Object.keys(args.headers).forEach(function (key) {
                         client.setRequestHeader(key, args.headers[key]);
                     });
                 }
-                console.log('promise data to send');
-                console.log(data);
+
                 client.send(data);
                 client.onload = function () {
                     if (this.status >= 200 && this.status < 300) {
-                        // Performs the function "resolve" when this.status is equal to 2xx
+                                // Performs the function "resolve" when this.status is equal to 2xx
                         resolve(this.response);
                     } else {
                         // Performs the function "reject" when this.status is different than 2xx
@@ -39,7 +37,7 @@ function $http(url) {
                     }
                 };
                 client.onerror = function () {
-                    console.log('error');
+                    console.log(this);
                     reject(this);
                 };
             });
