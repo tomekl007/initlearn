@@ -25,7 +25,8 @@ function $http(url) {
                         client.setRequestHeader(key, args.headers[key]);
                     });
                 }
-
+                console.log('promise data to send');
+                console.log(data);
                 client.send(data);
                 client.onload = function () {
                     if (this.status >= 200 && this.status < 300) {
@@ -37,6 +38,7 @@ function $http(url) {
                     }
                 };
                 client.onerror = function () {
+                    console.log('error');
                     reject(this);
                 };
             });

@@ -90,7 +90,7 @@
     height: auto;
     float: right; }
   .main-nav-list.pos-left {
-    left: initial; }
+    left: 0; }
   .main-nav-list-item {
     width: auto;
     border-bottom: none;
