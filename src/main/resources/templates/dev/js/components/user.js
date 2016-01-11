@@ -32,6 +32,7 @@ var User = React.createClass({
         $rateWrapper.classList.add('disable');
     },
     successRate() {
+        console.log('add vote');
         this.setState({
             data: data[0],
             modalOpen: true,
@@ -40,6 +41,7 @@ var User = React.createClass({
         });
     },
     failureRate(jqXHR) {
+        console.log(jqXHR);
         var message = 'something went wrong';
         if (jqXHR.status === 412) {
             message = 'You already rate that teacher';

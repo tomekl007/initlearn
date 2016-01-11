@@ -18,8 +18,8 @@ function $http(url) {
                 var data = JSON.stringify(args.json) || formData || '';
 
                 client.withCredentials = true;
-                client.overrideMimeType('json' || dataType);
-                client.open(method, url + (params || ''));
+                client.open(method, url + (params || ''), true);
+                client.overrideMimeType(dataType || 'json');
 
                 if (args.headers) {
                     Object.keys(args.headers).forEach(function (key) {
