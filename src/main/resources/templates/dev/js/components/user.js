@@ -32,6 +32,7 @@ var User = React.createClass({
         $rateWrapper.classList.add('disable');
     },
     successRate(data) {
+        console.log(data);
         console.log('add vote');
         this.setState({
             data: data[0],
