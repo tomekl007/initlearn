@@ -60,20 +60,7 @@ public class ReservationService {
     private List<Appointment> addAppointment(Account reservedBy, Account teacher, DateTime reservationTime) {
         Appointment appointment = new Appointment(teacher.getEmail(), reservationTime.getMillis());
 
-        CustomData customData = reservedBy.getCustomData();
-
-        List<Appointment> appointmentList;
-        Object appointments = customData.get(appointmentsField);
-        if (appointments == null) {
-            appointmentList = new LinkedList<>();
-        } else {
-            appointmentList = (List<Appointment>) appointment;
-        }
-        appointmentList.add(appointment);
-
-        customData.put(appointmentsField, appointmentList);
-        reservedBy.save();
-        return appointmentList;
+        return addToList(reservedBy, appointment, appointmentsField);
     }
 
     private void addReservation(Account reservedBy, Account teacher, DateTime reservationTime) {
@@ -82,19 +69,20 @@ public class ReservationService {
         addToList(teacher, reservation, reservationField);
     }
 
-    private static<T> void addToList(Account account, T toAdd, String fieldName) {
+    private static<T> List<T> addToList(Account account, T toAdd, String fieldName) {
         CustomData customData = account.getCustomData();
 
-        List<T> reservationList;
+        List<T> list;
         Object reservations = customData.get(fieldName);
         if (reservations == null) {
-            reservationList = new LinkedList<>();
+            list = new LinkedList<>();
         } else {
-            reservationList = (List<T>) reservations;
+            list = (List<T>) reservations;
         }
-        reservationList.add(toAdd);
+        list.add(toAdd);
 
-        customData.put(fieldName, reservationList);
+        customData.put(fieldName, list);
         account.save();
+        return list;
     }
 }
