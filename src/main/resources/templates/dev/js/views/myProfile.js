@@ -7,7 +7,7 @@ class MyProfile extends React.Component {
     render() {
         return (
             <section id='profile' className='main-section-user-profile'>
-                <UsersComponent url={config.loggedUserUrl} />
+                <UsersComponent url={config.getUserDataUrl} />
             </section>
         );
     }

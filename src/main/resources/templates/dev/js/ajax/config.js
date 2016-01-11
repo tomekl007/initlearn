@@ -4,37 +4,40 @@ var Config = (function () {
 
     /*urls, paths, hashes*/
     var appUrl = 'https://initlearn.herokuapp.com';
-    var authTokenUrl = appUrl + '/oauth/token';
-    var userGroupPath = '/group/users/';
-    var allTeachersUrl = appUrl + userGroupPath + 'teachers';
-    var registerAccountUrl = appUrl + '/registerAccount';
-    var isUserLoggedInUrl = appUrl + '/isLoggedIn';
-    var loggedUserUrl = appUrl + '/me';
     var myProfileHash = '#me';
-    var logoutUserUrl = appUrl + '/logout';
-    var userUrl = appUrl + '/users';
+    var usersUrl = appUrl + '/users';
     var usersHash = '#users/';
-    var messagesHash = '#msg/';
+    var userGroupPath = '/group/users/';
     var messagesUrl = appUrl + '/msg';
-    var messagesOverviewUrl = messagesUrl + '/overview';
-    var addUserToTeacherGroupUrl = userUrl + '/teachers';
-    var updateScreenheroUrl = userUrl + '/screenhero';
-    var updateUserDataUrl = userUrl + '/data';
+    var messagesHash = '#msg/';
+
+
+    var registerAccountUrl = appUrl + '/registerAccount';
+    var addUserToTeacherGroupUrl = usersUrl + '/teachers';
+    var updateScreenheroUrl = usersUrl + '/screenhero';
+    var updateUserDataUrl = usersUrl + '/data';
+    var isUserLoggedInUrl = appUrl + '/isLoggedIn';
+    var getAuthTokenUrl = appUrl + '/oauth/token';
+    var getUserDataUrl = appUrl + '/me';
+    var getMessagesOverviewUrl = messagesUrl + '/overview';
+    var getSearchAutocompleteOptionsUrl = appUrl + '/skills';
+    var getTeachersUrl = appUrl + userGroupPath + 'teachers';
+    var logoutUserUrl = appUrl + '/logout';
+
     var searchUrl = 'search?';
     var searchTeachersBySkillPath = usersHash + searchUrl + 'skill=';
     var paymentPath = '/adaptivePayment?toEmail=';
-    var searchAutocompleteOptionsUrl = appUrl + '/skills';
 
     var getMessagesUrl = function (email) {
         return messagesUrl + '/' + email;
     };
 
-    var userRatingUrl = function(email) {
-      return userUrl + '/' + email + '/rate';
+    var addUserRatingUrl = function(email) {
+      return usersUrl + '/' + email + '/rate';
     };
 
-    var updateUserDataField = function(fieldPath) {
-        return userUrl + '/' + fieldPath;
+    var updateUserDataFieldUrl = function(fieldPath) {
+        return usersUrl + '/' + fieldPath;
     };
 
     /*calls*/
@@ -59,29 +62,30 @@ var Config = (function () {
 
     return {
         appUrl: appUrl,
-        authTokenUrl: authTokenUrl,
-        userGroupPath: userGroupPath,
-        allTeachersUrl: allTeachersUrl,
-        registerAccountUrl: registerAccountUrl,
-        isUserLoggedInUrl: isUserLoggedInUrl,
-        loggedUserUrl: loggedUserUrl,
         myProfileHash: myProfileHash,
-        logoutUserUrl: logoutUserUrl,
-        userUrl: userUrl,
+        usersUrl: usersUrl,
         usersHash: usersHash,
-        userRatingUrl: userRatingUrl,
-        authorizationPrefix: authorizationPrefix,
-        messagesHash: messagesHash,
+        userGroupPath: userGroupPath,
         messagesUrl: messagesUrl,
-        messagesOverviewUrl: messagesOverviewUrl,
-        updateUserDataUrl: updateUserDataUrl,
+        messagesHash: messagesHash,
+        registerAccountUrl: registerAccountUrl,
         addUserToTeacherGroupUrl: addUserToTeacherGroupUrl,
+        addUserRatingUrl: addUserRatingUrl,
+        updateUserDataUrl: updateUserDataUrl,
         updateScreenheroUrl: updateScreenheroUrl,
+        updateUserDataFieldUrl: updateUserDataFieldUrl,
+        isUserLoggedInUrl: isUserLoggedInUrl,
+        getAuthTokenUrl: getAuthTokenUrl,
+        getUserDataUrl: getUserDataUrl,
+        getMessagesOverviewUrl: getMessagesOverviewUrl,
         getMessagesUrl: getMessagesUrl,
-        apiCallHeader: apiCallHeader,
+        getSearchAutocompleteOptionsUrl: getSearchAutocompleteOptionsUrl,
+        getTeachersUrl: getTeachersUrl,
+        logoutUserUrl: logoutUserUrl,
         searchTeachersBySkillPath: searchTeachersBySkillPath,
         paymentPath: paymentPath,
-        searchAutocompleteOptionsUrl: searchAutocompleteOptionsUrl
+        authorizationPrefix: authorizationPrefix,
+        apiCallHeader: apiCallHeader
     };
 })();
 

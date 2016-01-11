@@ -33,8 +33,8 @@ var Api = (function () {
             }
             return options;
         },
-        getAllTeachers: function () {
-            return $http(config.allTeachersUrl)
+        getTeachers: function () {
+            return $http(config.getTeachersUrl)
                 .get(this.payload());
         },
         registerAccount: function (data) {
@@ -46,7 +46,7 @@ var Api = (function () {
                 .post(this.payload({json: data}));
         },
         addUserRating: function (emailPath, data) {
-            return $http(config.userRatingUrl())
+            return $http(config.addUserRatingUrl(emailPath))
                 .post(this.payload({json: data}));
         },
         updateUserData: function (data) {
@@ -54,7 +54,7 @@ var Api = (function () {
                 .post(this.payload({json: data}));
         },
         updateUserDataField: function (fieldPath, data) {
-            return $http(config.updateUserDataField(fieldPath))
+            return $http(config.updateUserDataFieldUrl(fieldPath))
                 .post(this.payload({json: data}));
         },
         isUserLoggedIn: function () {
@@ -62,15 +62,15 @@ var Api = (function () {
                 .get(this.payload());
         },
         getAuthToken: function (data) {
-            return $http(config.authTokenUrl)
+            return $http(config.getAuthTokenUrl)
                 .post(this.payload({formData: data}));
         },
         getUserData: function () {
-            return $http(config.loggedUserUrl)
+            return $http(config.getUserDataUrl)
                 .get(this.payload());
         },
         getMessagesOverview: function () {
-            return $http(config.messagesOverviewUrl)
+            return $http(config.getMessagesOverviewUrl)
                 .get(this.payload());
         },
         getMessages: function (emailPath) {
@@ -78,7 +78,7 @@ var Api = (function () {
                 .get(this.payload());
         },
         getSearchAutocompleteOptions: function () {
-            return $http(config.searchAutocompleteOptionsUrl)
+            return $http(config.getSearchAutocompleteOptionsUrl)
                 .get(this.payload());
         }
     };

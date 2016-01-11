@@ -30,7 +30,7 @@ var User = React.createClass({
 
         $.ajax({
             type: 'post',
-            url: config.userRatingUrl(this.props.email),
+            url: config.addUserRatingUrl(this.props.email),
             data: JSON.stringify(rate),
             headers: config.apiCallHeader(),
             success: function (data) {
