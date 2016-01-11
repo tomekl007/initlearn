@@ -58,7 +58,7 @@ public class ReservationService {
     }
 
     private List<Appointment> addAppointment(Account reservedBy, Account teacher, DateTime reservationTime) {
-        Appointment appointment = new Appointment(teacher.getEmail(), reservationTime);
+        Appointment appointment = new Appointment(teacher.getEmail(), reservationTime.getMillis());
 
         CustomData customData = reservedBy.getCustomData();
 
@@ -77,7 +77,7 @@ public class ReservationService {
     }
 
     private void addReservation(Account reservedBy, Account teacher, DateTime reservationTime) {
-        Reservation reservation = new Reservation(reservationTime, reservedBy.getEmail());
+        Reservation reservation = new Reservation(reservationTime.getMillis(), reservedBy.getEmail());
 
         addToList(teacher, reservation, reservationField);
     }
