@@ -66,6 +66,15 @@ public class UserService implements AccountFields {
         return findAccountsBy("email", email);
     }
 
+    public Optional<Account> findAccountByEmail(String email) {
+        List<Account> accounts = findAccountsBy("email", email);
+        if(accounts.size() == 0 ){
+            return Optional.empty();
+        }else{
+            return Optional.of(accounts.get(0));
+        }
+    }
+
     private List<Account> findAccountsBy(String key, String value) {
         List<Account> accounts = new ArrayList<>();
         client.getAccounts(Collections.singletonMap(key, value))
