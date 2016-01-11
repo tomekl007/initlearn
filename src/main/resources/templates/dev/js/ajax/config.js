@@ -4,6 +4,7 @@ var Config = (function () {
 
     /*urls, paths, hashes*/
     var appUrl = 'https://initlearn.herokuapp.com';
+    var authTokenUrl = appUrl + '/oauth/token';
     var userGroupPath = '/group/users/';
     var allTeachersUrl = appUrl + userGroupPath + 'teachers';
     var registerAccountUrl = appUrl + '/registerAccount';
@@ -22,6 +23,7 @@ var Config = (function () {
     var searchUrl = 'search?';
     var searchTeachersBySkillPath = usersHash + searchUrl + 'skill=';
     var paymentPath = '/adaptivePayment?toEmail=';
+    var searchAutocompleteOptionsUrl = appUrl + '/skills';
 
     var getMessagesUrl = function (email) {
         return messagesUrl + '/' + email;
@@ -29,6 +31,10 @@ var Config = (function () {
 
     var userRatingUrl = function(email) {
       return userUrl + '/' + email + '/rate';
+    };
+
+    var updateUserDataField = function(fieldPath) {
+        return userUrl + '/' + fieldPath;
     };
 
     /*calls*/
@@ -53,6 +59,7 @@ var Config = (function () {
 
     return {
         appUrl: appUrl,
+        authTokenUrl: authTokenUrl,
         userGroupPath: userGroupPath,
         allTeachersUrl: allTeachersUrl,
         registerAccountUrl: registerAccountUrl,
@@ -73,7 +80,8 @@ var Config = (function () {
         getMessagesUrl: getMessagesUrl,
         apiCallHeader: apiCallHeader,
         searchTeachersBySkillPath: searchTeachersBySkillPath,
-        paymentPath: paymentPath
+        paymentPath: paymentPath,
+        searchAutocompleteOptionsUrl: searchAutocompleteOptionsUrl
     };
 })();
 
