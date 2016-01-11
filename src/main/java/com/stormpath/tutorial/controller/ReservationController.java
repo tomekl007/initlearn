@@ -29,20 +29,20 @@ public class ReservationController {
     @Autowired
     UserService userService;
 
-    @RequestMapping(value = "reservations/{email:.+}", method = RequestMethod.GET)
+    @RequestMapping(value = "/reservations/{email:.+}", method = RequestMethod.GET)
     public ResponseEntity<List<Reservation>> getReservations(@PathVariable("email") String email) {
         List<Reservation> allReservations = reservationService.getAllReservations(email);
         return new ResponseEntity<>(allReservations, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "appointments", method = RequestMethod.GET)
+    @RequestMapping(value = "/appointments", method = RequestMethod.GET)
     public ResponseEntity<List<Appointment>> getLoggedInUserAppointments(ServletRequest servletRequest) {
         return AccountUtils.actionForAuthenticatedUserOrUnauthorized(servletRequest, a ->
                 reservationService.getAllAppointments(a)
         );
     }
 
-    @RequestMapping(value = "reservation/{email:.+}", method = RequestMethod.POST)
+    @RequestMapping(value = "/reservation/{email:.+}", method = RequestMethod.POST)
     public ResponseEntity<List<Appointment>> reserveLesson(@PathVariable("email") String email,
                                                            ServletRequest servletRequest) {
         DateTime reservationTime = DateTime.now();//todo get from api
