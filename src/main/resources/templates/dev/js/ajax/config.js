@@ -2,7 +2,6 @@ import localStorage from '../common/localStorage';
 
 var Config = (function () {
 
-    /*urls, paths, hashes*/
     var appUrl = 'https://initlearn.herokuapp.com';
     var myProfileHash = '#me';
     var usersUrl = appUrl + '/users';
@@ -10,7 +9,6 @@ var Config = (function () {
     var userGroupPath = '/group/users/';
     var messagesUrl = appUrl + '/msg';
     var messagesHash = '#msg/';
-
 
     var registerAccountUrl = appUrl + '/registerAccount';
     var addUserToTeacherGroupUrl = usersUrl + '/teachers';

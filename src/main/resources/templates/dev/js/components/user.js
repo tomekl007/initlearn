@@ -5,6 +5,7 @@ import ModalComponent from '../components/modal';
 import ModalMessageNotificationComponent from '../components/modalMessageNotification';
 
 import config from '../ajax/config';
+import api from '../ajax/api';
 
 var User = React.createClass({
 
@@ -17,8 +18,6 @@ var User = React.createClass({
         };
     },
     rate(event) {
-        /*TODO improve AJAX CALLS*/
-
         var $rateStar = event.currentTarget;
         var $rateWrapper = $rateStar.parentNode;
 
@@ -28,29 +27,24 @@ var User = React.createClass({
 
         $rateWrapper.classList.add('disable');
 
-        $.ajax({
-            type: 'post',
-            url: config.addUserRatingUrl(this.props.email),
-            data: JSON.stringify(rate),
-            headers: config.apiCallHeader(),
-            success: function (data) {
-                this.setState({
-                    data: data[0],
-                    modalOpen: true,
-                    rateFeedbackType: 'success',
-                    rateFeedbackMessage: 'Thanks for your vote'
-                });
-            }.bind(this),
-
-            error: function (jqXHR) {
-                console.log(jqXHR);
-                var message = 'something went wrong';
-                if (jqXHR.status === 412) {
-                    message = 'You already rate that teacher';
-                }
-                this.setState({modalOpen: true, rateFeedbackType: 'cancel', rateFeedbackMessage: message});
-            }.bind(this)
+        api.addUserRating(this.props.email, rate)
+            .then(this.successRate)
+            .catch(this.failureRate);
+    },
+    successRate() {
+        this.setState({
+            data: data[0],
+            modalOpen: true,
+            rateFeedbackType: 'success',
+            rateFeedbackMessage: 'Thanks for your vote'
         });
+    },
+    failureRate(jqXHR) {
+        var message = 'something went wrong';
+        if (jqXHR.status === 412) {
+            message = 'You already rate that teacher';
+        }
+        this.setState({modalOpen: true, rateFeedbackType: 'cancel', rateFeedbackMessage: message});
     },
     render() {
 
