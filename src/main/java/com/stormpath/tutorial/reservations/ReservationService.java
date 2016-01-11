@@ -72,7 +72,7 @@ public class ReservationService {
         appointmentList.add(appointment);
 
         customData.put(appointmentsField, appointmentList);
-        teacher.save();
+        reservedBy.save();
         return appointmentList;
     }
 
