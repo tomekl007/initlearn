@@ -7,7 +7,7 @@ function $http(url) {
     var core = {
 
         // Method that performs the ajax request
-        ajax: function (method, url, args) {
+        ajax: function (method, url, args, dataType) {
 
             // Creating a promise
             var promise = new PromiseP(function(resolve, reject) {
@@ -18,6 +18,7 @@ function $http(url) {
                 var data = JSON.stringify(args.json) || formData || '';
 
                 client.withCredentials = true;
+                client.overrideMimeType('json' || dataType);
                 client.open(method, url + (params || ''));
 
                 if (args.headers) {
