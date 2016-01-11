@@ -42,7 +42,7 @@ public class ReservationController {
         );
     }
 
-    @RequestMapping(value = "/reservation/{email:.+}", method = RequestMethod.POST)
+    @RequestMapping(value = "/reservations/{email:.+}", method = RequestMethod.POST)
     public ResponseEntity<List<Appointment>> reserveLesson(@PathVariable("email") String email,
                                                            ServletRequest servletRequest) {
         DateTime reservationTime = DateTime.now();//todo get from api
