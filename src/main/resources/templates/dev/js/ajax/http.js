@@ -30,7 +30,7 @@ function $http(url) {
                 client.onload = function () {
                     if (this.status >= 200 && this.status < 300) {
                                 // Performs the function "resolve" when this.status is equal to 2xx
-                        resolve(this.response);
+                        resolve(args.json ? JSON.parse(this.response):this.response);
                     } else {
                         // Performs the function "reject" when this.status is different than 2xx
                         reject(this);
