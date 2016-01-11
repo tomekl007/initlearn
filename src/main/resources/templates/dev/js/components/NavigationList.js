@@ -55,7 +55,7 @@ var NavigationList = React.createClass({
                 if (isLooggedIn === true) {
                     $.ajax({
                         type: 'get',
-                        url: config.loggedUserUrl,
+                        url: config.getUserDataUrl,
                         headers: config.apiCallHeader(),
                         success: function (data) {
 

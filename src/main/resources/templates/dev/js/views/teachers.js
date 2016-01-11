@@ -11,7 +11,7 @@ class Teachers extends React.Component {
                         <h2 className='section-header color-purple'>Our Teachers</h2>
                     </div>
                     <div>
-                        <UsersComponent url={config.allTeachersUrl} />
+                        <UsersComponent url={config.getTeachersUrl} />
                     </div>
                 </div>
             </section>

@@ -19,7 +19,7 @@ var MessageThreadList = React.createClass({
         console.log('get message thread list');
         $.ajax({
             method: 'get',
-            url: config.messagesOverviewUrl,
+            url: config.getMessagesOverviewUrl,
             headers: config.apiCallHeader(),
             success: function (messageThreadList) {
                 this.setState({messageThreadList: messageThreadList, messageThreadListVisibility: true});

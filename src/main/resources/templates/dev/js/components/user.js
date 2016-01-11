@@ -1,13 +1,19 @@
 import React from 'react';
 import tapOrClick from 'react-tap-or-click';
 
+import ModalComponent from '../components/modal';
+import ModalMessageNotificationComponent from '../components/modalMessageNotification';
+
 import config from '../ajax/config';
 
 var User = React.createClass({
 
     getInitialState() {
         return {
-            data: this.props.data
+            data: this.props.data,
+            modalOpen: false,
+            rateFeedbackType: '',
+            rateFeedbackMessage: ''
         };
     },
     rate(event) {
@@ -24,21 +30,32 @@ var User = React.createClass({
 
         $.ajax({
             type: 'post',
-            url: config.userRatingUrl(this.props.email),
+            url: config.addUserRatingUrl(this.props.email),
             data: JSON.stringify(rate),
             headers: config.apiCallHeader(),
             success: function (data) {
-                this.setState({data: data[0]});
+                this.setState({
+                    data: data[0],
+                    modalOpen: true,
+                    rateFeedbackType: 'success',
+                    rateFeedbackMessage: 'Thanks for your vote'
+                });
             }.bind(this),
 
             error: function (jqXHR) {
                 console.log(jqXHR);
-            }
+                var message = 'something went wrong';
+                if (jqXHR.status === 412) {
+                    message = 'You already rate that teacher';
+                }
+                this.setState({modalOpen: true, rateFeedbackType: 'cancel', rateFeedbackMessage: message});
+            }.bind(this)
         });
     },
     render() {
 
         var userRateInfo;
+        var $modalComponent;
 
         var userSkills = this.state.data.skills.map(function (skill, key) {
             return (
@@ -55,17 +72,27 @@ var User = React.createClass({
         if (this.state.data.average !== null) {
             userRateInfo =
                 [<p className='main-user-profile-label-average-rate' key={1} >Average rate:</p>,
-                <p className='main-user-profile-average-rate'key={2} >
-                    <i className='fa fa-star color-gold'></i>
+                    <p className='main-user-profile-average-rate'key={2} >
+                        <i className='fa fa-star color-gold'></i>
                     {this.state.data.average}
-                </p>,
-                <p className='main-user-profile-label-number-of-rates'key={3} >Number of rates:</p>,
-                <p className='main-user-profile-number-of-rates'key={4} >{this.state.data.numberOfRates}</p>];
+                    </p>,
+                    <p className='main-user-profile-label-number-of-rates'key={3} >Number of rates:</p>,
+                    <p className='main-user-profile-number-of-rates'key={4} >{this.state.data.numberOfRates}</p>];
+        }
+
+        if (this.state.modalOpen) {
+            $modalComponent = <ModalComponent
+                parent={this}
+                content={<ModalMessageNotificationComponent
+                    type={this.state.rateFeedbackType}
+                    message={this.state.rateFeedbackMessage}
+                />}/>
         }
 
         return (
             <div className='col s12 m6'>
                 <div className='card-wrapper fw-100'>
+                {$modalComponent}
                     <a className='main-user-profile-nav-profile' href={config.usersHash + this.props.email}></a>
                     <a className='card-header-img bg-white' href={config.usersHash + this.props.email}>
                         <img src={this.state.data.img} alt='teacher profile image'/>
