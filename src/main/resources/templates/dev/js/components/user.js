@@ -33,7 +33,6 @@ var User = React.createClass({
     },
     successRate(data) {
         console.log(data);
-        console.log('add vote');
         this.setState({
             data: data[0],
             modalOpen: true,

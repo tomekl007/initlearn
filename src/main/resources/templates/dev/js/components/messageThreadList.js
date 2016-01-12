@@ -4,6 +4,8 @@ import $ from '../lib/jquery';
 
 import config from '../ajax/config';
 
+import api from '../ajax/api';
+
 /*TODO improve Teachers class to ES6*/
 var MessageThreadList = React.createClass({
 
@@ -17,17 +19,13 @@ var MessageThreadList = React.createClass({
     },
     getMessageThreadList() {
         console.log('get message thread list');
-        $.ajax({
-            method: 'get',
-            url: config.getMessagesOverviewUrl,
-            headers: config.apiCallHeader(),
-            success: function (messageThreadList) {
+        api.getMessagesOverview()
+            .then(function(messageThreadList) {
                 this.setState({messageThreadList: messageThreadList, messageThreadListVisibility: true});
-            }.bind(this),
-            error: function (jqXHR, statusString, err) {
-                console.log(err);
-            }
-        });
+            })
+            ['catch'](function(jqXHR) {
+                console.log(jqXHR);
+            });
     },
     /*TODO code refactoring needed*/
     reloadMessangerMessagesList() {
