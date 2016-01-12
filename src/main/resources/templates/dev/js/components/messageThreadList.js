@@ -26,6 +26,7 @@ var MessageThreadList = React.createClass({
             });
     },
     refresh(messageThreadList) {
+        console.log(typeof messageThreadList);
         this.setState({messageThreadList: messageThreadList, messageThreadListVisibility: true});
     },
     /*TODO code refactoring needed*/

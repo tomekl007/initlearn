@@ -31,7 +31,7 @@ function $http(url) {
                     if (this.status >= 200 && this.status < 300) {
                                 // Performs the function "resolve" when this.status is equal to 2xx
                         console.log('promise success');
-                        resolve(args.json ? JSON.parse(this.response):this.response);
+                        resolve(JSON.parse(this.response));
                     } else {
                         // Performs the function "reject" when this.status is different than 2xx
                         console.log('promise failure');
