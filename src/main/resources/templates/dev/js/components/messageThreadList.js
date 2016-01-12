@@ -20,12 +20,13 @@ var MessageThreadList = React.createClass({
     getMessageThreadList() {
         console.log('get message thread list');
         api.getMessagesOverview()
-            .then(function(messageThreadList) {
-                this.setState({messageThreadList: messageThreadList, messageThreadListVisibility: true});
-            })
+            .then(this.refresh)
             ['catch'](function(jqXHR) {
                 console.log(jqXHR);
             });
+    },
+    refresh(messageThreadList) {
+        this.setState({messageThreadList: messageThreadList, messageThreadListVisibility: true});
     },
     /*TODO code refactoring needed*/
     reloadMessangerMessagesList() {
