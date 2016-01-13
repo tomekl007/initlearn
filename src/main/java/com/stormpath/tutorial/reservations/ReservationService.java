@@ -29,7 +29,7 @@ public class ReservationService {
         if(!accountByEmail.isPresent()){
             return Collections.emptyList();
         }
-        return reservationRepository.getAllTecherReservations(email);
+        return reservationRepository.getAllUserAppoitments(email);
     }
 
 
