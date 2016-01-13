@@ -1,5 +1,6 @@
 package com.stormpath.tutorial.controller.jsonrequest;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.joda.time.DateTime;
 
 /**
@@ -25,5 +26,6 @@ public class ReservationRequest {
         this.fromHour = fromHour;
     }
 
+    @JsonSerialize(using=JodaDateTimeJsonSerializer.class)
     public DateTime fromHour;
 }
