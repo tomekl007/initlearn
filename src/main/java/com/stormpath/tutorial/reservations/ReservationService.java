@@ -29,7 +29,7 @@ public class ReservationService {
         if(!accountByEmail.isPresent()){
             return Collections.emptyList();
         }
-        return reservationRepository.findAll();
+        return reservationRepository.getAllTecherReservations(email);
     }
 
 
@@ -46,6 +46,6 @@ public class ReservationService {
     }
 
     public List<Reservation> getAllAppointments(String email) {
-        return null;
+        return reservationRepository.getAllUserAppoitments(email);
     }
 }
