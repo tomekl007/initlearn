@@ -33,19 +33,19 @@ public class Reservation {
         this.id = id;
     }
 
-    public Date get_from_hour() {
+    public Date getFrom_hour() {
         return from_hour;
     }
 
-    public void set_from_hour(Date from) {
+    public void setFrom_hour(Date from) {
         this.from_hour = from;
     }
 
-    public String get_reserved_by() {
+    public String getReserved_by() {
         return reserved_by;
     }
 
-    public void set_reseved_by (String reservedBy) {
+    public void setReseved_by (String reservedBy) {
         this.reserved_by = reservedBy;
     }
 
