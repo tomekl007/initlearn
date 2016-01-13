@@ -17,7 +17,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     @Query("SELECT r FROM Reservation r WHERE r.reserved_by = :reservedBy")
     List<Reservation> getAllUserAppoitments(@Param("reservedBy") String reservedBy);
 
-    @Query("SELECT r FROM Reservation r WHERE r.teacher = :teacherEmail BETWEEN :from_hour  AND :to_hour")
+    @Query("SELECT r FROM Reservation r WHERE r.teacher = :teacherEmail AND r.from_hour >= :from_hour AND r.from_hour <= :to_hour")
     List<Reservation> getAllReservationsForTimespan(@Param("from_hour") Date fromHour, @Param("to_hour") Date toHour,
                                                     @Param("teacherEmail") String teacherEmail);
 }
