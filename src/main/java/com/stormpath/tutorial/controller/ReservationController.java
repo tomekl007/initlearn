@@ -7,6 +7,7 @@ import com.stormpath.tutorial.reservations.ReservationService;
 import com.stormpath.tutorial.user.UserService;
 import com.stormpath.tutorial.utils.AccountUtils;
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,10 +44,12 @@ public class ReservationController {
         );
     }
 
+    private static final String dateFormat = ("dd/MM/yyyy-hh:mm:ss");
     @RequestMapping(value = "/reservations", method = RequestMethod.POST, consumes = "application/json")
     public ResponseEntity<List<Reservation>> reserveLesson(@RequestBody ReservationRequest reservationRequest,
                                                            ServletRequest servletRequest) {
-        DateTime reservationTime = reservationRequest.fromHour;
+
+        DateTime reservationTime = DateTimeFormat.forPattern(dateFormat).parseDateTime(reservationRequest.fromHour);
         return AccountUtils.actionResponseEntityForAuthenticatedUserOrUnauthorized(servletRequest,
                 a -> {
                     Optional<Account> teacherAccount = userService.findAccountByEmail(reservationRequest.teacher);

@@ -4,7 +4,6 @@ import com.stormpath.sdk.account.Account;
 import com.stormpath.tutorial.reservations.db.Reservation;
 import com.stormpath.tutorial.reservations.db.ReservationRepository;
 import com.stormpath.tutorial.user.UserService;
-import com.stormpath.tutorial.utils.AccountUtils;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
