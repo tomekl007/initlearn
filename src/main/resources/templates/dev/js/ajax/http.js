@@ -29,14 +29,17 @@ function $http(url) {
                 client.send(data);
                 client.onload = function () {
                     if (this.status >= 200 && this.status < 300) {
-                        // Performs the function "resolve" when this.status is equal to 2xx
-                        resolve(this.response);
+                                // Performs the function "resolve" when this.status is equal to 2xx
+                        console.log('promise success');
+                        resolve(JSON.parse(this.response));
                     } else {
                         // Performs the function "reject" when this.status is different than 2xx
+                        console.log('promise failure');
                         reject(this);
                     }
                 };
                 client.onerror = function () {
+                    console.log('promise error');
                     reject(this);
                 };
             });

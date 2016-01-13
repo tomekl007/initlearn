@@ -25,13 +25,14 @@ var User = React.createClass({
             rate: parseInt($rateStar.getAttribute('data-rate'))
         };
 
-        $rateWrapper.classList.add('disable');
-
         api.addUserRating(this.props.email, rate)
             .then(this.successRate)
-            .catch(this.failureRate);
+            ['catch'](this.failureRate);
+
+        $rateWrapper.classList.add('disable');
     },
-    successRate() {
+    successRate(data) {
+        console.log(data);
         this.setState({
             data: data[0],
             modalOpen: true,
@@ -40,6 +41,7 @@ var User = React.createClass({
         });
     },
     failureRate(jqXHR) {
+        console.log(jqXHR);
         var message = 'something went wrong';
         if (jqXHR.status === 412) {
             message = 'You already rate that teacher';
