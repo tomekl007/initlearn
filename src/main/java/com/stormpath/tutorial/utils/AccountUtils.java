@@ -231,4 +231,23 @@ public class AccountUtils implements AccountFields {
         addCustomListFieldToAccount(a, RATED_BY,
                 Collections.singletonList(userThatRate.getEmail()), a.getCustomData());
     }
+
+
+    public static<T> List<T> addToList(Account account, T toAdd, String fieldName) {
+        CustomData customData = account.getCustomData();
+
+        List<T> list;
+        Object reservations = customData.get(fieldName);
+        if (reservations == null) {
+            list = new LinkedList<>();
+        } else {
+            list = (List<T>) reservations;
+        }
+        list.add(toAdd);
+
+        customData.put(fieldName, list);
+        account.save();
+        return list;
+    }
+
 }

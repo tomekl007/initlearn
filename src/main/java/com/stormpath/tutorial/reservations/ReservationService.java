@@ -1,8 +1,8 @@
 package com.stormpath.tutorial.reservations;
 
 import com.stormpath.sdk.account.Account;
-import com.stormpath.sdk.directory.CustomData;
-import com.stormpath.tutorial.messages.Message;
+import com.stormpath.tutorial.reservations.db.Reservation;
+import com.stormpath.tutorial.reservations.db.ReservationRepository;
 import com.stormpath.tutorial.user.UserService;
 import com.stormpath.tutorial.utils.AccountUtils;
 import org.joda.time.DateTime;
@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,10 +18,10 @@ import java.util.Optional;
  */
 @Component
 public class ReservationService {
-    public static final String appointmentsField = "appointments";
-    public static final String reservationField = "reservations";
     @Autowired
     UserService userService;
+    @Autowired
+    ReservationRepository reservationRepository;
 
 
     public List<Reservation> getAllReservations(String email) {
@@ -30,59 +29,23 @@ public class ReservationService {
         if(!accountByEmail.isPresent()){
             return Collections.emptyList();
         }
-        return getAllReservationsField(accountByEmail.get());
+        return reservationRepository.findAll();
     }
 
 
-    public List<Reservation> getAllReservationsField(Account account) {
-        Object reservation = account.getCustomData().get(reservationField);
-        if (reservation == null) {
-            return Collections.emptyList();
-        } else {
-            return (List<Reservation>) reservation;
-        }
-    }
 
-    public List<Appointment> getAllAppointments(Account a) {
-        Object reservation = a.getCustomData().get(appointmentsField);
-        if (reservation == null) {
-            return Collections.emptyList();
-        } else {
-            return (List<Appointment>) reservation;
-        }
-    }
-
-    public List<Appointment> reserve(Account reservedBy, Account teacher, DateTime reservationTime) {
+    public List<Reservation> reserve(Account reservedBy, Account teacher, DateTime reservationTime) {
+        //todo handle when appoitment could not be reserved
         addReservation(reservedBy, teacher, reservationTime);
-        return addAppointment(reservedBy, teacher, reservationTime);
-    }
-
-    private List<Appointment> addAppointment(Account reservedBy, Account teacher, DateTime reservationTime) {
-        Appointment appointment = new Appointment(teacher.getEmail(), reservationTime.getMillis());
-
-        return addToList(reservedBy, appointment, appointmentsField);
+        return getAllReservations(reservedBy.getEmail());
     }
 
     private void addReservation(Account reservedBy, Account teacher, DateTime reservationTime) {
-        Reservation reservation = new Reservation(reservationTime.getMillis(), reservedBy.getEmail());
-
-        addToList(teacher, reservation, reservationField);
+        Reservation reservation = new Reservation(reservationTime.toDate(), reservedBy.getEmail(), teacher.getEmail());
+        reservationRepository.save(reservation);
     }
 
-    private static<T> List<T> addToList(Account account, T toAdd, String fieldName) {
-        CustomData customData = account.getCustomData();
-
-        List<T> list;
-        Object reservations = customData.get(fieldName);
-        if (reservations == null) {
-            list = new LinkedList<>();
-        } else {
-            list = (List<T>) reservations;
-        }
-        list.add(toAdd);
-
-        customData.put(fieldName, list);
-        account.save();
-        return list;
+    public List<Reservation> getAllAppointments(String email) {
+        return null;
     }
 }

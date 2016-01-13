@@ -1,8 +1,7 @@
 package com.stormpath.tutorial.controller;
 
 import com.stormpath.sdk.account.Account;
-import com.stormpath.tutorial.reservations.Appointment;
-import com.stormpath.tutorial.reservations.Reservation;
+import com.stormpath.tutorial.reservations.db.Reservation;
 import com.stormpath.tutorial.reservations.ReservationService;
 import com.stormpath.tutorial.user.UserService;
 import com.stormpath.tutorial.utils.AccountUtils;
@@ -36,14 +35,14 @@ public class ReservationController {
     }
 
     @RequestMapping(value = "/appointments", method = RequestMethod.GET)
-    public ResponseEntity<List<Appointment>> getLoggedInUserAppointments(ServletRequest servletRequest) {
+    public ResponseEntity<List<Reservation>> getLoggedInUserAppointments(ServletRequest servletRequest) {
         return AccountUtils.actionForAuthenticatedUserOrUnauthorized(servletRequest, a ->
-                reservationService.getAllAppointments(a)
+                reservationService.getAllAppointments(a.getEmail())
         );
     }
 
-    @RequestMapping(value = "/reservations/{email:.+}", method = RequestMethod.POST)
-    public ResponseEntity<List<Appointment>> reserveLesson(@PathVariable("email") String email,
+    @RequestMapping(value = "/reservations/{email:.+}", method = RequestMethod.POST) //todo post with json body
+    public ResponseEntity<List<Reservation>> reserveLesson(@PathVariable("email") String email,
                                                            ServletRequest servletRequest) {
         DateTime reservationTime = DateTime.now();//todo get from api
         return AccountUtils.actionResponseEntityForAuthenticatedUserOrUnauthorized(servletRequest,
