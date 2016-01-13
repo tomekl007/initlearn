@@ -44,13 +44,13 @@ public class ReservationController {
         );
     }
 
-    private static final String dateFormat = ("dd/MM/yyyy-hh:mm:ss");
+
     @RequestMapping(value = "/reservations", method = RequestMethod.POST, consumes = "application/json")
     public ResponseEntity<List<Reservation>> reserveLesson(@RequestBody ReservationRequest reservationRequest,
                                                            ServletRequest servletRequest) {
 
-        DateTime reservationTime = normalizeTime(reservationRequest);
-        DateTime endOfReservationTime = getEndOfReservationTime(reservationTime);
+        DateTime reservationTime = reservationService.normalizeTime(reservationRequest);
+        DateTime endOfReservationTime = reservationService.getEndOfReservationTime(reservationTime);
 
         return AccountUtils.actionResponseEntityForAuthenticatedUserOrUnauthorized(servletRequest,
                 a -> {
@@ -58,20 +58,16 @@ public class ReservationController {
                     if (!teacherAccount.isPresent()) {
                         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
                     }
+
+                    if(reservationService.alreadyReserved(reservationTime, endOfReservationTime, teacherAccount.get())){
+                        return new ResponseEntity<>(HttpStatus.CONFLICT);
+                    }
+
                     return new ResponseEntity<>(
                             reservationService.reserve(a,
                                     teacherAccount.get(), reservationTime, endOfReservationTime), HttpStatus.OK);
                 });
     }
 
-    private DateTime getEndOfReservationTime(DateTime reservationTime) {
-        return reservationTime.plusHours(1);
-    }
-
-    private DateTime normalizeTime(ReservationRequest reservationRequest) {
-        DateTime dateTime = DateTimeFormat.forPattern(dateFormat)
-                .parseDateTime(reservationRequest.fromHour);
-        return dateTime.withTime(dateTime.getHourOfDay(), dateTime.getMinuteOfHour(), 0, 0);
-    }
 
 }
