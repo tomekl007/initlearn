@@ -6,6 +6,7 @@ import com.stormpath.tutorial.reservations.db.Reservation;
 import com.stormpath.tutorial.reservations.db.ReservationRepository;
 import com.stormpath.tutorial.user.UserService;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeUtils;
 import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -62,6 +63,9 @@ public class ReservationService {
 
 
     public DateTime getEndOfReservationTime(DateTime reservationTime) {
+        if(reservationTime.getHourOfDay() == 23){//todo fix that hack
+            return reservationTime.plusHours(1).plusDays(1);
+        }
         return reservationTime.plusHours(1);
     }
 
