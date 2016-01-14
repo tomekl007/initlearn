@@ -14,3 +14,10 @@ CREATE TABLE Payment(
 );
 
 insert into payment (from_email, to_email, amount, payment_date) values ('a','b', 2.00, current_date);
+
+CREATE TABLE Reservation(
+  ID SERIAL PRIMARY KEY ,
+  teacher TEXT,
+  reserved_by TEXT,
+  from_hour timestamp
+);

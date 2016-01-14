@@ -1,17 +1,19 @@
 package com.stormpath.tutorial.controller;
 
 import com.stormpath.sdk.account.Account;
-import com.stormpath.tutorial.reservations.Appointment;
-import com.stormpath.tutorial.reservations.Reservation;
+import com.stormpath.tutorial.controller.jsonrequest.ReservationRequest;
+import com.stormpath.tutorial.reservations.db.Reservation;
 import com.stormpath.tutorial.reservations.ReservationService;
 import com.stormpath.tutorial.user.UserService;
 import com.stormpath.tutorial.utils.AccountUtils;
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -36,19 +38,21 @@ public class ReservationController {
     }
 
     @RequestMapping(value = "/appointments", method = RequestMethod.GET)
-    public ResponseEntity<List<Appointment>> getLoggedInUserAppointments(ServletRequest servletRequest) {
+    public ResponseEntity<List<Reservation>> getLoggedInUserAppointments(ServletRequest servletRequest) {
         return AccountUtils.actionForAuthenticatedUserOrUnauthorized(servletRequest, a ->
-                reservationService.getAllAppointments(a)
+                reservationService.getAllAppointments(a.getEmail())
         );
     }
 
-    @RequestMapping(value = "/reservations/{email:.+}", method = RequestMethod.POST)
-    public ResponseEntity<List<Appointment>> reserveLesson(@PathVariable("email") String email,
+    private static final String dateFormat = ("dd/MM/yyyy-hh:mm:ss");
+    @RequestMapping(value = "/reservations", method = RequestMethod.POST, consumes = "application/json")
+    public ResponseEntity<List<Reservation>> reserveLesson(@RequestBody ReservationRequest reservationRequest,
                                                            ServletRequest servletRequest) {
-        DateTime reservationTime = DateTime.now();//todo get from api
+
+        DateTime reservationTime = DateTimeFormat.forPattern(dateFormat).parseDateTime(reservationRequest.fromHour);
         return AccountUtils.actionResponseEntityForAuthenticatedUserOrUnauthorized(servletRequest,
                 a -> {
-                    Optional<Account> teacherAccount = userService.findAccountByEmail(email);
+                    Optional<Account> teacherAccount = userService.findAccountByEmail(reservationRequest.teacher);
                     if (!teacherAccount.isPresent()) {
                         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
                     }
