@@ -52,7 +52,7 @@ public class ReservationService {
         return reservationRepository.getAllUserAppoitments(email);
     }
 
-    private static final String dateFormat = ("dd/MM/yyyy-hh:mm:ss");
+    private static final String dateFormat = ("dd/MM/yyyy-HH:mm");
 
     public DateTime normalizeTime(ReservationRequest reservationRequest) {
         DateTime dateTime = DateTimeFormat.forPattern(dateFormat)
