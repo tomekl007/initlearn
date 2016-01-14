@@ -31,7 +31,7 @@ public class ReservationService {
         if(!accountByEmail.isPresent()){
             return Collections.emptyList();
         }
-        return reservationRepository.getAllUserAppoitments(email);
+        return reservationRepository.getAllTecherReservations(email);
     }
 
 
@@ -39,7 +39,7 @@ public class ReservationService {
     public List<Reservation> reserve(Account reservedBy, Account teacher, DateTime reservationTime, DateTime endOfReservationTime) {
         //todo handle when appoitment could not be reserved
         addReservation(reservedBy, teacher, reservationTime, endOfReservationTime);
-        return getAllReservations(reservedBy.getEmail());
+        return getAllAppointments(reservedBy.getEmail());
     }
 
     private void addReservation(Account reservedBy, Account teacher, DateTime reservationTime, DateTime endOfReservationTime) {
