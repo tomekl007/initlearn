@@ -63,9 +63,6 @@ public class ReservationService {
 
 
     public DateTime getEndOfReservationTime(DateTime reservationTime) {
-        if(reservationTime.getHourOfDay() == 23){//todo fix that hack
-            return reservationTime.plusHours(1).plusDays(1);
-        }
         return reservationTime.plusHours(1);
     }
 
