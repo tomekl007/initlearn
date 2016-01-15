@@ -18,7 +18,9 @@ var routes = (
         <Route name='users/*' handler={UserProfileView} />
         <Route name='successPayment' handler={SuccessPaymentView} />
         <Route name='cancelPayment' handler={CancelPaymentView} />
-        <Route name='calendar' handler={CalendarView} />
+        <Route name='calendar/:year' handler={CalendarView} />
+        <Route name='calendar/:year/:month' handler={CalendarView} />
+        <Route name='calendar/:year/:month/:day' handler={CalendarView} />
         <Route name='msg/*' handler={MessagesView} />
         <Route name='me' handler={MyProfileView} />
         <Route name='*' path='*' handler={HomeView}/>

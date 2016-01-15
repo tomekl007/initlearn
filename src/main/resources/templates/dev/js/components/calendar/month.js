@@ -1,12 +1,13 @@
 import React from 'react';
 
-import Day from './day';
-
 class Month extends React.Component {
     render() {
+        console.log('month');
         var $days = [];
         for (var i = 0; i < this.props.days; i++) {
-            $days.push(<Day day={i} key={i} />);
+            $days.push(<div className='main-calendar-days' key={i} data-day-nr={i}>
+                <a href={'#calendar/' + this.props.year + '/04/' + i} >{i}</a>
+            </div>);
         }
 
         return (
