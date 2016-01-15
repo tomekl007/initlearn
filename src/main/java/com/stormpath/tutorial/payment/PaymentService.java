@@ -10,7 +10,6 @@ import com.stormpath.tutorial.db.payment.PaymentsRepository;
 import com.stormpath.tutorial.db.payment.PaypalConfiguration;
 import com.stormpath.tutorial.model.User;
 import com.stormpath.tutorial.user.UserService;
-import com.stormpath.tutorial.utils.AccountUtils;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,14 +34,20 @@ public class PaymentService {
     public String pay(User sender, String toEmail) {
 
         Optional<User> receiver = userService.findUserByEmail(toEmail);
-        Double receiverHourRate = receiver.get().hourRate.doubleValue();//todo handle absence
+
+        Integer receiverHourRateInt = receiver.get().hourRate;
+        if (receiverHourRateInt == null) {
+            throw new RuntimeException("teacher hour rate is null");//todo handle it gracefully
+        }
+
+        Double receiverHourRate = receiverHourRateInt.doubleValue();
 
         paymentsRepository.save(new Payment(sender.email, toEmail, receiverHourRate, DateTime.now().toDate()));
 
         PayRequest payRequest = new PayRequest();
 
         List<Receiver> receivers = new ArrayList<>();
-        Receiver secondaryReceiver = createCompanyReceiver();
+        Receiver secondaryReceiver = createCompanyReceiver(sender);
         receivers.add(secondaryReceiver);
 
         createTeacherReceiver(toEmail, receivers, receiverHourRate);
@@ -76,10 +81,14 @@ public class PaymentService {
         receivers.add(primaryReceiver);
     }
 
-    private Receiver createCompanyReceiver() {
+    private Receiver createCompanyReceiver(User sender) {
+        String companyReceiverEmail = "initlearn@gmail.com";
+
+        paymentsRepository.save(new Payment(sender.email, companyReceiverEmail, COMPANY_PROVISION, DateTime.now().toDate()));
+
         Receiver secondaryReceiver = new Receiver();
         secondaryReceiver.setAmount(COMPANY_PROVISION);
-        secondaryReceiver.setEmail("initlearn@gmail.com");
+        secondaryReceiver.setEmail(companyReceiverEmail);
         return secondaryReceiver;
     }
 
@@ -103,4 +112,20 @@ public class PaymentService {
         sdkConfig.put("acct1.AppId", paypalConfiguration.getAppid());
         return sdkConfig;
     }
+
+    public void logCancelPayment(Optional<String> payKey) throws IOException, InvalidResponseDataException, SSLConfigurationException, OAuthException, MissingCredentialException, InvalidCredentialException, HttpErrorException, ClientActionRequiredException, InterruptedException {
+        if (payKey.isPresent()) {
+            PaymentDetailsResponse paymentStatus = getPaymentStatus(payKey.get());
+
+
+            String s = paymentStatus.getStatus() + ", sender: "
+                    + paymentStatus.getSenderEmail() + ", sender account: " +
+                    paymentStatus.getSender().getAccountId();
+        }
+    }
+
+    public void logSuccessPayment(Optional<String> payKey) {
+        //todo save to db as success
+    }
 }
+
