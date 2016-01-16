@@ -3,6 +3,8 @@
 
 .main-section-calendar {
   color: $calendar-color;
+  font-size: rem-calc(14px);
+  padding-top: rem-calc(10px);
 }
 
 .main-calendar-months,
@@ -33,6 +35,15 @@
   height: 100px;
 }
 
+.main-calendar-month-reservation,
+.main-calendar-day-reservation {
+  width: 10px;
+  height: 10px;
+  background-color: red;
+  display: block;
+  border-radius: 10px;
+}
+
 .main-calendar-days {
   width: 20%;
   margin: 1%;
@@ -42,6 +53,7 @@
 .main-calendar-day-hours,
 .main-calendar-day-appointment-slots {
   float: left;
+  border-top: 1px solid $color-dark-grey;
 }
 
 .main-calendar-day-hours {

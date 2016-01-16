@@ -1,4 +1,4 @@
-.main-user-profile-nav-messages {
+.main-user-profile-nav-messages, .main-user-profile-nav-calendar {
   position: absolute;
   top: 8px;
   right: 0;
@@ -8,8 +8,13 @@
   font-size: 1.875rem;
   transition: color .3s ease; }
 
-.main-user-profile-nav-messages:hover {
+.main-user-profile-nav-messages:hover, .main-user-profile-nav-calendar:hover {
   color: #ffee9c; }
+
+.main-user-profile-nav-calendar {
+  right: 0;
+  left: 0;
+  width: 40px; }
 
 .main-user-profile-skill {
   padding: 0.3125rem;
@@ -25,6 +30,10 @@
 
 .main-section-user-profile .main-user-profile-nav-profile {
   display: none; }
+
+.main-section-user-profile .main-user-profile-nav-calendar {
+  left: inherit;
+  right: 50px; }
 
 .main-section-user-profile .main-user-profile-skill {
   display: block;

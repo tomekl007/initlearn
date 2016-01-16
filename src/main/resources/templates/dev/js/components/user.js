@@ -85,6 +85,7 @@ var User = React.createClass({
                 />}/>
         }
 
+        /*TODO add current year to calendar*/
         return (
             <div className='col s12 m6'>
                 <div className='card-wrapper fw-100'>
@@ -140,6 +141,9 @@ var User = React.createClass({
                     </div>
                     <a className='main-user-profile-nav-messages' href={config.messagesHash + this.props.email}>
                         <i className='fa fa-envelope'></i>
+                    </a>
+                    <a className='main-user-profile-nav-calendar' href={config.usersHash + this.props.email + config.calendarPath + '2016'}>
+                        <i className='fa fa-calendar'></i>
                     </a>
                     <a href={config.paymentPath + this.props.email} className='main-user-profile-payment-btn' data-paypal-button='true'>
                         <img src='//www.paypalobjects.com/en_US/i/btn/btn_paynow_LG.gif' alt='Pay Now' />

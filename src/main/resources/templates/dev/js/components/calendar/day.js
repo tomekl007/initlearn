@@ -6,6 +6,7 @@ class Day extends React.Component {
 
         var hours = 24;
         var hour = 12;
+        var timeOfDay = 'am';
         var $hours = [];
         var $appointmentSlots = [];
 
@@ -13,9 +14,10 @@ class Day extends React.Component {
 
             if (i === 1 || i === 13) {
                 hour = 1;
+                timeOfDay = 'pm';
             }
 
-            $hours.push(<div className='main-calendar-day-hour' key={i}>{hour}</div>);
+            $hours.push(<div className='main-calendar-day-hour' key={i}>{hour + timeOfDay}</div>);
             $appointmentSlots.push(<div className='main-calendar-day-appointment-slot' key={i + 1}>
                 <div className='main-calendar-day-appointment-slot-hour'></div>
                 <div className='main-calendar-day-appointment-slot-hour'></div>
