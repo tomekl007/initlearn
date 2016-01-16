@@ -17,6 +17,20 @@ public class Reservation {
     public String reserved_by;
     public String teacher;
 
+    public Date getTo_hour() {
+        return to_hour;
+    }
+
+    public void setTo_hour(Date to_hour) {
+        this.to_hour = to_hour;
+    }
+
+    public void setReserved_by(String reserved_by) {
+        this.reserved_by = reserved_by;
+    }
+
+    public Date to_hour;
+
     public String getTeacher() {
         return teacher;
     }
@@ -53,9 +67,10 @@ public class Reservation {
 
     }
 
-    public Reservation(Date from_hour, String reserved_by, String teacher) {
+    public Reservation(Date from_hour, String reserved_by, String teacher, Date to_hour) {
         this.from_hour = from_hour;
         this.reserved_by = reserved_by;
         this.teacher = teacher;
+        this.to_hour = to_hour;
     }
 }

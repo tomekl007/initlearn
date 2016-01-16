@@ -44,21 +44,30 @@ public class ReservationController {
         );
     }
 
-    private static final String dateFormat = ("dd/MM/yyyy-hh:mm:ss");
+
     @RequestMapping(value = "/reservations", method = RequestMethod.POST, consumes = "application/json")
     public ResponseEntity<List<Reservation>> reserveLesson(@RequestBody ReservationRequest reservationRequest,
                                                            ServletRequest servletRequest) {
 
-        DateTime reservationTime = DateTimeFormat.forPattern(dateFormat).parseDateTime(reservationRequest.fromHour);
+        DateTime reservationTime = reservationService.normalizeTime(reservationRequest);
+        DateTime endOfReservationTime = reservationService.getEndOfReservationTime(reservationTime);
+
         return AccountUtils.actionResponseEntityForAuthenticatedUserOrUnauthorized(servletRequest,
                 a -> {
                     Optional<Account> teacherAccount = userService.findAccountByEmail(reservationRequest.teacher);
                     if (!teacherAccount.isPresent()) {
                         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
                     }
+
+                    if(reservationService.alreadyReserved(reservationTime, endOfReservationTime, teacherAccount.get())){
+                        return new ResponseEntity<>(HttpStatus.CONFLICT);
+                    }
+
                     return new ResponseEntity<>(
-                            reservationService.reserve(a, teacherAccount.get(), reservationTime), HttpStatus.OK);
+                            reservationService.reserve(a,
+                                    teacherAccount.get(), reservationTime, endOfReservationTime), HttpStatus.OK);
                 });
     }
+
 
 }

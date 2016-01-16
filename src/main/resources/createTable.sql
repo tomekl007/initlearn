@@ -19,5 +19,6 @@ CREATE TABLE Reservation(
   ID SERIAL PRIMARY KEY ,
   teacher TEXT,
   reserved_by TEXT,
-  from_hour timestamp
+  from_hour timestamp,
+  to_hour TIMESTAMP
 );

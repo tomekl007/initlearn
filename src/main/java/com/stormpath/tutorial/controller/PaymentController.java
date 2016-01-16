@@ -48,7 +48,7 @@ public class PaymentController {
     public String paymentCancelled(HttpServletRequest request) throws URISyntaxException, IOException, InvalidResponseDataException, SSLConfigurationException, OAuthException, MissingCredentialException, InvalidCredentialException, HttpErrorException, ClientActionRequiredException, InterruptedException {
         logger.info("payment cancelled");
         Optional<String> payKey = getPayKeyValue(request);
-        handlePaymentStatus(payKey, "cancel");
+        paymentService.logCancelPayment(payKey);
 
         return "redirect:/#/cancelPayment";
     }
@@ -56,23 +56,12 @@ public class PaymentController {
     @RequestMapping("/ap_chained_payment_success")
     public String paymentSucceed(HttpServletRequest request) throws URISyntaxException, IOException, InvalidResponseDataException, SSLConfigurationException, OAuthException, MissingCredentialException, InvalidCredentialException, HttpErrorException, ClientActionRequiredException, InterruptedException {
         Optional<String> payKey = getPayKeyValue(request);
-        handlePaymentStatus(payKey, "success");
+        paymentService.logSuccessPayment(payKey);
+
 
         return "redirect:/#/successPayment";
     }
 
-    private ResponseEntity handlePaymentStatus(Optional<String> payKey, String msg) throws IOException, OAuthException, InvalidResponseDataException, SSLConfigurationException, ClientActionRequiredException, MissingCredentialException, HttpErrorException, InvalidCredentialException, InterruptedException {
-        if (payKey.isPresent()) {
-            PaymentDetailsResponse paymentStatus = paymentService.getPaymentStatus(payKey.get());
-
-            return ResponseEntity.ok("payment "+ msg + " status: " +
-                    paymentStatus.getStatus() + ", sender: "
-                    + paymentStatus.getSenderEmail() + ", sender account: " +
-                    paymentStatus.getSender().getAccountId());
-        }else{
-            return ResponseEntity.badRequest().build();    
-        }
-    }
 
     public Optional<String> getPayKeyValue(HttpServletRequest httpServletRequest) throws URISyntaxException {
         String referer = httpServletRequest.getHeader("referer");
