@@ -39,9 +39,10 @@
 .main-calendar-day-reservation {
   width: 10px;
   height: 10px;
-  background-color: red;
+  background-color: $color-blue;
   display: block;
   border-radius: 10px;
+  border: 1px solid $color-green;
 }
 
 .main-calendar-days {
@@ -51,7 +52,7 @@
 }
 
 .main-calendar-day-hours,
-.main-calendar-day-appointment-slots {
+.main-calendar-day-slots {
   float: left;
   border-top: 1px solid $color-dark-grey;
 }
@@ -63,27 +64,38 @@
   background-color: #fff;
 }
 
-.main-calendar-day-appointment-slots {
+.main-calendar-day-slots {
   width: 90%;
   max-width: 645px;
   background-color: #fff;
 }
 
 .main-calendar-day-hour,
-.main-calendar-day-appointment-slot {
+.main-calendar-day-slot {
+  position: relative;
   height: 50px;
   border: 1px solid $color-dark-grey;
   border-top: none;
 }
 
-.main-calendar-day-appointment-slot-hour {
+.main-calendar-day-slot-hour {
   position: relative;
   width: 100%;
   height: 50%;
   float: left;
+  color: #fff;
 
   &:first-child {
     border-bottom: 1px dashed $color-dark-grey;
+  }
+
+  i {
+    display: none;
+    position: relative;
+    padding: rem-calc(10px);
+    text-align: center;
+    font-size: rem-calc(20px);
+    z-index: 1;
   }
 
   &:hover,
@@ -99,5 +111,38 @@
       opacity: .7;
       border: 2px solid $color-green;
     }
+
+    i {
+      display: block;
+    }
+
+    .main-calendar-day-slot-hour-booking-class {
+      display: block;
+    }
+  }
+}
+
+.main-calendar-day-slot-hour-booking-class {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: rem-calc(15px);
+  z-index: 1;
+}
+
+.main-calendar-day-slot-hour-reservation {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: $color-blue;
+  text-align: center;
+  padding: rem-calc(15px);
+  color: #fff;
+
+  &.half-hour {
+    top: 50%;
   }
 }

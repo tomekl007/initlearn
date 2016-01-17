@@ -28,7 +28,6 @@ var Calendar = React.createClass({
         return path.replace(config.usersPath + '/', '').split('/')[0];
     },
     componentDidMount() {
-        console.log('mount');
 
         if (this.state.teacherCalendar) {
             api.getReservation(this.state.teacherEmail)
@@ -39,7 +38,6 @@ var Calendar = React.createClass({
         }
     },
     addReservations(reservations) {
-        console.log(reservations);
         this.setState({reservations: reservations});
     },
     addAppointments(appointments) {

@@ -23,6 +23,7 @@ var Year = React.createClass ({
         var $reservations = [];
 
         this.props.parent.state.reservations.forEach(function (data, key) {
+            console.log(data);
             $reservations[$thisComponent.getMonth(data.from_hour)] = <span className='main-calendar-month-reservation' key={key}></span>;
         });
 

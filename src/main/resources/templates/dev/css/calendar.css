@@ -29,16 +29,17 @@
 .main-calendar-month-reservation, .main-calendar-day-reservation {
   width: 10px;
   height: 10px;
-  background-color: red;
+  background-color: #65c3df;
   display: block;
-  border-radius: 10px; }
+  border-radius: 10px;
+  border: 1px solid #1bbc9c; }
 
 .main-calendar-days {
   width: 20%;
   margin: 1%;
   height: 80px; }
 
-.main-calendar-day-hours, .main-calendar-day-appointment-slots {
+.main-calendar-day-hours, .main-calendar-day-slots {
   float: left;
   border-top: 1px solid #bbb; }
 
@@ -48,26 +49,36 @@
   text-align: center;
   background-color: #fff; }
 
-.main-calendar-day-appointment-slots {
+.main-calendar-day-slots {
   width: 90%;
   max-width: 645px;
   background-color: #fff; }
 
-.main-calendar-day-hour, .main-calendar-day-appointment-slot {
+.main-calendar-day-hour, .main-calendar-day-slot {
+  position: relative;
   height: 50px;
   border: 1px solid #bbb;
   border-top: none; }
 
-.main-calendar-day-appointment-slot-hour {
+.main-calendar-day-slot-hour {
   position: relative;
   width: 100%;
   height: 50%;
-  float: left; }
+  float: left;
+  color: #fff; }
 
-.main-calendar-day-appointment-slot-hour:first-child {
+.main-calendar-day-slot-hour:first-child {
   border-bottom: 1px dashed #bbb; }
 
-.main-calendar-day-appointment-slot-hour:hover:after, .main-calendar-day-appointment-slot-hour.is-active:after {
+.main-calendar-day-slot-hour i {
+  display: none;
+  position: relative;
+  padding: 0.625rem;
+  text-align: center;
+  font-size: 1.25rem;
+  z-index: 1; }
+
+.main-calendar-day-slot-hour:hover:after, .main-calendar-day-slot-hour.is-active:after {
   content: '';
   position: absolute;
   top: 0;
@@ -77,3 +88,31 @@
   background-color: #65c3df;
   opacity: .7;
   border: 2px solid #1bbc9c; }
+
+.main-calendar-day-slot-hour:hover i, .main-calendar-day-slot-hour.is-active i {
+  display: block; }
+
+.main-calendar-day-slot-hour:hover .main-calendar-day-slot-hour-booking-class, .main-calendar-day-slot-hour.is-active .main-calendar-day-slot-hour-booking-class {
+  display: block; }
+
+.main-calendar-day-slot-hour-booking-class {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0.9375rem;
+  z-index: 1; }
+
+.main-calendar-day-slot-hour-reservation {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #65c3df;
+  text-align: center;
+  padding: 0.9375rem;
+  color: #fff; }
+
+.main-calendar-day-slot-hour-reservation.half-hour {
+  top: 50%; }
