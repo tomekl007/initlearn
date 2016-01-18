@@ -1,4 +1,9 @@
 import React from 'react';
+import Router from 'react-router';
+import tapOrClick from 'react-tap-or-click';
+
+import ModalComponent from '../../components/modal';
+import ModalAppointment from '../../components/modalAppointment';
 
 var Day = React.createClass({
 
@@ -7,6 +12,8 @@ var Day = React.createClass({
         var date = path.split('/').slice(-3);
 
         return {
+            modalOpen: false,
+            appointmentDate: {},
             year: date[0],
             month: date[1],
             day: date[2]
@@ -18,9 +25,21 @@ var Day = React.createClass({
     getMinutes(timestamp) {
         return new Date(timestamp).getMinutes() < 30 ? '' : 'half-hour';
     },
+    selectDate(event) {
+        var $target = event.currentTarget;
+        var hour = $target.getAttribute('data-hour');
+        var hourFrom = $target.getAttribute('data-hour-from');
+        var hourTo = $target.getAttribute('data-hour-to');
+        var date = this.state.day + '/' + this.state.month + '/' +
+            this.state.year;
+
+        this.setState({
+            modalOpen: true, appointmentDate: {
+                date: date, hour: hour, hourFrom: hourFrom, hourTo: hourTo
+            }
+        });
+    },
     render() {
-        console.log(this.props.parent.state.teacherEmail);
-        console.log('day');
         var $thisComponent = this;
         var hours = 24;
         var hour = 12;
@@ -29,6 +48,7 @@ var Day = React.createClass({
         var $hours = [];
         var $hourSlots = [];
         var $reservations = [];
+        var $modalComponent;
 
         this.props.parent.state.reservations.forEach(function (data, key) {
             $reservations[$thisComponent.getHour(data.from_hour)] =
@@ -45,18 +65,20 @@ var Day = React.createClass({
 
             $hours.push(<div className='main-calendar-day-hour' key={i}>{hour + timeOfDay}</div>);
             $hourSlots.push(<div className='main-calendar-day-slot' key={i + 1}>
-                <div className='main-calendar-day-slot-hour'>
+                <div className='main-calendar-day-slot-hour' data-hour={hour + ':00 - ' + nextHour + ':00'}
+                    data-hour-from={i + ':00'} data-hour-to={(i + 1) + ':00'}  {...tapOrClick(this.selectDate)}>
                     <span className='main-calendar-day-slot-hour-booking-class'>
                         <span className='from-hour'>
-                            {hour} -
+                            {hour + ':00'} -
                         </span>
                         <span className='to-hour'>
-                            {nextHour}
+                            {nextHour + ':00'}
                         </span>
                     </span>
                     <i className='fa fa-calendar-plus-o'></i>
                 </div>
-                <div className='main-calendar-day-slot-hour'>
+                <div className='main-calendar-day-slot-hour' data-hour={hour + ':30 - ' + nextHour + ':30'}
+                    data-hour-from={i + ':30'} data-hour-to={(i + 1) + ':30'} {...tapOrClick(this.selectDate)}>
                     <span className='main-calendar-day-slot-hour-booking-class'>
                         <span className='from-hour'>
                             {hour + ':30'} -
@@ -73,6 +95,14 @@ var Day = React.createClass({
             hour = nextHour;
             nextHour++;
         }
+
+        if (this.state.modalOpen) {
+            $modalComponent = <ModalComponent
+                parent={this}
+                content={<ModalAppointment appointmentDate={this.state.appointmentDate}
+                    teacher={this.props.parent.state.teacherEmail} />}/>
+        }
+
         return (
             <div className='main-calendar-day'>
                 <div className='main-calendar-day-hours'>
@@ -81,6 +111,7 @@ var Day = React.createClass({
                 <div className='main-calendar-day-slots'>
                     {$hourSlots}
                 </div>
+                {$modalComponent}
             </div>
         );
     }

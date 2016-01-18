@@ -8,8 +8,6 @@ import CalendarYearComponent from './year';
 import CalendarMonthComponent from './month';
 import CalendarDayComponent from './day';
 
-window.Router = Router;
-
 var Calendar = React.createClass({
 
     getInitialState() {
@@ -57,7 +55,6 @@ var Calendar = React.createClass({
         return dateComponents[dateFormat];
     },
     render() {
-        console.log(this);
         return (
             <div>
                 {this.getDateComponentFromPath()}

@@ -27,7 +27,7 @@ var Year = React.createClass ({
             $reservations[$thisComponent.getMonth(data.from_hour)] = <span className='main-calendar-month-reservation' key={key}></span>;
         });
 
-        for (var i = 0; i < this.state.months; i++) {
+        for (var i = 1; i < this.state.months + 1; i++) {
             $months.push(<div className='main-calendar-months' key={i}>
                 <a href={this.state.path + '/' + i} >
                 {i}
