@@ -35,6 +35,7 @@ public class PaymentService {
 
         Optional<User> receiver = userService.findUserByEmail(toEmail);
 
+        //todo The+amount+for+the+primary+receiver+must+be+greater+than+or+equal+to+the+total+of+other+chained+receiver+amounts
         Integer receiverHourRateInt = receiver.get().hourRate;
         if (receiverHourRateInt == null) {
             throw new RuntimeException("teacher hour rate is null");//todo handle it gracefully

@@ -1,7 +1,5 @@
 package com.stormpath.tutorial.controller.jsonrequest;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
 /**
  * Created by tomasz.lelek on 13/01/16.
  */
@@ -17,13 +15,13 @@ public class ReservationRequest {
         this.teacher = teacher;
     }
 
-    public String getFromHour() {
+    public Long getFromHour() {
         return fromHour;
     }
 
-    public void setFromHour(String fromHour) {
+    public void setFromHour(Long fromHour) {
         this.fromHour = fromHour;
     }
 
-    public String fromHour;
+    public Long fromHour;
 }

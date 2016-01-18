@@ -11,9 +11,7 @@ import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Created by tomasz.lelek on 11/01/16.
@@ -56,8 +54,11 @@ public class ReservationService {
     private static final String dateFormat = ("dd/MM/yyyy-HH:mm");
 
     public DateTime normalizeTime(ReservationRequest reservationRequest) {
-        DateTime dateTime = DateTimeFormat.forPattern(dateFormat)
-                .parseDateTime(reservationRequest.fromHour);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(reservationRequest.fromHour);
+        Date time = calendar.getTime();
+        DateTime dateTime = new DateTime(time);
         return dateTime.withTime(dateTime.getHourOfDay(), dateTime.getMinuteOfHour(), 0, 0);
     }
 
