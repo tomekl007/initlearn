@@ -53,6 +53,12 @@
 .fa-star-o:before {
   content: ""; }
 
+.fa-calendar:before {
+  content: ""; }
+
+.fa-calendar-plus-o:before {
+  content: ""; }
+
 *, *:before, *:after {
   box-sizing: inherit; }
 

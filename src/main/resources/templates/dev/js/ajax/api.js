@@ -80,6 +80,18 @@ var Api = (function () {
         getSearchAutocompleteOptions: function () {
             return $http(config.getSearchAutocompleteOptionsUrl)
                 .get(this.payload());
+        },
+        addReservation: function(data) {
+            return $http(config.addReservationUrl)
+                .post(this.payload({json: data}));
+        },
+        getReservation: function(emailPath) {
+            return $http(config.getReservationsUrl(emailPath))
+                .get(this.payload());
+        },
+        getAppointments: function() {
+            return $http(config.getAppointmentsUrl)
+                .get(this.payload());
         }
     };
 

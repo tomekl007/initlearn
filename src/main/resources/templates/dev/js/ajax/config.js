@@ -4,11 +4,13 @@ var Config = (function () {
 
     var appUrl = 'https://initlearn.herokuapp.com';
     var myProfileHash = '#me';
-    var usersUrl = appUrl + '/users';
+    var usersPath = '/users';
+    var usersUrl = appUrl + usersPath;
     var usersHash = '#users/';
-    var userGroupPath = '/group/users/';
+    var userGroupPath = '/group'+ usersPath +'/';
     var messagesUrl = appUrl + '/msg';
     var messagesHash = '#msg/';
+    var calendarPath = '/calendar/';
 
     var registerAccountUrl = appUrl + '/registerAccount';
     var addUserToTeacherGroupUrl = usersUrl + '/teachers';
@@ -19,6 +21,8 @@ var Config = (function () {
     var getUserDataUrl = appUrl + '/me';
     var getMessagesOverviewUrl = messagesUrl + '/overview';
     var getSearchAutocompleteOptionsUrl = appUrl + '/skills';
+    var addReservationUrl = appUrl + '/reservations';
+    var getAppointmentsUrl = appUrl + '/appointments';
     var getTeachersUrl = appUrl + userGroupPath + 'teachers';
     var logoutUserUrl = appUrl + '/logout';
 
@@ -36,6 +40,10 @@ var Config = (function () {
 
     var updateUserDataFieldUrl = function(fieldPath) {
         return usersUrl + '/' + fieldPath;
+    };
+
+    var getReservationsUrl = function(email) {
+        return appUrl + '/reservations/' + email;
     };
 
     /*calls*/
@@ -61,11 +69,13 @@ var Config = (function () {
     return {
         appUrl: appUrl,
         myProfileHash: myProfileHash,
+        usersPath: usersPath,
         usersUrl: usersUrl,
         usersHash: usersHash,
         userGroupPath: userGroupPath,
         messagesUrl: messagesUrl,
         messagesHash: messagesHash,
+        calendarPath: calendarPath,
         registerAccountUrl: registerAccountUrl,
         addUserToTeacherGroupUrl: addUserToTeacherGroupUrl,
         addUserRatingUrl: addUserRatingUrl,
@@ -78,6 +88,9 @@ var Config = (function () {
         getMessagesOverviewUrl: getMessagesOverviewUrl,
         getMessagesUrl: getMessagesUrl,
         getSearchAutocompleteOptionsUrl: getSearchAutocompleteOptionsUrl,
+        addReservationUrl: addReservationUrl,
+        getReservationsUrl: getReservationsUrl,
+        getAppointmentsUrl: getAppointmentsUrl,
         getTeachersUrl: getTeachersUrl,
         logoutUserUrl: logoutUserUrl,
         searchTeachersBySkillPath: searchTeachersBySkillPath,
