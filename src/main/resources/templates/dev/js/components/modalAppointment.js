@@ -8,8 +8,7 @@ var ModalAppointment = React.createClass({
 
     addReservation() {
         var reservation = {
-            fromHour: this.props.appointmentDate.date + '-' +
-            this.props.appointmentDate.hourFrom,
+            fromHour: new Date(this.props.appointmentDate.date + ',' + this.props.appointmentDate.hourFrom).getTime(),
             teacher: this.props.teacher
         };
 
