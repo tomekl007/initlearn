@@ -18,6 +18,7 @@ var Month = React.createClass ({
     },
     render() {
         console.log('month');
+        console.log(this);
         var $thisComponent = this;
         var $days = [];
         var $reservations = [];
