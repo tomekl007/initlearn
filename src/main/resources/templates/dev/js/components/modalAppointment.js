@@ -7,6 +7,7 @@ import api from '../ajax/api';
 var ModalAppointment = React.createClass({
 
     addReservation() {
+        var $thisComponent = this;
         var reservation = {
             fromHour: new Date(this.props.appointmentDate.date + ',' + this.props.appointmentDate.hourFrom).getTime(),
             teacher: this.props.teacher
@@ -14,6 +15,7 @@ var ModalAppointment = React.createClass({
 
         api.addReservation(reservation).then(function (data) {
             console.log(data);
+            $thisComponent.props.calendar.addReservations(data);
         });
     },
     render() {

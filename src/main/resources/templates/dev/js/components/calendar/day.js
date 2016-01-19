@@ -100,7 +100,7 @@ var Day = React.createClass({
             $modalComponent = <ModalComponent
                 parent={this}
                 content={<ModalAppointment appointmentDate={this.state.appointmentDate}
-                    teacher={this.props.parent.state.teacherEmail} />}/>
+                    teacher={this.props.parent.state.teacherEmail} calendar={this.props.parent}/>}/>
         }
 
         return (
