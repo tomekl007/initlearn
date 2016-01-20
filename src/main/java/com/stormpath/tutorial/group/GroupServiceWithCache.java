@@ -24,7 +24,7 @@ public class GroupServiceWithCache implements GroupCachableService {
 
     private final Cache<String, List<User>> cache = CacheBuilder.newBuilder()
             .maximumSize(ONE_MILLION)
-            .refreshAfterWrite(5, TimeUnit.MINUTES)
+//            .refreshAfterWrite(5, TimeUnit.MINUTES)
             .build();
 
     private Callable<List<User>> getValueLoader(String groupName) {
