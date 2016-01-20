@@ -30,8 +30,8 @@ var Day = React.createClass({
         var hour = $target.getAttribute('data-hour');
         var hourFrom = $target.getAttribute('data-hour-from');
         var hourTo = $target.getAttribute('data-hour-to');
-        var date = this.state.day + '/' + this.state.month + '/' +
-            this.state.year;
+        var date = this.state.year + '/' + this.state.month + '/' +
+            this.state.day;
 
         this.setState({
             modalOpen: true, appointmentDate: {
@@ -100,7 +100,7 @@ var Day = React.createClass({
             $modalComponent = <ModalComponent
                 parent={this}
                 content={<ModalAppointment appointmentDate={this.state.appointmentDate}
-                    teacher={this.props.parent.state.teacherEmail} />}/>
+                    teacher={this.props.parent.state.teacherEmail} calendar={this.props.parent}/>}/>
         }
 
         return (
