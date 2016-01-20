@@ -17,7 +17,8 @@ var Calendar = React.createClass({
             teacherEmail: teacherEmail,
             teacherCalendar: teacherEmail ? true : false,
             reservations: [],
-            appointments: []
+            appointments: [],
+            temp: {}
         };
     },
     getUserEmail() {
@@ -36,10 +37,45 @@ var Calendar = React.createClass({
         }
     },
     addReservations(reservations) {
-        this.setState({reservations: reservations});
+        var $thisComponent = this;
+        var reservationsStore = [];
+        var temp = {};
+
+        reservations.forEach(function(reservation, key) {
+            reservationsStore.push({
+                data: reservation,
+                date: $thisComponent.getFullDate(reservation.from_hour)
+            });
+
+
+            var date = $thisComponent.getFullDate(reservation.from_hour);
+            var hours = [];
+            var day = {};
+            var month = {};
+            console.log(day[date.day]);
+            day[date.day] = day[date.day] || {};
+            month[date.month] = month[date.month] || {};
+            month[date.month] = day;
+            temp[date.year] = temp[date.year] || {};
+            temp[date.year] = month;
+
+        });
+
+        this.setState({reservations: reservationsStore, temp: temp});
     },
     addAppointments(appointments) {
+
         this.setState({appointments: appointments});
+    },
+    getFullDate(timestamp) {
+        var date = new Date(timestamp);
+
+        return {
+            year: date.getFullYear(),
+            month: date.getMonth(),
+            day: date.getDate(),
+            hours: date.getHours()
+        };
     },
     getDateComponentFromPath() {
         var dateComponents = [

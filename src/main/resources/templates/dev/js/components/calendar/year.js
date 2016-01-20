@@ -1,11 +1,11 @@
 import React from 'react';
 import Router from 'react-router';
 
-var Year = React.createClass ({
+var Year = React.createClass({
 
     getInitialState() {
         var path = Router.HashLocation.getCurrentPath();
-        var year = path.split('/').slice(-1);
+        var year = parseInt(path.split('/').slice(-1));
 
         return {
             path: '#' + path,
@@ -14,7 +14,7 @@ var Year = React.createClass ({
         };
     },
     getMonth(timestamp) {
-      return new Date(timestamp).getMonth();
+        return new Date(timestamp).getMonth();
     },
     render() {
         console.log('year');
@@ -22,9 +22,18 @@ var Year = React.createClass ({
         var $months = [];
         var $reservations = [];
 
-        this.props.parent.state.reservations.forEach(function (data, key) {
-            $reservations[$thisComponent.getMonth(data.from_hour)] = <span className='main-calendar-month-reservation' key={key}></span>;
+        /*TODO needs to be refactored*/
+        this.props.parent.state.reservations.forEach(function (reservation, key) {
+            var year = reservation.date.year;
+
+            if ($thisComponent.state.year === year) {
+                var month = reservation.date.month;
+                $reservations[month] = $reservations[month] || [];
+                $reservations[month].push(<span className='main-calendar-month-reservation' key={key}></span>);
+            }
         });
+
+        console.log($reservations);
 
         for (var i = 1; i < this.state.months + 1; i++) {
             $months.push(<div className='main-calendar-months' key={i}>
