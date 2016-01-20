@@ -43,7 +43,7 @@ public class GroupServiceWithCache implements GroupCachableService {
         }
     }
 
-    public ResponseEntity<List<User>> invalidate() {
+    public void invalidate() {
         cache.invalidateAll();
     }
 }
