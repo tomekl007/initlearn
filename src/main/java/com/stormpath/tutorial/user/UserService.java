@@ -178,7 +178,7 @@ public class UserService implements AccountFields, UserServiceCacheable {
     }
 
     public List<String> getAllSkillsAvailable() {
-        return getAllUsers()
+        return groupService.findAllTeachers()
                 .stream()
                 .map(u -> u.skills)
                 .filter( s -> !s.isEmpty())
