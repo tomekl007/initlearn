@@ -6,6 +6,7 @@ import com.stormpath.tutorial.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -28,8 +29,9 @@ public class UserServiceWithHash implements UserServiceCacheable {
     @Override
     public List<User> getAllUsers() {
         try {
-            return cache.get(clientId, getValueLoader(clientId));
-        } catch (ExecutionException e) {
+            return Collections.emptyList();
+//            return cache.get(clientId, getValueLoader(clientId));
+        } catch (Exception e) {
             System.out.println("operation supplying value to cache thrown exception " + e);
             throw new RuntimeException(e);
         }
