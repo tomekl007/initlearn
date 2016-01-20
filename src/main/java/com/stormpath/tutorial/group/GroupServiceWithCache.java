@@ -4,6 +4,7 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.stormpath.tutorial.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -40,5 +41,9 @@ public class GroupServiceWithCache implements GroupCachableService {
             System.out.println("operation supplying value to cache thrown exception " + e);
             throw new RuntimeException(e);
         }
+    }
+
+    public ResponseEntity<List<User>> invalidate() {
+        cache.invalidateAll();
     }
 }
