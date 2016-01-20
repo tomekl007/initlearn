@@ -1,5 +1,7 @@
 package com.stormpath.tutorial.user;
 
+import com.stormpath.tutorial.model.User;
+
 import java.util.List;
 
 /**
@@ -7,4 +9,5 @@ import java.util.List;
  */
 public interface UserServiceCacheable {
     List<String> getAllSkillsAvailable();
+    List<User> findUsersByEmail(String email);
 }
