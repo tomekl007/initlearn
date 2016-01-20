@@ -147,6 +147,7 @@ public class UserController {
     @RequestMapping(value = "users/data", method = RequestMethod.POST, consumes = "application/json")
     public ResponseEntity<List<User>> fillTeacherWithData(@RequestBody TeacherData teacherData, ServletRequest servletRequest) {
         groupServiceWithCache.invalidate();
+        userServiceWithCache.invalidate();
         return AccountUtils.actionForAuthenticatedUserOrUnauthorized(servletRequest,
                 account -> userService.fillTeacherWithData(teacherData, account.getEmail()));
     }

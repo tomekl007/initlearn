@@ -38,4 +38,8 @@ public class UserServiceWithCache implements UserServiceCacheable {
             throw new RuntimeException(e);
         }
     }
+
+    public void invalidate() {
+        cache.invalidateAll();
+    }
 }
