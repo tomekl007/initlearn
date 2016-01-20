@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
  * Created by tomasz.lelek on 16/12/15.
  */
 @Component
-public class UserService implements AccountFields {
+public class UserService implements AccountFields, UserServiceCacheable {
 
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
@@ -129,6 +129,7 @@ public class UserService implements AccountFields {
                 .collect(Collectors.toList());
     }
 
+    @Override
     public List<User> getAllUsers() {
         return getAllUsers(Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty());
     }
