@@ -129,7 +129,6 @@ public class UserService implements AccountFields, UserServiceCacheable {
                 .collect(Collectors.toList());
     }
 
-    @Override
     public List<User> getAllUsers() {
         return getAllUsers(Optional.empty(), Optional.empty(), Optional.empty());
     }
@@ -177,6 +176,7 @@ public class UserService implements AccountFields, UserServiceCacheable {
         return application.createAccount(account);
     }
 
+    @Override
     public List<String> getAllSkillsAvailable() {
         return groupService.findAllTeachers()
                 .stream()

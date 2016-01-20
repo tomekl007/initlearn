@@ -5,6 +5,7 @@ import com.stormpath.tutorial.controller.jsonrequest.*;
 import com.stormpath.tutorial.group.GroupServiceWithCache;
 import com.stormpath.tutorial.model.User;
 import com.stormpath.tutorial.user.UserService;
+import com.stormpath.tutorial.user.UserServiceWithCache;
 import com.stormpath.tutorial.utils.AccountUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +28,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    UserServiceWithCache userServiceWithCache;
 
     @Autowired
     private GroupServiceWithCache groupServiceWithCache;
@@ -165,7 +169,7 @@ public class UserController {
 
     @RequestMapping("/skills")
     ResponseEntity<List<String>> getAllSkills() {
-        List<String> allSkillsAvailable = userService.getAllSkillsAvailable();
+        List<String> allSkillsAvailable = userServiceWithCache.getAllSkillsAvailable();
         return new ResponseEntity<>(allSkillsAvailable, HttpStatus.OK);
     }
 }

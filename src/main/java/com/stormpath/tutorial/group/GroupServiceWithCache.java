@@ -20,11 +20,9 @@ public class GroupServiceWithCache implements GroupCachableService {
     @Autowired
     GroupCachableService groupService;
 
-    private static final int ONE_MILLION = 1000000;
-
     private final Cache<String, List<User>> cache = CacheBuilder.newBuilder()
-            .maximumSize(ONE_MILLION)
-//            .refreshAfterWrite(5, TimeUnit.MINUTES)
+            .maximumSize(10)
+            .expireAfterWrite(5, TimeUnit.MINUTES)
             .build();
 
     private Callable<List<User>> getValueLoader(String groupName) {
