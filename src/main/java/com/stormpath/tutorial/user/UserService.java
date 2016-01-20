@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
  * Created by tomasz.lelek on 16/12/15.
  */
 @Component
-public class UserService implements AccountFields {
+public class UserService implements AccountFields, UserServiceCacheable {
 
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
@@ -130,18 +130,18 @@ public class UserService implements AccountFields {
     }
 
     public List<User> getAllUsers() {
-        return getAllUsers(Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty());
+        return getAllUsers(Optional.empty(), Optional.empty(), Optional.empty());
     }
 
     public List<User> getAllUsers(Optional<String> sort,
-                                  Optional<Integer> sortOrder, Optional<Integer> offset, Optional<Integer> limit) {
-        return getAllUsers(sort, sortOrder, offset, limit, client);
+                                  Optional<Integer> sortOrder, Optional<Integer> offset) {
+        return getAllUsers(sort, sortOrder, offset, client);
     }
 
     public static List<User> getAllUsers(Optional<String> sort, Optional<Integer> sortOrder,
-                                         Optional<Integer> offset, Optional<Integer> limit, Client client) {
+                                         Optional<Integer> offset, Client client) {
         List<Account> list = new ArrayList<>();
-        client.getAccounts(pagination(offset, limit))
+        client.getAccounts(pagination(offset))
                 .iterator()
                 .forEachRemaining(list::add);
         return sortBy(AccountUtils.mapToUsers(list), sort, sortOrder);
@@ -154,10 +154,10 @@ public class UserService implements AccountFields {
         return list;
     }
 
-    private static AccountCriteria pagination(Optional<Integer> offset, Optional<Integer> limit) {
-        if (offset.isPresent() && limit.isPresent()) {
-            logger.info("--> offset : " + offset + " limit : " + limit);
-            return Accounts.criteria().limitTo(limit.get()).offsetBy(offset.get());
+    private static AccountCriteria pagination(Optional<Integer> offset) {
+        if (offset.isPresent()) {
+            logger.info("--> offset : " + offset);
+            return Accounts.criteria().offsetBy(offset.get());
         } else {
             return Accounts.criteria();
         }
@@ -176,8 +176,9 @@ public class UserService implements AccountFields {
         return application.createAccount(account);
     }
 
+    @Override
     public List<String> getAllSkillsAvailable() {
-        return getAllUsers()
+        return groupService.findAllTeachers()
                 .stream()
                 .map(u -> u.skills)
                 .filter( s -> !s.isEmpty())
