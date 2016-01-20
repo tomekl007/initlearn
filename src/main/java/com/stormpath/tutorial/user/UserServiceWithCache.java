@@ -15,7 +15,7 @@ import java.util.concurrent.ExecutionException;
  * Created by tomasz.lelek on 19/01/16.
  */
 @Component
-public class UserServiceWithHash implements UserServiceCacheable {
+public class UserServiceWithCache implements UserServiceCacheable {
     @Autowired
     UserService userService;
 

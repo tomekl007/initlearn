@@ -131,18 +131,18 @@ public class UserService implements AccountFields, UserServiceCacheable {
 
     @Override
     public List<User> getAllUsers() {
-        return getAllUsers(Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty());
+        return getAllUsers(Optional.empty(), Optional.empty(), Optional.empty());
     }
 
     public List<User> getAllUsers(Optional<String> sort,
-                                  Optional<Integer> sortOrder, Optional<Integer> offset, Optional<Integer> limit) {
-        return getAllUsers(sort, sortOrder, offset, limit, client);
+                                  Optional<Integer> sortOrder, Optional<Integer> offset) {
+        return getAllUsers(sort, sortOrder, offset, client);
     }
 
     public static List<User> getAllUsers(Optional<String> sort, Optional<Integer> sortOrder,
-                                         Optional<Integer> offset, Optional<Integer> limit, Client client) {
+                                         Optional<Integer> offset, Client client) {
         List<Account> list = new ArrayList<>();
-        client.getAccounts(pagination(offset, limit))
+        client.getAccounts(pagination(offset))
                 .iterator()
                 .forEachRemaining(list::add);
         return sortBy(AccountUtils.mapToUsers(list), sort, sortOrder);
@@ -155,10 +155,10 @@ public class UserService implements AccountFields, UserServiceCacheable {
         return list;
     }
 
-    private static AccountCriteria pagination(Optional<Integer> offset, Optional<Integer> limit) {
-        if (offset.isPresent() && limit.isPresent()) {
-            logger.info("--> offset : " + offset + " limit : " + limit);
-            return Accounts.criteria().limitTo(limit.get()).offsetBy(offset.get());
+    private static AccountCriteria pagination(Optional<Integer> offset) {
+        if (offset.isPresent()) {
+            logger.info("--> offset : " + offset);
+            return Accounts.criteria().offsetBy(offset.get());
         } else {
             return Accounts.criteria();
         }
