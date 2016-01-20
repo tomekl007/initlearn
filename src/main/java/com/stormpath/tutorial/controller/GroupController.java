@@ -4,6 +4,7 @@ import com.stormpath.sdk.account.Account;
 import com.stormpath.sdk.account.AccountList;
 import com.stormpath.sdk.group.Group;
 import com.stormpath.tutorial.group.GroupService;
+import com.stormpath.tutorial.group.GroupServiceWithCache;
 import com.stormpath.tutorial.model.User;
 import com.stormpath.tutorial.utils.AccountUtils;
 import org.slf4j.Logger;
@@ -32,16 +33,20 @@ public class GroupController {
     @Autowired
     private GroupService groupService;
 
+    @Autowired
+    private GroupServiceWithCache groupServiceWithCache;
+
     @RequestMapping(value = "group/users/{groupName}", method = RequestMethod.GET)
     public ResponseEntity<List<User>> getTeachers(@PathVariable("groupName") String groupName) {
 
-        Optional<AccountList> accountForGroup = groupService.findGroup(groupName).map(Group::getAccounts);
+        List<User> accountForGroup = groupServiceWithCache.findAccountsForGroup(groupName);
 
-        if (!accountForGroup.isPresent()) {
+
+        if (accountForGroup.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity<>(AccountUtils.mapToUsers(accountForGroup.get()), HttpStatus.OK);
+        return new ResponseEntity<>(accountForGroup, HttpStatus.OK);
     }
 
     @RequestMapping(value = "users/{group}", method = RequestMethod.POST, consumes = "application/json")

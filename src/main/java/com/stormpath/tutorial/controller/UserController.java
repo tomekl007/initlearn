@@ -2,6 +2,7 @@ package com.stormpath.tutorial.controller;
 
 import com.stormpath.sdk.account.Account;
 import com.stormpath.tutorial.controller.jsonrequest.*;
+import com.stormpath.tutorial.group.GroupServiceWithCache;
 import com.stormpath.tutorial.model.User;
 import com.stormpath.tutorial.user.UserService;
 import com.stormpath.tutorial.utils.AccountUtils;
@@ -26,6 +27,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private GroupServiceWithCache groupServiceWithCache;
 
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     public ResponseEntity<List<User>> getAllUsers(@RequestParam(required = false) Optional<String> sort,
@@ -121,7 +125,7 @@ public class UserController {
     public ResponseEntity<List<User>> addRateForTeacher(@RequestBody Rate rate, @PathVariable("email") String email,
                                                         ServletRequest servletRequest) {
         return AccountUtils.actionResponseEntityForAuthenticatedUserOrUnauthorized(servletRequest, userThatRate -> {
-            if(userService.alreadyRateThatTeacher(userThatRate, email)){
+            if (userService.alreadyRateThatTeacher(userThatRate, email)) {
                 return new ResponseEntity<>(HttpStatus.PRECONDITION_FAILED);
             }
 
@@ -138,6 +142,7 @@ public class UserController {
 
     @RequestMapping(value = "users/data", method = RequestMethod.POST, consumes = "application/json")
     public ResponseEntity<List<User>> fillTeacherWithData(@RequestBody TeacherData teacherData, ServletRequest servletRequest) {
+        groupServiceWithCache.invalidate();
         return AccountUtils.actionForAuthenticatedUserOrUnauthorized(servletRequest,
                 account -> userService.fillTeacherWithData(teacherData, account.getEmail()));
     }
