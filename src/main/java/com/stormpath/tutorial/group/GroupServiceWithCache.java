@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by tomasz.lelek on 20/01/16.
@@ -23,6 +24,7 @@ public class GroupServiceWithCache implements GroupCachableService {
 
     private final Cache<String, List<User>> cache = CacheBuilder.newBuilder()
             .maximumSize(ONE_MILLION)
+            .refreshAfterWrite(5, TimeUnit.MINUTES)
             .build();
 
     private Callable<List<User>> getValueLoader(String groupName) {
