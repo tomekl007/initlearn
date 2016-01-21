@@ -9,8 +9,8 @@ var Month = React.createClass({
 
         return {
             path: '#' + path,
-            year: date[0],
-            month: date[1]
+            year: parseInt(date[0]),
+            month: parseInt(date[1])
         };
     },
     getDay(timestamp) {
@@ -26,9 +26,16 @@ var Month = React.createClass({
         var $days = [];
         var $reservations = [];
 
-        this.props.parent.state.reservations.forEach(function (data, key) {
-            $reservations[$thisComponent.getDay(data.from_hour)] = <span className='main-calendar-day-reservation' key={key}></span>;
+        this.props.parent.state.reservations.forEach(function (reservation, key) {
+            var year = reservation.date.year;
+            var month = reservation.date.month;
+            if ($thisComponent.state.month === month && $thisComponent.state.year === year) {
+                var day = reservation.date.day;
+                $reservations[day] = $reservations[day] || [];
+                $reservations[day].push(<span className='main-calendar-day-reservation' key={key}></span>);
+            }
         });
+
         for (var i = 1; i < this.daysInMonth() + 1; i++) {
             $days.push(<div className='main-calendar-days' key={i} data-day-nr={i}>
                 <a href={this.state.path + '/' + i} >

@@ -17,8 +17,7 @@ var Calendar = React.createClass({
             teacherEmail: teacherEmail,
             teacherCalendar: teacherEmail ? true : false,
             reservations: [],
-            appointments: [],
-            temp: {}
+            appointments: []
         };
     },
     getUserEmail() {
@@ -39,29 +38,15 @@ var Calendar = React.createClass({
     addReservations(reservations) {
         var $thisComponent = this;
         var reservationsStore = [];
-        var temp = {};
 
-        reservations.forEach(function(reservation, key) {
+        reservations.forEach(function(reservation) {
             reservationsStore.push({
                 data: reservation,
                 date: $thisComponent.getFullDate(reservation.from_hour)
             });
-
-
-            var date = $thisComponent.getFullDate(reservation.from_hour);
-            var hours = [];
-            var day = {};
-            var month = {};
-            console.log(day[date.day]);
-            day[date.day] = day[date.day] || {};
-            month[date.month] = month[date.month] || {};
-            month[date.month] = day;
-            temp[date.year] = temp[date.year] || {};
-            temp[date.year] = month;
-
         });
 
-        this.setState({reservations: reservationsStore, temp: temp});
+        this.setState({reservations: reservationsStore});
     },
     addAppointments(appointments) {
 
