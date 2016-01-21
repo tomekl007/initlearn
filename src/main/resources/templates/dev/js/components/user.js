@@ -9,6 +9,9 @@ import api from '../ajax/api';
 
 var User = React.createClass({
 
+    componentWillReceiveProps(state) {
+        this.setState({data: state.data});
+    },
     getInitialState() {
         return {
             data: this.props.data,

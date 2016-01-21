@@ -11,13 +11,10 @@ import CalendarDayComponent from './day';
 var Calendar = React.createClass({
 
     getInitialState() {
-        var teacherEmail = this.getUserEmail();
 
         return {
-            teacherEmail: teacherEmail,
-            teacherCalendar: teacherEmail ? true : false,
-            reservations: [],
-            appointments: []
+            email: this.getUserEmail(),
+            reservations: []
         };
     },
     getUserEmail() {
@@ -26,20 +23,32 @@ var Calendar = React.createClass({
         return path.replace(config.usersPath + '/', '').split('/')[0];
     },
     componentDidMount() {
+        api.getReservation(this.state.email)
+            .then(this.addReservations);
 
-        if (this.state.teacherCalendar) {
-            api.getReservation(this.state.teacherEmail)
-                .then(this.addReservations);
-        } else {
-            api.getAppointments()
-                .then(this.addAppointments);
-        }
     },
     addReservations(reservations) {
-        this.setState({reservations: reservations});
+        var $thisComponent = this;
+        var reservationsStore = [];
+
+        reservations.forEach(function(reservation) {
+            reservationsStore.push({
+                data: reservation,
+                date: $thisComponent.getFullDate(reservation.from_hour)
+            });
+        });
+
+        this.setState({reservations: reservationsStore});
     },
-    addAppointments(appointments) {
-        this.setState({appointments: appointments});
+    getFullDate(timestamp) {
+        var date = new Date(timestamp);
+
+        return {
+            year: date.getFullYear(),
+            month: date.getMonth() + 1,
+            day: date.getDate(),
+            hour: date.getHours()
+        };
     },
     getDateComponentFromPath() {
         var dateComponents = [
