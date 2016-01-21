@@ -16,6 +16,7 @@ var ModalAppointment = React.createClass({
         api.addReservation(reservation).then(function (data) {
             console.log(data);
             $thisComponent.props.calendar.addReservations(data);
+            $thisComponent.props.parent.setState({modalOpen: false});
         });
     },
     render() {

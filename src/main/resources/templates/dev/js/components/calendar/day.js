@@ -109,8 +109,11 @@ var Day = React.createClass({
         if (this.state.modalOpen) {
             $modalComponent = <ModalComponent
                 parent={this}
-                content={<ModalAppointment appointmentDate={this.state.appointmentDate}
-                    teacher={this.props.parent.state.teacherEmail} calendar={this.props.parent}/>}/>
+                content={<ModalAppointment
+                    parent={this}
+                    appointmentDate={this.state.appointmentDate}
+                    teacher={this.props.parent.state.teacherEmail}
+                    calendar={this.props.parent}/>}/>
         }
 
         return (
