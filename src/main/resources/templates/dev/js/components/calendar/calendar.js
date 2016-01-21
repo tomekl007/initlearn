@@ -59,7 +59,7 @@ var Calendar = React.createClass({
             year: date.getFullYear(),
             month: date.getMonth(),
             day: date.getDate(),
-            hours: date.getHours()
+            hour: date.getHours()
         };
     },
     getDateComponentFromPath() {

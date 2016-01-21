@@ -54,6 +54,7 @@ var Day = React.createClass({
             var year = reservation.date.year;
             var month = reservation.date.month;
             var day = reservation.date.day;
+
             if ($thisComponent.state.month === month &&
                 $thisComponent.state.year === year &&
                 $thisComponent.state.day === day) {
@@ -64,7 +65,7 @@ var Day = React.createClass({
                 </div>;
             }
         });
-        
+
         for (var i = 0; i < hours; i++) {
 
             if (i === 12) {
