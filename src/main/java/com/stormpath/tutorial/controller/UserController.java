@@ -49,7 +49,7 @@ public class UserController {
         List<User> users = userService.findUsersByEmail(email);
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
-
+    //todo invalidate cache for particular user when data changed forr him
     @RequestMapping(value = "users/screenhero", method = RequestMethod.POST)
     public ResponseEntity<List<User>> addScreenHeroToUser(@RequestBody ScreenHero screenHero, ServletRequest servletRequest) {
         return AccountUtils.actionForAuthenticatedUserOrUnauthorized(servletRequest, account -> {
