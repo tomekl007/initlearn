@@ -3,7 +3,7 @@ import Router from 'react-router';
 import tapOrClick from 'react-tap-or-click';
 
 import ModalComponent from '../../components/modal';
-import ModalAppointment from '../../components/modalAppointment';
+import ModalReservation from '../../components/modalReservation';
 
 var Day = React.createClass({
 
@@ -13,7 +13,7 @@ var Day = React.createClass({
 
         return {
             modalOpen: false,
-            appointmentDate: {},
+            reservationDate: {},
             year: parseInt(date[0]),
             month: parseInt(date[1]),
             day: parseInt(date[2])
@@ -34,7 +34,7 @@ var Day = React.createClass({
             this.state.day;
 
         this.setState({
-            modalOpen: true, appointmentDate: {
+            modalOpen: true, reservationDate: {
                 date: date, hour: hour, hourFrom: hourFrom, hourTo: hourTo
             }
         });
@@ -109,10 +109,10 @@ var Day = React.createClass({
         if (this.state.modalOpen) {
             $modalComponent = <ModalComponent
                 parent={this}
-                content={<ModalAppointment
+                content={<ModalReservation
                     parent={this}
-                    appointmentDate={this.state.appointmentDate}
-                    teacher={this.props.parent.state.teacherEmail}
+                    reservationDate={this.state.reservationDate}
+                    teacher={this.props.parent.state.email}
                     calendar={this.props.parent}/>}/>
         }
 

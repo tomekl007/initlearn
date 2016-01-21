@@ -4,12 +4,13 @@ import tapOrClick from 'react-tap-or-click';
 import api from '../ajax/api';
 
 /*TODO improve Teachers class to ES6*/
-var ModalAppointment = React.createClass({
+var ModalReservation = React.createClass({
 
     addReservation() {
         var $thisComponent = this;
         var reservation = {
-            fromHour: new Date(this.props.appointmentDate.date + ',' + this.props.appointmentDate.hourFrom).getTime(),
+            fromHour: new Date(this.props.reservationDate.date + ',' +
+            this.props.reservationDate.hourFrom).getTime(),
             teacher: this.props.teacher
         };
 
@@ -20,17 +21,15 @@ var ModalAppointment = React.createClass({
         });
     },
     render() {
-        console.log(new Date(this.props.appointmentDate.date + ',' + this.props.appointmentDate.hourFrom));
-        console.log(new Date(this.props.appointmentDate.date + ',' + this.props.appointmentDate.hourTo));
         return (
-            <div className='main-modal-appointment'>
-                <h2 className='main-modal-appointment-header'>Appoinment</h2>
+            <div className='main-modal-reservation'>
+                <h2 className='main-modal-reservation-header'>Reservation</h2>
                 <div>
-                    {this.props.appointmentDate.date},
-                    {this.props.appointmentDate.hour}
+                    {this.props.reservationDate.date},
+                    {this.props.reservationDate.hour}
                 </div>
                 <span>Subject: </span>
-                <input className='main-modal-appointment-subject'/>
+                <input className='main-modal-reservation-subject'/>
 
                 <button className='main-btn btn-primary fw-700' {...tapOrClick(this.addReservation)}>send</button>
             </div>
@@ -38,4 +37,4 @@ var ModalAppointment = React.createClass({
     }
 });
 
-module.exports = ModalAppointment;
+module.exports = ModalReservation;

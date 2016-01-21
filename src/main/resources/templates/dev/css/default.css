@@ -59,6 +59,9 @@
 .fa-calendar-plus-o:before {
   content: ""; }
 
+.fa-list-alt:before {
+  content: ""; }
+
 *, *:before, *:after {
   box-sizing: inherit; }
 
