@@ -5,6 +5,10 @@
   padding-top: rem-calc(5px);
 }
 
+.main-schedule-appointment-header {
+  text-align: center;
+}
+
 .main-schedule-appointment {
   position: relative;
   margin: rem-calc(10px) 0;
@@ -60,13 +64,23 @@
 
 .main-schedule-appointment-content-date-hour {
   position: absolute;
-  bottom: 10px;
-  right: 10px;
-  font-size: rem-calc(20px);
+  top: 10px;
+  right: 5px;
 
   i {
     margin-right: rem-calc(5px);
   }
+}
+
+.main-schedule-appointment-content-cancel {
+  font-size: rem-calc(20px);
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0 rem-calc(10px);
+  background: $color-red;
+  color: #fff;
+  cursor: pointer;
 }
 
 @media #{$medium-and-up} {

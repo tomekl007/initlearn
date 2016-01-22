@@ -8,15 +8,15 @@ var Appointment = React.createClass({
         console.log(this);
         return (
             <div>
+                <h2 className='main-schedule-appointment-header'>Appointments</h2>
                 {this.props.parent.state.appointments.map(function (appointment, key) {
                     return <div className='main-schedule-appointment' key={key} >
                         <DateComponent date={appointment.date} />
                         <div className='main-schedule-appointment-content'>
                             {appointment.data.teacher}
                         </div>
-                        <div className='main-schedule-appointment-content-date-hour'>
-                            <i className='fa fa-clock-o'></i>
-                                {appointment.date.hour}
+                        <div className='main-schedule-appointment-content-cancel'>
+                            <i className='fa fa-times'></i>
                         </div>
                     </div>;
                 })}

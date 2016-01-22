@@ -47,6 +47,9 @@
 .fa-times-circle-o:before {
   content: ""; }
 
+.fa-times:before {
+  content: ""; }
+
 .fa-star:before {
   content: ""; }
 
