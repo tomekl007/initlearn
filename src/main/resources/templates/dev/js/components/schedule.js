@@ -24,10 +24,9 @@ var Schedule = React.createClass({
         api.getReservation(this.state.email)
             .then(this.add('reservations').toStore);
 
-        if (!userData.isATeacher) {
-            api.getAppointments()
-                .then(this.add('appointments').toStore);
-        }
+        api.getAppointments()
+            .then(this.add('appointments').toStore);
+
     },
     add(option) {
         var $thisComponent = this;
@@ -35,7 +34,6 @@ var Schedule = React.createClass({
         console.log(option);
 
         var toStore = function(data) {
-            console.log(data);
             data.forEach(function(item) {
                 dataStore.push({
                     data: item,
@@ -61,7 +59,6 @@ var Schedule = React.createClass({
         };
     },
     render() {
-        console.log(this);
         return (
             <div>
                 <this.props.content parent={this} />

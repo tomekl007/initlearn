@@ -8,7 +8,7 @@ class Schedule extends React.Component {
     render() {
         return (
             <div className='main-section-schedule'>
-                <ScheduleComponent content={ReservationComponent}/>
+                <ScheduleComponent content={AppointmentComponent}/>
             </div>
         );
     }

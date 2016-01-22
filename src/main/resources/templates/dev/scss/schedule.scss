@@ -1,0 +1,76 @@
+@import "variables";
+@import "functions";
+
+.main-section-schedule {
+  padding-top: rem-calc(5px);
+}
+
+.main-schedule-appointment {
+  position: relative;
+  margin: rem-calc(10px) 0;
+  overflow: hidden;
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 25%;
+    width: 75%;
+    height: 100%;
+    background-color: #fff;
+    z-index: -1;
+  }
+}
+
+.main-schedule-appointment-content,
+.main-schedule-appointment-date {
+  float: left;
+  background-color: #fff;
+  padding: rem-calc(15px) rem-calc(10px) rem-calc(10px);
+}
+
+.main-schedule-appointment-content {
+  width: 75%;
+  margin-left: 5%;
+}
+
+.main-schedule-appointment-date {
+  position: relative;
+  width: 20%;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  overflow: hidden;
+  text-align: center;
+  font-size: rem-calc(14px);
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 10px;
+    background-color: $color-red;
+  }
+}
+
+.main-schedule-appointment-date-day {
+  font-size: rem-calc(30px);
+}
+
+.main-schedule-appointment-content-date-hour {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  font-size: rem-calc(20px);
+
+  i {
+    margin-right: rem-calc(5px);
+  }
+}
+
+@media #{$medium-and-up} {
+  .main-schedule-appointment-date-day {
+    font-size: rem-calc(40px);
+  }
+}
