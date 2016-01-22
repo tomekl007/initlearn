@@ -47,6 +47,7 @@ public class UserService implements AccountFields, UserServiceCacheable {
         return map;
     }
 
+    @Override
     public List<User> findUsersByEmail(String email) {
         List<Account> accounts = findAccountsByEmail(email);
         return AccountUtils.mapToUsers(accounts);
