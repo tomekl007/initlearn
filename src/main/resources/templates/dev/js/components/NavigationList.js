@@ -4,6 +4,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import $ from '../lib/jquery';
 
 import config from '../ajax/config';
+import userData from '../ajax/userData';
 import localStorage from '../common/localStorage';
 
 import ModalComponent from './modal';
@@ -60,6 +61,7 @@ var NavigationList = React.createClass({
                         success: function (data) {
 
                             $thisComponent.setState({visibility: true, loggedIn: true, data: data[0]});
+                            userData.set(data[0]);
                         },
                         error: function (jqXHR, statusString, err) {
                             console.log(err);
@@ -71,6 +73,7 @@ var NavigationList = React.createClass({
             },
             error: function (jqXHR, statusString, err) {
                 console.log(err);
+                $thisComponent.logout();
             }
         });
     },

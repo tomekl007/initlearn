@@ -17,6 +17,7 @@ var Year = React.createClass({
         return new Date(timestamp).getMonth();
     },
     render() {
+        console.log(this);
         console.log('year');
         var $thisComponent = this;
         var $months = [];

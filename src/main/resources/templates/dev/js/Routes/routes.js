@@ -11,6 +11,7 @@ import MessagesView from '../views/messages';
 import CancelPaymentView from '../views/cancelPayment';
 import SuccessPaymentView from '../views/successPayment';
 import CalendarView from '../views/calendar';
+import ScheduleView from '../views/schedule';
 
 var routes = (
     <Route name='app' path='/'>
@@ -21,6 +22,7 @@ var routes = (
         <Route name='users/:email/calendar/:year' handler={CalendarView} />
         <Route name='users/:email/calendar/:year/:month' handler={CalendarView} />
         <Route name='users/:email/calendar/:year/:month/:day' handler={CalendarView} />
+        <Route name='schedule' handler={ScheduleView} />
         <Route name='msg/*' handler={MessagesView} />
         <Route name='me' handler={MyProfileView} />
         <Route name='*' path='*' handler={HomeView}/>
