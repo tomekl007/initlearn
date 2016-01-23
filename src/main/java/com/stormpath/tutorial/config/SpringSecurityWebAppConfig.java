@@ -47,6 +47,7 @@ public class SpringSecurityWebAppConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
                 .antMatcher("/reservations/**").csrf().disable()
+                .antMatcher("/reservations").csrf().disable()
                 .antMatcher("/users/**").csrf().disable()
                 .antMatcher("/register/**").csrf().disable()
                 .antMatcher("/registerAccount").csrf().disable()
