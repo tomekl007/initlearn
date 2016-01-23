@@ -31,7 +31,6 @@ var Schedule = React.createClass({
     add(option) {
         var $thisComponent = this;
         var dataStore = [];
-        console.log(option);
 
         var toStore = function(data) {
             data.forEach(function(item) {
@@ -54,8 +53,13 @@ var Schedule = React.createClass({
         return {
             year: date.getFullYear(),
             month: date.getMonth() + 1,
+            monthString: date.toString().split(' ')[1],
             day: date.getDate(),
-            hour: date.getHours()
+            dayString: date.toString().split(' ')[0],
+            time: {
+                hour: date.getHours(),
+                minutes: date.getMinutes() < 30 ? '00' : 30
+            }
         };
     },
     render() {

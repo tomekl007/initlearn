@@ -3,10 +3,32 @@
 
 .main-section-schedule {
   padding-top: rem-calc(5px);
+  font-size: rem-calc(14px);
 }
 
-.main-schedule-appointment-header {
+.main-schedule-tabs {
+  margin-top: rem-calc(10px);
+  margin-right: rem-calc(12px);
+  width: 100%;
+  max-width: 300px;
+  float: right;
+}
+
+.main-schedule-tabs-item {
+  position: relative;
+  display: inline-block;
+  width: 50%;
+  padding: rem-calc(5px);
   text-align: center;
+  cursor: pointer;
+  background-color: #fff;
+  transition: background-color .3s ease, color .3s ease;
+
+  &:hover,
+  &.is-active {
+    background-color: $color-red;
+    color: #fff;
+  }
 }
 
 .main-schedule-appointment {
@@ -63,10 +85,6 @@
 }
 
 .main-schedule-appointment-content-date-hour {
-  position: absolute;
-  top: 10px;
-  right: 5px;
-
   i {
     margin-right: rem-calc(5px);
   }
@@ -86,5 +104,11 @@
 @media #{$medium-and-up} {
   .main-schedule-appointment-date-day {
     font-size: rem-calc(40px);
+  }
+
+  .main-schedule-appointment-content-date-hour {
+    position: absolute;
+    top: 10px;
+    right: 5px;
   }
 }

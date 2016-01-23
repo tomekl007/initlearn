@@ -41,23 +41,39 @@
   transition: opacity .3s ease-in; }
 
 .main-modal-message-notification.success .main-modal-message-notification-icon.success {
-  display: block;
-  color: #1bbc9c; }
+  display: block; }
 
 .main-modal-message-notification.success .main-modal-message-notification-content {
   color: #1bbc9c; }
 
 .main-modal-message-notification.cancel .main-modal-message-notification-icon.cancel {
-  display: block;
-  color: #e57e6f; }
+  display: block; }
 
 .main-modal-message-notification.cancel .main-modal-message-notification-content {
   color: #e57e6f; }
+
+.main-modal-message-notification.warning .main-modal-message-notification-icon.warning {
+  display: block; }
+
+.main-modal-message-notification.warning .main-modal-message-notification-content {
+  color: #f79f00; }
 
 .main-modal-message-notification-icon {
   display: none;
   font-size: 4.375rem;
   text-align: center; }
 
+.main-modal-message-notification-icon.success {
+  color: #1bbc9c; }
+
+.main-modal-message-notification-icon.cancel {
+  color: #e57e6f; }
+
+.main-modal-message-notification-icon.warning {
+  color: #f79f00; }
+
 .main-modal-message-notification-content {
   text-align: center; }
+
+.main-modal-reservation .main-modal-message-notification-icon {
+  display: block; }

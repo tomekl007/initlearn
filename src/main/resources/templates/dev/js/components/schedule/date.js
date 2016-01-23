@@ -9,14 +9,14 @@ var Date = React.createClass({
                         {this.props.date.day}
                     </div>
                     <div className='main-schedule-appointment-date-month'>
-                        {this.props.date.month}
+                        {this.props.date.monthString}
                     </div>
                     <div className='main-schedule-appointment-date-year'>
                         {this.props.date.year}
                     </div>
                     <div className='main-schedule-appointment-content-date-hour'>
                         <i className='fa fa-clock-o'></i>
-                        {this.props.date.hour}
+                        {this.props.date.time.hour}:{this.props.date.time.minutes}
                     </div>
                 </div>
             );

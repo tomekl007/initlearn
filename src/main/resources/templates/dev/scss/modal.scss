@@ -51,7 +51,6 @@
   &.success {
     .main-modal-message-notification-icon.success {
       display: block;
-      color: $color-green;
     }
 
     .main-modal-message-notification-content {
@@ -62,11 +61,20 @@
   &.cancel {
     .main-modal-message-notification-icon.cancel {
       display: block;
-      color: $color-red;
     }
 
     .main-modal-message-notification-content {
       color: $color-red;
+    }
+  }
+
+  &.warning {
+    .main-modal-message-notification-icon.warning {
+      display: block;
+    }
+
+    .main-modal-message-notification-content {
+      color: $color-gold;
     }
   }
 }
@@ -77,6 +85,25 @@
   text-align: center;
 }
 
+.main-modal-message-notification-icon.success {
+  color: $color-green;
+}
+
+.main-modal-message-notification-icon.cancel {
+  color: $color-red;
+}
+
+.main-modal-message-notification-icon.warning {
+  color: $color-gold;
+}
+
+
 .main-modal-message-notification-content {
   text-align: center;
+}
+
+.main-modal-reservation {
+  .main-modal-message-notification-icon {
+    display: block;
+  }
 }

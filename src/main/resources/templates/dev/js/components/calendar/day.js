@@ -19,12 +19,6 @@ var Day = React.createClass({
             day: parseInt(date[2])
         };
     },
-    getHour(timestamp) {
-        return new Date(timestamp).getHours();
-    },
-    getMinutes(timestamp) {
-        return new Date(timestamp).getMinutes() < 30 ? '' : 'half-hour';
-    },
     selectDate(event) {
         var $target = event.currentTarget;
         var hour = $target.getAttribute('data-hour');
@@ -59,8 +53,9 @@ var Day = React.createClass({
                 $thisComponent.state.year === year &&
                 $thisComponent.state.day === day) {
 
-                var hour = reservation.date.hour;
-                $reservations[hour] = <div className={'main-calendar-day-slot-hour-reservation ' + $thisComponent.getMinutes(reservation.data.from_hour)} key={key}>
+                var time = reservation.date.time;
+                console.log(time.minutes);
+                $reservations[time.hour] = <div className={'main-calendar-day-slot-hour-reservation ' + (time.minutes < 30 ? '' : 'half-hour')} key={key}>
                     <span className='fw-700'>Reserved by: {reservation.data.reserved_by}</span>
                 </div>;
             }
@@ -111,6 +106,7 @@ var Day = React.createClass({
                 parent={this}
                 content={<ModalReservation
                     parent={this}
+                    option={'add'}
                     reservationDate={this.state.reservationDate}
                     teacher={this.props.parent.state.email}
                     calendar={this.props.parent}/>}/>

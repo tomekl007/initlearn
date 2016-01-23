@@ -20,9 +20,15 @@ var ModalReservation = React.createClass({
                 $thisComponent.props.parent.setState({modalOpen: false});
             });
     },
+    removeReservation() {
+        console.log('remove reservation');
+    },
     render() {
-        return (
-            <div className='main-modal-reservation'>
+
+        var $template;
+
+        if (this.props.option === 'add') {
+            $template = <div>
                 <h2 className='main-modal-reservation-header'>Reservation</h2>
                 <div>
                     {this.props.reservationDate.date},
@@ -32,6 +38,20 @@ var ModalReservation = React.createClass({
                 <input className='main-modal-reservation-subject'/>
 
                 <button className='main-btn btn-primary fw-700' {...tapOrClick(this.addReservation)}>send</button>
+            </div>
+        } else {
+            $template = <div>
+                <div className='main-modal-message-notification-icon warning'>
+                    <i className='fa fa-exclamation-circle'></i>
+                </div>
+                <div>Do you really want to cancel that lesson</div>
+                <button className='main-btn btn-primary fw-700' {...tapOrClick(this.removeReservation)}>yes</button>
+                </div>
+        }
+
+        return (
+            <div className='main-modal-reservation'>
+                {$template}
             </div>
         );
     }

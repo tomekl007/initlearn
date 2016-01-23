@@ -68,6 +68,9 @@
 .fa-clock-o:before {
   content: ""; }
 
+.fa-exclamation-circle:before {
+  content: ""; }
+
 *, *:before, *:after {
   box-sizing: inherit; }
 
