@@ -14,7 +14,6 @@ var Config = (function () {
 
     var registerAccountUrl = appUrl + '/registerAccount';
     var addUserToTeacherGroupUrl = usersUrl + '/teachers';
-    var updateScreenheroUrl = usersUrl + '/screenhero';
     var updateUserDataUrl = usersUrl + '/data';
     var isUserLoggedInUrl = appUrl + '/isLoggedIn';
     var getAuthTokenUrl = appUrl + '/oauth/token';
@@ -84,7 +83,6 @@ var Config = (function () {
         addUserToTeacherGroupUrl: addUserToTeacherGroupUrl,
         addUserRatingUrl: addUserRatingUrl,
         updateUserDataUrl: updateUserDataUrl,
-        updateScreenheroUrl: updateScreenheroUrl,
         updateUserDataFieldUrl: updateUserDataFieldUrl,
         isUserLoggedInUrl: isUserLoggedInUrl,
         getAuthTokenUrl: getAuthTokenUrl,

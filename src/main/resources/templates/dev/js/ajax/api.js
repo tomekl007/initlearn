@@ -41,9 +41,9 @@ var Api = (function () {
             return $http(config.registerAccountUrl)
                 .post(this.payload({json: data}));
         },
-        addUserToTeachGroup: function (data) {
+        addUserToTeachGroup: function () {
             return $http(config.addUserToTeacherGroupUrl)
-                .post(this.payload({json: data}));
+                .post(this.payload());
         },
         addUserRating: function (emailPath, data) {
             return $http(config.addUserRatingUrl(emailPath))
