@@ -38,7 +38,7 @@ public class ReservationService {
     public List<Reservation> reserve(Account reservedBy, Account teacher, DateTime reservationTime, DateTime endOfReservationTime) {
         //todo handle when appoitment could not be reserved
         addReservation(reservedBy, teacher, reservationTime, endOfReservationTime);
-        return getAllAppointments(reservedBy.getEmail());
+        return getAllReservations(teacher.getEmail());
     }
 
     private void addReservation(Account reservedBy, Account teacher, DateTime reservationTime, DateTime endOfReservationTime) {
