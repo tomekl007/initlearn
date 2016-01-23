@@ -23,4 +23,8 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
             "r.to_hour >= :from_hour AND r.to_hour <= :to_hour )")
     List<Reservation> getAllReservationsForTimespan(@Param("from_hour") Date fromHour, @Param("to_hour") Date toHour,
                                                     @Param("teacherEmail") String teacherEmail);
+
+    @Query("SELECT r FROM Reservation r WHERE r.reserved_by = :reservedBy AND r.teacher = :teacherEmail AND " +
+            "r.from_hour = :fromHour")
+    Reservation getReservation(String reservedBy, String teacherEmail, Long fromHour);
 }

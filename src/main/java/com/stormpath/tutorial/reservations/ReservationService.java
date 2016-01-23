@@ -73,5 +73,10 @@ public class ReservationService {
                         endOfReservationTime.toDate(), teacher.getEmail());
         return !allReservationsForTimespan.isEmpty();
     }
+
+    public void deleteReservation(String reservedBy, String teacherEmail, Long fromHour) {
+        Reservation reservation = reservationRepository.getReservation(reservedBy, teacherEmail, fromHour);
+        reservationRepository.delete(reservation.getId());
+    }
 }
 
