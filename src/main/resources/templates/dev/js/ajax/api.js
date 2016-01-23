@@ -6,14 +6,17 @@ import localStorage from '../common/localStorage';
 var Api = (function () {
 
     var call = {
-        payload: function (data) {
+        payload: function (data, token) {
             var options = {
                 /*always call header*/
                 headers: (function () {
 
                     var authorizationPrefix = 'Bearer ';
+                    var appJSON = 'application/json';
+                    var appURLEncoded = 'application/x-www-form-urlencoded';
+                    var contentType = !token ? appJSON : appURLEncoded;
                     var headerOptions = {
-                        'Content-Type': 'application/json'
+                        'Content-Type': contentType
                     };
 
                     if (localStorage.isAvailable()) {
@@ -64,7 +67,7 @@ var Api = (function () {
         },
         getAuthToken: function (data) {
             return $http(config.getAuthTokenUrl)
-                .post(this.payload({formData: data}));
+                .post(this.payload({formData: data}, true));
         },
         getUserData: function () {
             return $http(config.getUserDataUrl)
