@@ -107,6 +107,15 @@ public class AccountUtils implements AccountFields {
         }
     }
 
+    public static String getCustomFieldValueOrDefault(Account a, String field, String defaultValue) {
+        Object o = a.getCustomData().get(field);
+        if (o == null) {
+            return defaultValue;
+        } else {
+            return (String) o;
+        }
+    }
+
     public static Double getCustomFieldValueAsDouble(Account a, String field) {
         Object o = a.getCustomData().get(field);
         if (o == null) {
@@ -153,7 +162,7 @@ public class AccountUtils implements AccountFields {
                 .setSkills(AccountUtils.getCustomListFieldValue(a, SKILLS_FIELD))
                 .setLinks(AccountUtils.getCustomListFieldValue(a, LINKS_FILED))
                 .setBio(AccountUtils.getCustomFieldValue(a, BIO_FILED))
-                .setImg(AccountUtils.getCustomFieldValue(a, IMG_FIELD))
+                .setImg(AccountUtils.getCustomFieldValueOrDefault(a, IMG_FIELD, "https://cdn0.iconfinder.com/data/icons/thin-users-people/57/thin-191_user_profile_avatar-512.png"))
                 .setAverage(AccountUtils.getCustomFieldValueAsDouble(a, AVERAGE_FIELD))
                 .setNumberOfRates(AccountUtils.getCustomIntegerValue(a, NUMBER_OF_RATES_FIELD))
                 .setIsATeacher(isATeacher)
