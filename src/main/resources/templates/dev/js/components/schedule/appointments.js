@@ -5,7 +5,7 @@ import DateComponent from './date';
 import ModalComponent from '../modal';
 import ModalReservation from '../modalReservation';
 
-var Appointment = React.createClass({
+var Appointments = React.createClass({
 
     getInitialState() {
         return {
@@ -16,7 +16,6 @@ var Appointment = React.createClass({
         this.setState({modalOpen: true});
     },
     render() {
-        console.log(this);
         var $modalComponent;
         var $thisComponent = this;
 
@@ -32,12 +31,12 @@ var Appointment = React.createClass({
         return (
             <div>
                 {this.props.parent.state.appointments.map(function (appointment, key) {
-                    return <div className='main-schedule-appointment' key={key} >
+                    return <div className='main-schedule-item' key={key} >
                         <DateComponent date={appointment.date} />
-                        <div className='main-schedule-appointment-content'>
+                        <div className='main-schedule-item-content'>
                             {appointment.data.teacher}
                         </div>
-                        <div className='main-schedule-appointment-content-cancel' {...tapOrClick($thisComponent.remove)}>
+                        <div className='main-schedule-item-cancel' {...tapOrClick($thisComponent.remove)}>
                             <i className='fa fa-times'></i>
                         </div>
                     </div>;
@@ -49,4 +48,4 @@ var Appointment = React.createClass({
     }
 });
 
-module.exports = Appointment;
+module.exports = Appointments;

@@ -31,7 +31,7 @@
   }
 }
 
-.main-schedule-appointment {
+.main-schedule-item {
   position: relative;
   margin: rem-calc(10px) 0;
   overflow: hidden;
@@ -48,19 +48,19 @@
   }
 }
 
-.main-schedule-appointment-content,
-.main-schedule-appointment-date {
+.main-schedule-item-content,
+.main-schedule-item-date {
   float: left;
   background-color: #fff;
   padding: rem-calc(15px) rem-calc(10px) rem-calc(10px);
 }
 
-.main-schedule-appointment-content {
+.main-schedule-item-content {
   width: 75%;
   margin-left: 5%;
 }
 
-.main-schedule-appointment-date {
+.main-schedule-item-date {
   position: relative;
   width: 20%;
   border-top-right-radius: 5px;
@@ -80,17 +80,17 @@
   }
 }
 
-.main-schedule-appointment-date-day {
+.main-schedule-item-date-day {
   font-size: rem-calc(30px);
 }
 
-.main-schedule-appointment-content-date-hour {
+.main-schedule-item-date-time {
   i {
     margin-right: rem-calc(5px);
   }
 }
 
-.main-schedule-appointment-content-cancel {
+.main-schedule-item-cancel {
   font-size: rem-calc(20px);
   position: absolute;
   top: 0;
@@ -102,11 +102,11 @@
 }
 
 @media #{$medium-and-up} {
-  .main-schedule-appointment-date-day {
+  .main-schedule-item-date-day {
     font-size: rem-calc(40px);
   }
 
-  .main-schedule-appointment-content-date-hour {
+  .main-schedule-item-date-time {
     position: absolute;
     top: 10px;
     right: 5px;
