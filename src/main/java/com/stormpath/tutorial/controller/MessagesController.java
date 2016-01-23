@@ -41,8 +41,13 @@ public class MessagesController {
                     HttpStatus.BAD_REQUEST);
         }
         else {
-           return AccountUtils.actionForAuthenticatedUserOrUnauthorized(servletRequest,
-                    a -> messageService.sendMessageToUser(receiver.get(0), messageData.text, a));
+           return AccountUtils.actionResponseEntityForAuthenticatedUserOrUnauthorized(servletRequest,
+                    a -> {
+                        messageService.sendMessageToUser(receiver.get(0), messageData.text, a);
+                        return new ResponseEntity<>(
+                                messageService.retrieveAllMessagesInConversationWith(a, messageData.emailTo),
+                                HttpStatus.OK);
+                    });
         }
     }
 
@@ -63,7 +68,7 @@ public class MessagesController {
     }
 
     @RequestMapping(value = "/msg/{email:.+}/notread", method = RequestMethod.GET)
-    ResponseEntity getAllNotReadMessages(ServletRequest servletRequest,
+    ResponseEntity<List<Message>> getAllNotReadMessages(ServletRequest servletRequest,
                                          @PathVariable("email") String email){
         return AccountUtils.actionForAuthenticatedUserOrUnauthorized(
                 servletRequest, a -> messageService.getAllNotReadMessages(a, email));
