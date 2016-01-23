@@ -1,10 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import FormSerialize from 'form-serialize';
+import $ from '../lib/jquery';
 
 import localStorage from '../common/localStorage';
-import api from '../ajax/api';
 
 import Input from './input';
 
@@ -33,16 +32,48 @@ var LoginForm = React.createClass({
         var $thisComponent = this;
         var $navigationComponent = this.props.navigation;
         var $modalComponent = $navigationComponent.refs.modal;
-        var formData = event !== null ? FormSerialize($target, {hash: true, empty: true}) : $modalComponent.state.formData;
 
+        /*TODO improve AJAX CALLS*/
         /*TODO code refactoring needed*/
+        $.ajax({
+            type: $target.getAttribute('method'),
+            url: $target.getAttribute('action'),
+            /*TODO change serialize to http://stackoverflow.com/questions/11661187/form-serialize-javascript-no-framework*/
+            /*TODO change serialize method to npm serialize*/
+            data: event !== null ? $($target).serialize() : $.param($modalComponent.state.formData),
+
+            success: function (data) {
+                console.log(data);
+                if (localStorage.isAvailable()) {
+                    window.localStorage.setItem('user-token', data.access_token);
+                    /*TODO improve - 3 times render call*/
+                    $navigationComponent.automaticLogin();
+
+                    if ($navigationComponent.state.addUserDataForm) {
+                        $navigationComponent.openUserDataForm();
+                    } else {
+                        $modalComponent.close($navigationComponent.resetFormStates);
+                    }
+                }
+            },
+
+            error: function (jqXHR) {
+                if (jqXHR.status === 400) {
+                    $thisComponent.setState({errorMessage: true});
+                }
+            }
+
+        });
+
+        /*
+
+         var formData = event !== null ? FormSerialize($target, {hash: true, empty: true}) : $modalComponent.state.formData;
 
         api.getAuthToken(formData)
             .then(function (data) {
                 console.log(data);
                 if (localStorage.isAvailable()) {
                     window.localStorage.setItem('user-token', data.access_token);
-                    /*TODO improve - 3 times render call*/
                     $navigationComponent.automaticLogin();
 
                     if ($navigationComponent.state.addUserDataForm) {
@@ -57,6 +88,8 @@ var LoginForm = React.createClass({
                 $thisComponent.setState({errorMessage: true});
             }
         });
+
+        */
     },
     render() {
 

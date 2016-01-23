@@ -33,8 +33,9 @@ var Api = (function () {
             }
             return options;
         },
-        getTeachers: function () {
-            return $http(config.getTeachersUrl)
+        /*TODO getUsers - temporary, delete in the future*/
+        getUsers: function (url) {
+            return $http(url)
                 .get(this.payload());
         },
         registerAccount: function (data) {
