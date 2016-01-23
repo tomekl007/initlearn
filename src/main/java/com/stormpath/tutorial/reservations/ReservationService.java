@@ -6,8 +6,6 @@ import com.stormpath.tutorial.reservations.db.Reservation;
 import com.stormpath.tutorial.reservations.db.ReservationRepository;
 import com.stormpath.tutorial.user.UserService;
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeUtils;
-import org.joda.time.format.DateTimeFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,12 +28,11 @@ public class ReservationService {
 
     public List<Reservation> getAllReservations(String email) {
         Optional<Account> accountByEmail = userService.findAccountByEmail(email);
-        if(!accountByEmail.isPresent()){
+        if (!accountByEmail.isPresent()) {
             return Collections.emptyList();
         }
         return reservationRepository.getAllTecherReservations(email);
     }
-
 
 
     public List<Reservation> reserve(Account reservedBy, Account teacher, DateTime reservationTime, DateTime endOfReservationTime) {
@@ -78,10 +75,14 @@ public class ReservationService {
         return !allReservationsForTimespan.isEmpty();
     }
 
-    public void deleteReservation(String reservedBy, String teacherEmail, Long fromHour) {
+    public long deleteReservation(String reservedBy, String teacherEmail, Long fromHour) {
         logger.info("delete for reserved by: " + reservedBy + " teacher: " + teacherEmail + " fromHour: " + fromHour);
         Reservation reservation = reservationRepository.getReservation(reservedBy, teacherEmail, new Date(fromHour));
+        if (reservation == null) {
+            return -1;
+        }
         reservationRepository.delete(reservation.getId());
+        return reservation.getId();
     }
 }
 

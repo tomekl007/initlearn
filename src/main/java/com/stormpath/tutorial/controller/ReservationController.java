@@ -37,13 +37,17 @@ public class ReservationController {
         return new ResponseEntity<>(allReservations, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/reservations/{email:.+}", method = RequestMethod.POST)
+    @RequestMapping(value = "/reservations/delete/{email:.+}", method = RequestMethod.POST)
     public ResponseEntity<List<Reservation>> deleteReservation(
             @PathVariable("email") String email,
             ServletRequest servletRequest,
             @RequestBody DeleteReservationRequest deleteReservationRequest) {
         return AccountUtils.actionResponseEntityForAuthenticatedUserOrUnauthorized(servletRequest, a -> {
-            reservationService.deleteReservation(a.getEmail(), email, deleteReservationRequest.fromHour);
+            long result = reservationService.deleteReservation(a.getEmail(), email, deleteReservationRequest.fromHour);
+            if(result == -1){
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+
             return new ResponseEntity<>(reservationService.getAllReservations(email), HttpStatus.OK);
         });
     }
