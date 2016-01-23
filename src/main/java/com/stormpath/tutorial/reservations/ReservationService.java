@@ -80,7 +80,7 @@ public class ReservationService {
 
     public void deleteReservation(String reservedBy, String teacherEmail, Long fromHour) {
         logger.info("delete for reserved by: " + reservedBy + " teacher: " + teacherEmail + " fromHour: " + fromHour);
-        Reservation reservation = reservationRepository.getReservation(reservedBy, teacherEmail, fromHour);
+        Reservation reservation = reservationRepository.getReservation(reservedBy, teacherEmail, new Date(fromHour));
         reservationRepository.delete(reservation.getId());
     }
 }
