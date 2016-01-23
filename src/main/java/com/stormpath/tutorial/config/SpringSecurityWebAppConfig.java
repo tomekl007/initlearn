@@ -46,6 +46,7 @@ public class SpringSecurityWebAppConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST,  "/login", "/registerFacebookAccount/**", "/register/**", "/registerAccount")
                 .permitAll()
                 .and()
+                .antMatcher("/reservations/**").csrf().disable()
                 .antMatcher("/users/**").csrf().disable()
                 .antMatcher("/register/**").csrf().disable()
                 .antMatcher("/registerAccount").csrf().disable()
