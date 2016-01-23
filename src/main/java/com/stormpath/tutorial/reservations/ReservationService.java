@@ -6,8 +6,8 @@ import com.stormpath.tutorial.reservations.db.Reservation;
 import com.stormpath.tutorial.reservations.db.ReservationRepository;
 import com.stormpath.tutorial.user.UserService;
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeUtils;
-import org.joda.time.format.DateTimeFormat;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,21 +23,22 @@ public class ReservationService {
     @Autowired
     ReservationRepository reservationRepository;
 
+    private static final Logger logger = LoggerFactory.getLogger(ReservationService.class);
+
 
     public List<Reservation> getAllReservations(String email) {
         Optional<Account> accountByEmail = userService.findAccountByEmail(email);
-        if(!accountByEmail.isPresent()){
+        if (!accountByEmail.isPresent()) {
             return Collections.emptyList();
         }
         return reservationRepository.getAllTecherReservations(email);
     }
 
 
-
     public List<Reservation> reserve(Account reservedBy, Account teacher, DateTime reservationTime, DateTime endOfReservationTime) {
         //todo handle when appoitment could not be reserved
         addReservation(reservedBy, teacher, reservationTime, endOfReservationTime);
-        return getAllAppointments(reservedBy.getEmail());
+        return getAllReservations(teacher.getEmail());
     }
 
     private void addReservation(Account reservedBy, Account teacher, DateTime reservationTime, DateTime endOfReservationTime) {
@@ -72,6 +73,16 @@ public class ReservationService {
                 .getAllReservationsForTimespan(reservationTime.toDate(),
                         endOfReservationTime.toDate(), teacher.getEmail());
         return !allReservationsForTimespan.isEmpty();
+    }
+
+    public long deleteReservation(String reservedBy, String teacherEmail, Long fromHour) {
+        logger.info("delete for reserved by: " + reservedBy + " teacher: " + teacherEmail + " fromHour: " + fromHour);
+        Reservation reservation = reservationRepository.getReservation(reservedBy, teacherEmail, new Date(fromHour));
+        if (reservation == null) {
+            return -1;
+        }
+        reservationRepository.delete(reservation.getId());
+        return reservation.getId();
     }
 }
 

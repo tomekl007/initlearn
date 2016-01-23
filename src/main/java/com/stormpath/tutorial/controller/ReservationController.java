@@ -1,13 +1,13 @@
 package com.stormpath.tutorial.controller;
 
 import com.stormpath.sdk.account.Account;
+import com.stormpath.tutorial.controller.jsonrequest.DeleteReservationRequest;
 import com.stormpath.tutorial.controller.jsonrequest.ReservationRequest;
-import com.stormpath.tutorial.reservations.db.Reservation;
 import com.stormpath.tutorial.reservations.ReservationService;
+import com.stormpath.tutorial.reservations.db.Reservation;
 import com.stormpath.tutorial.user.UserService;
 import com.stormpath.tutorial.utils.AccountUtils;
 import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +37,21 @@ public class ReservationController {
         return new ResponseEntity<>(allReservations, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/reservations/delete/{email:.+}", method = RequestMethod.POST)
+    public ResponseEntity<List<Reservation>> deleteReservation(
+            @PathVariable("email") String email,
+            ServletRequest servletRequest,
+            @RequestBody DeleteReservationRequest deleteReservationRequest) {
+        return AccountUtils.actionResponseEntityForAuthenticatedUserOrUnauthorized(servletRequest, a -> {
+            long result = reservationService.deleteReservation(a.getEmail(), email, deleteReservationRequest.fromHour);
+            if(result == -1){
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+
+            return new ResponseEntity<>(reservationService.getAllReservations(email), HttpStatus.OK);
+        });
+    }
+
     @RequestMapping(value = "/appointments", method = RequestMethod.GET)
     public ResponseEntity<List<Reservation>> getLoggedInUserAppointments(ServletRequest servletRequest) {
         return AccountUtils.actionForAuthenticatedUserOrUnauthorized(servletRequest, a ->
@@ -59,7 +74,7 @@ public class ReservationController {
                         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
                     }
 
-                    if(reservationService.alreadyReserved(reservationTime, endOfReservationTime, teacherAccount.get())){
+                    if (reservationService.alreadyReserved(reservationTime, endOfReservationTime, teacherAccount.get())) {
                         return new ResponseEntity<>(HttpStatus.CONFLICT);
                     }
 
