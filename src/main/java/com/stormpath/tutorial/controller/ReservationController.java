@@ -12,10 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletRequest;
 import java.util.List;
@@ -41,9 +38,9 @@ public class ReservationController {
     public ResponseEntity<List<Reservation>> deleteReservation(
             @PathVariable("email") String email,
             ServletRequest servletRequest,
-            @RequestBody DeleteReservationRequest deleteReservationRequest) {
+            @RequestParam("from_hour") Long fromHour) {
         return AccountUtils.actionResponseEntityForAuthenticatedUserOrUnauthorized(servletRequest, a -> {
-            reservationService.deleteReservation(a.getEmail(), email, deleteReservationRequest.fromHour);
+            reservationService.deleteReservation(a.getEmail(), email, fromHour);
             return new ResponseEntity<>(reservationService.getAllReservations(email), HttpStatus.OK);
         });
     }
