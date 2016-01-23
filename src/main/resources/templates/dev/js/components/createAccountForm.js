@@ -3,7 +3,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import $ from '../lib/jquery';
 import FormSerialize from 'form-serialize';
 
-import config from '../ajax/config';
+import api from '../ajax/api';
 
 import Input from './input';
 
@@ -26,16 +26,10 @@ var CreateAccountForm = React.createClass({
 
         var data = JSON.stringify(FormSerialize($target, {hash: true, empty: true}));
 
-        /*TODO improve AJAX CALLS*/
         /*TODO code refactoring needed*/
-        $.ajax({
 
-            type: $target.getAttribute('method'),
-            url: config.registerAccountUrl,
-            data: data,
-            headers: config.apiCallHeader(),
-
-            success: function (data) {
+        api.registerAccount(data)
+            .then(function (data) {
                 console.log(data);
 
                 /*TODO refactor mapping*/
@@ -51,22 +45,20 @@ var CreateAccountForm = React.createClass({
                 $modalComponent.setState({formData: dataToMap, teacherCheckbox: $thisComponent.state.teacherCheckbox});
                 $navigationComponent.setState({automaticLogin: true, addUserDataForm: true});
                 $navigationComponent.openLoginForm();
-            },
+            })
+            ['catch'](function (jqXHR) {
+            console.log(jqXHR);
+            var errorMessageText = '';
 
-            error: function (jqXHR) {
-                var errorMessageText = '';
-
-                if (jqXHR.status === 406) {
-                    errorMessageText = 'Account email address is in an invalid format';
-                } else if (jqXHR.status === 409) {
-                    errorMessageText = 'Account with that email already exists';
-                } else if (jqXHR.status === 412) {
-                    errorMessageText = 'Password should have at least 6 characters';
-                }
-
-                $thisComponent.setState({errorMessage: true, errorMessageText: errorMessageText});
+            if (jqXHR.status === 406) {
+                errorMessageText = 'Account email address is in an invalid format';
+            } else if (jqXHR.status === 409) {
+                errorMessageText = 'Account with that email already exists';
+            } else if (jqXHR.status === 412) {
+                errorMessageText = 'Password should have at least 6 characters';
             }
 
+            $thisComponent.setState({errorMessage: true, errorMessageText: errorMessageText});
         });
     },
     isTeacher() {
