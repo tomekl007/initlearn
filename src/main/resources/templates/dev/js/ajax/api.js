@@ -97,9 +97,9 @@ var Api = (function () {
             return $http(config.getReservationsUrl(emailPath))
                 .get(this.payload());
         },
-        deleteReservation: function(emailPath) {
+        deleteReservation: function(emailPath, data) {
             return $http(config.deleteReservationUrl(emailPath))
-                .delete(this.payload());
+                .delete(this.payload({json: data}));
         },
         getAppointments: function() {
             return $http(config.getAppointmentsUrl)

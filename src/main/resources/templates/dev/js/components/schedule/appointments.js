@@ -27,7 +27,7 @@ var Appointments = React.createClass({
 
                 />}/>
         }
-
+        /*{...tapOrClick($thisComponent.remove)}*/
         return (
             <div>
                 {this.props.parent.state.appointments.map(function (appointment, key) {
@@ -36,7 +36,7 @@ var Appointments = React.createClass({
                         <div className='main-schedule-item-content'>
                             {appointment.data.teacher}
                         </div>
-                        <div className='main-schedule-item-cancel' {...tapOrClick($thisComponent.remove)}>
+                        <div className='main-schedule-item-cancel'>
                             <i className='fa fa-times'></i>
                         </div>
                     </div>;
