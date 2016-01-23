@@ -49,26 +49,6 @@ var Config = (function () {
         return appUrl + '/reservations/delete/' + email;
     };
 
-    /*calls*/
-    var authorizationPrefix = 'Bearer ';
-
-    var apiCallHeader = function () {
-
-        var header = {
-            'Content-Type': 'application/json'
-        };
-
-        if (localStorage.isAvailable()) {
-            var userToken = window.localStorage.getItem('user-token');
-
-            if (typeof userToken === 'string') {
-                header.Authorization = authorizationPrefix + userToken;
-            }
-        }
-
-        return header;
-    };
-
     return {
         appUrl: appUrl,
         myProfileHash: myProfileHash,
@@ -97,9 +77,7 @@ var Config = (function () {
         getTeachersUrl: getTeachersUrl,
         logoutUserUrl: logoutUserUrl,
         searchTeachersBySkillPath: searchTeachersBySkillPath,
-        paymentPath: paymentPath,
-        authorizationPrefix: authorizationPrefix,
-        apiCallHeader: apiCallHeader
+        paymentPath: paymentPath
     };
 })();
 

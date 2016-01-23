@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import tapOrClick from 'react-tap-or-click';
-import $ from '../lib/jquery';
 
 import api from '../ajax/api';
 
