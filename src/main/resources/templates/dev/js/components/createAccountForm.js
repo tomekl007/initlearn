@@ -24,7 +24,8 @@ var CreateAccountForm = React.createClass({
         var $navigationComponent = this.props.navigation;
         var $modalComponent = $navigationComponent.refs.modal;
 
-        var data = JSON.stringify(FormSerialize($target, {hash: true, empty: true}));
+        var data = FormSerialize($target, {hash: true, empty: true});
+        console.log(data);
 
         /*TODO code refactoring needed*/
 
