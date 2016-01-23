@@ -1,7 +1,6 @@
 import React from 'react';
 import FormSerialize from 'form-serialize';
 
-import config from '../ajax/config';
 import api from '../ajax/api';
 
 import Input from './input';
@@ -43,7 +42,7 @@ var AddUserDataForm = React.createClass({
                     $modalComponent.close($navigationComponent.resetFormStates);
                 });
         } else {
-            api.updateUserDataField('screenhero')
+            api.updateUserDataField('screenhero', serializedData)
                 .then(function (data) {
                     console.log(data);
                     $modalComponent.close($navigationComponent.resetFormStates);

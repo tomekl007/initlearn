@@ -19,6 +19,7 @@ function $http(url) {
 
                 client.withCredentials = true;
                 client.open(method, url + (params || ''));
+                console.log(formData);
 
                 if (args.headers) {
                     Object.keys(args.headers).forEach(function (key) {
