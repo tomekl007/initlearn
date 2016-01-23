@@ -17,7 +17,7 @@ var Reservations = React.createClass({
         var $target = event.currentTarget;
         var reservation = {
             email:  $target.getAttribute('data-email'),
-            date: {from_hour: $target.getAttribute('data-date')}
+            date: {fromHour: $target.getAttribute('data-date')}
         };
         this.setState({modalOpen: true, reservation: reservation});
     },

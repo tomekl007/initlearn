@@ -27,7 +27,7 @@ var Appointments = React.createClass({
 
                 />}/>
         }
-        /*{...tapOrClick($thisComponent.remove)}*/
+        //{...tapOrClick($thisComponent.remove)}
         return (
             <div>
                 {this.props.parent.state.appointments.map(function (appointment, key) {
