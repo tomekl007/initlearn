@@ -8,6 +8,8 @@ import com.stormpath.tutorial.user.UserService;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeUtils;
 import org.joda.time.format.DateTimeFormat;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -22,6 +24,8 @@ public class ReservationService {
     UserService userService;
     @Autowired
     ReservationRepository reservationRepository;
+
+    private static final Logger logger = LoggerFactory.getLogger(ReservationService.class);
 
 
     public List<Reservation> getAllReservations(String email) {
@@ -75,6 +79,7 @@ public class ReservationService {
     }
 
     public void deleteReservation(String reservedBy, String teacherEmail, Long fromHour) {
+        logger.info("delete for reserved by: " + reservedBy + " teacher: " + teacherEmail + " fromHour: " + fromHour);
         Reservation reservation = reservationRepository.getReservation(reservedBy, teacherEmail, fromHour);
         reservationRepository.delete(reservation.getId());
     }
