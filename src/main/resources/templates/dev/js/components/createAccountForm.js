@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import $ from '../lib/jquery';
 import FormSerialize from 'form-serialize';
 
 import api from '../ajax/api';

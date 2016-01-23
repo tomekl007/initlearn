@@ -46,6 +46,10 @@ var Config = (function () {
         return appUrl + '/reservations/' + email;
     };
 
+    var deleteReservationUrl = function(email) {
+        return appUrl + '/reservations/delete/' + email;
+    };
+
     /*calls*/
     var authorizationPrefix = 'Bearer ';
 
@@ -90,6 +94,7 @@ var Config = (function () {
         getSearchAutocompleteOptionsUrl: getSearchAutocompleteOptionsUrl,
         addReservationUrl: addReservationUrl,
         getReservationsUrl: getReservationsUrl,
+        deleteReservationUrl: deleteReservationUrl,
         getAppointmentsUrl: getAppointmentsUrl,
         getTeachersUrl: getTeachersUrl,
         logoutUserUrl: logoutUserUrl,
