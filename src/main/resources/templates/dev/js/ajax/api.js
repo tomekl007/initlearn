@@ -69,6 +69,10 @@ var Api = (function () {
             return $http(config.getUserDataUrl)
                 .get(this.payload());
         },
+        logoutUser: function() {
+            return $http(config.logoutUserUrl)
+                .post(this.payload());
+        },
         getMessagesOverview: function () {
             return $http(config.getMessagesOverviewUrl)
                 .get(this.payload());
@@ -76,6 +80,10 @@ var Api = (function () {
         getMessages: function (emailPath) {
             return $http(config.getMessagesUrl(emailPath))
                 .get(this.payload());
+        },
+        sendMessage: function(data) {
+            return $http(config.messagesUrl)
+                .post(this.payload({json: data}));
         },
         getSearchAutocompleteOptions: function () {
             return $http(config.getSearchAutocompleteOptionsUrl)

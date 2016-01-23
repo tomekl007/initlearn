@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import tapOrClick from 'react-tap-or-click';
 import $ from '../lib/jquery';
 
-import config from '../ajax/config';
+import api from '../ajax/api';
 
 import MessageThreadList from './messageThreadList';
 
@@ -21,43 +21,32 @@ var Messenger = React.createClass({
     sendMessage() {
         var input = ReactDOM.findDOMNode(this.refs.mainInput);
         var messages = this.state.messages;
+        var message = {text: input.value, emailTo: this.props.email};
 
         messages.push({text: input.value});
         this.setState({
             messages: messages
         });
 
-        $.ajax({
-            method: 'post',
-            url: config.messagesUrl,
-            headers: config.apiCallHeader(),
-            data: JSON.stringify({
-                text: input.value,
-                emailTo: this.props.email
-            }),
-            success: function (data) {
+        api.sendMessage(message)
+            .then(function (data) {
                 console.log(data);
-            },
-            error: function (jqXHR, statusString, err) {
-                console.log(err);
-            }
+            })
+            ['catch'](function (jqXHR) {
+            console.log(jqXHR);
         });
 
         input.value = '';
     },
     getMessages() {
-        console.log('get messages');
+        var $thisComponent = this;
 
-        $.ajax({
-            method: 'get',
-            url: this.props.url,
-            headers: config.apiCallHeader(),
-            success: function (messages) {
-                this.setState({messages: messages, messagesListVisibility: true});
-            }.bind(this),
-            error: function (jqXHR, statusString, err) {
-                console.log(err);
-            }
+        api.getMessages(this.props.email)
+            .then(function (messages) {
+                $thisComponent.setState({messages: messages, messagesListVisibility: true});
+            })
+            ['catch'](function (jqXHR) {
+            console.log(jqXHR);
         });
     },
     reloadMessagesList() {

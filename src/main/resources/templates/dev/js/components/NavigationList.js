@@ -4,6 +4,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import $ from '../lib/jquery';
 
 import config from '../ajax/config';
+import api from '../ajax/api';
 import userData from '../ajax/userData';
 import localStorage from '../common/localStorage';
 
@@ -47,57 +48,43 @@ var NavigationList = React.createClass({
 
         var $thisComponent = this;
 
-        /*TODO improve AJAX CALLS*/
-        $.ajax({
-            type: 'get',
-            url: config.isUserLoggedInUrl,
-            headers: config.apiCallHeader(),
-            success: function (isLooggedIn) {
+        /*TODO code refactoring*/
+        api.isUserLoggedIn()
+            .then(function (isLooggedIn) {
                 if (isLooggedIn === true) {
-                    $.ajax({
-                        type: 'get',
-                        url: config.getUserDataUrl,
-                        headers: config.apiCallHeader(),
-                        success: function (data) {
-
+                    api.getUserData()
+                        .then(function (data) {
                             $thisComponent.setState({visibility: true, loggedIn: true, data: data[0]});
                             userData.set(data[0]);
-                        },
-                        error: function (jqXHR, statusString, err) {
-                            console.log(err);
-                        }
+                        })
+                        ['catch'](function (jqXHR) {
+                        console.log(jqXHR);
                     });
                 } else {
                     $thisComponent.hideLoader();
                 }
-            },
-            error: function (jqXHR, statusString, err) {
-                console.log(err);
-                $thisComponent.logout();
-            }
+            })
+            ['catch'](function (jqXHR) {
+            console.log(jqXHR);
+            $thisComponent.hideLoader();
         });
     },
     logout() {
 
         var $thisComponent = this;
 
-        /*TODO improve AJAX CALLS*/
-        $.ajax({
-            type: 'post',
-            url: config.logoutUserUrl,
-            headers: config.apiCallHeader(),
-            success: function () {
-
+        /*TODO code refactoring*/
+        api.logoutUser()
+            .then(function() {
                 if (localStorage.isAvailable()) {
                     /*TODO improve FB logout*/
                     //FB.logout(function(response) {});
                     window.localStorage.clear();
                     $thisComponent.setState({loggedIn: false});
                 }
-            },
-            error: function (jqXHR, statusString, err) {
-                console.log(err);
-            }
+            })
+            ['catch'](function (jqXHR) {
+            console.log(jqXHR);
         });
     },
     hideLoader() {

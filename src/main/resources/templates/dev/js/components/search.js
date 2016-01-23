@@ -3,6 +3,7 @@ import ReactTypeahead from 'react-typeahead';
 import $ from '../lib/jquery';
 
 import config from '../ajax/config';
+import api from '../ajax/api';
 
 /*TODO improve Teachers class to ES6*/
 var Search = React.createClass({
@@ -16,18 +17,13 @@ var Search = React.createClass({
         this.loadOptions();
     },
     loadOptions() {
-        /*TODO improve AJAX CALLS*/
-        $.ajax({
-            type: 'get',
-            url: 'https://initlearn.herokuapp.com/skills',
-            success: function (data) {
-                this.setState({
-                    options: data
-                });
-            }.bind(this),
-            error: function (jqXHR, statusString, err) {
-                console.log(err);
-            }
+        var $thisComponent = this;
+        api.getSearchAutocompleteOptions()
+            .then(function (data) {
+                $thisComponent.setState({options: data});
+            })
+            ['catch'](function (jqXHR) {
+            console.log(jqXHR);
         });
     },
     render() {
@@ -45,9 +41,6 @@ var Search = React.createClass({
                 }
                     }
                 onOptionSelected={function (skill) {
-                    console.log(skill);
-                    /*TODO change to react route*/
-                    //Router.Navigation.transitionTo('router', config.searchTeachersBySkillPath + skill);
                     window.document.location.hash = config.searchTeachersBySkillPath + skill;
                 }}
 
