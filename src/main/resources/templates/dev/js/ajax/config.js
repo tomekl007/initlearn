@@ -14,7 +14,6 @@ var Config = (function () {
 
     var registerAccountUrl = appUrl + '/registerAccount';
     var addUserToTeacherGroupUrl = usersUrl + '/teachers';
-    var updateScreenheroUrl = usersUrl + '/screenhero';
     var updateUserDataUrl = usersUrl + '/data';
     var isUserLoggedInUrl = appUrl + '/isLoggedIn';
     var getAuthTokenUrl = appUrl + '/oauth/token';
@@ -46,24 +45,8 @@ var Config = (function () {
         return appUrl + '/reservations/' + email;
     };
 
-    /*calls*/
-    var authorizationPrefix = 'Bearer ';
-
-    var apiCallHeader = function () {
-
-        var header = {
-            'Content-Type': 'application/json'
-        };
-
-        if (localStorage.isAvailable()) {
-            var userToken = window.localStorage.getItem('user-token');
-
-            if (typeof userToken === 'string') {
-                header.Authorization = authorizationPrefix + userToken;
-            }
-        }
-
-        return header;
+    var deleteReservationUrl = function(email) {
+        return appUrl + '/reservations/delete/' + email;
     };
 
     return {
@@ -80,7 +63,6 @@ var Config = (function () {
         addUserToTeacherGroupUrl: addUserToTeacherGroupUrl,
         addUserRatingUrl: addUserRatingUrl,
         updateUserDataUrl: updateUserDataUrl,
-        updateScreenheroUrl: updateScreenheroUrl,
         updateUserDataFieldUrl: updateUserDataFieldUrl,
         isUserLoggedInUrl: isUserLoggedInUrl,
         getAuthTokenUrl: getAuthTokenUrl,
@@ -90,13 +72,12 @@ var Config = (function () {
         getSearchAutocompleteOptionsUrl: getSearchAutocompleteOptionsUrl,
         addReservationUrl: addReservationUrl,
         getReservationsUrl: getReservationsUrl,
+        deleteReservationUrl: deleteReservationUrl,
         getAppointmentsUrl: getAppointmentsUrl,
         getTeachersUrl: getTeachersUrl,
         logoutUserUrl: logoutUserUrl,
         searchTeachersBySkillPath: searchTeachersBySkillPath,
-        paymentPath: paymentPath,
-        authorizationPrefix: authorizationPrefix,
-        apiCallHeader: apiCallHeader
+        paymentPath: paymentPath
     };
 })();
 

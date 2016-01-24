@@ -1,7 +1,7 @@
 import React from 'react';
 import FormSerialize from 'form-serialize';
 
-import config from '../ajax/config';
+import api from '../ajax/api';
 
 import Input from './input';
 
@@ -11,18 +11,10 @@ var AddUserDataForm = React.createClass({
         var $modalComponent = this.props.navigation.refs.modal;
 
         if ($modalComponent.state.teacherCheckbox) {
-            /*TODO AJAX Improvement */
-            $.ajax({
-                type: 'post',
-                url: config.addUserToTeacherGroupUrl,
-                headers: config.apiCallHeader(),
-                success: function (data) {
+            api.addUserToTeachGroup()
+                .then(function (data) {
                     console.log(data);
-                },
-                error: function (jqXHR, statusString, err) {
-                    console.log(err);
-                }
-            });
+                });
         }
     },
     addData(event) {
@@ -42,29 +34,20 @@ var AddUserDataForm = React.createClass({
                 serializedData[key] = serializedData[key][0].split(',');
             }
         });
-
-        serializedData = JSON.stringify(serializedData);
-
-        var url = $modalComponent.state.teacherCheckbox ? config.updateUserDataUrl : config.updateScreenheroUrl;
-
-        /*TODO improve AJAX CALLS*/
         /*TODO code refactoring needed*/
-        $.ajax({
-
-            type: $target.getAttribute('method'),
-            url: url,
-            data: serializedData,
-            headers: config.apiCallHeader(),
-            success: function (data) {
-                console.log(data);
-
-                $modalComponent.close($navigationComponent.resetFormStates);
-            },
-            error: function (jqXHR, statusString, err) {
-                console.log(err);
-            }
-
-        });
+        if ($modalComponent.state.teacherCheckbox) {
+            api.updateUserData(serializedData)
+                .then(function (data) {
+                    console.log(data);
+                    $modalComponent.close($navigationComponent.resetFormStates);
+                });
+        } else {
+            api.updateUserDataField('screenhero', serializedData)
+                .then(function (data) {
+                    console.log(data);
+                    $modalComponent.close($navigationComponent.resetFormStates);
+                });
+        }
     },
     render() {
         var $userForm;

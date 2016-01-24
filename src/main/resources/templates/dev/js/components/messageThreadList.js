@@ -1,6 +1,5 @@
 import React from 'react';
 import tapOrClick from 'react-tap-or-click';
-import $ from '../lib/jquery';
 
 import config from '../ajax/config';
 

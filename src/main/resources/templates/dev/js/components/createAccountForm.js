@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import $ from '../lib/jquery';
 import FormSerialize from 'form-serialize';
 
 import api from '../ajax/api';
@@ -24,7 +23,8 @@ var CreateAccountForm = React.createClass({
         var $navigationComponent = this.props.navigation;
         var $modalComponent = $navigationComponent.refs.modal;
 
-        var data = JSON.stringify(FormSerialize($target, {hash: true, empty: true}));
+        var data = FormSerialize($target, {hash: true, empty: true});
+        console.log(data);
 
         /*TODO code refactoring needed*/
 

@@ -9,11 +9,17 @@ var Reservations = React.createClass({
 
     getInitialState() {
         return {
-            modalOpen: false
+            modalOpen: false,
+            reservation: {}
         };
     },
-    remove() {
-        this.setState({modalOpen: true});
+    remove(event) {
+        var $target = event.currentTarget;
+        var reservation = {
+            email:  $target.getAttribute('data-email'),
+            date: {fromHour: $target.getAttribute('data-date')}
+        };
+        this.setState({modalOpen: true, reservation: reservation});
     },
     render() {
         var $modalComponent;
@@ -24,6 +30,8 @@ var Reservations = React.createClass({
                 parent={this}
                 content={<ModalReservation
                     parent={this}
+                    schedule={this.props.parent}
+                    reservation={this.state.reservation}
 
                 />}/>
         }
@@ -36,7 +44,8 @@ var Reservations = React.createClass({
                         <div className='main-schedule-item-content'>
                             {reservation.data.reserved_by}
                         </div>
-                        <div className='main-schedule-item-cancel' {...tapOrClick($thisComponent.remove)}>
+                        <div className='main-schedule-item-cancel' data-email={reservation.data.reserved_by}
+                            data-date={reservation.data.from_hour} {...tapOrClick($thisComponent.remove)}>
                             <i className='fa fa-times'></i>
                         </div>
                     </div>;

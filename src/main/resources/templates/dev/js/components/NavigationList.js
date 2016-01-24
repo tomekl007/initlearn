@@ -1,7 +1,6 @@
 import React from 'react';
 import tapOrClick from 'react-tap-or-click';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import $ from '../lib/jquery';
 
 import config from '../ajax/config';
 import api from '../ajax/api';

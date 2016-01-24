@@ -21,7 +21,13 @@ var ModalReservation = React.createClass({
             });
     },
     removeReservation() {
-        console.log('remove reservation');
+        var $thisComponent = this;
+        var reservation = this.props.reservation;
+        api.deleteReservation(reservation.email, reservation.date)
+            .then(function(data) {
+                $thisComponent.props.schedule.add('reservations').toStore(data);
+                $thisComponent.props.parent.setState({modalOpen: false});
+            });
     },
     render() {
 

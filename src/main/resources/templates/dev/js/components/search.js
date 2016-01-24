@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactTypeahead from 'react-typeahead';
-import $ from '../lib/jquery';
 
 import config from '../ajax/config';
 import api from '../ajax/api';

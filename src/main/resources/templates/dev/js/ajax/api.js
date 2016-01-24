@@ -6,14 +6,17 @@ import localStorage from '../common/localStorage';
 var Api = (function () {
 
     var call = {
-        payload: function (data) {
+        payload: function (data, token) {
             var options = {
                 /*always call header*/
                 headers: (function () {
 
                     var authorizationPrefix = 'Bearer ';
+                    var appJSON = 'application/json';
+                    var appURLEncoded = 'application/x-www-form-urlencoded';
+                    var contentType = !token ? appJSON : appURLEncoded;
                     var headerOptions = {
-                        'Content-Type': 'application/json'
+                        'Content-Type': contentType
                     };
 
                     if (localStorage.isAvailable()) {
@@ -33,17 +36,18 @@ var Api = (function () {
             }
             return options;
         },
-        getTeachers: function () {
-            return $http(config.getTeachersUrl)
+        /*TODO getUsers - temporary, delete in the future*/
+        getUsers: function (url) {
+            return $http(url)
                 .get(this.payload());
         },
         registerAccount: function (data) {
             return $http(config.registerAccountUrl)
                 .post(this.payload({json: data}));
         },
-        addUserToTeachGroup: function (data) {
+        addUserToTeachGroup: function () {
             return $http(config.addUserToTeacherGroupUrl)
-                .post(this.payload({json: data}));
+                .post(this.payload());
         },
         addUserRating: function (emailPath, data) {
             return $http(config.addUserRatingUrl(emailPath))
@@ -63,7 +67,7 @@ var Api = (function () {
         },
         getAuthToken: function (data) {
             return $http(config.getAuthTokenUrl)
-                .post(this.payload({formData: data}));
+                .post(this.payload({formData: data}, true));
         },
         getUserData: function () {
             return $http(config.getUserDataUrl)
@@ -96,6 +100,10 @@ var Api = (function () {
         getReservation: function(emailPath) {
             return $http(config.getReservationsUrl(emailPath))
                 .get(this.payload());
+        },
+        deleteReservation: function(emailPath, data) {
+            return $http(config.deleteReservationUrl(emailPath))
+                .post(this.payload({json: data}));
         },
         getAppointments: function() {
             return $http(config.getAppointmentsUrl)

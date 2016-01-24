@@ -1,7 +1,6 @@
 import React from 'react';
-import $ from '../lib/jquery';
 
-import config from '../ajax/config';
+import api from '../ajax/api';
 
 import UserComponent from './user';
 
@@ -17,22 +16,11 @@ var Users = React.createClass({
         };
     },
     loadUsersFromServer(url) {
-        /*TODO improve AJAX CALLS*/
-        $.ajax({
-            url: url || this.props.url,
-            dataType: 'json',
-            headers: config.apiCallHeader(),
-            cache: false,
-            success: function (data) {
-                this.setState({
-                    data: data,
-                    url: url
-                });
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.error(this.props.url, status, err.toString());
-            }.bind(this)
-        });
+        var $thisComponent = this;
+        api.getUsers(url || this.props.url)
+            .then(function(data) {
+                $thisComponent.setState({ data: data, url: url});
+            });
     },
     componentWillMount() {
         this.loadUsersFromServer(this.props.url);
