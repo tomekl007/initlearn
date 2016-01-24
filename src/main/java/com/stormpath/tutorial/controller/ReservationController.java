@@ -37,18 +37,18 @@ public class ReservationController {
         return new ResponseEntity<>(allReservations, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/reservations/delete/{email:.+}", method = RequestMethod.POST)
-    public ResponseEntity<List<Reservation>> deleteReservation(
+    @RequestMapping(value = "/appoitments/delete/{email:.+}", method = RequestMethod.POST)
+    public ResponseEntity<List<Reservation>> deleteAppointment(
             @PathVariable("email") String email,
             ServletRequest servletRequest,
             @RequestBody DeleteReservationRequest deleteReservationRequest) {
         return AccountUtils.actionResponseEntityForAuthenticatedUserOrUnauthorized(servletRequest, a -> {
-            long result = reservationService.deleteReservation(a.getEmail(), email, deleteReservationRequest.fromHour);
-            if(result == -1){
+            long result = reservationService.delete(a.getEmail(), email, deleteReservationRequest.fromHour);
+            if (result == -1) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
 
-            return new ResponseEntity<>(reservationService.getAllReservations(email), HttpStatus.OK);
+            return new ResponseEntity<>(reservationService.getAllAppointments(email), HttpStatus.OK);
         });
     }
 
@@ -82,6 +82,22 @@ public class ReservationController {
                             reservationService.reserve(a,
                                     teacherAccount.get(), reservationTime, endOfReservationTime), HttpStatus.OK);
                 });
+    }
+
+
+    @RequestMapping(value = "/reservation/delete/{email:.+}", method = RequestMethod.POST)
+    public ResponseEntity<List<Reservation>> deleteReservation(
+            @PathVariable("email") String email,
+            ServletRequest servletRequest,
+            @RequestBody DeleteReservationRequest deleteReservationRequest) {
+        return AccountUtils.actionResponseEntityForAuthenticatedUserOrUnauthorized(servletRequest, a -> {
+            long result = reservationService.delete(email, a.getEmail(), deleteReservationRequest.fromHour);
+            if (result == -1) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+
+            return new ResponseEntity<>(reservationService.getAllReservations(email), HttpStatus.OK);
+        });
     }
 
 
