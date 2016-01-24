@@ -30,6 +30,7 @@ public class Reservation {
     }
 
     public Date to_hour;
+    private String subject;
 
     public String getTeacher() {
         return teacher;
@@ -67,10 +68,19 @@ public class Reservation {
 
     }
 
-    public Reservation(Date from_hour, String reserved_by, String teacher, Date to_hour) {
+    public Reservation(Date from_hour, String reserved_by, String teacher, Date to_hour, String subject) {
         this.from_hour = from_hour;
         this.reserved_by = reserved_by;
         this.teacher = teacher;
         this.to_hour = to_hour;
+        this.subject = subject;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
     }
 }

@@ -35,16 +35,19 @@ public class ReservationService {
     }
 
 
-    public List<Reservation> reserve(Account reservedBy, Account teacher, DateTime reservationTime, DateTime endOfReservationTime) {
+    public List<Reservation> reserve(Account reservedBy, Account teacher,
+                                     DateTime reservationTime, DateTime endOfReservationTime,
+                                     String subject) {
         //todo handle when appoitment could not be reserved
-        addReservation(reservedBy, teacher, reservationTime, endOfReservationTime);
+        addReservation(reservedBy, teacher, reservationTime, endOfReservationTime, subject);
         return getAllReservations(teacher.getEmail());
     }
 
-    private void addReservation(Account reservedBy, Account teacher, DateTime reservationTime, DateTime endOfReservationTime) {
+    private void addReservation(Account reservedBy, Account teacher, DateTime reservationTime,
+                                DateTime endOfReservationTime, String subject) {
         Reservation reservation =
                 new Reservation(reservationTime.toDate(), reservedBy.getEmail(),
-                        teacher.getEmail(), endOfReservationTime.toDate());
+                        teacher.getEmail(), endOfReservationTime.toDate(), subject);
         reservationRepository.save(reservation);
     }
 

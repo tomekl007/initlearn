@@ -22,3 +22,5 @@ CREATE TABLE Reservation(
   from_hour timestamp,
   to_hour TIMESTAMP
 );
+
+alter table Reservation ADD COLUMN subject TEXT;

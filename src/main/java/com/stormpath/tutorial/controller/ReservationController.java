@@ -80,7 +80,8 @@ public class ReservationController {
 
                     return new ResponseEntity<>(
                             reservationService.reserve(a,
-                                    teacherAccount.get(), reservationTime, endOfReservationTime), HttpStatus.OK);
+                                    teacherAccount.get(), reservationTime,
+                                    endOfReservationTime, reservationRequest.subject), HttpStatus.OK);
                 });
     }
 
