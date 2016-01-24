@@ -75,7 +75,7 @@ public class ReservationService {
         return !allReservationsForTimespan.isEmpty();
     }
 
-    public long deleteReservation(String reservedBy, String teacherEmail, Long fromHour) {
+    public long delete(String reservedBy, String teacherEmail, Long fromHour) {
         logger.info("delete for reserved by: " + reservedBy + " teacher: " + teacherEmail + " fromHour: " + fromHour);
         List<Reservation> reservations = reservationRepository.getReservations(reservedBy, teacherEmail, new Date(fromHour));
         if (reservations == null || reservations.isEmpty()) {
