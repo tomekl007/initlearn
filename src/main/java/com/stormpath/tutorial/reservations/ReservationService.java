@@ -77,12 +77,14 @@ public class ReservationService {
 
     public long deleteReservation(String reservedBy, String teacherEmail, Long fromHour) {
         logger.info("delete for reserved by: " + reservedBy + " teacher: " + teacherEmail + " fromHour: " + fromHour);
-        Reservation reservation = reservationRepository.getReservation(reservedBy, teacherEmail, new Date(fromHour));
-        if (reservation == null) {
+        List<Reservation> reservations = reservationRepository.getReservations(reservedBy, teacherEmail, new Date(fromHour));
+        if (reservations == null || reservations.isEmpty()) {
             return -1;
         }
-        reservationRepository.delete(reservation.getId());
-        return reservation.getId();
+        for (Reservation reservation : reservations) {
+            reservationRepository.delete(reservation.getId());
+        }
+        return 0;
     }
 }
 
