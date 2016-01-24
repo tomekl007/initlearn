@@ -57,7 +57,7 @@ var AddUserDataForm = React.createClass({
             $userForm =
                 <form method='post' role='form' className='main-form' onSubmit={this.addData}>
                     <div form-group='true' className='main-input-wrapper'>
-                        <Input data={{name: 'hourRate', type: 'text'}}/>
+                        <Input data={{name: 'hourRate', type: 'text', required: 'required'}}/>
                         <label className='main-label'>hour rate</label>
 
                         <div className='main-input-bg'></div>

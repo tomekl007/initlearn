@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import tapOrClick from 'react-tap-or-click';
 
 import api from '../ajax/api';
@@ -8,10 +9,12 @@ var ModalReservation = React.createClass({
 
     addReservation() {
         var $thisComponent = this;
+        var $input = ReactDOM.findDOMNode(this);
         var reservation = {
             fromHour: new Date(this.props.reservationDate.date + ',' +
             this.props.reservationDate.hourFrom).getTime(),
-            teacher: this.props.teacher
+            teacher: this.props.teacher,
+            subject: $input.querySelector('.main-modal-reservation-subject').value
         };
 
         api.addReservation(reservation)
@@ -46,7 +49,7 @@ var ModalReservation = React.createClass({
                 <button className='main-btn btn-primary fw-700' {...tapOrClick(this.addReservation)}>send</button>
             </div>
         } else {
-            $template = <div>
+                $template = <div>
                 <div className='main-modal-message-notification-icon warning'>
                     <i className='fa fa-exclamation-circle'></i>
                 </div>
