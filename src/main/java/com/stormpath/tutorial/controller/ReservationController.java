@@ -48,7 +48,7 @@ public class ReservationController {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
 
-            return new ResponseEntity<>(reservationService.getAllAppointments(email), HttpStatus.OK);
+            return new ResponseEntity<>(reservationService.getAllAppointments(a.getEmail()), HttpStatus.OK);
         });
     }
 
@@ -97,7 +97,7 @@ public class ReservationController {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
 
-            return new ResponseEntity<>(reservationService.getAllReservations(email), HttpStatus.OK);
+            return new ResponseEntity<>(reservationService.getAllReservations(a.getEmail()), HttpStatus.OK);
         });
     }
 
