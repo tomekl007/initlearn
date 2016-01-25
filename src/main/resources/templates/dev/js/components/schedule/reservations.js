@@ -43,7 +43,8 @@ var Reservations = React.createClass({
                     return <div className='main-schedule-item' key={key} >
                         <DateComponent date={reservation.date} />
                         <div className='main-schedule-item-content'>
-                            {reservation.data.reserved_by}
+                            <div>Teacher: {reservation.data.reserved_by}</div>
+                            <div>Subject: {reservation.data.subject}</div>
                         </div>
                         <div className='main-schedule-item-cancel' data-email={reservation.data.reserved_by}
                             data-date={reservation.data.from_hour} {...tapOrClick($thisComponent.remove)}>
