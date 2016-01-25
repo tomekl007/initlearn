@@ -86,7 +86,7 @@ public class ReservationController {
     }
 
 
-    @RequestMapping(value = "/reservation/delete/{email:.+}", method = RequestMethod.POST)
+    @RequestMapping(value = "/reservations/delete/{email:.+}", method = RequestMethod.POST)
     public ResponseEntity<List<Reservation>> deleteReservation(
             @PathVariable("email") String email,
             ServletRequest servletRequest,
