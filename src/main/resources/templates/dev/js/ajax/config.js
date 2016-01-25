@@ -46,7 +46,11 @@ var Config = (function () {
     };
 
     var deleteReservationUrl = function(email) {
-        return appUrl + '/reservations/delete/' + email;
+        return appUrl + '/reservation/delete/' + email;
+    };
+
+    var deleteAppointmentUrl = function(email) {
+        return appUrl + '/appoitments/delete/' + email;
     };
 
     return {
@@ -74,6 +78,7 @@ var Config = (function () {
         getReservationsUrl: getReservationsUrl,
         deleteReservationUrl: deleteReservationUrl,
         getAppointmentsUrl: getAppointmentsUrl,
+        deleteAppointmentUrl: deleteAppointmentUrl,
         getTeachersUrl: getTeachersUrl,
         logoutUserUrl: logoutUserUrl,
         searchTeachersBySkillPath: searchTeachersBySkillPath,

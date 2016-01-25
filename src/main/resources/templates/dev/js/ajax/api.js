@@ -108,6 +108,10 @@ var Api = (function () {
         getAppointments: function() {
             return $http(config.getAppointmentsUrl)
                 .get(this.payload());
+        },
+        deleteAppointment: function(emailPath, data) {
+            return $http(config.deleteAppointmentUrl(emailPath))
+                .post(this.payload({json: data}));
         }
     };
 
