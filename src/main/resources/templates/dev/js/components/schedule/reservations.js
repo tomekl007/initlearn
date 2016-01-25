@@ -31,6 +31,7 @@ var Reservations = React.createClass({
                 content={<ModalReservation
                     parent={this}
                     schedule={this.props.parent}
+                    option={'reservation'}
                     reservation={this.state.reservation}
 
                 />}/>
@@ -44,7 +45,7 @@ var Reservations = React.createClass({
                         <div className='main-schedule-item-content'>
                             {reservation.data.reserved_by}
                         </div>
-                        <div className='main-schedule-item-cancel' data-email={reservation.data.teacher}
+                        <div className='main-schedule-item-cancel' data-email={reservation.data.reserved_by}
                             data-date={reservation.data.from_hour} {...tapOrClick($thisComponent.remove)}>
                             <i className='fa fa-times'></i>
                         </div>
