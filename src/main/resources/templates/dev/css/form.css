@@ -24,7 +24,7 @@
 
 .main-form-message.main-form-message-error {
   background-color: #e57e6f;
-  border: 1px solid #e04832;
+  border: 1px solid #d62b12;
   color: #fff; }
 
 .main-form-message-transition-enter {
@@ -51,7 +51,7 @@
   background-color: transparent;
   border: none;
   width: 100%;
-  color: #65c3df; }
+  color: #00bcd4; }
 
 .main-input:focus, .main-input.is-filled {
   outline: 0; }

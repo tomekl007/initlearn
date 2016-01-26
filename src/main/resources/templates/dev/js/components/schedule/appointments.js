@@ -40,7 +40,7 @@ var Appointments = React.createClass({
         return (
             <div>
                 {this.props.parent.state.appointments.map(function (appointment, key) {
-                    return <div className='main-schedule-item' key={key} >
+                    return <div className='main-schedule-item row' key={key} >
                         <DateComponent date={appointment.date} />
                         <div className='main-schedule-item-content'>
                             <div>Teacher: {appointment.data.teacher}</div>

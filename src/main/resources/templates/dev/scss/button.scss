@@ -6,15 +6,15 @@
   text-decoration: none;
   padding: rem-calc(10px);
   border-radius: $border-radius;
-  border: 2px solid transparent;
+  box-shadow: $box-shadow;
+  border: none;
   text-transform: uppercase;
   transition: color .3s ease, background-color .3s ease;
   margin: auto;
 }
 
 .btn-primary {
-  border: 2px solid $color-gold;
-  background-color: $color-gold;
+  background-color: $color-blue;
   color: #fff;
 }
 

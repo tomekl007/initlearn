@@ -1,29 +1,39 @@
+.main-section-messages {
+  padding: 0; }
+
 .main-messenger {
   width: 100%;
-  min-height: 400px;
+  height: 480px;
   color: #9ea7b3;
   overflow: hidden;
-  background-color: #f5f5f5;
   box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.3); }
 
 .main-messenger ul {
   margin: 0;
-  padding: 0; }
+  height: 100%;
+  overflow-y: scroll; }
 
 .main-messenger-header {
   text-align: center;
   padding: 0.9375rem; }
 
+.main-messenger-message-thread-list-wrapper, .main-messenger-messages-wrapper {
+  position: absolute;
+  top: 50px;
+  height: 430px; }
+
 .main-messenger-message-thread-list-wrapper {
-  float: left;
   width: 30%;
-  border-right: 1px solid #9ea7b3;
-  border-top: 1px solid #9ea7b3; }
+  border-right: 1px solid #f5f5f5;
+  border-top: 1px solid #f5f5f5; }
 
 .main-messenger-messages-wrapper {
-  float: left;
+  left: 30%;
   width: 70%;
   background-color: #fff; }
+
+.main-messenger-messages-list {
+  padding: 10px 10px 50px; }
 
 .main-messenger-messages-list-item {
   margin: 0.625rem;
@@ -31,9 +41,9 @@
 
 .main-messenger-messages-list-item span {
   padding: 0.3125rem;
-  border-radius: 20px;
+  border-radius: 2px;
   float: right;
-  background-color: #65c3df;
+  background-color: #2196f3;
   color: #fff; }
 
 .main-messenger-messages-list-item.email-to span {
@@ -42,8 +52,12 @@
   color: #000; }
 
 .main-messenger-text-input-wrapper {
-  background-color: #f5f5f5;
-  overflow: hidden; }
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #fafafa;
+  border-top: 1px solid #f5f5f5; }
 
 .main-messenger-text-input {
   float: left; }

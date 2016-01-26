@@ -7,9 +7,9 @@ var Tooltip = React.createClass({
 
     render() {
         return (
-            <span className='main-tooltip'>
+            <div className='main-tooltip'>
                 {this.props.content}
-            </span>
+            </div>
         );
     }
 });

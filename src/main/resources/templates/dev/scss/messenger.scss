@@ -1,17 +1,21 @@
 @import "variables";
 @import "functions";
 
+.main-section-messages {
+  padding: 0;
+}
+
 .main-messenger {
   width: 100%;
-  min-height: 400px;
+  height: 480px;
   color: $messenger-color-grey-dark;
   overflow: hidden;
-  background-color: $messenger-color-grey;
   box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.3);
 
   ul {
     margin: 0;
-    padding: 0;
+    height: 100%;
+    overflow-y: scroll;
   }
 }
 
@@ -20,17 +24,27 @@
   padding: rem-calc(15px);
 }
 
+.main-messenger-message-thread-list-wrapper,
+.main-messenger-messages-wrapper {
+  position: absolute;
+  top: 50px;
+  height: 430px;
+}
+
 .main-messenger-message-thread-list-wrapper {
-  float: left;
   width: 30%;
-  border-right: 1px solid $messenger-color-grey-dark;
-  border-top: 1px solid $messenger-color-grey-dark;
+  border-right: 1px solid $messenger-color-grey;
+  border-top: 1px solid $messenger-color-grey;
 }
 
 .main-messenger-messages-wrapper {
-  float: left;
+  left: 30%;
   width: 70%;
   background-color: #fff;
+}
+
+.main-messenger-messages-list {
+  padding: 10px 10px 50px;
 }
 
 .main-messenger-messages-list-item {
@@ -39,9 +53,9 @@
 
   span {
     padding: rem-calc(5px);
-    border-radius: 20px;
+    border-radius: $border-radius;
     float: right;
-    background-color: $color-blue;
+    background-color: $color-blue-dark;
     color: #fff;
   }
 
@@ -53,8 +67,12 @@
 }
 
 .main-messenger-text-input-wrapper {
-  background-color: $messenger-color-grey;
-  overflow: hidden;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #fafafa;
+  border-top: 1px solid $messenger-color-grey;
 }
 
 .main-messenger-text-input {

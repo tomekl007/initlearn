@@ -80,8 +80,15 @@ html {
   font-family: "Source Sans Pro", sans-serif; }
 
 body {
-  background-color: #e8e8e8;
+  background-color: #fff;
   font-family: "Source Sans Pro", sans-serif; }
+
+section {
+  position: relative;
+  background-color: #fafafa;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  margin: 20px 0;
+  padding: 0 20px 20px; }
 
 .fw-100 {
   font-weight: 100; }
@@ -118,10 +125,10 @@ a {
   color: #fff; }
 
 .color-blue {
-  color: #65c3df; }
+  color: #00bcd4; }
 
 .color-purple {
-  color: #83639c; }
+  color: #3f51b5; }
 
 .color-gold {
   color: #f79f00; }
@@ -139,7 +146,7 @@ a {
   display: block;
   padding: 50px;
   text-align: center;
-  color: #65c3df;
+  color: #00bcd4;
   -webkit-animation: spin 1s linear infinite;
   -moz-animation: spin 1s linear infinite;
   -ms-animation: spin 1s linear infinite;

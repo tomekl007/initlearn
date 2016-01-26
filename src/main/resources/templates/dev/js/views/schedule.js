@@ -36,7 +36,7 @@ var Schedule = React.createClass({
         }
 
         return (
-            <div className='main-section-schedule'>
+            <section className='main-section-schedule'>
                 <div className='row'>
                     <div className='main-schedule-tabs'>
                         <div data-item='appointments' className='main-schedule-tabs-item is-active'
@@ -50,7 +50,7 @@ var Schedule = React.createClass({
                     </div>
                 </div>
                 <ScheduleComponent content={$component}/>
-            </div>
+            </section>
         );
     }
 });

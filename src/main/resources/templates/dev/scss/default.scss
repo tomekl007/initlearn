@@ -18,8 +18,16 @@ html {
 }
 
 body {
-  background-color: $color-grey;
+  background-color: #fff;
   font-family: $fontSourceSansPro;
+}
+
+section {
+  position: relative;
+  background-color: #fafafa;
+  box-shadow: $box-shadow;
+  margin: 20px 0;
+  padding: 0 20px 20px;
 }
 
 /*fonts*/

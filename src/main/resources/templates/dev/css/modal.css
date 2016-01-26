@@ -44,7 +44,7 @@
   display: block; }
 
 .main-modal-message-notification.success .main-modal-message-notification-content {
-  color: #1bbc9c; }
+  color: #4caf50; }
 
 .main-modal-message-notification.cancel .main-modal-message-notification-icon.cancel {
   display: block; }
@@ -64,7 +64,7 @@
   text-align: center; }
 
 .main-modal-message-notification-icon.success {
-  color: #1bbc9c; }
+  color: #4caf50; }
 
 .main-modal-message-notification-icon.cancel {
   color: #e57e6f; }
