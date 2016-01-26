@@ -128,5 +128,13 @@ public class PaymentService {
     public void logSuccessPayment(Optional<String> payKey) {
         //todo save to db as success
     }
+
+    public List<Payment> getPayments(String email) {
+        return paymentsRepository.getPaymentsOfUser(email);
+    }
+
+    public List<Payment> getReceivedPayments(String email) {
+        return paymentsRepository.getReceivedPayments(email);
+    }
 }
 

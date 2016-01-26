@@ -3,6 +3,8 @@ package com.stormpath.tutorial.controller;
 import com.paypal.exception.*;
 import com.paypal.sdk.exceptions.OAuthException;
 import com.paypal.svcs.types.ap.PaymentDetailsResponse;
+import com.stormpath.sdk.impl.http.Response;
+import com.stormpath.tutorial.db.payment.Payment;
 import com.stormpath.tutorial.db.payment.PaypalConfiguration;
 import com.stormpath.tutorial.model.User;
 import com.stormpath.tutorial.payment.PaymentService;
@@ -73,5 +75,17 @@ public class PaymentController {
             }
         }
         return Optional.empty();
+    }
+
+    @RequestMapping("/payments/payed")
+    public ResponseEntity<List<Payment>> getPaymentsOfLoggedInUser(ServletRequest servletRequest){
+        return AccountUtils.actionForAuthenticatedUserOrUnauthorized(servletRequest,
+                a -> paymentService.getPayments(a.getEmail()));
+    }
+
+    @RequestMapping("/payments/received")
+    public ResponseEntity<List<Payment>> getReceivedPaymentsOfLoggedInUser(ServletRequest servletRequest){
+        return AccountUtils.actionForAuthenticatedUserOrUnauthorized(servletRequest,
+                a -> paymentService.getReceivedPayments(a.getEmail()));
     }
 }
