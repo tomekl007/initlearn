@@ -37,12 +37,12 @@
   left: 25%;
   width: 75%;
   height: 100%;
-  background-color: #fff;
+  background-color: #fafafa;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12); }
 
 .main-schedule-item-content, .main-schedule-item-date {
   float: left;
-  background-color: #fff;
+  background-color: #fafafa;
   padding: 0.9375rem 0.625rem 0.625rem; }
 
 .main-schedule-item-content {
