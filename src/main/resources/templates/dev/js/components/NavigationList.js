@@ -118,7 +118,6 @@ var NavigationList = React.createClass({
         this.refs.messageThreadList.getMessageThreadList();
     },
     render() {
-
         var $loginElements;
         var $Loader;
         var $modalElement;
