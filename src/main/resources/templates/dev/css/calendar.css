@@ -19,6 +19,9 @@
   padding: 0.625rem;
   color: #696969; }
 
+.main-calendar-months span, .main-calendar-days span {
+  float: left; }
+
 .main-calendar-months:hover, .main-calendar-days:hover {
   border-top: 4px solid #e91e63; }
 
@@ -31,7 +34,8 @@
   height: 10px;
   background-color: #e91e63;
   display: block;
-  border-radius: 10px; }
+  border-radius: 10px;
+  margin: 4px 2px; }
 
 .main-calendar-days {
   width: 20%;

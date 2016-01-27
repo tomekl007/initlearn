@@ -85,7 +85,7 @@ var Messenger = React.createClass({
         return (
             <div className='main-messenger'>
                 <div className='main-messenger-wrapper'>
-                    <div className='main-messenger-header fw-700'>
+                    <div className='main-messenger-header'>
                         conversation with: {this.props.email}
                     </div>
                     <div className='main-messenger-message-thread-list-wrapper'>
@@ -96,10 +96,10 @@ var Messenger = React.createClass({
                             {$messagesListItems}
                         </ul>
                         {$Loader}
-                        <div className='main-messenger-text-input-wrapper'>
+                        <form className='main-messenger-text-input-wrapper'>
                             <textarea className='main-messenger-text-input' ref='mainInput' type='text'></textarea>
-                            <button className='main-messenger-button-submit main-btn btn-blue fw-700' {...tapOrClick(this.sendMessage)}>send</button>
-                        </div>
+                            <span className='main-messenger-button-submit' {...tapOrClick(this.sendMessage)}><i className='fa fa-paper-plane'></i></span>
+                        </form>
                     </div>
                 </div>
             </div>

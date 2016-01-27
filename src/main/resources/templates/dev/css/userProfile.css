@@ -9,7 +9,7 @@
   transition: color .3s ease; }
 
 .main-user-profile-nav-messages:hover, .main-user-profile-nav-calendar:hover {
-  color: #ffee9c; }
+  color: rgba(0, 0, 0, 0.3); }
 
 .main-user-profile-nav-calendar {
   right: 0;

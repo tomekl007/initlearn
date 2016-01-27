@@ -71,6 +71,9 @@
 .fa-exclamation-circle:before {
   content: ""; }
 
+.fa-paper-plane:before {
+  content: ""; }
+
 *, *:before, *:after {
   box-sizing: inherit; }
 

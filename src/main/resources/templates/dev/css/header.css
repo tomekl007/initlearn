@@ -96,7 +96,7 @@
     padding: 0.3125rem;
     color: #fff; }
   .main-nav-list-item > a:hover, .main-nav-list-item > a.is-active {
-    border-bottom: 2px solid #00bcd4;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.3);
     color: #fff; }
   .main-nav-messages {
     padding-bottom: 1.25rem; }

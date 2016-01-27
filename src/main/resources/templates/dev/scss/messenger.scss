@@ -6,16 +6,26 @@
 }
 
 .main-messenger {
+  position: relative;
   width: 100%;
+  max-width: 900px;
   height: 480px;
   color: $messenger-color-grey-dark;
   overflow: hidden;
   box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.3);
+  margin: auto;
 
   ul {
     margin: 0;
     height: 100%;
     overflow-y: scroll;
+  }
+
+  .main-loader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
   }
 }
 
@@ -34,7 +44,7 @@
 .main-messenger-message-thread-list-wrapper {
   width: 30%;
   border-right: 1px solid $messenger-color-grey;
-  border-top: 1px solid $messenger-color-grey;
+  border-top: 1px solid #fff;
 }
 
 .main-messenger-messages-wrapper {
@@ -76,5 +86,29 @@
 }
 
 .main-messenger-text-input {
-  float: left;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 50px;
+  border: none;
+  width: 80%;
+  resize: none;
+  outline: none;
+  padding: rem-calc(15px);
+  color: $color-blue-dark;
+}
+
+.main-messenger-button-submit {
+  color: $color-blue-dark;
+  width: 20%;
+  height: 50px;
+  float: right;
+  text-align: center;
+  cursor: pointer;
+
+  i {
+    display: block;
+    line-height: 50px;
+    margin: auto;
+  }
 }

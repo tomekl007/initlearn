@@ -13,7 +13,7 @@
   transition: color .3s ease;
 
   &:hover {
-    color: $color-yellow;
+    color: rgba(0, 0, 0, .3);
   }
 }
 

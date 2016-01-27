@@ -68,7 +68,7 @@
 
     &:hover,
     &:focus {
-      background-color: rgba(0, 0, 0, .2);
+      background-color: rgba(0, 0, 0, .3);
     }
   }
 
@@ -80,11 +80,11 @@
   }
 
   .main-search-list-item {
-    background-color: $color-light-grey;
+    background-color: #fff;
 
     &:hover,
     &.main-search-list-item-hover {
-      background-color: $color-blue;
+      background-color: $color-blue-dark;
 
       .main-search-list-item-anchor {
         color: #fff;
@@ -97,7 +97,7 @@
   }
 
   .main-search-list-item-anchor {
-    color: $color-blue;
+    color: $color-blue-dark;
   }
 
   .main-search-icon {
