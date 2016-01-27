@@ -33,16 +33,17 @@
 .main-schedule-item:before {
   content: '';
   position: absolute;
-  top: 0;
+  top: 5px;
   left: 25%;
   width: 75%;
-  height: 100%;
-  background-color: #fafafa;
+  height: calc(100% - 10px);
+  background-color: #fff;
+  border-radius: 2px;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12); }
 
 .main-schedule-item-content, .main-schedule-item-date {
   float: left;
-  background-color: #fafafa;
+  background-color: #fff;
   padding: 0.9375rem 0.625rem 0.625rem; }
 
 .main-schedule-item-content {
@@ -78,7 +79,7 @@
 .main-schedule-item-cancel {
   font-size: 1.25rem;
   position: absolute;
-  top: 0;
+  top: 5px;
   right: 0;
   padding: 0 0.625rem;
   color: #fff;

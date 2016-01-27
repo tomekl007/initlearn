@@ -42,11 +42,12 @@
   &:before {
     content: '';
     position: absolute;
-    top: 0;
+    top: 5px;
     left: 25%;
     width: 75%;
-    height: 100%;
-    background-color: #fafafa;
+    height: calc(100% - 10px);
+    background-color: #fff;
+    border-radius: $border-radius;
     box-shadow: $box-shadow;
   }
 }
@@ -54,7 +55,7 @@
 .main-schedule-item-content,
 .main-schedule-item-date {
   float: left;
-  background-color: #fafafa;
+  background-color: #fff;
   padding: rem-calc(15px) rem-calc(10px) rem-calc(10px);
 }
 
@@ -98,7 +99,7 @@
 .main-schedule-item-cancel {
   font-size: rem-calc(20px);
   position: absolute;
-  top: 0;
+  top: 5px;
   right: 0;
   padding: 0 rem-calc(10px);
   color: #fff;
