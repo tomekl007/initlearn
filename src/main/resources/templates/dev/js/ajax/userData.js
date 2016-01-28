@@ -1,7 +1,7 @@
 import localStorage from '../common/localStorage';
 
 var UserData = (function () {
-    var data = localStorage.isAvailable ? JSON.parse(window.localStorage.getItem('user-data')) : {};
+    var data = localStorage.isAvailable ? JSON.parse(window.localStorage.getItem('user-data')) : false;
 
 
     var set = function(newdata) {
