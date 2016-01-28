@@ -93,7 +93,7 @@
 .main-modal-message-notification-content {
   text-align: center; }
 
-.main-modal-reservation .main-modal-message-notification-icon {
+.main-modal-reservation .main-modal-message-notification-icon.warning {
   display: block; }
 
 .main-modal-reservation-items {

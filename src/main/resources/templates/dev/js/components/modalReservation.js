@@ -6,12 +6,16 @@ import config from '../ajax/config';
 import userData from '../ajax/userData';
 import api from '../ajax/api';
 
+import ModalMessageNotificationComponent from './modalMessageNotification';
+
 /*TODO improve Teachers class to ES6*/
 var ModalReservation = React.createClass({
 
     getInitialState() {
         return {
-            modalPaymentOpen: false
+            modalPaymentOpen: false,
+            errorMessage: false,
+            errorMessageText: ''
         }
     },
     addReservation() {
@@ -27,9 +31,15 @@ var ModalReservation = React.createClass({
         api.addReservation(reservation)
             .then(function (data) {
                 $thisComponent.props.calendar.add('reservations').toStore(data);
-                //$thisComponent.props.parent.setState({modalOpen: false});
                 $thisComponent.setState({modalPaymentOpen: true});
-            });
+            })
+            ['catch'](function (jqXHR) {
+                console.log(jqXHR.status);
+            if (jqXHR.status === 409) {
+                var errorMessageText = 'There appears to be a problem with dates, please choose other date.';
+                $thisComponent.setState({errorMessage: true, errorMessageText: errorMessageText});
+            }
+        });
     },
     removeReservation() {
         var $thisComponent = this;
@@ -57,7 +67,34 @@ var ModalReservation = React.createClass({
 
         var $template;
 
-        if (!this.state.modalPaymentOpen) {
+        /*TODO code refactoring*/
+
+        if (this.state.errorMessage) {
+            $template = <ModalMessageNotificationComponent
+                type={'cancel'}
+                message={this.state.errorMessageText}
+            />
+        } else if (this.state.modalPaymentOpen) {
+            $template = <div>
+                <div className='main-modal-header row txt-center'>
+                    <h2>Payment</h2>
+                </div>
+                <div className='main-modal-payment-items row txt-center'>
+                    <div className='col s12 m6'>
+                        <div className='main-modal-payment-item'>
+                            <a href={config.paymentPath + userData.get().email} className='main-payment-btn' data-paypal-button='true'>
+                                <img src='//www.paypalobjects.com/en_US/i/btn/btn_paynow_LG.gif' alt='Pay Now' />
+                            </a>
+                        </div>
+                    </div>
+                    <div className='col s12 m6'>
+                        <div className='main-modal-payment-item'>
+                            <button className='main-btn btn-gold btn-radius' {...tapOrClick(this.closeModal)}>Pay Later</button>
+                        </div>
+                    </div>
+                </div>
+            </div>;
+        } else {
             if (this.props.option === 'add') {
                 $template = <div>
                     <div className='main-modal-header row txt-center'>
@@ -107,26 +144,6 @@ var ModalReservation = React.createClass({
                     <button className='main-btn btn-primary fw-700' {...tapOrClick(this.removeReservation)}>yes</button>
                 </div>
             }
-        } else {
-            $template = <div>
-                <div className='main-modal-header row txt-center'>
-                    <h2>Payment</h2>
-                </div>
-                <div className='main-modal-payment-items row txt-center'>
-                    <div className='col s12 m6'>
-                        <div className='main-modal-payment-item'>
-                            <a href={config.paymentPath + userData.get().email} className='main-payment-btn' data-paypal-button='true'>
-                                <img src='//www.paypalobjects.com/en_US/i/btn/btn_paynow_LG.gif' alt='Pay Now' />
-                            </a>
-                        </div>
-                    </div>
-                    <div className='col s12 m6'>
-                        <div className='main-modal-payment-item'>
-                            <button className='main-btn btn-gold btn-radius' {...tapOrClick(this.closeModal)}>Pay Later</button>
-                        </div>
-                    </div>
-                </div>
-            </div>;
         }
 
         return (
