@@ -40,7 +40,7 @@ var Reservations = React.createClass({
         return (
             <div>
                 {this.props.parent.state.reservations.map(function (reservation, key) {
-                    return <div className='main-schedule-item' key={key} >
+                    return <div className='main-schedule-item row' key={key} >
                         <DateComponent date={reservation.date} />
                         <div className='main-schedule-item-content'>
                             <div>Teacher: {reservation.data.reserved_by}</div>

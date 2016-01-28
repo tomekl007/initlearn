@@ -11,6 +11,10 @@
     &:hover {
       background-color: $color-grey;
     }
+
+    &:after {
+      background-color: $color-grey;
+    }
   }
 }
 
@@ -35,10 +39,10 @@
     content: '';
     position: absolute;
     bottom: 0;
-    left: 0;
-    width: 100%;
+    left: 10%;
+    width: 80%;
     height: 1px;
-    background-color: $messenger-color-grey-dark;
+    background-color: #fff;
   }
 }
 

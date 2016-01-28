@@ -5,8 +5,9 @@
   position: absolute;
   width: 200px;
   background-color: #fff;
-  margin-top: 13px;
-  border: 1px solid $color-dark-grey;
+  margin-top: 7px;
+  box-shadow: $box-shadow;
+  border-radius: $border-radius;
 
   &.active {
     display: block;
@@ -14,12 +15,12 @@
 
   &:after {
     position: absolute;
-    top: -13px;
+    top: -7px;
     left: 15%;
     content: '';
     border-color: #fff rgba(0, 0, 0, 0);
     border-style: solid;
-    border-width: 0 13px 13px;
+    border-width: 0 7px 7px;
     display: block;
     z-index: 1;
   }

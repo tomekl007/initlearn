@@ -13,7 +13,7 @@
   transition: color .3s ease;
 
   &:hover {
-    color: $color-yellow;
+    color: rgba(0, 0, 0, .3);
   }
 }
 
@@ -32,13 +32,12 @@
 
 /*TODO user rating and payment btn should be rendered in react, delete display none prop*/
 
-.main-user-profile-rating-wrapper,
-.main-user-profile-payment-btn {
+.main-user-profile-rating-wrapper {
   display: none;
 }
 
 .main-section-user-profile {
-  margin-top: 150px;
+  padding: 0;
 
   .main-user-profile-nav-profile {
     display: none;
@@ -58,8 +57,7 @@
     display: none;
   }
 
-  .main-user-profile-rating-wrapper,
-  .main-user-profile-payment-btn {
+  .main-user-profile-rating-wrapper {
     display: block;
   }
 

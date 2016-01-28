@@ -3,17 +3,28 @@
   text-decoration: none;
   padding: 0.625rem;
   border-radius: 2px;
-  border: 2px solid transparent;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  border: none;
   text-transform: uppercase;
   transition: color .3s ease, background-color .3s ease;
   margin: auto; }
 
+.main-btn.btn-radius {
+  min-width: 110px;
+  border-radius: 40px;
+  padding: 0.3125rem; }
+
 .btn-primary {
-  border: 2px solid #f79f00;
-  background-color: #f79f00;
+  background-color: #2196f3;
   color: #fff; }
 
 .btn-blue {
-  border: 2px solid #65c3df;
-  background-color: #65c3df;
+  background-color: #00bcd4;
   color: #fff; }
+
+.btn-gold {
+  background-color: #ff9800;
+  color: #fff; }
+
+.main-payment-btn {
+  display: block; }

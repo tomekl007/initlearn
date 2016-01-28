@@ -80,6 +80,7 @@ var NavigationList = React.createClass({
                     //FB.logout(function(response) {});
                     window.localStorage.clear();
                     $thisComponent.setState({loggedIn: false});
+                    userData.set(false);
                 }
             })
             ['catch'](function (jqXHR) {
@@ -118,7 +119,6 @@ var NavigationList = React.createClass({
         this.refs.messageThreadList.getMessageThreadList();
     },
     render() {
-
         var $loginElements;
         var $Loader;
         var $modalElement;
@@ -127,6 +127,11 @@ var NavigationList = React.createClass({
             if (this.state.loggedIn) {
 
                 $loginElements = [
+                    <li className='main-nav-list-item' key={2}>
+                        <a href='#schedule'>schedule
+                            <i className='fa fa-list-alt'></i>
+                        </a>
+                    </li>,
                     <li className='main-nav-list-item main-user-name' key={3}>
                         <a href={config.myProfileHash}>{this.state.data.fullName}</a>
                     </li>,
@@ -182,11 +187,6 @@ var NavigationList = React.createClass({
                 <li className='main-nav-list-item' key={1}>
                     <a href='#teachers'>teachers
                         <i className='fa fa-users'></i>
-                    </a>
-                </li>
-                <li className='main-nav-list-item' key={2}>
-                    <a href='#schedule'>schedule
-                        <i className='fa fa-list-alt'></i>
                     </a>
                 </li>
                 {$Loader}

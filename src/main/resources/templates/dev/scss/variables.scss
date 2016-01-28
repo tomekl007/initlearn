@@ -1,4 +1,5 @@
 @import "prefixer";
+
 // fonts
 $fontSourceSansPro: 'Source Sans Pro', sans-serif;
 $fontRoboto: 'Roboto', sans-serif;
@@ -25,20 +26,21 @@ $element-bottom-margin: ($gutter-width*2)/3 !default;
 
 //colors
 $color-yellow: #ffee9c;
-$color-gold: #f79f00;
+$color-gold: #ff9800;
 $color-light-grey: #f5f5f5;
 $color-grey: #e8e8e8;
 $color-dark-grey: #bbb;
-$color-blue: #65c3df;
-$color-purple: #83639c;
+$color-blue: #00bcd4;
+$color-blue-dark: #2196f3;
+$color-purple: #3f51b5;
 $color-red: #e57e6f;
-$color-red-dark: #e04832;
-$color-green: #1bbc9c;
-
+$color-red-dark: #f44336;
+$color-green: #4caf50;
+$color-pink: #e91e63;
 
 //border
 $border-radius: 2px;
-$box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+$box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
 
 //form
 $input-bg-color: #fff;
@@ -46,7 +48,7 @@ $input-color: $color-blue;
 $label-color: #696969;
 
 //card
-$cardsUserSkillsBackground: #f26377;
+$cardsUserSkillsBackground: $color-pink;
 
 //messenger
 $messenger-color-grey: $color-light-grey;

@@ -4,6 +4,24 @@
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 11; }
 
+.main-modal-header {
+  position: relative;
+  color: #fff; }
+
+.main-modal-header:before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  background-color: #2196f3;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  z-index: -1; }
+
+.main-modal-header * {
+  margin-top: 0; }
+
 .main-modal-window-content {
   position: absolute;
   left: 50%;
@@ -17,7 +35,7 @@
   -ms-transform: translate(-50%, -50%);
   -o-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
-  background-color: #e8e8e8;
+  background-color: #fff;
   padding: 0.625rem;
   overflow: hidden;
   z-index: 1; }
@@ -44,7 +62,7 @@
   display: block; }
 
 .main-modal-message-notification.success .main-modal-message-notification-content {
-  color: #1bbc9c; }
+  color: #4caf50; }
 
 .main-modal-message-notification.cancel .main-modal-message-notification-icon.cancel {
   display: block; }
@@ -56,7 +74,7 @@
   display: block; }
 
 .main-modal-message-notification.warning .main-modal-message-notification-content {
-  color: #f79f00; }
+  color: #ff9800; }
 
 .main-modal-message-notification-icon {
   display: none;
@@ -64,16 +82,38 @@
   text-align: center; }
 
 .main-modal-message-notification-icon.success {
-  color: #1bbc9c; }
+  color: #4caf50; }
 
 .main-modal-message-notification-icon.cancel {
   color: #e57e6f; }
 
 .main-modal-message-notification-icon.warning {
-  color: #f79f00; }
+  color: #ff9800; }
 
 .main-modal-message-notification-content {
   text-align: center; }
 
-.main-modal-reservation .main-modal-message-notification-icon {
+.main-modal-reservation .main-modal-message-notification-icon.warning {
   display: block; }
+
+.main-modal-reservation-items {
+  border-bottom: 1px solid #e8e8e8; }
+
+.main-modal-reservation-items:last-child {
+  border-bottom: none;
+  margin-bottom: 0; }
+
+.main-modal-reservation-item {
+  padding: 0.3125rem; }
+
+.main-modal-reservation-item i {
+  margin-right: 5px;
+  color: #2196f3; }
+
+.main-modal-reservation-subject {
+  width: 100%;
+  outline: 0;
+  border: none; }
+
+.main-modal-payment-item {
+  padding: 1.25rem; }

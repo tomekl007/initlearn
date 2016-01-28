@@ -6,12 +6,11 @@
 
   .main-user-profile-more-info-btn {
     position: absolute;
-    bottom: 0;
+    bottom: 5px;
     z-index: 1;
     left: 0;
     right: 0;
     width: 125px;
-    border: 2px solid;
     padding: rem-calc(5px);
   }
 

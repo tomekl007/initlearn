@@ -1,6 +1,5 @@
 .main-header {
   position: relative;
-  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
   z-index: 10; }
 
 .main-logo {
@@ -9,14 +8,11 @@
 
 .main-nav {
   padding: 0.9375rem 1.25rem;
-  background: #4dbdeb;
-  background: -moz-linear-gradient(-45deg, #4dbdeb 0%, #009ec3 100%);
-  background: -webkit-linear-gradient(-45deg, #4dbdeb 0%, #009ec3 100%);
-  background: linear-gradient(135deg, #4dbdeb 0%, #009ec3 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#4dbdeb', endColorstr='#009ec3', GradientType=1);
+  background-color: #2196f3;
   font-size: 1rem;
   width: 100%;
-  height: 70px; }
+  height: 70px;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12); }
 
 .main-nav.is-open .main-nav-list {
   left: 0; }
@@ -51,7 +47,7 @@
   color: #000; }
 
 .main-nav-list-item > a:hover {
-  color: #f79f00; }
+  color: #ff9800; }
 
 .main-nav-list-item .fa {
   margin: 0 0.625rem; }
@@ -81,8 +77,7 @@
   .main-nav-icon {
     display: none; }
   .main-nav {
-    font-size: 0.875rem;
-    border-bottom: 4px solid #65c3df; }
+    font-size: 0.875rem; }
   .main-nav-list {
     position: relative;
     background-color: transparent;
@@ -101,11 +96,7 @@
     padding: 0.3125rem;
     color: #fff; }
   .main-nav-list-item > a:hover, .main-nav-list-item > a.is-active {
-    border: 2px solid #ffee9c;
-    color: #ffee9c; }
-  .main-nav-list-item > a.is-active:hover {
-    border: 2px solid #f79f00;
-    background-color: #f79f00;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.3);
     color: #fff; }
   .main-nav-messages {
     padding-bottom: 1.25rem; }

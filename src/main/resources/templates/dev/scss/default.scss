@@ -18,8 +18,13 @@ html {
 }
 
 body {
-  background-color: $color-grey;
+  background-color: $color-light-grey;
   font-family: $fontSourceSansPro;
+}
+
+section {
+  position: relative;
+  margin: 20px 0;
 }
 
 /*fonts*/

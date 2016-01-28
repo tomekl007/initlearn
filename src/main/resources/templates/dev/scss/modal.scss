@@ -9,6 +9,27 @@
   z-index: 11;
 }
 
+.main-modal-header {
+  position: relative;
+  color: #fff;
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    background-color: $color-blue-dark;
+    box-shadow: $box-shadow;
+    z-index: -1;
+  }
+
+  * {
+    margin-top: 0;
+  }
+}
+
 .main-modal-window-content {
   position: absolute;
   left: 50%;
@@ -18,7 +39,7 @@
   max-width: 600px;
   border-radius: $border-radius;
   @include transform(translate(-50%, -50%));
-  background-color: $color-grey;
+  background-color: #fff;
   padding: rem-calc(10px);
   overflow: hidden;
   z-index: 1;
@@ -103,7 +124,35 @@
 }
 
 .main-modal-reservation {
-  .main-modal-message-notification-icon {
+  .main-modal-message-notification-icon.warning {
     display: block;
   }
+}
+
+.main-modal-reservation-items {
+  border-bottom: 1px solid $color-grey;
+
+  &:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+  }
+}
+
+.main-modal-reservation-item {
+  padding: rem-calc(5px);
+
+  i {
+    margin-right: 5px;
+    color: $color-blue-dark;
+  }
+}
+
+.main-modal-reservation-subject {
+  width: 100%;
+  outline: 0;
+  border: none;
+}
+
+.main-modal-payment-item {
+  padding: rem-calc(20px);
 }

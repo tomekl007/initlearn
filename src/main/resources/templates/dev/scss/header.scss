@@ -3,7 +3,6 @@
 
 .main-header {
   position: relative;
-  text-shadow: $box-shadow;
   z-index: 10;
 }
 
@@ -14,14 +13,11 @@
 
 .main-nav {
   padding: rem-calc(15) rem-calc(20px);
-  background: #4dbdeb; /* Old browsers */
-  background: -moz-linear-gradient(-45deg, #4dbdeb 0%, #009ec3 100%);
-  background: -webkit-linear-gradient(-45deg, #4dbdeb 0%, #009ec3 100%);
-  background: linear-gradient(135deg, #4dbdeb 0%, #009ec3 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#4dbdeb', endColorstr='#009ec3', GradientType=1);
+  background-color: $color-blue-dark;
   font-size: rem-calc(16px);
   width: 100%;
   height: 70px;
+  box-shadow: $box-shadow;
 
   &.is-open {
 
@@ -104,7 +100,6 @@
 
   .main-nav {
     font-size: rem-calc(14px);
-    border-bottom: 4px solid $color-blue;
   }
 
   .main-nav-list {
@@ -132,17 +127,8 @@
 
       &:hover,
       &.is-active {
-        border: 2px solid $color-yellow;
-        color: $color-yellow;
-      }
-
-      &.is-active {
-
-        &:hover {
-          border: 2px solid $color-gold;
-          background-color: $color-gold;
-          color: #fff;
-        }
+        border-bottom: 2px solid rgba(0, 0, 0, .3);
+        color: #fff;
       }
     }
   }

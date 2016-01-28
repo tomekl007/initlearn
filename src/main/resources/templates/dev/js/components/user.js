@@ -5,6 +5,7 @@ import ModalComponent from '../components/modal';
 import ModalMessageNotificationComponent from '../components/modalMessageNotification';
 
 import config from '../ajax/config';
+import userData from '../ajax/userData';
 import api from '../ajax/api';
 
 var User = React.createClass({
@@ -53,23 +54,46 @@ var User = React.createClass({
     },
     render() {
 
-        var userRateInfo;
+        var $userRateInfo;
         var $modalComponent;
 
-        var userSkills = this.state.data.skills.map(function (skill, key) {
+        var $userSkills = this.state.data.skills.map(function (skill, key) {
             return (
                 <span className='main-user-profile-skill color-white fw-700' key={key}>{skill}</span>
             );
         });
 
-        var userLinks = this.state.data.links.map(function (link, key) {
+        var $userLinks = this.state.data.links.map(function (link, key) {
             return (
                 <span className='main-user-profile-link' key={key}>{link}</span>
             );
         });
 
+        var $userRatingStars = userData.get() ? <div className='main-user-profile-rating-wrapper'>
+            <span className='main-user-profile-rating-star' data-rate='5' {...tapOrClick(this.rate)}>
+                <i className='fa fa-star-o'></i>
+                <i className='fa fa-star full-star color-gold'></i>
+            </span>
+            <span className='main-user-profile-rating-star ' data-rate='4' {...tapOrClick(this.rate)}>
+                <i className='fa fa-star-o'></i>
+                <i className='fa fa-star full-star color-gold'></i>
+            </span>
+            <span className='main-user-profile-rating-star' data-rate='3' {...tapOrClick(this.rate)}>
+                <i className='fa fa-star-o'></i>
+                <i className='fa fa-star full-star color-gold'></i>
+            </span>
+            <span className='main-user-profile-rating-star' data-rate='2' {...tapOrClick(this.rate)}>
+                <i className='fa fa-star-o'></i>
+                <i className='fa fa-star full-star color-gold'></i>
+            </span>
+            <span className='main-user-profile-rating-star' data-rate='1' {...tapOrClick(this.rate)}>
+                <i className='fa fa-star-o'></i>
+                <i className='fa fa-star full-star color-gold'></i>
+            </span>
+        </div> : [];
+
         if (this.state.data.average !== null) {
-            userRateInfo =
+            $userRateInfo =
                 [<p className='main-user-profile-label-average-rate' key={1} >Average rate:</p>,
                     <p className='main-user-profile-average-rate'key={2} >
                         <i className='fa fa-star color-gold'></i>
@@ -108,37 +132,16 @@ var User = React.createClass({
                         <p className='main-user-profile-hourRate'>{this.state.data.hourRate}</p>
                         <p className='main-user-profile-label-skills'>Skills:</p>
                         <div className='main-user-profile-skill-list'>
-                        {userSkills}
+                        {$userSkills}
                         </div>
                         <p className='main-user-profile-label-links'>Links:</p>
                         <div className='main-user-profile-link-list'>
-                        {userLinks}
+                        {$userLinks}
                         </div>
                         <p className='main-user-profile-label-bio'>Bio:</p>
                         <p className='main-user-profile-bio'>{this.state.data.bio}</p>
-                    {userRateInfo}
-                        <div className='main-user-profile-rating-wrapper'>
-                            <span className='main-user-profile-rating-star' data-rate='5' {...tapOrClick(this.rate)}>
-                                <i className='fa fa-star-o'></i>
-                                <i className='fa fa-star full-star color-gold'></i>
-                            </span>
-                            <span className='main-user-profile-rating-star ' data-rate='4' {...tapOrClick(this.rate)}>
-                                <i className='fa fa-star-o'></i>
-                                <i className='fa fa-star full-star color-gold'></i>
-                            </span>
-                            <span className='main-user-profile-rating-star' data-rate='3' {...tapOrClick(this.rate)}>
-                                <i className='fa fa-star-o'></i>
-                                <i className='fa fa-star full-star color-gold'></i>
-                            </span>
-                            <span className='main-user-profile-rating-star' data-rate='2' {...tapOrClick(this.rate)}>
-                                <i className='fa fa-star-o'></i>
-                                <i className='fa fa-star full-star color-gold'></i>
-                            </span>
-                            <span className='main-user-profile-rating-star' data-rate='1' {...tapOrClick(this.rate)}>
-                                <i className='fa fa-star-o'></i>
-                                <i className='fa fa-star full-star color-gold'></i>
-                            </span>
-                        </div>
+                        {$userRateInfo}
+                        {$userRatingStars}
 
                         <div className='main-user-profile-more-info-btn main-btn fw-700 color-purple bg-white'>more</div>
                     </div>
@@ -147,9 +150,6 @@ var User = React.createClass({
                     </a>
                     <a className='main-user-profile-nav-calendar' href={config.usersHash + this.props.email + config.calendarPath + '2016'}>
                         <i className='fa fa-calendar'></i>
-                    </a>
-                    <a href={config.paymentPath + this.props.email} className='main-user-profile-payment-btn' data-paypal-button='true'>
-                        <img src='//www.paypalobjects.com/en_US/i/btn/btn_paynow_LG.gif' alt='Pay Now' />
                     </a>
                 </div>
             </div>

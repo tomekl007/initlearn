@@ -63,8 +63,13 @@
   .main-search-input {
     font-weight: 100;
     color: #fff;
-    background-color: $color-blue;
+    background-color: transparent;
     padding: rem-calc(5px) rem-calc(40px) rem-calc(5px);
+
+    &:hover,
+    &:focus {
+      background-color: rgba(0, 0, 0, .3);
+    }
   }
 
   .main-search-list {
@@ -75,11 +80,11 @@
   }
 
   .main-search-list-item {
-    background-color: $color-light-grey;
+    background-color: #fff;
 
     &:hover,
     &.main-search-list-item-hover {
-      background-color: $color-blue;
+      background-color: $color-blue-dark;
 
       .main-search-list-item-anchor {
         color: #fff;
@@ -92,7 +97,7 @@
   }
 
   .main-search-list-item-anchor {
-    color: $color-blue;
+    color: $color-blue-dark;
   }
 
   .main-search-icon {

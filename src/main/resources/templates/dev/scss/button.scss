@@ -6,20 +6,34 @@
   text-decoration: none;
   padding: rem-calc(10px);
   border-radius: $border-radius;
-  border: 2px solid transparent;
+  box-shadow: $box-shadow;
+  border: none;
   text-transform: uppercase;
   transition: color .3s ease, background-color .3s ease;
   margin: auto;
+
+  &.btn-radius {
+    min-width: 110px;
+    border-radius: 40px;
+    padding: rem-calc(5px);
+  }
 }
 
 .btn-primary {
-  border: 2px solid $color-gold;
-  background-color: $color-gold;
+  background-color: $color-blue-dark;
   color: #fff;
 }
 
 .btn-blue {
-  border: 2px solid $color-blue;
   background-color: $color-blue;
   color: #fff;
+}
+
+.btn-gold {
+  background-color: $color-gold;
+  color: #fff;
+}
+
+.main-payment-btn {
+  display: block;
 }
