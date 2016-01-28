@@ -74,6 +74,9 @@
 .fa-paper-plane:before {
   content: ""; }
 
+.fa-tag:before {
+  content: ""; }
+
 *, *:before, *:after {
   box-sizing: inherit; }
 
@@ -131,10 +134,10 @@ a {
   color: #3f51b5; }
 
 .color-gold {
-  color: #f79f00; }
+  color: #ff9800; }
 
 .bg-gold {
-  background-color: #f79f00; }
+  background-color: #ff9800; }
 
 .bg-white {
   background-color: #fff; }

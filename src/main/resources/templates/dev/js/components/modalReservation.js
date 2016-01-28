@@ -2,11 +2,18 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import tapOrClick from 'react-tap-or-click';
 
+import config from '../ajax/config';
+import userData from '../ajax/userData';
 import api from '../ajax/api';
 
 /*TODO improve Teachers class to ES6*/
 var ModalReservation = React.createClass({
 
+    getInitialState() {
+        return {
+            modalPaymentOpen: false
+        }
+    },
     addReservation() {
         var $thisComponent = this;
         var $input = ReactDOM.findDOMNode(this);
@@ -20,7 +27,8 @@ var ModalReservation = React.createClass({
         api.addReservation(reservation)
             .then(function (data) {
                 $thisComponent.props.calendar.add('reservations').toStore(data);
-                $thisComponent.props.parent.setState({modalOpen: false});
+                //$thisComponent.props.parent.setState({modalOpen: false});
+                $thisComponent.setState({modalPaymentOpen: true});
             });
     },
     removeReservation() {
@@ -29,43 +37,96 @@ var ModalReservation = React.createClass({
         if (this.props.option === 'appointment') {
             var appointment = this.props.appointment;
             api.deleteAppointment(appointment.email, appointment.date)
-                .then(function(appointments) {
+                .then(function (appointments) {
                     $thisComponent.props.schedule.add('appointments').toStore(appointments);
                     $thisComponent.props.parent.setState({modalOpen: false});
                 });
         } else {
             var reservation = this.props.reservation;
             api.deleteReservation(reservation.email, reservation.date)
-                .then(function(reservations) {
+                .then(function (reservations) {
                     $thisComponent.props.schedule.add('reservations').toStore(reservations);
                     $thisComponent.props.parent.setState({modalOpen: false});
                 });
         }
     },
+    closeModal() {
+        this.props.parent.setState({modalOpen: false});
+    },
     render() {
 
         var $template;
 
-        if (this.props.option === 'add') {
-            $template = <div>
-                <h2 className='main-modal-reservation-header'>Reservation</h2>
-                <div>
-                    {this.props.reservationDate.date},
-                    {this.props.reservationDate.hour}
-                </div>
-                <span>Subject: </span>
-                <input className='main-modal-reservation-subject'/>
-
-                <button className='main-btn btn-primary fw-700' {...tapOrClick(this.addReservation)}>send</button>
-            </div>
-        } else {
+        if (!this.state.modalPaymentOpen) {
+            if (this.props.option === 'add') {
                 $template = <div>
-                <div className='main-modal-message-notification-icon warning'>
-                    <i className='fa fa-exclamation-circle'></i>
+                    <div className='main-modal-header row txt-center'>
+                        <h2>Reservation</h2>
+                    </div>
+                    <div className='main-modal-reservation-items row'>
+                        <div className='col s12 m6'>
+                            <div className='main-modal-reservation-item'>
+                                <i className='fa fa-calendar'></i>
+                                Date
+                            </div>
+                        </div>
+                        <div className='col s12 m6'>
+                            <div className='main-modal-reservation-item'>
+                            {this.props.reservationDate.date},
+                            {this.props.reservationDate.hour}
+                            </div>
+                        </div>
+                    </div>
+                    <div className='main-modal-reservation-items row'>
+                        <div className='col s12 m6'>
+                            <div className='main-modal-reservation-item'>
+                                <i className='fa fa-tag'></i>
+                                Subject
+                            </div>
+                        </div>
+                        <div className='col s12 m6'>
+                            <div className='main-modal-reservation-item'>
+                                <input className='main-modal-reservation-subject' placeholder='eg. Java inheritance'/>
+                            </ div>
+                        </div>
+                    </div>
+                    <div className='main-modal-reservation-items row txt-center'>
+                        <div className='col s12 m12'>
+                            <div className='main-modal-reservation-item'>
+                                <button className='main-btn btn-primary' {...tapOrClick(this.addReservation)}>add reservation</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div>Do you really want to cancel that lesson</div>
-                <button className='main-btn btn-primary fw-700' {...tapOrClick(this.removeReservation)}>yes</button>
+            } else {
+                $template = <div>
+                    <div className='main-modal-message-notification-icon warning'>
+                        <i className='fa fa-exclamation-circle'></i>
+                    </div>
+                    <div>Do you really want to cancel that lesson</div>
+                    <button className='main-btn btn-primary fw-700' {...tapOrClick(this.removeReservation)}>yes</button>
                 </div>
+            }
+        } else {
+            $template = <div>
+                <div className='main-modal-header row txt-center'>
+                    <h2>Payment</h2>
+                </div>
+                <div className='main-modal-payment-items row txt-center'>
+                    <div className='col s12 m6'>
+                        <div className='main-modal-payment-item'>
+                            <a href={config.paymentPath + userData.get().email} className='main-payment-btn' data-paypal-button='true'>
+                                <img src='//www.paypalobjects.com/en_US/i/btn/btn_paynow_LG.gif' alt='Pay Now' />
+                            </a>
+                        </div>
+                    </div>
+                    <div className='col s12 m6'>
+                        <div className='main-modal-payment-item'>
+                            <button className='main-btn btn-gold btn-radius' {...tapOrClick(this.closeModal)}>Pay Later</button>
+                        </div>
+                    </div>
+                </div>
+            </div>;
         }
 
         return (

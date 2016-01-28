@@ -19,10 +19,10 @@
 .main-user-profile-skill {
   padding: 0.3125rem;
   margin: 0 0.3125rem;
-  background-color: #f26377;
+  background-color: #e91e63;
   border-radius: 2px; }
 
-.main-user-profile-rating-wrapper, .main-user-profile-payment-btn {
+.main-user-profile-rating-wrapper {
   display: none; }
 
 .main-section-user-profile {
@@ -42,7 +42,7 @@
 .main-section-user-profile .main-user-profile-more-info-btn {
   display: none; }
 
-.main-section-user-profile .main-user-profile-rating-wrapper, .main-section-user-profile .main-user-profile-payment-btn {
+.main-section-user-profile .main-user-profile-rating-wrapper {
   display: block; }
 
 .main-section-user-profile .main-user-profile-rating-wrapper {

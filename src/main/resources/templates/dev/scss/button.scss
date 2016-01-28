@@ -11,15 +11,29 @@
   text-transform: uppercase;
   transition: color .3s ease, background-color .3s ease;
   margin: auto;
+
+  &.btn-radius {
+    min-width: 110px;
+    border-radius: 40px;
+    padding: rem-calc(5px);
+  }
 }
 
 .btn-primary {
-  background-color: $color-blue;
+  background-color: $color-blue-dark;
   color: #fff;
 }
 
 .btn-blue {
-  border: 2px solid $color-blue;
   background-color: $color-blue;
   color: #fff;
+}
+
+.btn-gold {
+  background-color: $color-gold;
+  color: #fff;
+}
+
+.main-payment-btn {
+  display: block;
 }

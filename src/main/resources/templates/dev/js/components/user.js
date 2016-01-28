@@ -148,9 +148,6 @@ var User = React.createClass({
                     <a className='main-user-profile-nav-calendar' href={config.usersHash + this.props.email + config.calendarPath + '2016'}>
                         <i className='fa fa-calendar'></i>
                     </a>
-                    <a href={config.paymentPath + this.props.email} className='main-user-profile-payment-btn' data-paypal-button='true'>
-                        <img src='//www.paypalobjects.com/en_US/i/btn/btn_paynow_LG.gif' alt='Pay Now' />
-                    </a>
                 </div>
             </div>
         );

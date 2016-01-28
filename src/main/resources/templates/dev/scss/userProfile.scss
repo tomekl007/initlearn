@@ -32,8 +32,7 @@
 
 /*TODO user rating and payment btn should be rendered in react, delete display none prop*/
 
-.main-user-profile-rating-wrapper,
-.main-user-profile-payment-btn {
+.main-user-profile-rating-wrapper {
   display: none;
 }
 
@@ -58,8 +57,7 @@
     display: none;
   }
 
-  .main-user-profile-rating-wrapper,
-  .main-user-profile-payment-btn {
+  .main-user-profile-rating-wrapper {
     display: block;
   }
 
