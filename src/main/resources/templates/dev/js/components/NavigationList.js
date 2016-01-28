@@ -80,6 +80,7 @@ var NavigationList = React.createClass({
                     //FB.logout(function(response) {});
                     window.localStorage.clear();
                     $thisComponent.setState({loggedIn: false});
+                    userData.set(false);
                 }
             })
             ['catch'](function (jqXHR) {
