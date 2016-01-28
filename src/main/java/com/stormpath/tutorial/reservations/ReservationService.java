@@ -2,9 +2,12 @@ package com.stormpath.tutorial.reservations;
 
 import com.stormpath.sdk.account.Account;
 import com.stormpath.tutorial.controller.jsonrequest.ReservationRequest;
+import com.stormpath.tutorial.db.payment.PaymentsRepository;
+import com.stormpath.tutorial.payment.PaymentService;
 import com.stormpath.tutorial.reservations.db.Reservation;
 import com.stormpath.tutorial.reservations.db.ReservationRepository;
 import com.stormpath.tutorial.user.UserService;
+import com.stormpath.tutorial.utils.AccountUtils;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +25,8 @@ public class ReservationService {
     UserService userService;
     @Autowired
     ReservationRepository reservationRepository;
+    @Autowired
+    PaymentService paymentService;
 
     private static final Logger logger = LoggerFactory.getLogger(ReservationService.class);
 
@@ -48,7 +53,11 @@ public class ReservationService {
         Reservation reservation =
                 new Reservation(reservationTime.toDate(), reservedBy.getEmail(),
                         teacher.getEmail(), endOfReservationTime.toDate(), subject);
-        reservationRepository.save(reservation);
+        Reservation savedReservation = reservationRepository.save(reservation);
+
+        Double hourRate = AccountUtils.mapAccountToUser(teacher).hourRate.doubleValue();
+        paymentService.createPendingPayment(reservedBy.getEmail(), teacher.getEmail(), hourRate,
+                savedReservation.getId());
     }
 
     public List<Reservation> getAllAppointments(String email) {

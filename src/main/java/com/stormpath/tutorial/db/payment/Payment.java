@@ -24,12 +24,15 @@ public class Payment {
     public Payment() {
     }
 
-    public Payment(String from_email, String to_email, Double amount, Date payment_date) {
+    public Payment(String from_email, String to_email, Double amount, Date payment_date, String payment_status,
+                   Long reservation_id) {
 
         this.from_email = from_email;
         this.to_email = to_email;
         this.amount = amount;
         this.payment_date = payment_date;
+        this.payment_status = payment_status;
+        this.reservation_id = reservation_id;
     }
 
     public String getFrom_email() {
@@ -68,4 +71,24 @@ public class Payment {
     private String to_email;
     private Double amount;
     private Date payment_date;
+
+    private String payment_status;
+
+    public Long getReservation_id() {
+        return reservation_id;
+    }
+
+    public void setReservation_id(Long reservation_id) {
+        this.reservation_id = reservation_id;
+    }
+
+    public String getPayment_status() {
+        return payment_status;
+    }
+
+    public void setPayment_status(String payment_status) {
+        this.payment_status = payment_status;
+    }
+
+    private Long reservation_id;
 }
