@@ -24,12 +24,12 @@ var Day = React.createClass({
         var hour = $target.getAttribute('data-hour');
         var hourFrom = $target.getAttribute('data-hour-from');
         var hourTo = $target.getAttribute('data-hour-to');
-        var date = this.state.year + '/' + this.state.month + '/' +
-            this.state.day;
+        var date = this.state.year + '/' + this.state.month + '/' + this.state.day;
+        var timestamp = new Date(date + ',' + hourFrom).getTime();
 
         this.setState({
             modalOpen: true, reservationDate: {
-                date: date, hour: hour, hourFrom: hourFrom, hourTo: hourTo
+                date: date, hour: hour, hourFrom: hourFrom, hourTo: hourTo, timestamp: timestamp
             }
         });
     },
@@ -40,7 +40,7 @@ var Day = React.createClass({
         var nextHour = 1;
         var timeOfDay = 'am';
         var $hours = [];
-        var $hourSlots = [];
+        var $hoursSlots = [];
         var $reservations = [];
         var $modalComponent;
 
@@ -54,8 +54,8 @@ var Day = React.createClass({
                 $thisComponent.state.day === day) {
 
                 var time = reservation.date.time;
-                console.log(time.minutes);
-                $reservations[time.hour] = <div className={'main-calendar-day-slot-hour-reservation ' + (time.minutes < 30 ? '' : 'half-hour')} key={key}>
+                $reservations[time.hour] = <div className={'main-calendar-day-slot-hour-reservation ' + (time.minutes < 30 ? '' : 'half-hour')}
+                    data-timestamp={reservation.data.from_hour} key={key}>
                     <span className='fw-700'>Reserved by: {reservation.data.reserved_by}</span>
                 </div>;
             }
@@ -69,7 +69,7 @@ var Day = React.createClass({
             }
 
             $hours.push(<div className='main-calendar-day-hour' key={i}>{hour + timeOfDay}</div>);
-            $hourSlots.push(<div className='main-calendar-day-slot' key={i + 1}>
+            $hoursSlots.push(<div className='main-calendar-day-slot' key={i + 1}>
                 <div className='main-calendar-day-slot-hour' data-hour={hour + ':00 - ' + nextHour + ':00'}
                     data-hour-from={i + ':00'} data-hour-to={(i + 1) + ':00'}  {...tapOrClick(this.selectDate)}>
                     <span className='main-calendar-day-slot-hour-booking-class'>
@@ -118,7 +118,7 @@ var Day = React.createClass({
                     {$hours}
                 </div>
                 <div className='main-calendar-day-slots'>
-                    {$hourSlots}
+                    {$hoursSlots}
                 </div>
                 {$modalComponent}
             </div>
