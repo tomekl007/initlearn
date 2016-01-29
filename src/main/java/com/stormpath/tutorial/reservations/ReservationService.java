@@ -1,6 +1,7 @@
 package com.stormpath.tutorial.reservations;
 
 import com.stormpath.sdk.account.Account;
+import com.stormpath.tutorial.controller.jsonrequest.ReservationAndPayment;
 import com.stormpath.tutorial.controller.jsonrequest.ReservationRequest;
 import com.stormpath.tutorial.db.payment.Payment;
 import com.stormpath.tutorial.db.payment.PaymentsRepository;
@@ -105,12 +106,12 @@ public class ReservationService {
         return 0;
     }
 
-    public Map<Reservation, Payment> getAllReservationsAndPayments(String email) {
-        Map<Reservation, Payment> reservationAndPayments = new LinkedHashMap<>();
+    public List<ReservationAndPayment> getAllReservationsAndPayments(String email) {
+        List<ReservationAndPayment> reservationAndPayments = new LinkedList<>();
         List<Reservation> allReservations = getAllReservations(email);
         for (Reservation reservation : allReservations) {
             Payment paymentForReservation = paymentsRepository.getNotCompanyPaymentForReservation(reservation.getId());
-            reservationAndPayments.put(reservation, paymentForReservation);
+            reservationAndPayments.add(new ReservationAndPayment(reservation, paymentForReservation));
         }
         return reservationAndPayments;
 

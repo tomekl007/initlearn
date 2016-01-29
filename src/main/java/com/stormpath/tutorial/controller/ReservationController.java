@@ -2,6 +2,7 @@ package com.stormpath.tutorial.controller;
 
 import com.stormpath.sdk.account.Account;
 import com.stormpath.tutorial.controller.jsonrequest.DeleteReservationRequest;
+import com.stormpath.tutorial.controller.jsonrequest.ReservationAndPayment;
 import com.stormpath.tutorial.controller.jsonrequest.ReservationRequest;
 import com.stormpath.tutorial.db.payment.Payment;
 import com.stormpath.tutorial.reservations.ReservationService;
@@ -41,8 +42,8 @@ public class ReservationController {
 
 
     @RequestMapping(value = "/reservations/payments/{email:.+}", method = RequestMethod.GET)
-    public ResponseEntity<Map<Reservation, Payment>> getReservationsAndPayments(@PathVariable("email") String email) {
-        Map<Reservation, Payment> allReservations = reservationService.getAllReservationsAndPayments(email);
+    public ResponseEntity<List<ReservationAndPayment>> getReservationsAndPayments(@PathVariable("email") String email) {
+        List<ReservationAndPayment> allReservations = reservationService.getAllReservationsAndPayments(email);
         return new ResponseEntity<>(allReservations, HttpStatus.OK);
     }
 
@@ -67,7 +68,6 @@ public class ReservationController {
                 reservationService.getAllAppointments(a.getEmail())
         );
     }
-
 
     @RequestMapping(value = "/reservations", method = RequestMethod.POST, consumes = "application/json")
     public ResponseEntity<List<Reservation>> reserveLesson(@RequestBody ReservationRequest reservationRequest,
