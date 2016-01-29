@@ -27,14 +27,13 @@ var Config = (function () {
 
     var searchUrl = 'search?';
     var searchTeachersBySkillPath = usersHash + searchUrl + 'skill=';
-    var paymentPath = '/adaptivePayment?toEmail=';
 
     var getMessagesUrl = function (email) {
         return messagesUrl + '/' + email;
     };
 
     var addUserRatingUrl = function(email) {
-      return usersUrl + '/' + email + '/rate';
+        return usersUrl + '/' + email + '/rate';
     };
 
     var updateUserDataFieldUrl = function(fieldPath) {
@@ -51,6 +50,10 @@ var Config = (function () {
 
     var deleteAppointmentUrl = function(email) {
         return appUrl + '/appointments/delete/' + email;
+    };
+
+    var paymentPath = function(email, timestamp) {
+        return '/adaptivePayment?toEmail='+ email+ '&fromHour='+ timestamp;
     };
 
     return {

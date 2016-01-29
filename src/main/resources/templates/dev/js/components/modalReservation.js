@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import tapOrClick from 'react-tap-or-click';
 
 import config from '../ajax/config';
-import userData from '../ajax/userData';
 import api from '../ajax/api';
 
 import ModalMessageNotificationComponent from './modalMessageNotification';
@@ -22,8 +21,7 @@ var ModalReservation = React.createClass({
         var $thisComponent = this;
         var $input = ReactDOM.findDOMNode(this);
         var reservation = {
-            fromHour: new Date(this.props.reservationDate.date + ',' +
-            this.props.reservationDate.hourFrom).getTime(),
+            fromHour: this.props.reservationDate.timestamp,
             teacher: this.props.teacher,
             subject: $input.querySelector('.main-modal-reservation-subject').value
         };
@@ -34,7 +32,7 @@ var ModalReservation = React.createClass({
                 $thisComponent.setState({modalPaymentOpen: true});
             })
             ['catch'](function (jqXHR) {
-                console.log(jqXHR.status);
+
             if (jqXHR.status === 409) {
                 var errorMessageText = 'There appears to be a problem with dates, please choose other date.';
                 $thisComponent.setState({errorMessage: true, errorMessageText: errorMessageText});
@@ -82,7 +80,8 @@ var ModalReservation = React.createClass({
                 <div className='main-modal-payment-items row txt-center'>
                     <div className='col s12 m6'>
                         <div className='main-modal-payment-item'>
-                            <a href={config.paymentPath + userData.get().email} className='main-payment-btn' data-paypal-button='true'>
+                            <a href={config.paymentPath(this.props.teacher, this.props.reservationDate.timestamp)}
+                                className='main-payment-btn' data-paypal-button='true'>
                                 <img src='//www.paypalobjects.com/en_US/i/btn/btn_paynow_LG.gif' alt='Pay Now' />
                             </a>
                         </div>
