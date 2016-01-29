@@ -2,6 +2,7 @@ package com.stormpath.tutorial.reservations;
 
 import com.stormpath.sdk.account.Account;
 import com.stormpath.tutorial.controller.jsonrequest.ReservationRequest;
+import com.stormpath.tutorial.db.payment.Payment;
 import com.stormpath.tutorial.db.payment.PaymentsRepository;
 import com.stormpath.tutorial.payment.PaymentService;
 import com.stormpath.tutorial.reservations.db.Reservation;
@@ -27,6 +28,8 @@ public class ReservationService {
     ReservationRepository reservationRepository;
     @Autowired
     PaymentService paymentService;
+    @Autowired
+    PaymentsRepository paymentsRepository;
 
     private static final Logger logger = LoggerFactory.getLogger(ReservationService.class);
 
@@ -94,7 +97,10 @@ public class ReservationService {
             return -1;
         }
         for (Reservation reservation : reservations) {
-            reservationRepository.delete(reservation.getId());
+            long reservationId = reservation.getId();
+            reservationRepository.delete(reservationId);
+            Payment paymentForReservation = paymentsRepository.getPaymentForReservation(reservationId);
+            paymentsRepository.delete(paymentForReservation);
         }
         return 0;
     }
