@@ -4,7 +4,6 @@ import com.stormpath.sdk.account.Account;
 import com.stormpath.tutorial.controller.jsonrequest.DeleteReservationRequest;
 import com.stormpath.tutorial.controller.jsonrequest.ReservationAndPayment;
 import com.stormpath.tutorial.controller.jsonrequest.ReservationRequest;
-import com.stormpath.tutorial.db.payment.Payment;
 import com.stormpath.tutorial.reservations.ReservationService;
 import com.stormpath.tutorial.reservations.db.Reservation;
 import com.stormpath.tutorial.user.UserService;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.ServletRequest;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -41,10 +39,10 @@ public class ReservationController {
     }
 
 
-    @RequestMapping(value = "/reservations/payments/{email:.+}", method = RequestMethod.GET)
-    public ResponseEntity<List<ReservationAndPayment>> getReservationsAndPayments(@PathVariable("email") String email) {
-        List<ReservationAndPayment> allReservations = reservationService.getAllReservationsAndPayments(email);
-        return new ResponseEntity<>(allReservations, HttpStatus.OK);
+    @RequestMapping(value = "/reservations/payments", method = RequestMethod.GET)
+    public ResponseEntity<List<ReservationAndPayment>> getReservationsAndPayments(ServletRequest servletRequest) {
+        return AccountUtils.actionForAuthenticatedUserOrUnauthorized(servletRequest,
+                a -> reservationService.getAllReservationsAndPayments(a.getEmail()));
     }
 
     @RequestMapping(value = "/appointments/delete/{email:.+}", method = RequestMethod.POST)
