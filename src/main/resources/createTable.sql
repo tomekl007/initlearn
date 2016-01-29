@@ -27,3 +27,4 @@ alter table Reservation ADD COLUMN subject TEXT;
 alter table Payment ADD COLUMN PAYMENT_STATUS TEXT;
 alter table Payment ADD COLUMN reservation_id INTEGER;
 ALTER TABLE Payment ADD CONSTRAINT payment_reservations_fk FOREIGN KEY (reservation_id) REFERENCES Reservation (id);
+alter table Payment ADD COLUMN pay_key TEXT;

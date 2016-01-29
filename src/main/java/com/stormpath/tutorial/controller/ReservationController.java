@@ -86,6 +86,7 @@ public class ReservationController {
     }
 
 
+    //todo make sure that delete only reservations that are after todays day, do not delete in past
     @RequestMapping(value = "/reservations/delete/{email:.+}", method = RequestMethod.POST)
     public ResponseEntity<List<Reservation>> deleteReservation(
             @PathVariable("email") String email,

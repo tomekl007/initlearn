@@ -73,20 +73,26 @@ public class PaymentService {
         AdaptivePaymentsService adaptivePaymentsService = new AdaptivePaymentsService(sdkConfig);
         try {
             String payKey = adaptivePaymentsService.pay(payRequest).getPayKey();
-            markPaymentAsCompleted(reservationId.get());
-            createCompanyCompletedPayment(senderEmail, reservationId.get());
+            addPayKeyToPayment(reservationId.get(), payKey);
+            createCompanyPendingPayment(senderEmail, reservationId.get(), payKey);
             return payKey;
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
     }
 
-    private void createCompanyCompletedPayment(String senderEmail, Long reservationId) {
-
+    private void createCompanyPendingPayment(String senderEmail, Long reservationId, String payKey) {
         paymentsRepository.save(new Payment(senderEmail,
                 COMPANY_RECEIVER_EMAIL, COMPANY_PROVISION, DateTime.now().toDate(),
-                PaymentStatus.COMPLETED.toString(), reservationId));
+                PaymentStatus.PENDING.toString(), reservationId, payKey));
     }
+
+    private void addPayKeyToPayment(Long reservationId, String payKey) {
+        Payment payment = paymentsRepository.getPaymentForReservation(reservationId);
+        payment.setPay_key(payKey);
+        paymentsRepository.save(payment);
+    }
+
 
     public Optional<Long> getReservationId(String senderEmail, String toEmail, Date fromHour) {
         List<Reservation> reservations = reservationRepository.getReservations(senderEmail, toEmail, fromHour);
@@ -94,13 +100,6 @@ public class PaymentService {
             return Optional.of(reservations.get(0).getId());
         }
         return Optional.empty();
-    }
-
-    private void markPaymentAsCompleted(Long reservationId) {
-        Payment payment = paymentsRepository.getPaymentForReservation(reservationId);
-        payment.setPayment_status(PaymentStatus.COMPLETED.toString());
-        paymentsRepository.save(payment);
-
     }
 
     private void createTeacherReceiver(String toEmail, List<Receiver> receivers, Double receiverHourRate) {
@@ -150,7 +149,13 @@ public class PaymentService {
     }
 
     public void logSuccessPayment(Optional<String> payKey) {
-        //todo save to db as success
+        if (payKey.isPresent()) {
+            List<Payment> paymentsForPayKey = paymentsRepository.getPaymentsForPayKey(payKey.get());
+            for (Payment payment : paymentsForPayKey) {
+                payment.setPayment_status(PaymentStatus.COMPLETED.toString());
+                paymentsRepository.save(payment);
+            }
+        }
     }
 
     public List<Payment> getPayments(String email) {

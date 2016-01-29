@@ -35,6 +35,18 @@ public class Payment {
         this.reservation_id = reservation_id;
     }
 
+    public Payment(String from_email, String to_email, Double amount, Date payment_date, String payment_status,
+                   Long reservation_id, String pay_key) {
+
+        this.from_email = from_email;
+        this.to_email = to_email;
+        this.amount = amount;
+        this.payment_date = payment_date;
+        this.payment_status = payment_status;
+        this.reservation_id = reservation_id;
+        this.pay_key = pay_key;
+    }
+
     public String getFrom_email() {
 
         return from_email;
@@ -78,6 +90,14 @@ public class Payment {
         return reservation_id;
     }
 
+    public String getPay_key() {
+        return pay_key;
+    }
+
+    public void setPay_key(String pay_key) {
+        this.pay_key = pay_key;
+    }
+
     public void setReservation_id(Long reservation_id) {
         this.reservation_id = reservation_id;
     }
@@ -91,4 +111,5 @@ public class Payment {
     }
 
     private Long reservation_id;
+    private String pay_key;
 }
