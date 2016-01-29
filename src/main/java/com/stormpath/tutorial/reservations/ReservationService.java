@@ -116,5 +116,15 @@ public class ReservationService {
         return reservationAndPayments;
 
     }
+
+    public List<ReservationAndPayment> getAllAppointmentsAndPayments(String email) {
+        List<ReservationAndPayment> reservationAndPayments = new LinkedList<>();
+        List<Reservation> allReservations = getAllAppointments(email);
+        for (Reservation reservation : allReservations) {
+            Payment paymentForReservation = paymentsRepository.getNotCompanyPaymentForReservation(reservation.getId());
+            reservationAndPayments.add(new ReservationAndPayment(reservation, paymentForReservation));
+        }
+        return reservationAndPayments;
+    }
 }
 

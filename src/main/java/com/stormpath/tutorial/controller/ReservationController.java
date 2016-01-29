@@ -69,6 +69,13 @@ public class ReservationController {
         );
     }
 
+    @RequestMapping(value = "/appointments/payments", method = RequestMethod.GET)
+    public ResponseEntity<List<ReservationAndPayment>> getAppointmentsAndPayments(ServletRequest servletRequest) {
+        return AccountUtils.actionForAuthenticatedUserOrUnauthorized(servletRequest, a ->
+                reservationService.getAllAppointmentsAndPayments(a.getEmail())
+        );
+    }
+
     @RequestMapping(value = "/reservations", method = RequestMethod.POST, consumes = "application/json")
     public ResponseEntity<List<Reservation>> reserveLesson(@RequestBody ReservationRequest reservationRequest,
                                                            ServletRequest servletRequest) {
