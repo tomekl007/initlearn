@@ -3,6 +3,7 @@ package com.stormpath.tutorial.controller;
 import com.stormpath.sdk.account.Account;
 import com.stormpath.tutorial.controller.jsonrequest.DeleteReservationRequest;
 import com.stormpath.tutorial.controller.jsonrequest.ReservationRequest;
+import com.stormpath.tutorial.db.payment.Payment;
 import com.stormpath.tutorial.reservations.ReservationService;
 import com.stormpath.tutorial.reservations.db.Reservation;
 import com.stormpath.tutorial.user.UserService;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.ServletRequest;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -34,6 +36,13 @@ public class ReservationController {
     @RequestMapping(value = "/reservations/{email:.+}", method = RequestMethod.GET)
     public ResponseEntity<List<Reservation>> getReservations(@PathVariable("email") String email) {
         List<Reservation> allReservations = reservationService.getAllReservations(email);
+        return new ResponseEntity<>(allReservations, HttpStatus.OK);
+    }
+
+
+    @RequestMapping(value = "/reservations/payments/{email:.+}", method = RequestMethod.GET)
+    public ResponseEntity<Map<Reservation, Payment>> getReservationsAndPayments(@PathVariable("email") String email) {
+        Map<Reservation, Payment> allReservations = reservationService.getAllReservationsAndPayments(email);
         return new ResponseEntity<>(allReservations, HttpStatus.OK);
     }
 

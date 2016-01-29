@@ -104,5 +104,16 @@ public class ReservationService {
         }
         return 0;
     }
+
+    public Map<Reservation, Payment> getAllReservationsAndPayments(String email) {
+        Map<Reservation, Payment> reservationAndPayments = new LinkedHashMap<>();
+        List<Reservation> allReservations = getAllReservations(email);
+        for (Reservation reservation : allReservations) {
+            Payment paymentForReservation = paymentsRepository.getNotCompanyPaymentForReservation(reservation.getId());
+            reservationAndPayments.put(reservation, paymentForReservation);
+        }
+        return reservationAndPayments;
+
+    }
 }
 
