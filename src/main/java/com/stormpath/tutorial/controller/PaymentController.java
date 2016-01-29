@@ -2,8 +2,6 @@ package com.stormpath.tutorial.controller;
 
 import com.paypal.exception.*;
 import com.paypal.sdk.exceptions.OAuthException;
-import com.paypal.svcs.types.ap.PaymentDetailsResponse;
-import com.stormpath.sdk.impl.http.Response;
 import com.stormpath.tutorial.db.payment.Payment;
 import com.stormpath.tutorial.db.payment.PaypalConfiguration;
 import com.stormpath.tutorial.model.User;
@@ -24,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,12 +35,14 @@ public class PaymentController {
     PaypalConfiguration paypalConfiguration;
 
     @RequestMapping("/adaptivePayment")
-    public String executeAdaptivePayment(ServletRequest servletRequest, @RequestParam("toEmail") String toEmail){
+    public String executeAdaptivePayment(ServletRequest servletRequest,
+                                         @RequestParam("toEmail") String toEmail,
+                                         @RequestParam("fromHour") Long fromHour) {
+
         Optional<User> accountIfUserLoggedIn = AccountUtils.getUserIfUserLoggedIn(servletRequest);
-        if(accountIfUserLoggedIn.isPresent()) {
-            return "redirect:"+ paypalConfiguration.getUrl() + paymentService.pay(accountIfUserLoggedIn.get(), toEmail);
-        }
-        else{
+        if (accountIfUserLoggedIn.isPresent()) {
+            return "redirect:" + paypalConfiguration.getUrl() + paymentService.pay(accountIfUserLoggedIn.get().email, toEmail, new Date(fromHour));
+        } else {
             return "redirect:/login";
         }
     }
@@ -78,13 +79,13 @@ public class PaymentController {
     }
 
     @RequestMapping("/payments/payed")
-    public ResponseEntity<List<Payment>> getPaymentsOfLoggedInUser(ServletRequest servletRequest){
+    public ResponseEntity<List<Payment>> getPaymentsOfLoggedInUser(ServletRequest servletRequest) {
         return AccountUtils.actionForAuthenticatedUserOrUnauthorized(servletRequest,
                 a -> paymentService.getPayments(a.getEmail()));
     }
 
     @RequestMapping("/payments/received")
-    public ResponseEntity<List<Payment>> getReceivedPaymentsOfLoggedInUser(ServletRequest servletRequest){
+    public ResponseEntity<List<Payment>> getReceivedPaymentsOfLoggedInUser(ServletRequest servletRequest) {
         return AccountUtils.actionForAuthenticatedUserOrUnauthorized(servletRequest,
                 a -> paymentService.getReceivedPayments(a.getEmail()));
     }

@@ -6,9 +6,12 @@ import com.paypal.svcs.services.AdaptivePaymentsService;
 import com.paypal.svcs.types.ap.*;
 import com.paypal.svcs.types.common.RequestEnvelope;
 import com.stormpath.tutorial.db.payment.Payment;
+import com.stormpath.tutorial.db.payment.PaymentStatus;
 import com.stormpath.tutorial.db.payment.PaymentsRepository;
 import com.stormpath.tutorial.db.payment.PaypalConfiguration;
 import com.stormpath.tutorial.model.User;
+import com.stormpath.tutorial.reservations.db.Reservation;
+import com.stormpath.tutorial.reservations.db.ReservationRepository;
 import com.stormpath.tutorial.user.UserService;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -23,16 +26,19 @@ import java.util.*;
 public class PaymentService {
     private static final Logger logger = LoggerFactory.getLogger(PaymentService.class);
     public static final double COMPANY_PROVISION = 5.00;//todo move to configuration
+    public static final String COMPANY_RECEIVER_EMAIL = "initlearn@gmail.com";
     @Autowired
     PaymentsRepository paymentsRepository;
     @Autowired
     PaypalConfiguration paypalConfiguration;
     @Autowired
     UserService userService;
+    @Autowired
+    ReservationRepository reservationRepository;
 
 
-    public String pay(User sender, String toEmail) {
-
+    public String pay(String senderEmail, String toEmail, Date fromHour) {
+        Optional<Long> reservationId = getReservationId(senderEmail, toEmail, fromHour);//todo handle when none
         Optional<User> receiver = userService.findUserByEmail(toEmail);
 
         //todo The+amount+for+the+primary+receiver+must+be+greater+than+or+equal+to+the+total+of+other+chained+receiver+amounts
@@ -43,12 +49,10 @@ public class PaymentService {
 
         Double receiverHourRate = receiverHourRateInt.doubleValue();
 
-        paymentsRepository.save(new Payment(sender.email, toEmail, receiverHourRate, DateTime.now().toDate()));
-
         PayRequest payRequest = new PayRequest();
 
         List<Receiver> receivers = new ArrayList<>();
-        Receiver secondaryReceiver = createCompanyReceiver(sender);
+        Receiver secondaryReceiver = createCompanyReceiver(COMPANY_RECEIVER_EMAIL);
         receivers.add(secondaryReceiver);
 
         createTeacherReceiver(toEmail, receivers, receiverHourRate);
@@ -68,10 +72,34 @@ public class PaymentService {
 
         AdaptivePaymentsService adaptivePaymentsService = new AdaptivePaymentsService(sdkConfig);
         try {
-            return adaptivePaymentsService.pay(payRequest).getPayKey();
+            String payKey = adaptivePaymentsService.pay(payRequest).getPayKey();
+            addPayKeyToPayment(reservationId.get(), payKey);
+            createCompanyPendingPayment(senderEmail, reservationId.get(), payKey);
+            return payKey;
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
+    }
+
+    private void createCompanyPendingPayment(String senderEmail, Long reservationId, String payKey) {
+        paymentsRepository.save(new Payment(senderEmail,
+                COMPANY_RECEIVER_EMAIL, COMPANY_PROVISION, DateTime.now().toDate(),
+                PaymentStatus.PENDING.toString(), reservationId, payKey));
+    }
+
+    private void addPayKeyToPayment(Long reservationId, String payKey) {
+        Payment payment = paymentsRepository.getPaymentForReservation(reservationId);
+        payment.setPay_key(payKey);
+        paymentsRepository.save(payment);
+    }
+
+
+    public Optional<Long> getReservationId(String senderEmail, String toEmail, Date fromHour) {
+        List<Reservation> reservations = reservationRepository.getReservations(senderEmail, toEmail, fromHour);
+        if (reservations.size() > 0) {
+            return Optional.of(reservations.get(0).getId());
+        }
+        return Optional.empty();
     }
 
     private void createTeacherReceiver(String toEmail, List<Receiver> receivers, Double receiverHourRate) {
@@ -82,11 +110,7 @@ public class PaymentService {
         receivers.add(primaryReceiver);
     }
 
-    private Receiver createCompanyReceiver(User sender) {
-        String companyReceiverEmail = "initlearn@gmail.com";
-
-        paymentsRepository.save(new Payment(sender.email, companyReceiverEmail, COMPANY_PROVISION, DateTime.now().toDate()));
-
+    private Receiver createCompanyReceiver(String companyReceiverEmail) {
         Receiver secondaryReceiver = new Receiver();
         secondaryReceiver.setAmount(COMPANY_PROVISION);
         secondaryReceiver.setEmail(companyReceiverEmail);
@@ -118,7 +142,6 @@ public class PaymentService {
         if (payKey.isPresent()) {
             PaymentDetailsResponse paymentStatus = getPaymentStatus(payKey.get());
 
-
             String s = paymentStatus.getStatus() + ", sender: "
                     + paymentStatus.getSenderEmail() + ", sender account: " +
                     paymentStatus.getSender().getAccountId();
@@ -126,7 +149,13 @@ public class PaymentService {
     }
 
     public void logSuccessPayment(Optional<String> payKey) {
-        //todo save to db as success
+        if (payKey.isPresent()) {
+            List<Payment> paymentsForPayKey = paymentsRepository.getPaymentsForPayKey(payKey.get());
+            for (Payment payment : paymentsForPayKey) {
+                payment.setPayment_status(PaymentStatus.COMPLETED.toString());
+                paymentsRepository.save(payment);
+            }
+        }
     }
 
     public List<Payment> getPayments(String email) {
@@ -135,6 +164,13 @@ public class PaymentService {
 
     public List<Payment> getReceivedPayments(String email) {
         return paymentsRepository.getReceivedPayments(email);
+    }
+
+    public void createPendingPayment(String fromEmail, String toEmail,
+                                     Double hourRate, Long reservationId) {
+        paymentsRepository.save(new Payment(fromEmail, toEmail,
+                hourRate, DateTime.now().toDate(),
+                PaymentStatus.PENDING.toString(), reservationId));
     }
 }
 
