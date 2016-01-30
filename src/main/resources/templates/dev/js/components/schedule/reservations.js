@@ -43,6 +43,7 @@ var Reservations = React.createClass({
                 {this.props.parent.state.reservationsWithPayments.map(function (reservationItem, key) {
                     var reservation = reservationItem.data.reservation;
                     var payment = reservationItem.data.payment;
+                    $cancelBtn = [];
 
                     if (payment.payment_status !== 'COMPLETED') {
                         $cancelBtn = <div className='main-schedule-item-cancel' data-email={reservation.reserved_by}
@@ -57,6 +58,7 @@ var Reservations = React.createClass({
                             <div>Teacher: {reservation.reserved_by}</div>
                             <div>Subject: {reservation.subject}</div>
                             <div>Payment status: {payment.payment_status}</div>
+                            <div>Payment amount: {payment.amount}</div>
                         </div>
                         {$cancelBtn}
                     </div>;

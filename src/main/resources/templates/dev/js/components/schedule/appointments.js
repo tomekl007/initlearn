@@ -18,7 +18,7 @@ var Appointments = React.createClass({
     remove(event) {
         var $target = event.currentTarget;
         var appointment = {
-            email:  $target.getAttribute('data-email'),
+            email: $target.getAttribute('data-email'),
             date: {fromHour: parseFloat($target.getAttribute('data-date'))}
         };
         this.setState({modalOpen: true, appointment: appointment});
@@ -46,6 +46,8 @@ var Appointments = React.createClass({
                 {this.props.parent.state.appointmentsWithPayments.map(function (appointment, key) {
                     var reservation = appointment.data.reservation;
                     var payment = appointment.data.payment;
+                    $paynowBtn = [];
+                    $cancelBtn = [];
 
                     if (payment.payment_status !== 'COMPLETED') {
                         $paynowBtn = <a href={config.paymentPath(reservation.teacher, reservation.from_hour)}
@@ -65,6 +67,7 @@ var Appointments = React.createClass({
                             <div>Teacher: {reservation.teacher}</div>
                             <div>Subject: {reservation.subject}</div>
                             <div>Payment status: {payment.payment_status}</div>
+                            <div>Payment amount: {payment.amount}</div>
                             {$paynowBtn}
                         </div>
                         {$cancelBtn}
