@@ -101,6 +101,7 @@ public class ReservationController {
 
 
     //todo make sure that delete only reservations that are after todays day, do not delete in past
+    //todo can not delete if payment complete
     @RequestMapping(value = "/reservations/delete/{email:.+}", method = RequestMethod.POST)
     public ResponseEntity<List<Reservation>> deleteReservation(
             @PathVariable("email") String email,
@@ -110,6 +111,8 @@ public class ReservationController {
             long result = reservationService.delete(email, a.getEmail(), deleteReservationRequest.fromHour);
             if (result == -1) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            } else if (result == -2) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
 
             return new ResponseEntity<>(reservationService.getAllReservations(a.getEmail()), HttpStatus.OK);

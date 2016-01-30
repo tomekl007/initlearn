@@ -4,6 +4,7 @@ import com.stormpath.sdk.account.Account;
 import com.stormpath.tutorial.controller.jsonrequest.ReservationAndPayment;
 import com.stormpath.tutorial.controller.jsonrequest.ReservationRequest;
 import com.stormpath.tutorial.db.payment.Payment;
+import com.stormpath.tutorial.db.payment.PaymentStatus;
 import com.stormpath.tutorial.db.payment.PaymentsRepository;
 import com.stormpath.tutorial.payment.PaymentService;
 import com.stormpath.tutorial.reservations.db.Reservation;
@@ -100,6 +101,12 @@ public class ReservationService {
         for (Reservation reservation : reservations) {
             long reservationId = reservation.getId();
             Payment paymentForReservation = paymentsRepository.getPaymentForReservation(reservationId);
+            if (paymentForReservation == null) {
+                return -1;
+            }
+            if (paymentForReservation.getPayment_status().equals(PaymentStatus.COMPLETED.toString())) {
+                return -2;
+            }
             paymentsRepository.delete(paymentForReservation);
             reservationRepository.delete(reservationId);
         }
