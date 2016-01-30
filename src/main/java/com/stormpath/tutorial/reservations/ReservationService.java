@@ -99,9 +99,9 @@ public class ReservationService {
         }
         for (Reservation reservation : reservations) {
             long reservationId = reservation.getId();
-            reservationRepository.delete(reservationId);
             Payment paymentForReservation = paymentsRepository.getPaymentForReservation(reservationId);
             paymentsRepository.delete(paymentForReservation);
+            reservationRepository.delete(reservationId);
         }
         return 0;
     }
