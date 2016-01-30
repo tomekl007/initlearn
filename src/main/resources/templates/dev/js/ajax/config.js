@@ -7,7 +7,7 @@ var Config = (function () {
     var usersPath = '/users';
     var usersUrl = appUrl + usersPath;
     var usersHash = '#users/';
-    var userGroupPath = '/group'+ usersPath +'/';
+    var userGroupPath = '/group' + usersPath + '/';
     var messagesUrl = appUrl + '/msg';
     var messagesHash = '#msg/';
     var calendarPath = '/calendar/';
@@ -21,7 +21,9 @@ var Config = (function () {
     var getMessagesOverviewUrl = messagesUrl + '/overview';
     var getSearchAutocompleteOptionsUrl = appUrl + '/skills';
     var addReservationUrl = appUrl + '/reservations';
+    var getReservationsWithPaymentsUrl = appUrl + '/reservations/payments';
     var getAppointmentsUrl = appUrl + '/appointments';
+    var getAppointmentsWithPaymentsUrl = appUrl + '/appointments/payments';
     var getTeachersUrl = appUrl + userGroupPath + 'teachers';
     var logoutUserUrl = appUrl + '/logout';
 
@@ -32,28 +34,28 @@ var Config = (function () {
         return messagesUrl + '/' + email;
     };
 
-    var addUserRatingUrl = function(email) {
+    var addUserRatingUrl = function (email) {
         return usersUrl + '/' + email + '/rate';
     };
 
-    var updateUserDataFieldUrl = function(fieldPath) {
+    var updateUserDataFieldUrl = function (fieldPath) {
         return usersUrl + '/' + fieldPath;
     };
 
-    var getReservationsUrl = function(email) {
+    var getReservationsUrl = function (email) {
         return appUrl + '/reservations/' + email;
     };
 
-    var deleteReservationUrl = function(email) {
+    var deleteReservationUrl = function (email) {
         return appUrl + '/reservations/delete/' + email;
     };
 
-    var deleteAppointmentUrl = function(email) {
+    var deleteAppointmentUrl = function (email) {
         return appUrl + '/appointments/delete/' + email;
     };
 
-    var paymentPath = function(email, timestamp) {
-        return '/adaptivePayment?toEmail='+ email+ '&fromHour='+ timestamp;
+    var paymentPath = function (email, timestamp) {
+        return '/adaptivePayment?toEmail=' + email + '&fromHour=' + timestamp;
     };
 
     return {
@@ -80,8 +82,10 @@ var Config = (function () {
         addReservationUrl: addReservationUrl,
         getReservationsUrl: getReservationsUrl,
         deleteReservationUrl: deleteReservationUrl,
+        getReservationsWithPaymentsUrl: getReservationsWithPaymentsUrl,
         getAppointmentsUrl: getAppointmentsUrl,
         deleteAppointmentUrl: deleteAppointmentUrl,
+        getAppointmentsWithPaymentsUrl: getAppointmentsWithPaymentsUrl,
         getTeachersUrl: getTeachersUrl,
         logoutUserUrl: logoutUserUrl,
         searchTeachersBySkillPath: searchTeachersBySkillPath,

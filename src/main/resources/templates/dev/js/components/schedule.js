@@ -12,7 +12,9 @@ var Schedule = React.createClass({
         return {
             email: this.getUserEmail() || userData.get().email,
             reservations: [],
-            appointments: []
+            reservationsWithPayments: [],
+            appointments: [],
+            appointmentsWithPayments: []
         };
     },
     getUserEmail() {
@@ -21,12 +23,17 @@ var Schedule = React.createClass({
         return path.replace(config.usersPath + '/', '').split('/')[0];
     },
     componentDidMount() {
-        api.getReservation(this.state.email)
+        api.getReservations(this.state.email)
             .then(this.add('reservations').toStore);
+
+        api.getReservationsWithPayments()
+            .then(this.add('reservationsWithPayments').toStore);
 
         api.getAppointments()
             .then(this.add('appointments').toStore);
 
+        api.getAppointmentsWithPayments()
+            .then(this.add('appointmentsWithPayments').toStore);
     },
     add(option) {
         var $thisComponent = this;
@@ -34,9 +41,11 @@ var Schedule = React.createClass({
 
         var toStore = function(data) {
             data.forEach(function(item) {
+                var timestamp = typeof item.reservation !== 'undefined' ?
+                    item.reservation.from_hour : item.from_hour;
                 dataStore.push({
                     data: item,
-                    date: $thisComponent.getFullDate(item.from_hour)
+                    date: $thisComponent.getFullDate(timestamp)
                 });
             });
 

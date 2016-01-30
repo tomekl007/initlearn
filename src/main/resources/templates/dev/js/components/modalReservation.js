@@ -46,14 +46,14 @@ var ModalReservation = React.createClass({
             var appointment = this.props.appointment;
             api.deleteAppointment(appointment.email, appointment.date)
                 .then(function (appointments) {
-                    $thisComponent.props.schedule.add('appointments').toStore(appointments);
+                    $thisComponent.props.schedule.add('appointmentsWithPayments').toStore(appointments);
                     $thisComponent.props.parent.setState({modalOpen: false});
                 });
         } else {
             var reservation = this.props.reservation;
             api.deleteReservation(reservation.email, reservation.date)
                 .then(function (reservations) {
-                    $thisComponent.props.schedule.add('reservations').toStore(reservations);
+                    $thisComponent.props.schedule.add('reservationsWithPayments').toStore(reservations);
                     $thisComponent.props.parent.setState({modalOpen: false});
                 });
         }

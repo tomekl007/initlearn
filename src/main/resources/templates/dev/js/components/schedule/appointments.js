@@ -1,6 +1,8 @@
 import React from 'react';
 import tapOrClick from 'react-tap-or-click';
 
+import config from '../../ajax/config';
+
 import DateComponent from './date';
 import ModalComponent from '../modal';
 import ModalReservation from '../modalReservation';
@@ -23,6 +25,8 @@ var Appointments = React.createClass({
     },
     render() {
         var $modalComponent;
+        var $paynowBtn;
+        var $cancelBtn;
         var $thisComponent = this;
 
         if (this.state.modalOpen) {
@@ -36,20 +40,34 @@ var Appointments = React.createClass({
 
                 />}/>
         }
-        //{...tapOrClick($thisComponent.remove)}
+
         return (
             <div>
-                {this.props.parent.state.appointments.map(function (appointment, key) {
+                {this.props.parent.state.appointmentsWithPayments.map(function (appointment, key) {
+                    var reservation = appointment.data.reservation;
+                    var payment = appointment.data.payment;
+
+                    if (payment.payment_status !== 'COMPLETED') {
+                        $paynowBtn = <a href={config.paymentPath(reservation.teacher, reservation.from_hour)}
+                            className='main-payment-btn' data-paypal-button='true'>
+                            <img src='//www.paypalobjects.com/en_US/i/btn/btn_paynow_LG.gif' alt='Pay Now' />
+                        </a>;
+
+                        $cancelBtn = <div className='main-schedule-item-cancel' data-email={reservation.teacher}
+                            data-date={reservation.from_hour} {...tapOrClick($thisComponent.remove)}>
+                            <i className='fa fa-times'></i>
+                        </div>;
+                    }
+
                     return <div className='main-schedule-item row' key={key} >
                         <DateComponent date={appointment.date} />
                         <div className='main-schedule-item-content'>
-                            <div>Teacher: {appointment.data.teacher}</div>
-                            <div>Subject: {appointment.data.subject}</div>
+                            <div>Teacher: {reservation.teacher}</div>
+                            <div>Subject: {reservation.subject}</div>
+                            <div>Payment status: {payment.payment_status}</div>
+                            {$paynowBtn}
                         </div>
-                        <div className='main-schedule-item-cancel' data-email={appointment.data.teacher}
-                            data-date={appointment.data.from_hour} {...tapOrClick($thisComponent.remove)}>
-                            <i className='fa fa-times'></i>
-                        </div>
+                        {$cancelBtn}
                     </div>;
                 })}
 

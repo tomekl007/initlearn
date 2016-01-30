@@ -97,13 +97,17 @@ var Api = (function () {
             return $http(config.addReservationUrl)
                 .post(this.payload({json: data}));
         },
-        getReservation: function(emailPath) {
+        getReservations: function(emailPath) {
             return $http(config.getReservationsUrl(emailPath))
                 .get(this.payload());
         },
         deleteReservation: function(emailPath, data) {
             return $http(config.deleteReservationUrl(emailPath))
                 .post(this.payload({json: data}));
+        },
+        getReservationsWithPayments: function() {
+            return $http(config.getReservationsWithPaymentsUrl)
+                .get(this.payload());
         },
         getAppointments: function() {
             return $http(config.getAppointmentsUrl)
@@ -112,6 +116,10 @@ var Api = (function () {
         deleteAppointment: function(emailPath, data) {
             return $http(config.deleteAppointmentUrl(emailPath))
                 .post(this.payload({json: data}));
+        },
+        getAppointmentsWithPayments: function() {
+            return $http(config.getAppointmentsWithPaymentsUrl)
+                .get(this.payload());
         }
     };
 

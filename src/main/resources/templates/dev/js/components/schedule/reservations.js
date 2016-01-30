@@ -23,6 +23,7 @@ var Reservations = React.createClass({
     },
     render() {
         var $modalComponent;
+        var $cancelBtn;
         var $thisComponent = this;
 
         if (this.state.modalOpen) {
@@ -39,17 +40,25 @@ var Reservations = React.createClass({
 
         return (
             <div>
-                {this.props.parent.state.reservations.map(function (reservation, key) {
-                    return <div className='main-schedule-item row' key={key} >
-                        <DateComponent date={reservation.date} />
-                        <div className='main-schedule-item-content'>
-                            <div>Teacher: {reservation.data.reserved_by}</div>
-                            <div>Subject: {reservation.data.subject}</div>
-                        </div>
-                        <div className='main-schedule-item-cancel' data-email={reservation.data.reserved_by}
-                            data-date={reservation.data.from_hour} {...tapOrClick($thisComponent.remove)}>
+                {this.props.parent.state.reservationsWithPayments.map(function (reservationItem, key) {
+                    var reservation = reservationItem.data.reservation;
+                    var payment = reservationItem.data.payment;
+
+                    if (payment.payment_status !== 'COMPLETED') {
+                        $cancelBtn = <div className='main-schedule-item-cancel' data-email={reservation.reserved_by}
+                            data-date={reservation.from_hour} {...tapOrClick($thisComponent.remove)}>
                             <i className='fa fa-times'></i>
+                        </div>;
+                    }
+
+                    return <div className='main-schedule-item row' key={key} >
+                        <DateComponent date={reservationItem.date} />
+                        <div className='main-schedule-item-content'>
+                            <div>Teacher: {reservation.reserved_by}</div>
+                            <div>Subject: {reservation.subject}</div>
+                            <div>Payment status: {payment.payment_status}</div>
                         </div>
+                        {$cancelBtn}
                     </div>;
                 })}
 
