@@ -140,11 +140,12 @@ public class PaymentService {
 
     public void logCancelPayment(Optional<String> payKey) throws IOException, InvalidResponseDataException, SSLConfigurationException, OAuthException, MissingCredentialException, InvalidCredentialException, HttpErrorException, ClientActionRequiredException, InterruptedException {
         if (payKey.isPresent()) {
-            PaymentDetailsResponse paymentStatus = getPaymentStatus(payKey.get());
-
-            String s = paymentStatus.getStatus() + ", sender: "
-                    + paymentStatus.getSenderEmail() + ", sender account: " +
-                    paymentStatus.getSender().getAccountId();
+//            PaymentDetailsResponse paymentStatus = getPaymentStatus(payKey.get());
+            List<Payment> paymentsForPayKey = paymentsRepository.getPaymentsForPayKey(payKey.get());
+            for (Payment payment : paymentsForPayKey) {
+                payment.setPayment_status(PaymentStatus.CANCELLED.toString());
+                paymentsRepository.save(payment);
+            }
         }
     }
 
