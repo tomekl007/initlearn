@@ -1,10 +1,16 @@
 package com.stormpath.tutorial.reservations;
 
 import com.stormpath.sdk.account.Account;
+import com.stormpath.tutorial.controller.jsonrequest.ReservationAndPayment;
 import com.stormpath.tutorial.controller.jsonrequest.ReservationRequest;
+import com.stormpath.tutorial.db.payment.Payment;
+import com.stormpath.tutorial.db.payment.PaymentStatus;
+import com.stormpath.tutorial.db.payment.PaymentsRepository;
+import com.stormpath.tutorial.payment.PaymentService;
 import com.stormpath.tutorial.reservations.db.Reservation;
 import com.stormpath.tutorial.reservations.db.ReservationRepository;
 import com.stormpath.tutorial.user.UserService;
+import com.stormpath.tutorial.utils.AccountUtils;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +28,10 @@ public class ReservationService {
     UserService userService;
     @Autowired
     ReservationRepository reservationRepository;
+    @Autowired
+    PaymentService paymentService;
+    @Autowired
+    PaymentsRepository paymentsRepository;
 
     private static final Logger logger = LoggerFactory.getLogger(ReservationService.class);
 
@@ -48,7 +58,11 @@ public class ReservationService {
         Reservation reservation =
                 new Reservation(reservationTime.toDate(), reservedBy.getEmail(),
                         teacher.getEmail(), endOfReservationTime.toDate(), subject);
-        reservationRepository.save(reservation);
+        Reservation savedReservation = reservationRepository.save(reservation);
+
+        Double hourRate = AccountUtils.mapAccountToUser(teacher).hourRate.doubleValue();
+        paymentService.createPendingPayment(reservedBy.getEmail(), teacher.getEmail(), hourRate,
+                savedReservation.getId());
     }
 
     public List<Reservation> getAllAppointments(String email) {
@@ -78,16 +92,48 @@ public class ReservationService {
         return !allReservationsForTimespan.isEmpty();
     }
 
-    public long delete(String reservedBy, String teacherEmail, Long fromHour) {
+    public ReservationDeleteResult delete(String reservedBy, String teacherEmail, Long fromHour) {
         logger.info("delete for reserved by: " + reservedBy + " teacher: " + teacherEmail + " fromHour: " + fromHour);
         List<Reservation> reservations = reservationRepository.getReservations(reservedBy, teacherEmail, new Date(fromHour));
         if (reservations == null || reservations.isEmpty()) {
-            return -1;
+            return ReservationDeleteResult.NOT_FOUND;
         }
         for (Reservation reservation : reservations) {
-            reservationRepository.delete(reservation.getId());
+            long reservationId = reservation.getId();
+            List<Payment> paymentForReservation = paymentsRepository.getPaymentsForReservation(reservationId);
+            if (paymentForReservation == null || paymentForReservation.isEmpty()) {
+                return ReservationDeleteResult.NOT_FOUND;
+            }
+            for (Payment payment : paymentForReservation) {
+                if (payment.getPayment_status().equals(PaymentStatus.COMPLETED.toString())) {
+                    return ReservationDeleteResult.PAYMENT_ALREADY_COMPLETED;
+                }
+                paymentsRepository.delete(payment);
+            }
+            reservationRepository.delete(reservationId);
         }
-        return 0;
+        return ReservationDeleteResult.OK;
+    }
+
+    public List<ReservationAndPayment> getAllReservationsAndPayments(String email) {
+        List<ReservationAndPayment> reservationAndPayments = new LinkedList<>();
+        List<Reservation> allReservations = getAllReservations(email);
+        for (Reservation reservation : allReservations) {
+            Payment paymentForReservation = paymentsRepository.getNotCompanyPaymentForReservation(reservation.getId());
+            reservationAndPayments.add(new ReservationAndPayment(reservation, paymentForReservation));
+        }
+        return reservationAndPayments;
+
+    }
+
+    public List<ReservationAndPayment> getAllAppointmentsAndPayments(String email) {
+        List<ReservationAndPayment> reservationAndPayments = new LinkedList<>();
+        List<Reservation> allReservations = getAllAppointments(email);
+        for (Reservation reservation : allReservations) {
+            Payment paymentForReservation = paymentsRepository.getNotCompanyPaymentForReservation(reservation.getId());
+            reservationAndPayments.add(new ReservationAndPayment(reservation, paymentForReservation));
+        }
+        return reservationAndPayments;
     }
 }
 

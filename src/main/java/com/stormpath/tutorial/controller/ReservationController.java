@@ -2,7 +2,9 @@ package com.stormpath.tutorial.controller;
 
 import com.stormpath.sdk.account.Account;
 import com.stormpath.tutorial.controller.jsonrequest.DeleteReservationRequest;
+import com.stormpath.tutorial.controller.jsonrequest.ReservationAndPayment;
 import com.stormpath.tutorial.controller.jsonrequest.ReservationRequest;
+import com.stormpath.tutorial.reservations.ReservationDeleteResult;
 import com.stormpath.tutorial.reservations.ReservationService;
 import com.stormpath.tutorial.reservations.db.Reservation;
 import com.stormpath.tutorial.user.UserService;
@@ -37,15 +39,24 @@ public class ReservationController {
         return new ResponseEntity<>(allReservations, HttpStatus.OK);
     }
 
+
+    @RequestMapping(value = "/reservations/payments", method = RequestMethod.GET)
+    public ResponseEntity<List<ReservationAndPayment>> getReservationsAndPayments(ServletRequest servletRequest) {
+        return AccountUtils.actionForAuthenticatedUserOrUnauthorized(servletRequest,
+                a -> reservationService.getAllReservationsAndPayments(a.getEmail()));
+    }
+
     @RequestMapping(value = "/appointments/delete/{email:.+}", method = RequestMethod.POST)
     public ResponseEntity<List<Reservation>> deleteAppointment(
             @PathVariable("email") String email,
             ServletRequest servletRequest,
             @RequestBody DeleteReservationRequest deleteReservationRequest) {
         return AccountUtils.actionResponseEntityForAuthenticatedUserOrUnauthorized(servletRequest, a -> {
-            long result = reservationService.delete(a.getEmail(), email, deleteReservationRequest.fromHour);
-            if (result == -1) {
+            ReservationDeleteResult result = reservationService.delete(a.getEmail(), email, deleteReservationRequest.fromHour);
+            if (result.equals(ReservationDeleteResult.NOT_FOUND)) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            } else if (result.equals(ReservationDeleteResult.PAYMENT_ALREADY_COMPLETED)) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
 
             return new ResponseEntity<>(reservationService.getAllAppointments(a.getEmail()), HttpStatus.OK);
@@ -59,6 +70,12 @@ public class ReservationController {
         );
     }
 
+    @RequestMapping(value = "/appointments/payments", method = RequestMethod.GET)
+    public ResponseEntity<List<ReservationAndPayment>> getAppointmentsAndPayments(ServletRequest servletRequest) {
+        return AccountUtils.actionForAuthenticatedUserOrUnauthorized(servletRequest, a ->
+                reservationService.getAllAppointmentsAndPayments(a.getEmail())
+        );
+    }
 
     @RequestMapping(value = "/reservations", method = RequestMethod.POST, consumes = "application/json")
     public ResponseEntity<List<Reservation>> reserveLesson(@RequestBody ReservationRequest reservationRequest,
@@ -86,15 +103,19 @@ public class ReservationController {
     }
 
 
+    //todo make sure that delete only reservations that are after todays day, do not delete in past
+    //todo can not delete if payment complete
     @RequestMapping(value = "/reservations/delete/{email:.+}", method = RequestMethod.POST)
     public ResponseEntity<List<Reservation>> deleteReservation(
             @PathVariable("email") String email,
             ServletRequest servletRequest,
             @RequestBody DeleteReservationRequest deleteReservationRequest) {
         return AccountUtils.actionResponseEntityForAuthenticatedUserOrUnauthorized(servletRequest, a -> {
-            long result = reservationService.delete(email, a.getEmail(), deleteReservationRequest.fromHour);
-            if (result == -1) {
+            ReservationDeleteResult result = reservationService.delete(email, a.getEmail(), deleteReservationRequest.fromHour);
+            if (result.equals(ReservationDeleteResult.NOT_FOUND)) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            } else if (result.equals(ReservationDeleteResult.PAYMENT_ALREADY_COMPLETED)) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
 
             return new ResponseEntity<>(reservationService.getAllReservations(a.getEmail()), HttpStatus.OK);
