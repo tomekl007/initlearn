@@ -4,6 +4,7 @@ import com.stormpath.sdk.account.Account;
 import com.stormpath.tutorial.controller.jsonrequest.DeleteReservationRequest;
 import com.stormpath.tutorial.controller.jsonrequest.ReservationAndPayment;
 import com.stormpath.tutorial.controller.jsonrequest.ReservationRequest;
+import com.stormpath.tutorial.reservations.ReservationDeleteResult;
 import com.stormpath.tutorial.reservations.ReservationService;
 import com.stormpath.tutorial.reservations.db.Reservation;
 import com.stormpath.tutorial.user.UserService;
@@ -51,9 +52,11 @@ public class ReservationController {
             ServletRequest servletRequest,
             @RequestBody DeleteReservationRequest deleteReservationRequest) {
         return AccountUtils.actionResponseEntityForAuthenticatedUserOrUnauthorized(servletRequest, a -> {
-            long result = reservationService.delete(a.getEmail(), email, deleteReservationRequest.fromHour);
-            if (result == -1) {
+            ReservationDeleteResult result = reservationService.delete(a.getEmail(), email, deleteReservationRequest.fromHour);
+            if (result.equals(ReservationDeleteResult.NOT_FOUND)) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            } else if (result.equals(ReservationDeleteResult.PAYMENT_ALREADY_COMPLETED)) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
 
             return new ResponseEntity<>(reservationService.getAllAppointments(a.getEmail()), HttpStatus.OK);
@@ -108,10 +111,10 @@ public class ReservationController {
             ServletRequest servletRequest,
             @RequestBody DeleteReservationRequest deleteReservationRequest) {
         return AccountUtils.actionResponseEntityForAuthenticatedUserOrUnauthorized(servletRequest, a -> {
-            long result = reservationService.delete(email, a.getEmail(), deleteReservationRequest.fromHour);
-            if (result == -1) {
+            ReservationDeleteResult result = reservationService.delete(email, a.getEmail(), deleteReservationRequest.fromHour);
+            if (result.equals(ReservationDeleteResult.NOT_FOUND)) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            } else if (result == -2) {
+            } else if (result.equals(ReservationDeleteResult.PAYMENT_ALREADY_COMPLETED)) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
 

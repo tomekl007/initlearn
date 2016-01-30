@@ -92,25 +92,27 @@ public class ReservationService {
         return !allReservationsForTimespan.isEmpty();
     }
 
-    public long delete(String reservedBy, String teacherEmail, Long fromHour) {
+    public ReservationDeleteResult delete(String reservedBy, String teacherEmail, Long fromHour) {
         logger.info("delete for reserved by: " + reservedBy + " teacher: " + teacherEmail + " fromHour: " + fromHour);
         List<Reservation> reservations = reservationRepository.getReservations(reservedBy, teacherEmail, new Date(fromHour));
         if (reservations == null || reservations.isEmpty()) {
-            return -1;
+            return ReservationDeleteResult.NOT_FOUND;
         }
         for (Reservation reservation : reservations) {
             long reservationId = reservation.getId();
-            Payment paymentForReservation = paymentsRepository.getPaymentForReservation(reservationId);
-            if (paymentForReservation == null) {
-                return -1;
+            List<Payment> paymentForReservation = paymentsRepository.getPaymentsForReservation(reservationId);
+            if (paymentForReservation == null || paymentForReservation.isEmpty()) {
+                return ReservationDeleteResult.NOT_FOUND;
             }
-            if (paymentForReservation.getPayment_status().equals(PaymentStatus.COMPLETED.toString())) {
-                return -2;
+            for (Payment payment : paymentForReservation) {
+                if (payment.getPayment_status().equals(PaymentStatus.COMPLETED.toString())) {
+                    return ReservationDeleteResult.PAYMENT_ALREADY_COMPLETED;
+                }
+                paymentsRepository.delete(payment);
             }
-            paymentsRepository.delete(paymentForReservation);
             reservationRepository.delete(reservationId);
         }
-        return 0;
+        return ReservationDeleteResult.OK;
     }
 
     public List<ReservationAndPayment> getAllReservationsAndPayments(String email) {

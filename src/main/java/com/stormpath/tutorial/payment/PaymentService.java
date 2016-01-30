@@ -88,9 +88,11 @@ public class PaymentService {
     }
 
     private void addPayKeyToPayment(Long reservationId, String payKey) {
-        Payment payment = paymentsRepository.getPaymentForReservation(reservationId);
-        payment.setPay_key(payKey);
-        paymentsRepository.save(payment);
+        List<Payment> payments = paymentsRepository.getPaymentsForReservation(reservationId);
+        for (Payment payment : payments) {
+            payment.setPay_key(payKey);
+            paymentsRepository.save(payment);
+        }
     }
 
 

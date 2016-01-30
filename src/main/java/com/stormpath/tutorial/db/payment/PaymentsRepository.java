@@ -16,7 +16,7 @@ public interface PaymentsRepository extends JpaRepository<Payment, Long> {
     List<Payment> getReceivedPayments(@Param("to_email") String email);
 
     @Query("SELECT p from Payment p where p.reservation_id = :reservation_id")
-    Payment getPaymentForReservation(@Param("reservation_id") long reservationId);
+    List<Payment> getPaymentsForReservation(@Param("reservation_id") long reservationId);
 
     @Query("SELECT p from Payment p where p.pay_key = :pay_key")
     List<Payment> getPaymentsForPayKey(@Param("pay_key") String payKey);
