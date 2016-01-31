@@ -77,6 +77,12 @@
 .fa-tag:before {
   content: ""; }
 
+.fa-money:before {
+  content: ""; }
+
+.fa-hourglass-half:before {
+  content: ""; }
+
 *, *:before, *:after {
   box-sizing: inherit; }
 
@@ -123,6 +129,12 @@ a {
 
 .sticky.pos-left {
   left: 0; }
+
+.float-left {
+  float: left; }
+
+.float-right {
+  float: right; }
 
 .color-white {
   color: #fff; }
