@@ -11,10 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -63,7 +60,17 @@ public class MessageService {
     }
 
     public List<String> getConversationWithField(Account account) {
-        return AccountUtils.getCustomListFieldValue(account, CONVERSATIONS_WITH_FIELD);
+        String participantEmail = account.getEmail();
+        List<MessageDb> allConversationsWith = messagesRepository.getAllConversationsWith(participantEmail);
+        List<String> collect = allConversationsWith
+                .stream()
+                .map(m -> Objects.equals(m.getFromEmail(), participantEmail) ? m.getToEmail() : m.getFromEmail())
+                .collect(Collectors.toList());
+
+        logger.info("collected : " + collect);
+        List<String> customListFieldValue = AccountUtils.getCustomListFieldValue(account, CONVERSATIONS_WITH_FIELD);
+        logger.info("collected old way : " + customListFieldValue);
+        return customListFieldValue;
     }
 
     public static void addMessageToCustomData(Message message, Account sender, Account receiver) {
