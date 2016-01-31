@@ -46,7 +46,7 @@ public class ReservationController {
     }
 
     @RequestMapping(value = "/appointments/delete/{email:.+}", method = RequestMethod.POST)
-    public ResponseEntity<List<Reservation>> deleteAppointment(
+    public ResponseEntity<List<ReservationAndPayment>> deleteAppointment(
             @PathVariable("email") String email,
             ServletRequest servletRequest,
             @RequestBody DeleteReservationRequest deleteReservationRequest,
@@ -59,7 +59,7 @@ public class ReservationController {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
 
-            return new ResponseEntity<>(reservationService.getAllAppointments(a.getEmail(), Optional.of(currentTime)), HttpStatus.OK);
+            return new ResponseEntity<>(reservationService.getAllAppointmentsAndPayments(a.getEmail(), Optional.of(currentTime)), HttpStatus.OK);
         });
     }
 
@@ -106,7 +106,7 @@ public class ReservationController {
 
 
     @RequestMapping(value = "/reservations/delete/{email:.+}", method = RequestMethod.POST)
-    public ResponseEntity<List<Reservation>> deleteReservation(
+    public ResponseEntity<List<ReservationAndPayment>> deleteReservation(
             @PathVariable("email") String email,
             ServletRequest servletRequest,
             @RequestBody DeleteReservationRequest deleteReservationRequest,
@@ -119,7 +119,7 @@ public class ReservationController {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
 
-            return new ResponseEntity<>(reservationService.getAllReservations(a.getEmail(), Optional.of(currentTime)), HttpStatus.OK);
+            return new ResponseEntity<>(reservationService.getAllReservationsAndPayments(a.getEmail(), Optional.of(currentTime)), HttpStatus.OK);
         });
     }
 
