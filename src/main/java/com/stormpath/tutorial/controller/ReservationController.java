@@ -55,7 +55,7 @@ public class ReservationController {
             ReservationDeleteResult result = reservationService.delete(a.getEmail(), email, deleteReservationRequest.fromHour, currentTime);
             if (result.equals(ReservationDeleteResult.NOT_FOUND)) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            } else if (result.equals(ReservationDeleteResult.PAYMENT_ALREADY_COMPLETED)) {
+            } else if (result.equals(ReservationDeleteResult.PAYMENT_ALREADY_COMPLETED) || result.equals(ReservationDeleteResult.CAN_NOT_DELETE_FROM_PAST)) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
 
@@ -115,7 +115,7 @@ public class ReservationController {
             ReservationDeleteResult result = reservationService.delete(email, a.getEmail(), deleteReservationRequest.fromHour, currentTime);
             if (result.equals(ReservationDeleteResult.NOT_FOUND)) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            } else if (result.equals(ReservationDeleteResult.PAYMENT_ALREADY_COMPLETED)) {
+            } else if (result.equals(ReservationDeleteResult.PAYMENT_ALREADY_COMPLETED) || result.equals(ReservationDeleteResult.CAN_NOT_DELETE_FROM_PAST)) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
 
