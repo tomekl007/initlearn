@@ -101,8 +101,8 @@ var Api = (function () {
             return $http(config.getReservationsUrl(emailPath))
                 .get(this.payload());
         },
-        deleteReservation: function(emailPath, data) {
-            return $http(config.deleteReservationUrl(emailPath))
+        deleteReservation: function(emailPath, timestamp, data) {
+            return $http(config.deleteReservationUrl(emailPath, timestamp))
                 .post(this.payload({json: data}));
         },
         getReservationsWithPayments: function() {
@@ -113,8 +113,8 @@ var Api = (function () {
             return $http(config.getAppointmentsUrl)
                 .get(this.payload());
         },
-        deleteAppointment: function(emailPath, data) {
-            return $http(config.deleteAppointmentUrl(emailPath))
+        deleteAppointment: function(emailPath, timestamp, data) {
+            return $http(config.deleteAppointmentUrl(emailPath, timestamp))
                 .post(this.payload({json: data}));
         },
         getAppointmentsWithPayments: function() {

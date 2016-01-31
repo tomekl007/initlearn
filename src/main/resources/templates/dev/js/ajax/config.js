@@ -46,12 +46,12 @@ var Config = (function () {
         return appUrl + '/reservations/' + email;
     };
 
-    var deleteReservationUrl = function (email) {
-        return appUrl + '/reservations/delete/' + email;
+    var deleteReservationUrl = function (email, timestamp) {
+        return appUrl + '/reservations/delete/' + email + '?current_time=' + timestamp;
     };
 
-    var deleteAppointmentUrl = function (email) {
-        return appUrl + '/appointments/delete/' + email;
+    var deleteAppointmentUrl = function (email, timestamp) {
+        return appUrl + '/appointments/delete/' + email + '?current_time=' + timestamp;
     };
 
     var paymentPath = function (email, timestamp) {
