@@ -3,7 +3,6 @@ package com.stormpath.tutorial.messages;
 import com.stormpath.sdk.account.Account;
 import com.stormpath.sdk.directory.CustomData;
 import com.stormpath.tutorial.controller.jsonrequest.MessageOverview;
-import com.stormpath.tutorial.model.User;
 import com.stormpath.tutorial.user.UserService;
 import com.stormpath.tutorial.utils.AccountUtils;
 import org.joda.time.DateTime;
@@ -25,6 +24,9 @@ public class MessageService {
     public static final String CONVERSATIONS_WITH_FIELD = "conversations-with";
     public static final String LAST_MESSAGE_FIELD = "last-message";
 
+    @Autowired
+    MessagesRepository messagesRepository;
+
     private static final Logger logger = LoggerFactory.getLogger(MessageService.class);
 
     public String sendMessageToUser(Account receiver, String text, Account sender) {
@@ -35,14 +37,16 @@ public class MessageService {
         return "OK";
     }
 
-    public static void addMessageToConversation(String text, Account sender, Account receiver) {
+    public void addMessageToConversation(String text, Account sender, Account receiver) {
         AccountUtils.addCustomListFieldToAccount(sender,
                 CONVERSATIONS_WITH_FIELD, Collections.singletonList(receiver.getEmail()), sender.getCustomData());
         AccountUtils.addCustomListFieldToAccount(receiver,
                 CONVERSATIONS_WITH_FIELD, Collections.singletonList(sender.getEmail()), receiver.getCustomData());
-
-        Message message = new Message(text, new DateTime().getMillis(),
+        DateTime dateTime = new DateTime();
+        Message message = new Message(text, dateTime.getMillis(),
                 sender.getEmail(), receiver.getEmail());
+
+        addMessageToDb(new MessageDb(text, dateTime.toDate(), sender.getEmail(), receiver.getEmail()));
 
         addLastMessage(message, sender, receiver.getEmail());
         addLastMessage(message, receiver, sender.getEmail());
@@ -51,8 +55,23 @@ public class MessageService {
         addMessageToCustomData(message, receiver, sender);
     }
 
+    private void addMessageToDb(MessageDb messageDb) {
+        messagesRepository.save(messageDb);
+    }
+
     public List<String> getConversationWithField(Account account) {
-        return AccountUtils.getCustomListFieldValue(account, CONVERSATIONS_WITH_FIELD);
+        String participantEmail = account.getEmail();
+        List<MessageDb> allConversationsWith = messagesRepository.getAllConversationsWith(participantEmail);
+        List<String> collect = allConversationsWith
+                .stream()
+                .map(m -> Objects.equals(m.getFrom_email(), participantEmail) ? m.getTo_email() : m.getFrom_email())
+                .distinct()
+                .collect(Collectors.toList());
+
+        logger.info("collected : " + collect);
+        List<String> customListFieldValue = AccountUtils.getCustomListFieldValue(account, CONVERSATIONS_WITH_FIELD);
+        logger.info("collected old way : " + customListFieldValue);
+        return customListFieldValue;
     }
 
     public static void addMessageToCustomData(Message message, Account sender, Account receiver) {
@@ -141,9 +160,9 @@ public class MessageService {
         Object o = account.getCustomData().get(getLastMessageField(email));
         String userFullName = userService.findUserByEmail(email).map(u -> u.fullName).orElse("");
 
-        if(o == null){
+        if (o == null) {
             return new MessageOverview(email, userFullName, null);
-        }else{
+        } else {
             List<LinkedHashMap> messages = (List<LinkedHashMap>) o;
             return new MessageOverview(email, userFullName, Message.mapFromLinkedHashMap(messages.get(0)));
         }

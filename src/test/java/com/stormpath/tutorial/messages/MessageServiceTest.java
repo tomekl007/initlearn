@@ -48,7 +48,7 @@ public class MessageServiceTest {
         Account to = createAccount(toEmail, toCustomData);
 
         //when
-        MessageService.addMessageToConversation("txt", from, to);
+        new MessageService().addMessageToConversation("txt", from, to);
 
         //then
         Mockito.verify(fromCustomData).put(eq(MessageService.getMessageField(toEmail)), any(Message.class));
@@ -67,7 +67,7 @@ public class MessageServiceTest {
         Account to = createAccountWithOneMessage(toEmail, toCustomData, fromEmail);
 
         //when
-        MessageService.addMessageToConversation("txt", from, to);
+        new MessageService().addMessageToConversation("txt", from, to);
 
         //then
         Mockito.verify(fromCustomData).put(eq(MessageService.getMessageField(toEmail)), any(Message.class));
