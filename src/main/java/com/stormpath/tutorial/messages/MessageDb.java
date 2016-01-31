@@ -11,8 +11,8 @@ import java.util.Date;
 public class MessageDb {
     public String text;
     public Date timestamp;
-    public String fromEmail;
-    public String toEmail;
+    public String from_email;
+    public String to_email;
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,8 +21,8 @@ public class MessageDb {
     public MessageDb(String text, Date timestamp, String fromEmail, String toEmail) {
         this.text = text;
         this.timestamp = timestamp;
-        this.fromEmail = fromEmail;
-        this.toEmail = toEmail;
+        this.from_email = fromEmail;
+        this.to_email = toEmail;
     }
 
     public String getText() {
@@ -41,20 +41,22 @@ public class MessageDb {
         this.timestamp = timestamp;
     }
 
-    public String getFromEmail() {
-        return fromEmail;
+
+    public String getFrom_email() {
+
+        return from_email;
     }
 
-    public void setFromEmail(String fromEmail) {
-        this.fromEmail = fromEmail;
+    public void setFrom_email(String from_email) {
+        this.from_email = from_email;
     }
 
-    public String getToEmail() {
-        return toEmail;
+    public String getTo_email() {
+        return to_email;
     }
 
-    public void setToEmail(String toEmail) {
-        this.toEmail = toEmail;
+    public void setTo_email(String to_email) {
+        this.to_email = to_email;
     }
 
     public long getId() {
