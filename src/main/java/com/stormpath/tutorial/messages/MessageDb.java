@@ -13,7 +13,12 @@ public class MessageDb {
     public Date timestamp;
     public String from_email;
     public String to_email;
+
+    public MessageDb() {
+    }
+
     @Id
+
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
