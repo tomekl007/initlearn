@@ -36,12 +36,17 @@ public class ReservationService {
     private static final Logger logger = LoggerFactory.getLogger(ReservationService.class);
 
 
-    public List<Reservation> getAllReservations(String email) {
-        Optional<Account> accountByEmail = userService.findAccountByEmail(email);
-        if (!accountByEmail.isPresent()) {
-            return Collections.emptyList();
+    public List<Reservation> getAllReservations(String email, Optional<Long> fromHour) {
+        if (!fromHour.isPresent()) {
+            return reservationRepository.getAllTecherReservations(email);
+        } else {
+            Date date = new Date(fromHour.get());
+            Optional<Account> accountByEmail = userService.findAccountByEmail(email);
+            if (!accountByEmail.isPresent()) {
+                return Collections.emptyList();
+            }
+            return reservationRepository.getAllTecherReservationsFromHour(email, date);
         }
-        return reservationRepository.getAllTecherReservations(email);
     }
 
 
@@ -50,7 +55,7 @@ public class ReservationService {
                                      String subject) {
         //todo handle when appoitment could not be reserved
         addReservation(reservedBy, teacher, reservationTime, endOfReservationTime, subject);
-        return getAllReservations(teacher.getEmail());
+        return getAllReservations(teacher.getEmail(), Optional.empty());
     }
 
     private void addReservation(Account reservedBy, Account teacher, DateTime reservationTime,
@@ -65,11 +70,15 @@ public class ReservationService {
                 savedReservation.getId());
     }
 
-    public List<Reservation> getAllAppointments(String email) {
-        return reservationRepository.getAllUserAppoitments(email);
-    }
+    public List<Reservation> getAllAppointments(String email, Optional<Long> fromHour) {
+        if (!fromHour.isPresent()) {
+            return reservationRepository.getAllUserAppoitments(email);
+        } else {
+            Date date = new Date(fromHour.get());
+            return reservationRepository.getAllUserAppoitmentsFromHour(email, date);
+        }
 
-    private static final String dateFormat = ("dd/MM/yyyy-HH:mm");
+    }
 
     public DateTime normalizeTime(ReservationRequest reservationRequest) {
 
@@ -92,7 +101,11 @@ public class ReservationService {
         return !allReservationsForTimespan.isEmpty();
     }
 
-    public ReservationDeleteResult delete(String reservedBy, String teacherEmail, Long fromHour) {
+    public ReservationDeleteResult delete(String reservedBy, String teacherEmail, Long fromHour, Long currentTime) {
+        if (couldNotDeletePastReservation(fromHour, currentTime))
+            return ReservationDeleteResult.CAN_NOT_DELETE_FROM_PAST;
+
+
         logger.info("delete for reserved by: " + reservedBy + " teacher: " + teacherEmail + " fromHour: " + fromHour);
         List<Reservation> reservations = reservationRepository.getReservations(reservedBy, teacherEmail, new Date(fromHour));
         if (reservations == null || reservations.isEmpty()) {
@@ -115,9 +128,16 @@ public class ReservationService {
         return ReservationDeleteResult.OK;
     }
 
-    public List<ReservationAndPayment> getAllReservationsAndPayments(String email) {
+    private boolean couldNotDeletePastReservation(Long fromHour, Long currentTime) {
+        if (fromHour <= currentTime) {
+            return true;
+        }
+        return false;
+    }
+
+    public List<ReservationAndPayment> getAllReservationsAndPayments(String email, Optional<Long> fromHour) {
         List<ReservationAndPayment> reservationAndPayments = new LinkedList<>();
-        List<Reservation> allReservations = getAllReservations(email);
+        List<Reservation> allReservations = getAllReservations(email, fromHour);
         for (Reservation reservation : allReservations) {
             Payment paymentForReservation = paymentsRepository.getNotCompanyPaymentForReservation(reservation.getId());
             reservationAndPayments.add(new ReservationAndPayment(reservation, paymentForReservation));
@@ -126,9 +146,9 @@ public class ReservationService {
 
     }
 
-    public List<ReservationAndPayment> getAllAppointmentsAndPayments(String email) {
+    public List<ReservationAndPayment> getAllAppointmentsAndPayments(String email, Optional<Long> fromHour) {
         List<ReservationAndPayment> reservationAndPayments = new LinkedList<>();
-        List<Reservation> allReservations = getAllAppointments(email);
+        List<Reservation> allReservations = getAllAppointments(email, fromHour);
         for (Reservation reservation : allReservations) {
             Payment paymentForReservation = paymentsRepository.getNotCompanyPaymentForReservation(reservation.getId());
             reservationAndPayments.add(new ReservationAndPayment(reservation, paymentForReservation));
