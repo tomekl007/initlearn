@@ -5,13 +5,15 @@ import tapOrClick from 'react-tap-or-click';
 import ScheduleComponent from '../components/schedule';
 import ReservationsComponent from '../components/schedule/reservations';
 import AppointmentsComponent from '../components/schedule/appointments';
+import CheckboxComponent from '../components/checbox';
 
 var Schedule = React.createClass({
 
     getInitialState() {
         return {
             appointmentsOpen: true,
-            reservationsOpen: false
+            reservationsOpen: false,
+            checkboxChecked: false
         };
     },
     toggleItem(event) {
@@ -49,7 +51,13 @@ var Schedule = React.createClass({
                         </div>
                     </div>
                 </div>
-                <ScheduleComponent content={$component}/>
+                <div className='main-schedule-checkbox row'>
+                    <div className='float-right'>
+                        show all
+                        <CheckboxComponent parent={this}/>
+                    </div>
+                </div>
+                <ScheduleComponent content={$component} fromDate={!this.state.checkboxChecked} type={'schedule'} />
             </section>
         );
     }
