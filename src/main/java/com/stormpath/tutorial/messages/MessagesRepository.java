@@ -11,6 +11,6 @@ import java.util.List;
  */
 public interface MessagesRepository extends JpaRepository<MessageDb, Long> {
 
-    @Query("select m from Message m where m.from_email = :email OR m.to_email = :email")
+    @Query("select m from MessageDb m where m.from_email = :email OR m.to_email = :email")
     List<MessageDb> getAllConversationsWith(@Param("email") String conversationParticipantEmail);
 }
