@@ -41,20 +41,25 @@ public class MessageService {
     }
 
     public void addMessageToConversation(String text, Account sender, Account receiver) {
-//        AccountUtils.addCustomListFieldToAccount(sender,
-//                CONVERSATIONS_WITH_FIELD, Collections.singletonList(receiver.getEmail()), sender.getCustomData());
-//        AccountUtils.addCustomListFieldToAccount(receiver,
-//                CONVERSATIONS_WITH_FIELD, Collections.singletonList(sender.getEmail()), receiver.getCustomData());
-
-        Message message = new Message(text, new DateTime().getMillis(),
+        AccountUtils.addCustomListFieldToAccount(sender,
+                CONVERSATIONS_WITH_FIELD, Collections.singletonList(receiver.getEmail()), sender.getCustomData());
+        AccountUtils.addCustomListFieldToAccount(receiver,
+                CONVERSATIONS_WITH_FIELD, Collections.singletonList(sender.getEmail()), receiver.getCustomData());
+        DateTime dateTime = new DateTime();
+        Message message = new Message(text, dateTime.getMillis(),
                 sender.getEmail(), receiver.getEmail());
-        messagesRepository.save(message);
 
-//        addLastMessage(message, sender, receiver.getEmail());
-//        addLastMessage(message, receiver, sender.getEmail());
+        addMessageToDb(new MessageDb(text, dateTime.toDate(), sender.getEmail(), receiver.getEmail()));
 
-//        addMessageToCustomData(message, sender, receiver);
-//        addMessageToCustomData(message, receiver, sender);
+        addLastMessage(message, sender, receiver.getEmail());
+        addLastMessage(message, receiver, sender.getEmail());
+
+        addMessageToCustomData(message, sender, receiver);
+        addMessageToCustomData(message, receiver, sender);
+    }
+
+    private void addMessageToDb(MessageDb messageDb) {
+        messagesRepository.save(messageDb);
     }
 
     public List<String> getConversationWithField(Account account) {
