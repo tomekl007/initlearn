@@ -14,10 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletRequest;
 import java.util.List;
@@ -34,46 +31,51 @@ public class ReservationController {
     UserService userService;
 
     @RequestMapping(value = "/reservations/{email:.+}", method = RequestMethod.GET)
-    public ResponseEntity<List<Reservation>> getReservations(@PathVariable("email") String email) {
-        List<Reservation> allReservations = reservationService.getAllReservations(email);
+    public ResponseEntity<List<Reservation>> getReservations(@PathVariable("email") String email,
+                                                             @RequestParam(value = "from_hour", required = false) Optional<Long> fromHour) {
+        List<Reservation> allReservations = reservationService.getAllReservations(email, fromHour);
         return new ResponseEntity<>(allReservations, HttpStatus.OK);
     }
 
 
     @RequestMapping(value = "/reservations/payments", method = RequestMethod.GET)
-    public ResponseEntity<List<ReservationAndPayment>> getReservationsAndPayments(ServletRequest servletRequest) {
+    public ResponseEntity<List<ReservationAndPayment>> getReservationsAndPayments(ServletRequest servletRequest,
+                                                                                  @RequestParam(value = "from_hour", required = false) Optional<Long> fromHour) {
         return AccountUtils.actionForAuthenticatedUserOrUnauthorized(servletRequest,
-                a -> reservationService.getAllReservationsAndPayments(a.getEmail()));
+                a -> reservationService.getAllReservationsAndPayments(a.getEmail(), fromHour));
     }
 
     @RequestMapping(value = "/appointments/delete/{email:.+}", method = RequestMethod.POST)
     public ResponseEntity<List<Reservation>> deleteAppointment(
             @PathVariable("email") String email,
             ServletRequest servletRequest,
-            @RequestBody DeleteReservationRequest deleteReservationRequest) {
+            @RequestBody DeleteReservationRequest deleteReservationRequest,
+            @RequestParam(value = "current_time") Long currentTime) {
         return AccountUtils.actionResponseEntityForAuthenticatedUserOrUnauthorized(servletRequest, a -> {
-            ReservationDeleteResult result = reservationService.delete(a.getEmail(), email, deleteReservationRequest.fromHour);
+            ReservationDeleteResult result = reservationService.delete(a.getEmail(), email, deleteReservationRequest.fromHour, currentTime);
             if (result.equals(ReservationDeleteResult.NOT_FOUND)) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             } else if (result.equals(ReservationDeleteResult.PAYMENT_ALREADY_COMPLETED)) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
 
-            return new ResponseEntity<>(reservationService.getAllAppointments(a.getEmail()), HttpStatus.OK);
+            return new ResponseEntity<>(reservationService.getAllAppointments(a.getEmail(), Optional.of(currentTime)), HttpStatus.OK);
         });
     }
 
     @RequestMapping(value = "/appointments", method = RequestMethod.GET)
-    public ResponseEntity<List<Reservation>> getLoggedInUserAppointments(ServletRequest servletRequest) {
+    public ResponseEntity<List<Reservation>> getLoggedInUserAppointments(ServletRequest servletRequest,
+                                                                         @RequestParam(value = "from_hour", required = false) Optional<Long> fromHour) {
         return AccountUtils.actionForAuthenticatedUserOrUnauthorized(servletRequest, a ->
-                reservationService.getAllAppointments(a.getEmail())
+                reservationService.getAllAppointments(a.getEmail(), fromHour)
         );
     }
 
     @RequestMapping(value = "/appointments/payments", method = RequestMethod.GET)
-    public ResponseEntity<List<ReservationAndPayment>> getAppointmentsAndPayments(ServletRequest servletRequest) {
+    public ResponseEntity<List<ReservationAndPayment>> getAppointmentsAndPayments(ServletRequest servletRequest,
+                                                                                  @RequestParam(value = "from_hour", required = false) Optional<Long> fromHour) {
         return AccountUtils.actionForAuthenticatedUserOrUnauthorized(servletRequest, a ->
-                reservationService.getAllAppointmentsAndPayments(a.getEmail())
+                reservationService.getAllAppointmentsAndPayments(a.getEmail(), fromHour)
         );
     }
 
@@ -103,22 +105,21 @@ public class ReservationController {
     }
 
 
-    //todo make sure that delete only reservations that are after todays day, do not delete in past
-    //todo can not delete if payment complete
     @RequestMapping(value = "/reservations/delete/{email:.+}", method = RequestMethod.POST)
     public ResponseEntity<List<Reservation>> deleteReservation(
             @PathVariable("email") String email,
             ServletRequest servletRequest,
-            @RequestBody DeleteReservationRequest deleteReservationRequest) {
+            @RequestBody DeleteReservationRequest deleteReservationRequest,
+            @RequestParam(value = "current_time") Long currentTime) {
         return AccountUtils.actionResponseEntityForAuthenticatedUserOrUnauthorized(servletRequest, a -> {
-            ReservationDeleteResult result = reservationService.delete(email, a.getEmail(), deleteReservationRequest.fromHour);
+            ReservationDeleteResult result = reservationService.delete(email, a.getEmail(), deleteReservationRequest.fromHour, currentTime);
             if (result.equals(ReservationDeleteResult.NOT_FOUND)) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             } else if (result.equals(ReservationDeleteResult.PAYMENT_ALREADY_COMPLETED)) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
 
-            return new ResponseEntity<>(reservationService.getAllReservations(a.getEmail()), HttpStatus.OK);
+            return new ResponseEntity<>(reservationService.getAllReservations(a.getEmail(), Optional.of(currentTime)), HttpStatus.OK);
         });
     }
 
