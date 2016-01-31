@@ -23,17 +23,28 @@ var Schedule = React.createClass({
         return path.replace(config.usersPath + '/', '').split('/')[0];
     },
     componentDidMount() {
-        api.getReservations(this.state.email)
-            .then(this.add('reservations').toStore);
+        this.getData(true);
+    },
+    componentWillReceiveProps(state) {
+        if (this.props.type === 'schedule') {
+            this.getData(state.fromDate);
+        }
+    },
+    getData(fromCurrentDate) {
+        var fromDate = typeof fromCurrentDate !== 'undefined' ?
+            fromCurrentDate : this.props.fromDate;
 
-        api.getReservationsWithPayments()
-            .then(this.add('reservationsWithPayments').toStore);
+        if (this.props.type === 'schedule') {
+            api.getReservationsWithPayments(fromDate)
+                .then(this.add('reservationsWithPayments').toStore);
 
-        api.getAppointments()
-            .then(this.add('appointments').toStore);
+            api.getAppointmentsWithPayments(fromDate)
+                .then(this.add('appointmentsWithPayments').toStore);
 
-        api.getAppointmentsWithPayments()
-            .then(this.add('appointmentsWithPayments').toStore);
+        } else if (this.props.type === 'calendar') {
+            api.getReservations(this.state.email, false)
+                .then(this.add('reservations').toStore);
+        }
     },
     add(option) {
         var $thisComponent = this;

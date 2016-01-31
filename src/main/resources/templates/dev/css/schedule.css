@@ -3,8 +3,6 @@
   font-size: 0.875rem; }
 
 .main-schedule-tabs {
-  margin-top: 0.625rem;
-  margin-right: 0.75rem;
   width: 100%;
   max-width: 300px;
   float: right; }
@@ -23,33 +21,56 @@
   transition: background .5s ease, color .5s ease; }
 
 .main-schedule-tabs-item:hover, .main-schedule-tabs-item.is-active {
-  background-color: #4caf50;
+  background-color: #2196f3;
   color: #fff; }
 
 .main-schedule-item {
   position: relative;
-  padding: 0.3125rem; }
-
-.main-schedule-item:before {
-  content: '';
-  position: absolute;
-  top: 5px;
-  left: 25%;
-  width: 75%;
-  height: calc(100% - 10px);
-  background-color: #fff;
-  border-radius: 2px;
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12); }
+  padding: 0.3125rem;
+  color: #696969; }
 
 .main-schedule-item-content, .main-schedule-item-date {
   float: left;
-  background-color: #fff;
-  padding: 0.9375rem 0.625rem 0.625rem; }
+  background-color: #fff; }
 
 .main-schedule-item-content {
   position: relative;
   width: 75%;
-  margin-left: 5%; }
+  margin-left: 5%;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  border-radius: 2px;
+  padding: 4.0625rem 0.625rem 0.625rem; }
+
+.main-schedule-item-content:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 40px;
+  background-color: #4caf50;
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px; }
+
+.main-schedule-item-content-items {
+  border-bottom: 1px solid #e8e8e8; }
+
+.main-schedule-item-content-items:last-child {
+  margin-bottom: 0;
+  border-bottom: none; }
+
+.main-schedule-item-content-items i {
+  color: #4caf50;
+  margin-right: 5px; }
+
+.main-schedule-item-content-item.PENDING {
+  color: #ff9800; }
+
+.main-schedule-item-content-item.COMPLETED {
+  color: #4caf50; }
+
+.main-schedule-item-content-item.CANCELLED {
+  color: #f44336; }
 
 .main-schedule-item-date {
   position: relative;
@@ -59,7 +80,8 @@
   overflow: hidden;
   text-align: center;
   font-size: 0.875rem;
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12); }
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  padding: 0.9375rem 0.625rem 0.625rem; }
 
 .main-schedule-item-date:before {
   content: '';
@@ -79,14 +101,17 @@
 .main-schedule-item-cancel {
   font-size: 1.25rem;
   position: absolute;
-  top: 5px;
-  right: 0;
+  top: 13px;
+  right: 10px;
   padding: 0 0.625rem;
   color: #fff;
   cursor: pointer;
   border-radius: 2px;
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
-  background-color: #4caf50; }
+  background-color: transparent;
+  transition: background-color .3s ease; }
+
+.main-schedule-item-cancel:hover {
+  background-color: rgba(0, 0, 0, 0.3); }
 
 @media only screen and (min-width: 601px) {
   .main-schedule-item-date-day {

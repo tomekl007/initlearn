@@ -51,7 +51,7 @@ var Appointments = React.createClass({
 
                     if (payment.payment_status !== 'COMPLETED') {
                         $paynowBtn = <a href={config.paymentPath(reservation.teacher, reservation.from_hour)}
-                            className='main-payment-btn' data-paypal-button='true'>
+                            className='main-payment-btn float-right' data-paypal-button='true'>
                             <img src='//www.paypalobjects.com/en_US/i/btn/btn_paynow_LG.gif' alt='Pay Now' />
                         </a>;
 
@@ -61,13 +61,45 @@ var Appointments = React.createClass({
                         </div>;
                     }
 
-                    return <div className='main-schedule-item row' key={key} >
+                    return <div className='main-schedule-item row ' key={key} >
                         <DateComponent date={appointment.date} />
                         <div className='main-schedule-item-content'>
-                            <div>Teacher: {reservation.teacher}</div>
-                            <div>Subject: {reservation.subject}</div>
-                            <div>Payment status: {payment.payment_status}</div>
-                            <div>Payment amount: {payment.amount}</div>
+                            <div className='main-schedule-item-content-items row'>
+                                <div className='main-schedule-item-content-item col s12 m6'>
+                                    <i className='fa fa-users'></i>
+                                    Teacher:
+                                </div>
+                                <div className='main-schedule-item-content-item col s12 m6'>
+                                    {reservation.teacher}
+                                </div>
+                            </div>
+                            <div className='main-schedule-item-content-items row'>
+                                <div className='main-schedule-item-content-item col s12 m6'>
+                                    <i className='fa fa-tag'></i>
+                                    Subject:
+                                </div>
+                                <div className='main-schedule-item-content-item col s12 m6'>
+                                    {reservation.subject}
+                                </div>
+                            </div>
+                            <div className='main-schedule-item-content-items row'>
+                                <div className='main-schedule-item-content-item col s12 m6'>
+                                    <i className='fa fa-hourglass-half'></i>
+                                    Payment status:
+                                </div>
+                                <div className={'main-schedule-item-content-item col s12 m6 fw-700 ' + payment.payment_status}>
+                                    {payment.payment_status}
+                                </div>
+                            </div>
+                            <div className='main-schedule-item-content-items row'>
+                                <div className='main-schedule-item-content-item col s12 m6'>
+                                    <i className='fa fa-money'></i>
+                                    Payment amount:
+                                </div>
+                                <div className='main-schedule-item-content-item col s12 m6 fw-700'>
+                                    {payment.amount}
+                                </div>
+                            </div>
                             {$paynowBtn}
                         </div>
                         {$cancelBtn}

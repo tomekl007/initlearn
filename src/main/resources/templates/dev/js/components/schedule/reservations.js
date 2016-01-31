@@ -52,13 +52,45 @@ var Reservations = React.createClass({
                         </div>;
                     }
 
-                    return <div className='main-schedule-item row' key={key} >
+                    return <div className={'main-schedule-item row ' + payment.payment_status || ''} key={key} >
                         <DateComponent date={reservationItem.date} />
                         <div className='main-schedule-item-content'>
-                            <div>Teacher: {reservation.reserved_by}</div>
-                            <div>Subject: {reservation.subject}</div>
-                            <div>Payment status: {payment.payment_status}</div>
-                            <div>Payment amount: {payment.amount}</div>
+                            <div className='main-schedule-item-content-items row'>
+                                <div className='main-schedule-item-content-item col s12 m6'>
+                                    <i className='fa fa-users'></i>
+                                    Reserved by:
+                                </div>
+                                <div className='main-schedule-item-content-item col s12 m6'>
+                                    {reservation.reserved_by}
+                                </div>
+                            </div>
+                            <div className='main-schedule-item-content-items row'>
+                                <div className='main-schedule-item-content-item col s12 m6'>
+                                    <i className='fa fa-tag'></i>
+                                    Subject:
+                                </div>
+                                <div className='main-schedule-item-content-item col s12 m6'>
+                                    {reservation.subject}
+                                </div>
+                            </div>
+                            <div className='main-schedule-item-content-items row'>
+                                <div className='main-schedule-item-content-item col s12 m6'>
+                                    <i className='fa fa-hourglass-half'></i>
+                                    Payment status:
+                                </div>
+                                <div className={'main-schedule-item-content-item col s12 m6 fw-700 ' + payment.payment_status}>
+                                    {payment.payment_status}
+                                </div>
+                            </div>
+                            <div className='main-schedule-item-content-items row'>
+                                <div className='main-schedule-item-content-item col s12 m6'>
+                                    <i className='fa fa-money'></i>
+                                    Payment amount:
+                                </div>
+                                <div className='main-schedule-item-content-item col s12 m6 fw-700'>
+                                    {payment.amount}
+                                </div>
+                            </div>
                         </div>
                         {$cancelBtn}
                     </div>;

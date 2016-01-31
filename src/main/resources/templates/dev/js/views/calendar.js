@@ -27,7 +27,7 @@ class Calendar extends React.Component {
     render() {
         return (
             <section className='main-section-calendar'>
-                <ScheduleComponent content={this.getDateComponentFromPath()}/>
+                <ScheduleComponent content={this.getDateComponentFromPath()} type={'calendar'} />
             </section>
         );
     }
