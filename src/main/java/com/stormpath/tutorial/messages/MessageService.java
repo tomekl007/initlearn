@@ -65,6 +65,7 @@ public class MessageService {
         List<String> collect = allConversationsWith
                 .stream()
                 .map(m -> Objects.equals(m.getFrom_email(), participantEmail) ? m.getTo_email() : m.getFrom_email())
+                .distinct()
                 .collect(Collectors.toList());
 
         logger.info("collected : " + collect);
