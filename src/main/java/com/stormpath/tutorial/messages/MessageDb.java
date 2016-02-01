@@ -68,6 +68,17 @@ public class MessageDb {
         return id;
     }
 
+    @Override
+    public String toString() {
+        return "MessageDb{" +
+                "text='" + text + '\'' +
+                ", timestamp=" + timestamp +
+                ", from_email='" + from_email + '\'' +
+                ", to_email='" + to_email + '\'' +
+                ", id=" + id +
+                '}';
+    }
+
     public void setId(long id) {
         this.id = id;
     }
