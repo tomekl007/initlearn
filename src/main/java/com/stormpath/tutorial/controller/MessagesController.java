@@ -39,16 +39,22 @@ public class MessagesController {
         if(receiver.size() == 0){
             return new ResponseEntity<>("there is no user with emailTo : " + messageData.emailTo,
                     HttpStatus.BAD_REQUEST);
-        }
-        else {
+        }else {
            return AccountUtils.actionResponseEntityForAuthenticatedUserOrUnauthorized(servletRequest,
                     a -> {
+                        if(messageToYourself(receiver, a)){
+                            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                        }
                         messageService.sendMessageToUser(receiver.get(0), messageData.text, a);
                         return new ResponseEntity<>(
                                 messageService.retrieveAllMessagesInConversationWith(a, messageData.emailTo),
                                 HttpStatus.OK);
                     });
         }
+    }
+
+    private boolean messageToYourself(List<Account> receiver, Account a) {
+        return a.getEmail().equals(receiver.get(0).getEmail());
     }
 
     @RequestMapping(value = "/msg/{email:.+}", method = RequestMethod.GET)

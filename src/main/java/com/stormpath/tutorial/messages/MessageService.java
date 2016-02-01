@@ -64,18 +64,11 @@ public class MessageService {
         String participantEmail = account.getEmail();
         List<MessageDb> allConversationsWith = messagesRepository.getAllConversationsWith(participantEmail);
 
-
-        //------
-        List<String> collect = allConversationsWith
+        return allConversationsWith
                 .stream()
                 .map(m -> Objects.equals(m.getFrom_email(), participantEmail) ? m.getTo_email() : m.getFrom_email())
                 .distinct()
                 .collect(Collectors.toList());
-        //-------
-
-        List<String> customListFieldValue = AccountUtils.getCustomListFieldValue(account, CONVERSATIONS_WITH_FIELD);
-        logger.info("collected new way : " + collect + " " + "collected old way : " + customListFieldValue);
-        return customListFieldValue;
     }
 
     public static void addMessageToCustomData(Message message, Account sender, Account receiver) {
@@ -122,15 +115,9 @@ public class MessageService {
     }
 
     public List<Message> retrieveAllMessagesInConversationWith(Account account, String conversationEmail) {
-        Object messages = account.getCustomData().get(getMessageField(conversationEmail));
         List<MessageDb> allMessages = messagesRepository.getAllMessagesForConversation(account.getEmail(), conversationEmail);
-        if (messages == null) {
-            return Collections.emptyList();
-        } else {
-            List<Message> messages1 = (List<Message>) messages;
-            logger.info("all messages old way : " + messages1 + " " + "all messages new way : " + allMessages);
-            return messages1;
-        }
+        return mapFromMessageDb(allMessages);
+
     }
 
     public Integer markAllMessagesInConversationAsRead(Account account, String conversationEmail) {
@@ -164,21 +151,15 @@ public class MessageService {
     }
 
     public MessageOverview getLastMessage(Account account, String email) {
-        Object o = account.getCustomData().get(getLastMessageField(email));
-
         List<MessageDb> lastMessageInConversation = messagesRepository.getLastMessageForConversations(account.getEmail(),
                 email, new PageRequest(0, 1));
 
         String userFullName = userService.findUserByEmail(email).map(u -> u.fullName).orElse("");
 
-        if (o == null) {
+        if (lastMessageInConversation == null || lastMessageInConversation.isEmpty()) {
             return new MessageOverview(email, userFullName, null);
         } else {
-            List<LinkedHashMap> messages = (List<LinkedHashMap>) o;
-
-            logger.info("last message old : " + messages + " " + " last message new : " + lastMessageInConversation);
-
-            return new MessageOverview(email, userFullName, Message.mapFromLinkedHashMap(messages.get(0)));
+            return new MessageOverview(email, userFullName, mapFromMessageDb(lastMessageInConversation).get(0));
         }
     }
 
@@ -189,4 +170,11 @@ public class MessageService {
                 .filter(m -> m.lastMessage != null)
                 .collect(Collectors.toList());
     }
+
+    public List<Message> mapFromMessageDb(List<MessageDb> messageDb) {
+        return messageDb.stream()
+                .map(m -> new Message(m.text, m.timestamp.getTime(), m.from_email, m.to_email))
+                .collect(Collectors.toList());
+    }
+
 }
