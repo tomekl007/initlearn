@@ -73,9 +73,8 @@ public class MessageService {
                 .collect(Collectors.toList());
         //-------
 
-        logger.info("collected : " + collect);
         List<String> customListFieldValue = AccountUtils.getCustomListFieldValue(account, CONVERSATIONS_WITH_FIELD);
-        logger.info("collected old way : " + customListFieldValue);
+        logger.info("collected new way : " + collect + " " + "collected old way : " + customListFieldValue);
         return customListFieldValue;
     }
 
@@ -129,8 +128,7 @@ public class MessageService {
             return Collections.emptyList();
         } else {
             List<Message> messages1 = (List<Message>) messages;
-            logger.info("all messages old way : " + messages1);
-            logger.info("all messages new way : " + allMessages);
+            logger.info("all messages old way : " + messages1 + " " + "all messages new way : " + allMessages);
             return messages1;
         }
     }
@@ -178,8 +176,7 @@ public class MessageService {
         } else {
             List<LinkedHashMap> messages = (List<LinkedHashMap>) o;
 
-            logger.info("last message old : " + messages);
-            logger.info("last message new : " + lastMessageInConversation);
+            logger.info("last message old : " + messages + " " + " last message new : " + lastMessageInConversation);
 
             return new MessageOverview(email, userFullName, Message.mapFromLinkedHashMap(messages.get(0)));
         }
