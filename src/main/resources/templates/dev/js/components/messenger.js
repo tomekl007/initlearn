@@ -20,11 +20,13 @@ var Messenger = React.createClass({
         };
     },
     sendMessage() {
-        var input = ReactDOM.findDOMNode(this.refs.mainInput);
+        /*TODO code refactoring*/
+        var $thisComponentNode = ReactDOM.findDOMNode(this);
+        var $input = $thisComponentNode.querySelector('.main-messenger-text-input');
         var messages = this.state.messages;
-        var message = {text: input.value, emailTo: this.props.email};
+        var message = {text: $input.value, emailTo: this.props.email};
 
-        messages.push({text: input.value});
+        messages.push({text: $input.value});
         this.setState({
             messages: messages
         });
@@ -32,19 +34,27 @@ var Messenger = React.createClass({
         api.sendMessage(message)
             .then(function (data) {
                 console.log(data);
+                var $messageList = $thisComponentNode
+                    .querySelector('.main-messenger-messages-list');
+                $messageList.scrollTop = $messageList.scrollHeight;
             })
             ['catch'](function (jqXHR) {
             console.log(jqXHR);
         });
 
-        input.value = '';
+        $input.value = '';
     },
     getMessages() {
+        /*TODO code refactoring*/
         var $thisComponent = this;
+        var $messageList = ReactDOM.findDOMNode(this)
+            .querySelector('.main-messenger-messages-list');
 
         api.getMessages(this.props.email)
             .then(function (messages) {
+                var isNewMessage = messages.length !== $thisComponent.state.messages.length;
                 $thisComponent.setState({messages: messages, messagesListVisibility: true});
+                isNewMessage ? $messageList.scrollTop = $messageList.scrollHeight : false;
             })
             ['catch'](function (jqXHR) {
             console.log(jqXHR);
@@ -130,9 +140,11 @@ var Messenger = React.createClass({
                         </ul>
                         {$Loader}
                         <form className='main-messenger-text-input-wrapper'>
-                            <textarea className='main-messenger-text-input' ref='mainInput' type='text' data-height='50'
-                                data-max-height='80' onKeyDown={this.checkKeyUp} onKeyUp={this.removeShiftKey}></textarea>
-                            <span className='main-messenger-button-submit' {...tapOrClick(this.sendMessage)}><i className='fa fa-paper-plane'></i></span>
+                            <textarea className='main-messenger-text-input' type='text' data-height='50' data-max-height='80'
+                                onKeyDown={this.checkKeyUp} onKeyUp={this.removeShiftKey}></textarea>
+                            <span className='main-messenger-button-submit' {...tapOrClick(this.sendMessage)}>
+                                <i className='fa fa-paper-plane'></i>
+                            </span>
                         </form>
                     </div>
                 </div>

@@ -53,8 +53,9 @@
   background-color: #fff;
 }
 
-.main-messenger-messages-list {
-  padding: 10px 10px 50px;
+ul.main-messenger-messages-list {
+  height: 380px;
+  padding: rem-calc(10px);
 }
 
 .main-messenger-messages-list-item {

@@ -41,8 +41,9 @@
   width: 70%;
   background-color: #fff; }
 
-.main-messenger-messages-list {
-  padding: 10px 10px 50px; }
+ul.main-messenger-messages-list {
+  height: 380px;
+  padding: 0.625rem; }
 
 .main-messenger-messages-list-item {
   margin: 0.625rem;
