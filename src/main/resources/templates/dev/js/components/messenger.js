@@ -73,12 +73,23 @@ var Messenger = React.createClass({
                 this.sendMessage();
             }
         }
+
+        this.calculateInputHeight(event.target);
     },
     removeShiftKey(event) {
         if (!systemDetection.isMobileOrTabletDevice) {
             if (event.keyCode === 16) {
                 this.shiftKeyUp = false;
             }
+        }
+    },
+    calculateInputHeight(target) {
+        var defaultHeight = parseInt(target.getAttribute('data-height'));
+        var maxHeight = parseInt(target.getAttribute('data-max-height'));
+        var scrollTop = target.scrollTop;
+
+        if (defaultHeight + scrollTop < maxHeight) {
+            target.setAttribute('style', 'height : ' + (defaultHeight + scrollTop) + 'px');
         }
     },
     render() {
@@ -119,8 +130,8 @@ var Messenger = React.createClass({
                         </ul>
                         {$Loader}
                         <form className='main-messenger-text-input-wrapper'>
-                            <textarea className='main-messenger-text-input' ref='mainInput' type='text'
-                                onKeyDown={this.checkKeyUp} onKeyUp={this.removeShiftKey}></textarea>
+                            <textarea className='main-messenger-text-input' ref='mainInput' type='text' data-height='50'
+                                data-max-height='80' onKeyDown={this.checkKeyUp} onKeyUp={this.removeShiftKey}></textarea>
                             <span className='main-messenger-button-submit' {...tapOrClick(this.sendMessage)}><i className='fa fa-paper-plane'></i></span>
                         </form>
                     </div>

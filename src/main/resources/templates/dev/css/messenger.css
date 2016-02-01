@@ -65,8 +65,7 @@
   bottom: 0;
   left: 0;
   width: 100%;
-  background-color: #fafafa;
-  border-top: 1px solid #f5f5f5; }
+  background-color: #fafafa; }
 
 .main-messenger-text-input {
   position: absolute;
@@ -78,7 +77,8 @@
   resize: none;
   outline: none;
   padding: 0.9375rem;
-  color: #2196f3; }
+  color: #2196f3;
+  border-top: 1px solid #f5f5f5; }
 
 .main-messenger-button-submit {
   color: #2196f3;
@@ -86,7 +86,8 @@
   height: 50px;
   float: right;
   text-align: center;
-  cursor: pointer; }
+  cursor: pointer;
+  border-top: 1px solid #f5f5f5; }
 
 .main-messenger-button-submit i {
   display: block;
