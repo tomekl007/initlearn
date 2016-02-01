@@ -36,22 +36,25 @@ public class MessagesController {
     @RequestMapping(value = "/msg", method = RequestMethod.POST)
     ResponseEntity msg(ServletRequest servletRequest, @RequestBody MessageData messageData) {
         List<Account> receiver = userService.findAccountsByEmail(messageData.emailTo);
-        if (messageData.text.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.OK);
-        }
-
         if (receiver.size() == 0) {
             return new ResponseEntity<>("there is no user with emailTo : " + messageData.emailTo,
                     HttpStatus.BAD_REQUEST);
         } else {
             return AccountUtils.actionResponseEntityForAuthenticatedUserOrUnauthorized(servletRequest,
                     a -> {
+                        if (messageToYourself(receiver, a)) {
+                            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                        }
                         messageService.sendMessageToUser(receiver.get(0), messageData.text, a);
                         return new ResponseEntity<>(
                                 messageService.retrieveAllMessagesInConversationWith(a, messageData.emailTo),
                                 HttpStatus.OK);
                     });
         }
+    }
+
+    private boolean messageToYourself(List<Account> receiver, Account a) {
+        return a.getEmail().equals(receiver.get(0).getEmail());
     }
 
     @RequestMapping(value = "/msg/{email:.+}", method = RequestMethod.GET)
@@ -65,16 +68,16 @@ public class MessagesController {
     @RequestMapping(value = "/msg/{email:.+}/read", method = RequestMethod.POST)
     ResponseEntity markAllMessagesAsRead(ServletRequest servletRequest,
                                          @PathVariable("email") String email) {
-        return AccountUtils.actionForAuthenticatedUserOrUnauthorized(
-                servletRequest, a -> messageService.markAllMessagesInConversationAsRead(a, email));
+        return AccountUtils.actionResponseEntityForAuthenticatedUserOrUnauthorized(
+                servletRequest, a -> new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED));
 
     }
 
     @RequestMapping(value = "/msg/{email:.+}/notread", method = RequestMethod.GET)
     ResponseEntity<List<Message>> getAllNotReadMessages(ServletRequest servletRequest,
                                                         @PathVariable("email") String email) {
-        return AccountUtils.actionForAuthenticatedUserOrUnauthorized(
-                servletRequest, a -> messageService.getAllNotReadMessages(a, email));
+        return AccountUtils.actionResponseEntityForAuthenticatedUserOrUnauthorized(
+                servletRequest, a -> new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED));
 
     }
 

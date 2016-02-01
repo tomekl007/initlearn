@@ -1,7 +1,5 @@
 package com.stormpath.tutorial.messages;
 
-import java.util.LinkedHashMap;
-
 /**
  * Created by tomasz.lelek on 10/12/15.
  */
@@ -26,22 +24,5 @@ public class Message {
         this.timestamp = timestamp;
         this.fromEmail = fromEmail;
         this.toEmail = toEmail;
-    }
-
-    public static Message mapFromLinkedHashMap(LinkedHashMap linkedHashMap) {
-        String text = (String) linkedHashMap.get("text");
-        Long timestamp = (Long) linkedHashMap.get("timestamp");
-        String fromEmail = (String) linkedHashMap.get("fromEmail");
-        String toEmail = (String) linkedHashMap.get("toEmail");
-        return new Message(text, timestamp, fromEmail, toEmail);
-    }
-
-    public static LinkedHashMap toLinkedHashMap(Message message) {
-        LinkedHashMap linkedHashMap = new LinkedHashMap();
-        linkedHashMap.put("text", message.text);
-        linkedHashMap.put("timestamp", message.timestamp);
-        linkedHashMap.put("fromEmail", message.fromEmail);
-        linkedHashMap.put("toEmail", message.toEmail);
-        return linkedHashMap;
     }
 }
