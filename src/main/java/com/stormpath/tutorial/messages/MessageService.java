@@ -124,6 +124,7 @@ public class MessageService {
 
     public List<Message> retrieveAllMessagesInConversationWith(Account account, String conversationEmail) {
         Object messages = account.getCustomData().get(getMessageField(conversationEmail));
+        messagesRepository.getAllMessagesForConversation(account.getEmail(), )
         if (messages == null) {
             return Collections.emptyList();
         } else {
