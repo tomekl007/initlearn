@@ -9,6 +9,7 @@ import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -165,7 +166,8 @@ public class MessageService {
     public MessageOverview getLastMessage(Account account, String email) {
         Object o = account.getCustomData().get(getLastMessageField(email));
 
-        MessageDb lastMessageInConversation = messagesRepository.getLastMessageForConversations(account.getEmail(), email);
+        List<MessageDb> lastMessageInConversation = messagesRepository.getLastMessageForConversations(account.getEmail(),
+                email, new PageRequest(0, 1));
 
         String userFullName = userService.findUserByEmail(email).map(u -> u.fullName).orElse("");
 
