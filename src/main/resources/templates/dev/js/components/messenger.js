@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import tapOrClick from 'react-tap-or-click';
 
 import api from '../ajax/api';
+import systemDetection from '../common/systemDetection';
 
 import MessageThreadList from './messageThreadList';
 
@@ -10,6 +11,7 @@ import MessageThreadList from './messageThreadList';
 var Messenger = React.createClass({
 
     getMessagesIntervalId: 0,
+    shiftKeyUp: false,
     getInitialState() {
 
         return {
@@ -59,6 +61,26 @@ var Messenger = React.createClass({
     componentWillUnmount() {
         clearInterval(this.getMessagesIntervalId);
     },
+    checkKeyUp(event) {
+        if (!systemDetection.isMobileOrTabletDevice) {
+            if (event.keyCode === 16) {
+                this.shiftKeyUp = true;
+            }
+
+            if ((event.which === 13 && !this.shiftKeyUp) ||
+                (event.keyCode === 13 && !this.shiftKeyUp)) {
+                event.preventDefault();
+                this.sendMessage();
+            }
+        }
+    },
+    removeShiftKey(event) {
+        if (!systemDetection.isMobileOrTabletDevice) {
+            if (event.keyCode === 16) {
+                this.shiftKeyUp = false;
+            }
+        }
+    },
     render() {
 
         var $thisComponent = this;
@@ -97,7 +119,8 @@ var Messenger = React.createClass({
                         </ul>
                         {$Loader}
                         <form className='main-messenger-text-input-wrapper'>
-                            <textarea className='main-messenger-text-input' ref='mainInput' type='text'></textarea>
+                            <textarea className='main-messenger-text-input' ref='mainInput' type='text'
+                                onKeyDown={this.checkKeyUp} onKeyUp={this.removeShiftKey}></textarea>
                             <span className='main-messenger-button-submit' {...tapOrClick(this.sendMessage)}><i className='fa fa-paper-plane'></i></span>
                         </form>
                     </div>

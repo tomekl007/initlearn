@@ -21,9 +21,6 @@ var Config = (function () {
     var getMessagesOverviewUrl = messagesUrl + '/overview';
     var getSearchAutocompleteOptionsUrl = appUrl + '/skills';
     var addReservationUrl = appUrl + '/reservations';
-    var getReservationsWithPaymentsUrl = appUrl + '/reservations/payments';
-    var getAppointmentsUrl = appUrl + '/appointments';
-    var getAppointmentsWithPaymentsUrl = appUrl + '/appointments/payments';
     var getTeachersUrl = appUrl + userGroupPath + 'teachers';
     var logoutUserUrl = appUrl + '/logout';
 
@@ -42,16 +39,32 @@ var Config = (function () {
         return usersUrl + '/' + fieldPath;
     };
 
-    var getReservationsUrl = function (email) {
-        return appUrl + '/reservations/' + email;
+    var getReservationsUrl = function (email, fromDate) {
+        return appUrl + '/reservations/' + email +
+            (fromDate === true ? '?from_hour=' + new Date().getTime() : '');
     };
 
-    var deleteReservationUrl = function (email) {
-        return appUrl + '/reservations/delete/' + email;
+    var getReservationsWithPaymentsUrl = function (fromDate) {
+        return appUrl + '/reservations/payments' +
+            (fromDate === true ? '?from_hour=' + new Date().getTime() : '');
     };
 
-    var deleteAppointmentUrl = function (email) {
-        return appUrl + '/appointments/delete/' + email;
+    var getAppointmentsUrl = function (fromDate) {
+        return appUrl + '/appointments' +
+            (fromDate === true ? '?from_hour=' + new Date().getTime() : '');
+    };
+
+    var getAppointmentsWithPaymentsUrl = function (fromDate) {
+        return appUrl + '/appointments/payments' +
+            (fromDate === true ? '?from_hour=' + new Date().getTime() : '');
+    };
+
+    var deleteReservationUrl = function (email, timestamp) {
+        return appUrl + '/reservations/delete/' + email + '?current_time=' + timestamp;
+    };
+
+    var deleteAppointmentUrl = function (email, timestamp) {
+        return appUrl + '/appointments/delete/' + email + '?current_time=' + timestamp;
     };
 
     var paymentPath = function (email, timestamp) {

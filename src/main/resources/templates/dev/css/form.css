@@ -64,6 +64,26 @@
 .main-input:focus ~ .main-input-bg, .main-input.is-filled ~ .main-input-bg {
   height: 100%; }
 
+.main-checkbox {
+  border: 2px solid #696969;
+  border-radius: 2px;
+  margin-right: 5px;
+  margin-left: 5px; }
+
+.main-checkbox i {
+  color: transparent; }
+
+.main-checkbox.checked {
+  background-color: #3f51b5;
+  border: 2px solid #3f51b5; }
+
+.main-checkbox.checked i {
+  color: #fff; }
+
+.main-checkbox.checkbox-blue.checked {
+  background-color: #2196f3;
+  border: 2px solid #2196f3; }
+
 .main-label {
   position: absolute;
   left: 10px;

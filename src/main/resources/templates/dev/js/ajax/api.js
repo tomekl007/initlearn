@@ -97,28 +97,28 @@ var Api = (function () {
             return $http(config.addReservationUrl)
                 .post(this.payload({json: data}));
         },
-        getReservations: function(emailPath) {
-            return $http(config.getReservationsUrl(emailPath))
+        getReservations: function(emailPath, fromDate) {
+            return $http(config.getReservationsUrl(emailPath, fromDate))
                 .get(this.payload());
         },
-        deleteReservation: function(emailPath, data) {
-            return $http(config.deleteReservationUrl(emailPath))
+        deleteReservation: function(emailPath, timestamp, data) {
+            return $http(config.deleteReservationUrl(emailPath, timestamp))
                 .post(this.payload({json: data}));
         },
-        getReservationsWithPayments: function() {
-            return $http(config.getReservationsWithPaymentsUrl)
+        getReservationsWithPayments: function(fromDate) {
+            return $http(config.getReservationsWithPaymentsUrl(fromDate))
                 .get(this.payload());
         },
-        getAppointments: function() {
-            return $http(config.getAppointmentsUrl)
+        getAppointments: function(fromDate) {
+            return $http(config.getAppointmentsUrl(fromDate))
                 .get(this.payload());
         },
-        deleteAppointment: function(emailPath, data) {
-            return $http(config.deleteAppointmentUrl(emailPath))
+        deleteAppointment: function(emailPath, timestamp, data) {
+            return $http(config.deleteAppointmentUrl(emailPath, timestamp))
                 .post(this.payload({json: data}));
         },
-        getAppointmentsWithPayments: function() {
-            return $http(config.getAppointmentsWithPaymentsUrl)
+        getAppointmentsWithPayments: function(fromDate) {
+            return $http(config.getAppointmentsWithPaymentsUrl(fromDate))
                 .get(this.payload());
         }
     };
