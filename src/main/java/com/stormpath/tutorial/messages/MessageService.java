@@ -1,10 +1,8 @@
 package com.stormpath.tutorial.messages;
 
 import com.stormpath.sdk.account.Account;
-import com.stormpath.sdk.directory.CustomData;
 import com.stormpath.tutorial.controller.jsonrequest.MessageOverview;
 import com.stormpath.tutorial.user.UserService;
-import com.stormpath.tutorial.utils.AccountUtils;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -22,7 +19,6 @@ public class MessageService {
 
     @Autowired
     UserService userService;
-    public static final String MESSAGES_READ_OFFSET_FIELD = "messages-offset";
 
     @Autowired
     MessagesRepository messagesRepository;
@@ -49,9 +45,8 @@ public class MessageService {
 
     public List<String> getConversationWithField(Account account) {
         String participantEmail = account.getEmail();
-        List<MessageDb> allConversationsWith = messagesRepository.getAllConversationsWith(participantEmail);
 
-        return allConversationsWith
+        return messagesRepository.getAllConversationsWith(participantEmail)
                 .stream()
                 .map(m -> Objects.equals(m.getFrom_email(), participantEmail) ? m.getTo_email() : m.getFrom_email())
                 .distinct()
@@ -59,45 +54,8 @@ public class MessageService {
     }
 
 
-    private static String getMessageOffsetField(String email) {
-        String encode = cleanEmailFromSpecialCharacters(email); //todo think about better way of replacing
-        return MESSAGES_READ_OFFSET_FIELD + "-" + encode;
-    }
-
-    private static String cleanEmailFromSpecialCharacters(String email) {
-        return email
-                .replace("@", "_-_-_")
-                .replace(".", "_-_-_");
-    }
-
     public List<Message> retrieveAllMessagesInConversationWith(Account account, String conversationEmail) {
-        List<MessageDb> allMessages = messagesRepository.getAllMessagesForConversation(account.getEmail(), conversationEmail);
-        return mapFromMessageDb(allMessages);
-
-    }
-
-    public Integer markAllMessagesInConversationAsRead(Account account, String conversationEmail) {
-        List<Message> messages = retrieveAllMessagesInConversationWith(account, conversationEmail);
-        String messageOffsetField = getMessageOffsetField(conversationEmail);
-        int newOffset = markNewReadOffset(messages);
-        account.getCustomData().put(messageOffsetField, newOffset);
-        account.save();
-        return newOffset;
-    }
-
-    public static Integer markNewReadOffset(List messages) {
-        return messages.size();
-    }
-
-
-    public List<Message> getAllNotReadMessages(Account account, String conversationEmail) {
-        List<Message> messages = retrieveAllMessagesInConversationWith(account, conversationEmail);
-        Integer readOffset = AccountUtils.getCustomIntegerValue(account, getMessageOffsetField(conversationEmail));
-        return getNotReadMessages(messages, readOffset);
-    }
-
-    public static List<Message> getNotReadMessages(List<Message> messages, Integer readOffset) {
-        return messages.subList(readOffset, messages.size());
+        return mapFromMessageDb(messagesRepository.getAllMessagesForConversation(account.getEmail(), conversationEmail));
     }
 
     public MessageOverview getLastMessage(Account account, String email) {
