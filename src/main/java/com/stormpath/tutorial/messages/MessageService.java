@@ -126,7 +126,9 @@ public class MessageService {
         if (messages == null) {
             return Collections.emptyList();
         } else {
-            return (List<Message>) messages;
+            List<Message> messages1 = (List<Message>) messages;
+            logger.info("all messages old way : " + messages1);
+            return messages1;
         }
     }
 

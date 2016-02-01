@@ -15,6 +15,6 @@ public interface MessagesRepository extends JpaRepository<MessageDb, Long> {
     List<MessageDb> getAllConversationsWith(@Param("email") String conversationParticipantEmail);
 
     @Query("select m from MessageDb m where ( m.from_email = :from_email AND m.to_email = :to_email ) OR " +
-            "( m.from_email = :to_email AND m.to_email = :from_email ) ORDER BY timestamp desc LIMIT 1")
+            "( m.from_email = :to_email AND m.to_email = :from_email ) ORDER BY m.timestamp desc")
     MessageDb getLastMessageForConversations(@Param("from_email") String fromEmail, @Param("to_email") String toEmail);
 }
