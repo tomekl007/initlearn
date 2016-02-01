@@ -62,11 +62,15 @@ public class MessageService {
     public List<String> getConversationWithField(Account account) {
         String participantEmail = account.getEmail();
         List<MessageDb> allConversationsWith = messagesRepository.getAllConversationsWith(participantEmail);
+
+
+        //------
         List<String> collect = allConversationsWith
                 .stream()
                 .map(m -> Objects.equals(m.getFrom_email(), participantEmail) ? m.getTo_email() : m.getFrom_email())
                 .distinct()
                 .collect(Collectors.toList());
+        //-------
 
         logger.info("collected : " + collect);
         List<String> customListFieldValue = AccountUtils.getCustomListFieldValue(account, CONVERSATIONS_WITH_FIELD);
@@ -105,7 +109,7 @@ public class MessageService {
         return MESSAGES_FIELD + "-" + encode;
     }
 
-    public static String getLastMessageField(String email) {
+    public String getLastMessageField(String email) {
         String encode = cleanEmailFromSpecialCharacters(email); //todo think about better way of replacing
 
         return LAST_MESSAGE_FIELD + "-" + encode;
@@ -150,7 +154,7 @@ public class MessageService {
         return messages.subList(readOffset, messages.size());
     }
 
-    public static void addLastMessage(Message message, Account account, String email) {
+    public void addLastMessage(Message message, Account account, String email) {
         LinkedHashMap linkedHashMap = Message.toLinkedHashMap(message);
         account.getCustomData().put(getLastMessageField(email), Collections.singletonList(linkedHashMap));
         account.save();
@@ -158,12 +162,19 @@ public class MessageService {
 
     public MessageOverview getLastMessage(Account account, String email) {
         Object o = account.getCustomData().get(getLastMessageField(email));
+
+        MessageDb lastMessageInConversation = messagesRepository.getLastMessageForConversations(account.getEmail(), email);
+
         String userFullName = userService.findUserByEmail(email).map(u -> u.fullName).orElse("");
 
         if (o == null) {
             return new MessageOverview(email, userFullName, null);
         } else {
             List<LinkedHashMap> messages = (List<LinkedHashMap>) o;
+
+            logger.info("last message old : " + messages);
+            logger.info("last message new : " + lastMessageInConversation);
+
             return new MessageOverview(email, userFullName, Message.mapFromLinkedHashMap(messages.get(0)));
         }
     }
