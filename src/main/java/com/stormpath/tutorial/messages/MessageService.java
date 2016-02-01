@@ -12,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
@@ -20,10 +22,7 @@ public class MessageService {
 
     @Autowired
     UserService userService;
-    public static final String MESSAGES_FIELD = "messages";
     public static final String MESSAGES_READ_OFFSET_FIELD = "messages-offset";
-    public static final String CONVERSATIONS_WITH_FIELD = "conversations-with";
-    public static final String LAST_MESSAGE_FIELD = "last-message";
 
     @Autowired
     MessagesRepository messagesRepository;
@@ -39,21 +38,9 @@ public class MessageService {
     }
 
     public void addMessageToConversation(String text, Account sender, Account receiver) {
-        AccountUtils.addCustomListFieldToAccount(sender,
-                CONVERSATIONS_WITH_FIELD, Collections.singletonList(receiver.getEmail()), sender.getCustomData());
-        AccountUtils.addCustomListFieldToAccount(receiver,
-                CONVERSATIONS_WITH_FIELD, Collections.singletonList(sender.getEmail()), receiver.getCustomData());
         DateTime dateTime = new DateTime();
-        Message message = new Message(text, dateTime.getMillis(),
-                sender.getEmail(), receiver.getEmail());
 
         addMessageToDb(new MessageDb(text, dateTime.toDate(), sender.getEmail(), receiver.getEmail()));
-
-        addLastMessage(message, sender, receiver.getEmail());
-        addLastMessage(message, receiver, sender.getEmail());
-
-        addMessageToCustomData(message, sender, receiver);
-        addMessageToCustomData(message, receiver, sender);
     }
 
     private void addMessageToDb(MessageDb messageDb) {
@@ -71,41 +58,10 @@ public class MessageService {
                 .collect(Collectors.toList());
     }
 
-    public static void addMessageToCustomData(Message message, Account sender, Account receiver) {
-        CustomData customData = sender.getCustomData();
-        String messageField = getMessageField(receiver.getEmail());
-        String messageOffsetField = getMessageOffsetField(receiver.getEmail());
-        logger.info("sender : " + sender + ", receiver: " + receiver + " add message for field : " + messageField);
-
-        List<Message> messagesList;
-        Object messages = customData.get(messageField);
-        if (messages == null) {
-            customData.put(messageOffsetField, 0);
-            messagesList = new LinkedList<>();
-        } else {
-            messagesList = (List<Message>) messages;
-        }
-        messagesList.add(message);
-
-        customData.put(messageField, messagesList);
-        sender.save();
-    }
 
     private static String getMessageOffsetField(String email) {
         String encode = cleanEmailFromSpecialCharacters(email); //todo think about better way of replacing
         return MESSAGES_READ_OFFSET_FIELD + "-" + encode;
-    }
-
-    public static String getMessageField(String email) {
-        String encode = cleanEmailFromSpecialCharacters(email); //todo think about better way of replacing
-
-        return MESSAGES_FIELD + "-" + encode;
-    }
-
-    public String getLastMessageField(String email) {
-        String encode = cleanEmailFromSpecialCharacters(email); //todo think about better way of replacing
-
-        return LAST_MESSAGE_FIELD + "-" + encode;
     }
 
     private static String cleanEmailFromSpecialCharacters(String email) {
@@ -142,12 +98,6 @@ public class MessageService {
 
     public static List<Message> getNotReadMessages(List<Message> messages, Integer readOffset) {
         return messages.subList(readOffset, messages.size());
-    }
-
-    public void addLastMessage(Message message, Account account, String email) {
-        LinkedHashMap linkedHashMap = Message.toLinkedHashMap(message);
-        account.getCustomData().put(getLastMessageField(email), Collections.singletonList(linkedHashMap));
-        account.save();
     }
 
     public MessageOverview getLastMessage(Account account, String email) {
