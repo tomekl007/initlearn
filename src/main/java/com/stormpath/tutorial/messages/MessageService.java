@@ -124,12 +124,13 @@ public class MessageService {
 
     public List<Message> retrieveAllMessagesInConversationWith(Account account, String conversationEmail) {
         Object messages = account.getCustomData().get(getMessageField(conversationEmail));
-        messagesRepository.getAllMessagesForConversation(account.getEmail(), )
+        List<MessageDb> allMessages = messagesRepository.getAllMessagesForConversation(account.getEmail(), conversationEmail);
         if (messages == null) {
             return Collections.emptyList();
         } else {
             List<Message> messages1 = (List<Message>) messages;
             logger.info("all messages old way : " + messages1);
+            logger.info("all messages new way : " + allMessages);
             return messages1;
         }
     }
