@@ -2,6 +2,7 @@ import React from 'react';
 
 import HeaderView from './header';
 import ContainerView from './container';
+import FooterView from './footer';
 
 class Layout extends React.Component {
     render() {
@@ -9,6 +10,7 @@ class Layout extends React.Component {
             <div className='main-layout'>
                 <HeaderView />
                 <ContainerView />
+                <FooterView />
             </div>
         );
     }
