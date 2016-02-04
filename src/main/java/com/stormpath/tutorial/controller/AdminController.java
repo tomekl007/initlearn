@@ -15,13 +15,13 @@ public class AdminController {
     @Autowired
     AdminService adminService;
 
-    @RequestMapping("/invalidateCache")
+    @RequestMapping("/admin/invalidateCache")
     public ResponseEntity<String> invalidateCache(){
         boolean res = adminService.invalidateCaches();
         if(res) {
-            new ResponseEntity<>("Successfully invalidate caches", HttpStatus.OK);
+            return new ResponseEntity<>("Successfully invalidate caches", HttpStatus.OK);
         }else{
-            new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
