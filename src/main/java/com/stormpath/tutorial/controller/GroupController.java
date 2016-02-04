@@ -41,10 +41,10 @@ public class GroupController {
     public ResponseEntity<List<User>> getTeachers(@PathVariable("groupName") String groupName,
                                                   @RequestParam(value = "verified", defaultValue = "true") Boolean isVerified) {
 
-        List<User> accountForGroup = groupServiceWithCache.findAccountsForGroup(groupName);
-        accountForGroup.stream()
+        List<User> accountForGroup = groupServiceWithCache.findAccountsForGroup(groupName)
+                .stream()
                 .filter(u -> u.isTeacherVerified != null)
-                .filter( u -> u.isTeacherVerified.equals(isVerified))
+                .filter(u -> u.isTeacherVerified.equals(isVerified))
                 .collect(Collectors.toList());
 
         if (accountForGroup.isEmpty()) {
