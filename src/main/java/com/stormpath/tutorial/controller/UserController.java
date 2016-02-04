@@ -49,6 +49,7 @@ public class UserController {
         List<User> users = userService.findUsersByEmail(email);
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
+
     //todo invalidate cache for particular user when data changed forr him
     @RequestMapping(value = "users/screenhero", method = RequestMethod.POST)
     public ResponseEntity<List<User>> addScreenHeroToUser(@RequestBody ScreenHero screenHero, ServletRequest servletRequest) {
@@ -107,6 +108,15 @@ public class UserController {
         });
     }
 
+    @RequestMapping(value = "user/paypalEmail", method = RequestMethod.POST)
+    public ResponseEntity<List<User>> addPaypalEmailToTeacher(@RequestBody PaypalEmail paypalEmail, ServletRequest servletRequest) {
+        return AccountUtils.actionForAuthenticatedUserOrUnauthorized(servletRequest, account -> {
+            List<Account> accountsByEmail = Collections.singletonList(account);
+            accountsByEmail.forEach(a -> AccountUtils.addPaypalEmail(a, paypalEmail.paypalEmail));
+            return AccountUtils.mapToUsers(accountsByEmail);
+        });
+    }
+
     @RequestMapping(value = "users/bio", method = RequestMethod.POST)
     public ResponseEntity<List<User>> addBioToTeacher(@RequestBody Bio bio, ServletRequest servletRequest) {
         return AccountUtils.actionForAuthenticatedUserOrUnauthorized(servletRequest, account -> {
@@ -149,7 +159,7 @@ public class UserController {
         groupServiceWithCache.invalidate();
         userServiceWithCache.invalidate();
         return AccountUtils.actionForAuthenticatedUserOrUnauthorized(servletRequest,
-                account -> userService.fillTeacherWithData(teacherData, account.getEmail()));
+                account -> userService.fillTeacherWithData(teacherData, account.getEmail(), false)); //todo hardcoded false
     }
 
     @RequestMapping(value = "/users/search", method = RequestMethod.GET)
