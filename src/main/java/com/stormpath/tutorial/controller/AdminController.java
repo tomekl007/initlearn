@@ -23,14 +23,14 @@ public class AdminController {
     @RequestMapping("/admin/invalidateCache")
     public ResponseEntity<String> invalidateCache(ServletRequest servletRequest) {
         Optional<User> user = AccountUtils.getUserIfUserLoggedIn(servletRequest).filter(u -> u.email.equals("tomekl007@gmail.com"));//todo make it using PreAuthorize
-        if(user.isPresent()) {
+        if (user.isPresent()) {
             boolean res = adminService.invalidateCaches();
             if (res) {
                 return new ResponseEntity<>("Successfully invalidate caches", HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
-        }else{
+        } else {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }

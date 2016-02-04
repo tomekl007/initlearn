@@ -15,7 +15,7 @@ public class AdminService {
     @Autowired
     UserServiceWithCache userServiceWithCache;
 
-    @PreAuthorize("hasRole(@roles.ADMIN)")
+//    @PreAuthorize("hasRole(@roles.ADMIN)")
     public boolean invalidateCaches() {
         groupServiceWithCache.invalidate();
         userServiceWithCache.invalidate();
