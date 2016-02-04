@@ -2,10 +2,12 @@ package com.stormpath.tutorial.controller;
 
 import com.paypal.exception.*;
 import com.paypal.sdk.exceptions.OAuthException;
+import com.stormpath.sdk.account.Account;
 import com.stormpath.tutorial.db.payment.Payment;
 import com.stormpath.tutorial.db.payment.PaypalConfiguration;
 import com.stormpath.tutorial.model.User;
 import com.stormpath.tutorial.payment.PaymentService;
+import com.stormpath.tutorial.user.UserService;
 import com.stormpath.tutorial.utils.AccountUtils;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
@@ -33,6 +35,8 @@ public class PaymentController {
     private PaymentService paymentService;
     @Autowired
     PaypalConfiguration paypalConfiguration;
+    @Autowired
+    UserService userService;
 
     @RequestMapping("/adaptivePayment")
     public String executeAdaptivePayment(ServletRequest servletRequest,
@@ -40,8 +44,9 @@ public class PaymentController {
                                          @RequestParam("fromHour") Long fromHour) {
 
         Optional<User> accountIfUserLoggedIn = AccountUtils.getUserIfUserLoggedIn(servletRequest);
-        if (accountIfUserLoggedIn.isPresent()) {
-            return "redirect:" + paypalConfiguration.getUrl() + paymentService.pay(accountIfUserLoggedIn.get().email, toEmail, new Date(fromHour));
+        Optional<String> toEmailOpt = userService.findUserByEmail(toEmail).map(u -> u.paypalEmail);
+        if (accountIfUserLoggedIn.isPresent() && toEmailOpt.isPresent()) {//todo think about handling toEmail user not exists
+            return "redirect:" + paypalConfiguration.getUrl() + paymentService.pay(accountIfUserLoggedIn.get().email, toEmailOpt.get(), new Date(fromHour));
         } else {
             return "redirect:/login";
         }

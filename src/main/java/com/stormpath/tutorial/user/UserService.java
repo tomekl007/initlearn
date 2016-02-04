@@ -56,9 +56,9 @@ public class UserService implements AccountFields, UserServiceCacheable {
     public Optional<User> findUserByEmail(String email) {
         List<Account> accounts = findAccountsByEmail(email);
         List<User> users = AccountUtils.mapToUsers(accounts);
-        if(users.size() == 0 ){
+        if (users.size() == 0) {
             return Optional.empty();
-        }else{
+        } else {
             return Optional.of(users.get(0));
         }
     }
@@ -69,9 +69,9 @@ public class UserService implements AccountFields, UserServiceCacheable {
 
     public Optional<Account> findAccountByEmail(String email) {
         List<Account> accounts = findAccountsBy("email", email);
-        if(accounts.size() == 0 ){
+        if (accounts.size() == 0) {
             return Optional.empty();
-        }else{
+        } else {
             return Optional.of(accounts.get(0));
         }
     }
@@ -103,7 +103,7 @@ public class UserService implements AccountFields, UserServiceCacheable {
         AccountUtils.addRatedBy(a, userThatRate);
     }
 
-    public List<User> fillTeacherWithData(TeacherData teacherData, String email) {
+    public List<User> fillTeacherWithData(TeacherData teacherData, String email, Boolean isTeacherVerified) {
         List<Account> accountsByEmail = findAccountsByEmail(email);
         for (Account account : accountsByEmail) {
             AccountUtils.addBioField(account, teacherData.bio);
@@ -113,6 +113,8 @@ public class UserService implements AccountFields, UserServiceCacheable {
             AccountUtils.addScreenheroField(account, teacherData.screenHero);
             AccountUtils.addLinksField(account, teacherData.links);
             AccountUtils.addLinkedInField(account, teacherData.linkedIn);
+            AccountUtils.addPaypalEmail(account, teacherData.paypalEmail);
+            AccountUtils.addIsTeacherVerified(account, isTeacherVerified);
         }
         return AccountUtils.mapToUsers(accountsByEmail);
     }
@@ -149,8 +151,8 @@ public class UserService implements AccountFields, UserServiceCacheable {
     }
 
     private static List<User> sortBy(List<User> list, Optional<String> sort, Optional<Integer> sortOrder) {
-        if(sort.isPresent() && sortOrder.isPresent()) {
-           AccountUtils.sortUsersBy(list, sort.get(), sortOrder.get());
+        if (sort.isPresent() && sortOrder.isPresent()) {
+            AccountUtils.sortUsersBy(list, sort.get(), sortOrder.get());
         }
         return list;
     }
@@ -182,7 +184,7 @@ public class UserService implements AccountFields, UserServiceCacheable {
         return groupService.findAllTeachers()
                 .stream()
                 .map(u -> u.skills)
-                .filter( s -> !s.isEmpty())
+                .filter(s -> !s.isEmpty())
                 .flatMap(Collection::stream)
                 .distinct()
                 .collect(Collectors.toList());
@@ -190,10 +192,10 @@ public class UserService implements AccountFields, UserServiceCacheable {
 
     public boolean alreadyRateThatTeacher(Account userThatRate, String email) {
         Optional<User> userByEmail = findUserByEmail(email);
-        if(userByEmail.isPresent()){
+        if (userByEmail.isPresent()) {
             User user = userByEmail.get();
             return user.ratedBy.contains(userThatRate.getEmail());
-        }else{
+        } else {
             return false;
         }
     }

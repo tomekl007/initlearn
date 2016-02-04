@@ -18,9 +18,13 @@ public class User {
     public final Integer numberOfRates;
     public final Boolean isATeacher;
     public final List<String> ratedBy;
+    public final String paypalEmail;
+    public final Boolean isTeacherVerified;
 
     public User(String email, String fullName, String givenName, String middleName, String screenHero, Integer hourRate,
-                String linkedIn, List<String> skills, List<String> links, String bio, String img, Double average, Integer numberOfRates, Boolean isATeacher, List<String> ratedBy) {
+                String linkedIn, List<String> skills, List<String> links, String bio, String img, Double average, Integer numberOfRates, Boolean isATeacher, List<String> ratedBy,
+                String paypalEmail,
+                Boolean isTeacherVerified) {
         this.email = email;
         this.fullName = fullName;
         this.givenName = givenName;
@@ -36,6 +40,8 @@ public class User {
         this.numberOfRates = numberOfRates;
         this.isATeacher = isATeacher;
         this.ratedBy = ratedBy;
+        this.paypalEmail = paypalEmail;
+        this.isTeacherVerified = isTeacherVerified;
     }
 
     @Override

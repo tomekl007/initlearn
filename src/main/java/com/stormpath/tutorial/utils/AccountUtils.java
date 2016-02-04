@@ -12,12 +12,20 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import javax.servlet.ServletRequest;
-import java.text.DecimalFormat;
 import java.util.*;
+import java.util.function.BooleanSupplier;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class AccountUtils implements AccountFields {
+
+    public static void addPaypalEmail(Account a, String paypalEmail) {
+        addCustomFieldToAccount(a, PAYPAL_EMAIL, paypalEmail);
+    }
+
+    public static void addIsTeacherVerified(Account a, Boolean isTeacherVerified){
+        addCustomBooleanField(a, IS_TEACHER_VERIFIED, isTeacherVerified);
+    }
 
     public static void addBioField(Account a, String bio) {
         addCustomFieldToAccount(a, BIO_FILED, bio);
@@ -98,6 +106,12 @@ public class AccountUtils implements AccountFields {
         a.save();
     }
 
+    public static void addCustomBooleanField(Account a, String name, Boolean value) {
+        CustomData customData = a.getCustomData();
+        customData.put(name, value);
+        a.save();
+    }
+
     public static String getCustomFieldValue(Account a, String field) {
         Object o = a.getCustomData().get(field);
         if (o == null) {
@@ -167,7 +181,18 @@ public class AccountUtils implements AccountFields {
                 .setNumberOfRates(AccountUtils.getCustomIntegerValue(a, NUMBER_OF_RATES_FIELD))
                 .setIsATeacher(isATeacher)
                 .setRatedBy(AccountUtils.getCustomListFieldValue(a, RATED_BY))
+                .setPaypalEmail(AccountUtils.getCustomFieldValue(a, PAYPAL_EMAIL))
+                .setTeacherVerified(AccountUtils.getCustomFieldValueBool(a, IS_TEACHER_VERIFIED))
                 .createUser();
+    }
+
+    private static Boolean getCustomFieldValueBool(Account a, String field) {
+        Object o = a.getCustomData().get(field);
+        if (o == null) {
+            return null;
+        } else {
+            return (Boolean) o;
+        }
     }
 
 
@@ -228,9 +253,9 @@ public class AccountUtils implements AccountFields {
             }
         };
 
-        if(sortOrder == -1){
+        if (sortOrder == -1) {
             Collections.sort(list, Ordering.from(userComparator).reverse());
-        }else{
+        } else {
             Collections.sort(list, Ordering.from(userComparator));
         }
 
@@ -242,7 +267,7 @@ public class AccountUtils implements AccountFields {
     }
 
 
-    public static<T> List<T> addToList(Account account, T toAdd, String fieldName) {
+    public static <T> List<T> addToList(Account account, T toAdd, String fieldName) {
         CustomData customData = account.getCustomData();
 
         List<T> list;
@@ -258,5 +283,6 @@ public class AccountUtils implements AccountFields {
         account.save();
         return list;
     }
+
 
 }

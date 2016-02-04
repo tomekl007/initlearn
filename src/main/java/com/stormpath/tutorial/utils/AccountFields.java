@@ -5,14 +5,16 @@ package com.stormpath.tutorial.utils;
  */
 public interface AccountFields {
 
-    public static final String SCREEN_HERO_FIELD = "screenHero";
-    public static final String HOUR_RATE_FIELD = "hourRate";
-    public static final String SKILLS_FIELD = "skills";
-    public static final String LINKEDIN_FIELD = "linkedIn";
-    public static final String LINKS_FILED = "links";
-    public static final String BIO_FILED = "bio";
-    public static final String IMG_FIELD = "img";
-    public static final String NUMBER_OF_RATES_FIELD = "numberOfRates";
-    public static final String AVERAGE_FIELD = "average";
-    public static final String RATED_BY = "rated_by";
+    String SCREEN_HERO_FIELD = "screenHero";
+    String HOUR_RATE_FIELD = "hourRate";
+    String SKILLS_FIELD = "skills";
+    String LINKEDIN_FIELD = "linkedIn";
+    String LINKS_FILED = "links";
+    String BIO_FILED = "bio";
+    String IMG_FIELD = "img";
+    String NUMBER_OF_RATES_FIELD = "numberOfRates";
+    String AVERAGE_FIELD = "average";
+    String RATED_BY = "rated_by";
+    String PAYPAL_EMAIL = "paypalEmail";
+    String IS_TEACHER_VERIFIED = "teacherVerified";
 }
