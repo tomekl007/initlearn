@@ -40,7 +40,7 @@ public class AdminController {
         }
     }
 
-    @RequestMapping("/admin/verifyTeacher/{email}")
+    @RequestMapping("/admin/verifyTeacher/{email:.+}")
     public ResponseEntity<String> setTeacherAsVerified(ServletRequest servletRequest, @PathVariable("email") String teacherEmail) {
         Optional<User> user = getAdminUser(servletRequest);
         if (user.isPresent()) {
