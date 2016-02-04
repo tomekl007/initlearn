@@ -12,6 +12,15 @@ public class TeacherData {
     public List<String> skills;
     public List<String> links;
     public String bio;
+    public String paypalEmail;
+
+    public String getPaypalEmail() {
+        return paypalEmail;
+    }
+
+    public void setPaypalEmail(String paypalEmail) {
+        this.paypalEmail = paypalEmail;
+    }
 
     public String getScreenHero() {
         return screenHero;

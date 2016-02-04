@@ -18,6 +18,8 @@ public class UserBuilder {
     private Integer numberOfRates;
     private Boolean isATeacher;
     private List<String> ratedBy;
+    private String paypalEmail;
+    private Boolean isTeacherVerified;
 
     public UserBuilder setEmail(String email) {
         this.email = email;
@@ -91,11 +93,21 @@ public class UserBuilder {
 
     public User createUser() {
         return new User(email, fullName, givenName, middleName, screenHero, hourRate,
-                linkedIn, skills, links, bio, img, average, numberOfRates, isATeacher, ratedBy);
+                linkedIn, skills, links, bio, img, average, numberOfRates, isATeacher, ratedBy, paypalEmail, isTeacherVerified);
     }
 
     public UserBuilder setRatedBy(List<String> ratedBy) {
         this.ratedBy = ratedBy;
+        return this;
+    }
+
+    public UserBuilder setPaypalEmail(String paypalEmail) {
+        this.paypalEmail = paypalEmail;
+        return this;
+    }
+
+    public UserBuilder setTeacherVerified(Boolean teacherVerified) {
+        isTeacherVerified = teacherVerified;
         return this;
     }
 }
