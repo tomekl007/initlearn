@@ -47,6 +47,7 @@ public class UserServiceWithCache implements UserServiceCacheable {
 
     public void invalidate() {
         skillsCache.invalidateAll();
+        usersCache.invalidateAll();
     }
 
 
