@@ -64,6 +64,13 @@ var AddUserDataForm = React.createClass({
                     </div>
 
                     <div form-group='true' className='main-input-wrapper'>
+                        <Input data={{name: 'paypalEmail', type: 'email'}}/>
+                        <label className='main-label'>paypal email</label>
+
+                        <div className='main-input-bg'></div>
+                    </div>
+
+                    <div form-group='true' className='main-input-wrapper'>
                         <Input data={{name: 'screenHero', type: 'text'}}/>
                         <label className='main-label'>screenHero</label>
 
