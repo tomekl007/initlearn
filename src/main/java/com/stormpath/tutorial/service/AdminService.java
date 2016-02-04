@@ -3,6 +3,7 @@ package com.stormpath.tutorial.service;
 import com.stormpath.sdk.account.Account;
 import com.stormpath.tutorial.group.GroupServiceWithCache;
 import com.stormpath.tutorial.user.UserServiceWithCache;
+import com.stormpath.tutorial.utils.AccountUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,7 @@ public class AdminService {
     @Autowired
     UserServiceWithCache userServiceWithCache;
 
-    @PreAuthorize("hasRole(@roles.ADMIN)")
+//    @PreAuthorize("hasRole(@roles.ADMIN)")
     public boolean invalidateCaches() {
         groupServiceWithCache.invalidate();
         userServiceWithCache.invalidate();
