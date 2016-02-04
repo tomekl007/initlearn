@@ -1,7 +1,6 @@
 package com.stormpath.tutorial.controller;
 
 import com.stormpath.sdk.account.Account;
-import com.stormpath.sdk.account.AccountList;
 import com.stormpath.sdk.group.Group;
 import com.stormpath.tutorial.group.GroupService;
 import com.stormpath.tutorial.group.GroupServiceWithCache;
@@ -16,11 +15,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.ServletRequest;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Created by tomasz.lelek on 22/12/15.
@@ -37,10 +38,13 @@ public class GroupController {
     private GroupServiceWithCache groupServiceWithCache;
 
     @RequestMapping(value = "group/users/{groupName}", method = RequestMethod.GET)
-    public ResponseEntity<List<User>> getTeachers(@PathVariable("groupName") String groupName) {
+    public ResponseEntity<List<User>> getTeachers(@PathVariable("groupName") String groupName,
+                                                  @RequestParam(value = "verified", defaultValue = "true") Boolean isVerified) {
 
         List<User> accountForGroup = groupServiceWithCache.findAccountsForGroup(groupName);
-
+        accountForGroup.stream()
+                .filter(u -> u.isTeacherVerified != null && u.isTeacherVerified.equals(isVerified))
+                .collect(Collectors.toList());
 
         if (accountForGroup.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

@@ -18,7 +18,7 @@ public class UserServiceWithCache implements UserServiceCacheable {
 
     private final Cache<String, List<String>> skillsCache = CacheBuilder.newBuilder()
             .maximumSize(10)
-            .expireAfterWrite(10, TimeUnit.MINUTES)
+            .expireAfterWrite(10, TimeUnit.MINUTES)//todo maybe endpoint for revalidating cache
             .build();
 
     private final Cache<String, List<User>> usersCache = CacheBuilder.newBuilder()
