@@ -42,9 +42,13 @@ public class GroupController {
                                                   @RequestParam(value = "verified", defaultValue = "true") Boolean isVerified) {
 
         List<User> accountForGroup = groupServiceWithCache.findAccountsForGroup(groupName);
-        accountForGroup.stream()
-                .filter(u -> u.isTeacherVerified != null && u.isTeacherVerified.equals(isVerified))
-                .collect(Collectors.toList());
+        accountForGroup.stream().filter(u -> {
+            if (u.isTeacherVerified == null) {
+                return false;
+            } else {
+                return u.isTeacherVerified.equals(isVerified);
+            }
+        }).collect(Collectors.toList());
 
         if (accountForGroup.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
