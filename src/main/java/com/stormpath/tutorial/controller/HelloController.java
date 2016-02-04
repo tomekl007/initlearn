@@ -32,19 +32,19 @@ import java.util.function.Consumer;
 @Controller
 public class HelloController {
     private static final Logger logger = LoggerFactory.getLogger(HelloController.class);
-    @Autowired
-    private Client client;
+//    @Autowired
+//    private Client client;
+//
+//    @Autowired
+//    AdminService adminService;
+//
+//    todo after login quick guide, how to login, and fill extra data about user
+//    @RequestMapping("/")
+//    String home(ServletRequest servletRequest) {
 
-    @Autowired
-    AdminService adminService;
-
-    //todo after login quick guide, how to login, and fill extra data about user
-    @RequestMapping("/")
-    String home(ServletRequest servletRequest) {
-
-        client.getAccounts().forEach(new Consumer<Account>() {
-            @Override
-            public void accept(Account account) {
+//        client.getAccounts().forEach(new Consumer<Account>() {
+//            @Override
+//            public void accept(Account account) {
 //                adding custom data
 //                CustomData customData = account.getCustomData();
 //                customData.put("sc", "field");
@@ -57,8 +57,8 @@ public class HelloController {
                 logger.info("teachers : " + teachers);
                 account.addGroup(teachers);
                 account.save();*/
-            }
-        });
+//            }
+//        });
 
        /*create account and custom data
        Account account = client.instantiate(Account.class)
@@ -80,21 +80,21 @@ public class HelloController {
         directory.createAccount(account);
         account.save();
 */
-        return "index";
-    }
+//        return "index";
+//    }
 
    /* @RequestMapping
     String home() {
         return "home";
     }*/
 
-    @RequestMapping("/restricted")
-    String restricted(ServletRequest servletRequest) {
-        if (AccountResolver.INSTANCE.hasAccount(servletRequest)) {
-            return "restricted";
-        } else {
-            return "redirect:/login";
-        }
-
-    }
+//    @RequestMapping("/restricted")
+//    String restricted(ServletRequest servletRequest) {
+//        if (AccountResolver.INSTANCE.hasAccount(servletRequest)) {
+//            return "restricted";
+//        } else {
+//            return "redirect:/login";
+//        }
+//
+//    }
 }
