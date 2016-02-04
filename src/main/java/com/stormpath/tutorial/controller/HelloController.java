@@ -97,10 +97,4 @@ public class HelloController {
         }
 
     }
-
-    @RequestMapping("/admin")
-    String admin() {
-        adminService.ensureAdmin();
-        return "admin";
-    }
 }
