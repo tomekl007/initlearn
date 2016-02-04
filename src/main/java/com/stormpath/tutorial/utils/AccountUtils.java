@@ -126,7 +126,12 @@ public class AccountUtils implements AccountFields {
         if (o == null) {
             return defaultValue;
         } else {
-            return (String) o;
+            String v = (String) o;
+            if(v.isEmpty()){
+                return defaultValue;
+            }else{
+                return v;
+            }
         }
     }
 
