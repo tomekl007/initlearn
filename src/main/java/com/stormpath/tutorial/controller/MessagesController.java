@@ -44,7 +44,7 @@ public class MessagesController {
                         }
                         messageService.sendMessageToUser(receiver.get(0), messageData.text, a);
                         return new ResponseEntity<>(
-                                messageService.retrieveAllMessagesInConversationWith(a, messageData.emailTo),
+                                messageService.retrieveAllMessagesInConversationWith(a, messageData.emailTo, 0, 10),
                                 HttpStatus.OK);
                     });
         }
