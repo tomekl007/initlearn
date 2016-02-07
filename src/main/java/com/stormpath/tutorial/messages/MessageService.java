@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -54,8 +55,11 @@ public class MessageService {
     }
 
 
-    public List<Message> retrieveAllMessagesInConversationWith(Account account, String conversationEmail) {
-        return mapFromMessageDb(messagesRepository.getAllMessagesForConversation(account.getEmail(), conversationEmail));
+    public List<Message> retrieveAllMessagesInConversationWith(Account account, String conversationEmail, int page, int size) {
+        List<MessageDb> allMessagesForConversation = messagesRepository.getAllMessagesForConversation(account.getEmail(),
+                conversationEmail, new PageRequest(page, size));
+        Collections.reverse(allMessagesForConversation);
+        return mapFromMessageDb(allMessagesForConversation);
     }
 
     public MessageOverview getLastMessage(Account account, String email) {

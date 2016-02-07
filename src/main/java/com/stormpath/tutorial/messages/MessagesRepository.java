@@ -1,5 +1,6 @@
 package com.stormpath.tutorial.messages;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -21,6 +22,7 @@ public interface MessagesRepository extends JpaRepository<MessageDb, Long> {
                                                    Pageable pageable);
 
     @Query("select m from MessageDb m where ( m.from_email = :from_email AND m.to_email = :to_email ) OR " +
-            "( m.from_email = :to_email AND m.to_email = :from_email ) ORDER BY m.timestamp asc")
-    List<MessageDb> getAllMessagesForConversation(@Param("from_email") String fromEmail, @Param("to_email") String toEmail);
+            "( m.from_email = :to_email AND m.to_email = :from_email ) ORDER BY m.timestamp desc")
+    List<MessageDb> getAllMessagesForConversation(@Param("from_email") String fromEmail, @Param("to_email") String toEmail,
+                                                  Pageable pageable);
 }
